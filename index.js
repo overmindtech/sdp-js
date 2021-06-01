@@ -40,18 +40,33 @@ var Util;
     }
     Util.getHash = getHash;
     function getUniqueattributevalue(object) {
-        var _a, _b;
         if ("getUniqueattributevalue" in object) {
             return object.getUniqueattributevalue();
         }
         else {
             var uniqueAttribute = object.getUniqueattribute();
-            var fields = (_b = (_a = object.getAttributes()) === null || _a === void 0 ? void 0 : _a.getAttrstruct()) === null || _b === void 0 ? void 0 : _b.getFieldsMap();
-            var value = fields === null || fields === void 0 ? void 0 : fields.get(uniqueAttribute);
-            return (value === null || value === void 0 ? void 0 : value.toString()) || "";
+            var attributes = object.getAttributes();
+            if (typeof attributes != "undefined") {
+                var value = Util.getAttributeValue(attributes, uniqueAttribute);
+                return String(value);
+            }
+            else {
+                return '';
+            }
         }
     }
     Util.getUniqueattributevalue = getUniqueattributevalue;
+    function getAttributeValue(attributes, name) {
+        var _a;
+        var object = (_a = attributes.getAttrstruct()) === null || _a === void 0 ? void 0 : _a.toJavaScript();
+        if (typeof object === "undefined") {
+            return undefined;
+        }
+        else {
+            return object[name];
+        }
+    }
+    Util.getAttributeValue = getAttributeValue;
     function getReference(item) {
         var ref = new items_pb_1.Reference();
         ref.setContext(item.getContext());

@@ -7,6 +7,7 @@ export declare namespace Util {
     function getGloballyuniquename(object: Reference | Item): string;
     function getHash(object: Reference | Item): string;
     function getUniqueattributevalue(object: Item | Reference): string;
+    function getAttributeValue(attributes: ItemAttributes, name: string): any;
     function getReference(item: Item): Reference;
     function toDate(duration: Duration): Date;
 }

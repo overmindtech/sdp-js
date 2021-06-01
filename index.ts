@@ -48,9 +48,24 @@ export namespace Util {
             return object.getUniqueattributevalue();
         } else {
             const uniqueAttribute = object.getUniqueattribute();
-            const fields = object.getAttributes()?.getAttrstruct()?.getFieldsMap();
-            const value = fields?.get(uniqueAttribute)
-            return value?.toString() || "";
+            const attributes = object.getAttributes();
+
+            if (typeof attributes != "undefined") {
+                const value = Util.getAttributeValue(attributes, uniqueAttribute);
+                return String(value);
+            } else {
+                return ''
+            }
+        }
+    }
+
+    export function getAttributeValue(attributes: ItemAttributes, name: string): any {
+        var object = attributes.getAttrstruct()?.toJavaScript()
+
+        if (typeof object === "undefined") {
+            return undefined;
+        } else {
+            return object[name];
         }
     }
 
