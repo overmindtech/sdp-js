@@ -20,6 +20,9 @@ var responses_pb_1 = require("./responses_pb");
 Object.defineProperty(exports, "Response", { enumerable: true, get: function () { return responses_pb_1.Response; } });
 var sha1_1 = __importDefault(require("sha1"));
 var to_data_view_1 = __importDefault(require("to-data-view"));
+var duration_pb_1 = require("google-protobuf/google/protobuf/duration_pb");
+var struct_pb_1 = require("google-protobuf/google/protobuf/struct_pb");
+var timestamp_pb_1 = require("google-protobuf/google/protobuf/timestamp_pb");
 var Util;
 (function (Util) {
     function getGloballyuniquename(object) {
@@ -80,10 +83,86 @@ var Util;
         return new Date((duration.getSeconds() * 1000) + (duration.getNanos() / 1000000));
     }
     Util.toDate = toDate;
+    function newItem(details) {
+        var item = new items_pb_1.Item();
+        item.setType(details.type);
+        item.setUniqueattribute(details.uniqueAttribute);
+        item.setContext(details.context);
+        item.setAttributes(details.attributes);
+        if (typeof details.metadata != "undefined") {
+            item.setMetadata(details.metadata);
+        }
+        item.setLinkeditemrequestsList(details.linkedItemRequests);
+        item.setLinkeditemsList(details.linkedItems);
+        return item;
+    }
+    Util.newItem = newItem;
+    // NewItemAttributes creates a new ItemAttributes object from any javascript
+    // object that has string keys
+    function newItemAttributes(value) {
+        var attributes = new items_pb_1.ItemAttributes();
+        attributes.setAttrstruct(struct_pb_1.Struct.fromJavaScript(value));
+        return attributes;
+    }
+    Util.newItemAttributes = newItemAttributes;
+    function newMetadata(data) {
+        var m = new items_pb_1.Metadata();
+        m.setBackendname(data.backendName);
+        m.setRequestmethod(convertRequestMethod(data.requestMethod));
+        var timestamp = new timestamp_pb_1.Timestamp();
+        timestamp.fromDate(data.timestamp);
+        m.setTimestamp(timestamp);
+        var backendDuration = new duration_pb_1.Duration();
+        backendDuration.setSeconds(Math.floor(data.backendDuration / 1000));
+        backendDuration.setNanos((data.backendDuration % 1000) * 1e6);
+        m.setBackendduration(backendDuration);
+        var backendDurationPerItem = new duration_pb_1.Duration();
+        backendDurationPerItem.setSeconds(Math.floor(data.backendDurationPerItem / 1000));
+        backendDurationPerItem.setNanos((data.backendDurationPerItem % 1000) * 1e6);
+        m.setBackenddurationperitem(backendDurationPerItem);
+        m.setBackendpackage(data.backendPackage);
+        return m;
+    }
+    Util.newMetadata = newMetadata;
+    function newItemRequest(details) {
+        var r = new items_pb_1.ItemRequest();
+        r.setType(details.type);
+        r.setMethod(convertRequestMethod(details.method));
+        r.setQuery(details.query);
+        r.setLinkdepth(details.linkDepth);
+        r.setContext(details.context);
+        r.setItemsubject(details.itemSubject);
+        r.setLinkeditemsubject(details.linkedItemSubject);
+        r.setResponsesubject(details.responseSubject);
+        r.setErrorsubject(details.errorSubject);
+        return r;
+    }
+    Util.newItemRequest = newItemRequest;
+    function newReference(details) {
+        var r = new items_pb_1.Reference();
+        r.setType(details.type);
+        r.setUniqueattributevalue(details.uniqueAttributeValue);
+        r.setContext(details.context);
+        return r;
+    }
+    Util.newReference = newReference;
 })(Util = exports.Util || (exports.Util = {}));
 //
 // Private helper functions
 //
+function convertRequestMethod(method) {
+    switch (method) {
+        case 'GET': {
+            return items_pb_1.RequestMethod.GET;
+        }
+        case 'FIND': {
+            return items_pb_1.RequestMethod.FIND;
+        }
+        case 'SEARCH': {
+            return items_pb_1.RequestMethod.SEARCH;
+        }
+    }
+}
 // This is a copied and modified version of
 // https://github.com/LinusU/base32-encode made to support my custom encoding
 function base32EncodeCustom(data) {

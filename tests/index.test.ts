@@ -1,7 +1,8 @@
-import { Util, Item, ItemAttributes } from '..';
+import { Util, Item, ItemAttributes, RequestMethod } from '..';
 import * as testData from './items';
 import * as assert from 'assert';
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
+import { expect } from 'chai';
 
 
 describe('Util', function() {
@@ -60,6 +61,188 @@ describe('Util', function() {
         assert.deepStrictEqual(Util.getAttributeValue(deepEqualAttrs, k), v);
       });
     }
+  });
+
+  describe('#newReference()', function() {
+    const data = {
+      type: "person",
+      uniqueAttributeValue: "Sebastian",
+      context: "global",
+    }
+
+    const ref = Util.newReference(data);
+
+    it('should have the correct Type', () => {
+      assert.strictEqual(ref.getType(), data.type);
+    })
+
+    it('should have the correct Uniqueattributevalue', () => {
+      assert.strictEqual(ref.getUniqueattributevalue(), data.uniqueAttributeValue);
+    })
+
+    it('should have the correct Context', () => {
+      assert.strictEqual(ref.getContext(), data.context);
+    })
+  });
+
+  describe('#newItemRequest()', function() {
+      const data: Util.ItemRequestData = {
+        type: "person",
+        method: "GET",
+        query: "Sebastian",
+        linkDepth: 10,
+        context: "global",
+        itemSubject: "subject1",
+        linkedItemSubject: "subject2",
+        responseSubject: "subject3",
+        errorSubject: "subject4",
+      }
+
+      const ir = Util.newItemRequest(data);
+
+      it('should have the correct Type', () => {
+        assert.strictEqual(ir.getType(), data.type);
+      })
+
+      it('should have the correct Method', () => {
+        assert.strictEqual(ir.getMethod(), RequestMethod.GET);
+      })
+
+      it('should have the correct Query', () => {
+        assert.strictEqual(ir.getQuery(), data.query);
+      })
+
+      it('should have the correct Linkdepth', () => {
+        assert.strictEqual(ir.getLinkdepth(), data.linkDepth);
+      })
+
+      it('should have the correct Context', () => {
+        assert.strictEqual(ir.getContext(), data.context);
+      })
+
+      it('should have the correct Itemsubject', () => {
+        assert.strictEqual(ir.getItemsubject(), data.itemSubject);
+      })
+
+      it('should have the correct Linkeditemsubject', () => {
+        assert.strictEqual(ir.getLinkeditemsubject(), data.linkedItemSubject);
+      })
+
+      it('should have the correct Responsesubject', () => {
+        assert.strictEqual(ir.getResponsesubject(), data.responseSubject);
+      })
+
+      it('should have the correct Errorsubject', () => {
+        assert.strictEqual(ir.getErrorsubject(), data.errorSubject);
+      })
+
+  });
+
+  describe('#newMetadata()', function() {
+    const data: Util.MetadataData = {
+      backendName: "packages",
+      requestMethod: "FIND",
+      timestamp: new Date(),
+      backendDuration: 1638,
+      backendDurationPerItem: 23,
+      backendPackage: "yum",
+    }
+
+    const m = Util.newMetadata(data);
+
+    it('should have the correct Backendname', () => {
+      assert.strictEqual(m.getBackendname(), data.backendName)
+    })
+
+    it('should have the correct Requestmethod', () => {
+      assert.strictEqual(m.getRequestmethod(), RequestMethod.FIND)
+    })
+
+    it('should have the correct Timestamp', () => {
+      const ts = m.getTimestamp();
+
+      if (typeof ts != "undefined") {
+        assert.deepEqual(Util.toDate(ts), data.timestamp)
+      }
+    })
+
+    it('should have the correct Backendduration', () => {
+      const duration = m.getBackendduration();
+
+      if (typeof duration != "undefined") {
+        const date = Util.toDate(duration);
+
+        assert.strictEqual(
+          (date.getSeconds() * 1000) + date.getMilliseconds(),
+          data.backendDuration
+        )
+      }
+    })
+
+    it('should have the correct Backenddurationperitem', () => {
+      const duration = m.getBackenddurationperitem();
+
+      if (typeof duration != "undefined") {
+        const date = Util.toDate(duration);
+
+        assert.strictEqual(
+          (date.getSeconds() * 1000) + date.getMilliseconds(),
+          data.backendDurationPerItem
+        )
+      }    
+    })
+
+    it('should have the correct Backendpackage', () => {
+      assert.strictEqual(m.getBackendpackage(), data.backendPackage)
+    })
+  });
+
+  describe('#newItem()', function() {
+    const data: Util.ItemData = {
+      type: "person",
+      uniqueAttribute: "name",
+      context: "global",
+      attributes: Util.newItemAttributes({
+        "name": "Dylan"
+      }),
+      metadata: undefined,
+      linkedItemRequests: [],
+      linkedItems: [],
+    }
+
+    const i = Util.newItem(data);
+
+    it('should have the correct Type', () => {
+      assert.strictEqual(i.getType(), data.type)
+    })
+
+    it('should have the correct Uniqueattribute', () => {
+      assert.strictEqual(i.getUniqueattribute(), data.uniqueAttribute)
+    })
+
+    it('should have the correct Attributes', () => {
+      assert.strictEqual(
+        i.getAttributes()?.getAttrstruct()?.toJavaScript()["name"],
+        "Dylan" 
+      )
+    })
+
+    it('should have the correct Metadata', () => {
+      assert.strictEqual(i.getMetadata(), data.metadata)
+    })
+
+    it('should have the correct Context', () => {
+      assert.strictEqual(i.getContext(), data.context)
+    })
+
+    it('should have the correct LinkeditemrequestsList', () => {
+      assert.strictEqual(i.getLinkeditemrequestsList(), data.linkedItemRequests)
+    })
+
+    it('should have the correct LinkeditemsList', () => {
+      assert.strictEqual(i.getLinkeditemsList(), data.linkedItems)
+    })
+
   });
 
 });

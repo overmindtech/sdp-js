@@ -7,6 +7,8 @@ import { Response } from './responses_pb';
 import sha1 from 'sha1';
 import toDataView from 'to-data-view';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
+import { JavaScriptValue, Struct } from 'google-protobuf/google/protobuf/struct_pb';
+import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
 
 // Re-Export all the stuff we just imported
 export {
@@ -83,11 +85,139 @@ export namespace Util {
     export function toDate(duration: Duration): Date {
         return new Date((duration.getSeconds() * 1000) + (duration.getNanos() / 1000000));
     }
+
+    export type ItemData = {
+        type: string,
+        uniqueAttribute: string,
+        context: string,
+        attributes: ItemAttributes,
+        metadata: Metadata | undefined,
+        linkedItemRequests: ItemRequest[],
+        linkedItems: Reference[],
+    }
+
+    export function newItem(details: ItemData): Item {
+        const item = new Item();
+
+        item.setType(details.type);
+        item.setUniqueattribute(details.uniqueAttribute);
+        item.setContext(details.context);
+        item.setAttributes(details.attributes);
+
+        if (typeof details.metadata != "undefined") {
+            item.setMetadata(details.metadata);
+        }
+
+        item.setLinkeditemrequestsList(details.linkedItemRequests);
+        item.setLinkeditemsList(details.linkedItems);
+
+        return item;
+    }
+
+    // NewItemAttributes creates a new ItemAttributes object from any javascript
+    // object that has string keys
+    export function newItemAttributes(value: {[key: string]: JavaScriptValue}): ItemAttributes {
+        const attributes = new ItemAttributes();
+        attributes.setAttrstruct(Struct.fromJavaScript(value));
+
+        return attributes;
+    }
+
+    export type MetadataData = {
+        backendName: string,
+        requestMethod: "GET" | "FIND" | "SEARCH",
+        timestamp: Date;
+        backendDuration: number; // milliseconds
+        backendDurationPerItem: number; // milliseconds
+        backendPackage: string,
+    }
+
+    export function newMetadata(data: MetadataData): Metadata {
+        const m = new Metadata();
+
+        m.setBackendname(data.backendName);
+        m.setRequestmethod(convertRequestMethod(data.requestMethod));
+
+        const timestamp = new Timestamp();
+        timestamp.fromDate(data.timestamp);
+        m.setTimestamp(timestamp);
+
+        const backendDuration = new Duration();
+        backendDuration.setSeconds(Math.floor(data.backendDuration / 1000));
+        backendDuration.setNanos((data.backendDuration % 1000) * 1e6);
+        m.setBackendduration(backendDuration);
+        
+        const backendDurationPerItem = new Duration();
+        backendDurationPerItem.setSeconds(Math.floor(data.backendDurationPerItem / 1000));
+        backendDurationPerItem.setNanos((data.backendDurationPerItem % 1000) * 1e6);
+        m.setBackenddurationperitem(backendDurationPerItem);
+
+        m.setBackendpackage(data.backendPackage);
+
+        return m;
+    }
+
+    export type ItemRequestData = {
+        type: string,
+        method: "GET" | "FIND" | "SEARCH",
+        query: string,
+        linkDepth: number,
+        context: string,
+        itemSubject: string,
+        linkedItemSubject: string,
+        responseSubject: string,
+        errorSubject: string,
+    }
+
+    export function newItemRequest(details: ItemRequestData): ItemRequest {
+        const r = new ItemRequest();
+
+        r.setType(details.type);
+        r.setMethod(convertRequestMethod(details.method));
+        r.setQuery(details.query);
+        r.setLinkdepth(details.linkDepth);
+        r.setContext(details.context);
+        r.setItemsubject(details.itemSubject);
+        r.setLinkeditemsubject(details.linkedItemSubject);
+        r.setResponsesubject(details.responseSubject);
+        r.setErrorsubject(details.errorSubject);
+
+        return r;
+    }
+
+    export type ReferenceData = {
+        type: string,
+        uniqueAttributeValue: string,
+        context: string,
+    }
+
+    export function newReference(details: ReferenceData): Reference {
+        const r = new Reference();
+
+        r.setType(details.type);
+        r.setUniqueattributevalue(details.uniqueAttributeValue);
+        r.setContext(details.context);
+
+        return r;
+    }
 }
 
 //
 // Private helper functions
 //
+function convertRequestMethod(method: "GET" | "FIND" | "SEARCH"): RequestMethodMap[keyof RequestMethodMap] {
+    switch(method) { 
+        case 'GET': { 
+           return RequestMethod.GET;
+        } 
+        case 'FIND': { 
+            return RequestMethod.FIND;
+        } 
+        case 'SEARCH': { 
+            return RequestMethod.SEARCH;
+        } 
+    }
+}
 
 // This is a copied and modified version of
 // https://github.com/LinusU/base32-encode made to support my custom encoding
