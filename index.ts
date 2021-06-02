@@ -1,7 +1,7 @@
 // This file contains the extra methods I want to add to the generated protobuf
 // code
 
-import { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './items_pb';
+import { ItemRequest, ItemAttributes, Item as ItemBase, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './items_pb';
 import { ItemRequestError } from './errors_pb';
 import { Response } from './responses_pb';
 import sha1 from 'sha1';
@@ -12,7 +12,6 @@ import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 export {
     ItemRequest,
     ItemAttributes,
-    Item,
     Items,
     Reference,
     Metadata,
@@ -20,6 +19,32 @@ export {
     RequestMethod,
     ItemRequestError,
     Response,
+}
+
+export class Item extends ItemBase {
+    constructor(details: {
+        type: string,
+        uniqueAttribute: string,
+        context: string,
+        attributes: ItemAttributes,
+        metadata: Metadata | undefined,
+        linkedItemRequests: ItemRequest[],
+        linkedItems: Reference[],
+    }) {
+        super();
+
+        this.setType(details.type);
+        this.setUniqueattribute(details.uniqueAttribute);
+        this.setContext(details.context);
+        this.setAttributes(details.attributes);
+
+        if (typeof details.metadata != "undefined") {
+            this.setMetadata(details.metadata);
+        }
+
+        this.setLinkeditemrequestsList(details.linkedItemRequests);
+        this.setLinkeditemsList(details.linkedItems);
+    }
 }
 
 export namespace Util {
