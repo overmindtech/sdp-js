@@ -47,10 +47,6 @@ describe('RequestProgress', () => {
 
             assert.strictEqual(progress.numWorking(), 0)
         });
-
-        // it('marks as stalled if no response', () => {
-        
-        // });
         
     });
 
