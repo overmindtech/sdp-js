@@ -92,6 +92,16 @@ describe('RequestProgress', () => {
                 assert.strictEqual(result, "timeout")
             })
         });
+
+        it('should stall successfully', async () => {
+            var progress = new RequestProgress(requests.FIND, 10);
+            
+            progress.processResponse(responses.WORKING);
+
+            await new Promise(resolve => setTimeout(resolve, 150))
+
+            assert.strictEqual(progress.numStalled(), 1)
+        });
     })
 
 });

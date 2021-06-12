@@ -41,12 +41,38 @@ export class RequestProgress {
     responders: Map<string, Responder> = new Map<string, Responder>();
     request: ItemRequest;
 
+    // This is the result of a setInterval which watches for timeouts and sets
+    // nodes as stalled
+    private watcher: NodeJS.Timeout;
+
     // Tracks the number of things currently being processed so that we can be
     // sure that all processing is complete before returning
     private inFlight: number = 0;
 
-    constructor(request: ItemRequest) {
+    constructor(request: ItemRequest, stallCheckIntervalMs: number = 500) {
         this.request = request;
+
+        // Start watching for stalls
+        this.watcher = setInterval(() => {
+            // Check to see if the request is complete, if it is we need to stop
+            // checking
+            if (this.allDone()) {
+                clearInterval(this.watcher)
+            }
+
+            // Get the current time
+            var now = new Date();
+
+            // Loop over all results and check for stalls
+            this.responders.forEach((responder) => {
+                if (typeof responder.nextStatusTime != 'undefined') {
+                    if (responder.nextStatusTime < now) {
+                        // This means that the responder has stalled
+                        responder.status = ResponderStatus.Stalled
+                    }
+                }
+            })
+        }, stallCheckIntervalMs)
     }
 
     // Return the count of items with a given status
@@ -102,7 +128,8 @@ export class RequestProgress {
     // "timeout" or "done"
     async waitForCompletion(timeoutMs: number = 3000): Promise<string> {
         // How often to check for done-ness
-        const checkIntervalMs = 100;
+        const doneCheckIntervalMs = 100;
+        const stallCheckIntervalMs = 500;
 
         // Create the timeout promise
         const timeout = new Promise<string>(resolve => setTimeout(resolve, timeoutMs, "timeout"));
@@ -113,7 +140,7 @@ export class RequestProgress {
                 if (this.allDone()) {
                     resolve("done");
                 }
-            }, checkIntervalMs, resolve)
+            }, doneCheckIntervalMs, resolve)
         })
 
         return Promise.race([timeout, done]);

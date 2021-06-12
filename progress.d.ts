@@ -20,8 +20,9 @@ export declare class Responder {
 export declare class RequestProgress {
     responders: Map<string, Responder>;
     request: ItemRequest;
+    private watcher;
     private inFlight;
-    constructor(request: ItemRequest);
+    constructor(request: ItemRequest, stallCheckIntervalMs?: number);
     private countOfStatus;
     numWorking(): number;
     numStalled(): number;

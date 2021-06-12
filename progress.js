@@ -74,12 +74,33 @@ var Responder = /** @class */ (function () {
 }());
 exports.Responder = Responder;
 var RequestProgress = /** @class */ (function () {
-    function RequestProgress(request) {
+    function RequestProgress(request, stallCheckIntervalMs) {
+        var _this = this;
+        if (stallCheckIntervalMs === void 0) { stallCheckIntervalMs = 500; }
         this.responders = new Map();
         // Tracks the number of things currently being processed so that we can be
         // sure that all processing is complete before returning
         this.inFlight = 0;
         this.request = request;
+        // Start watching for stalls
+        this.watcher = setInterval(function () {
+            // Check to see if the request is complete, if it is we need to stop
+            // checking
+            if (_this.allDone()) {
+                clearInterval(_this.watcher);
+            }
+            // Get the current time
+            var now = new Date();
+            // Loop over all results and check for stalls
+            _this.responders.forEach(function (responder) {
+                if (typeof responder.nextStatusTime != 'undefined') {
+                    if (responder.nextStatusTime < now) {
+                        // This means that the responder has stalled
+                        responder.status = ResponderStatus.Stalled;
+                    }
+                }
+            });
+        }, stallCheckIntervalMs);
     }
     // Return the count of items with a given status
     RequestProgress.prototype.countOfStatus = function (status) {
@@ -125,17 +146,18 @@ var RequestProgress = /** @class */ (function () {
     RequestProgress.prototype.waitForCompletion = function (timeoutMs) {
         if (timeoutMs === void 0) { timeoutMs = 3000; }
         return __awaiter(this, void 0, void 0, function () {
-            var checkIntervalMs, timeout, done;
+            var doneCheckIntervalMs, stallCheckIntervalMs, timeout, done;
             var _this = this;
             return __generator(this, function (_a) {
-                checkIntervalMs = 100;
+                doneCheckIntervalMs = 100;
+                stallCheckIntervalMs = 500;
                 timeout = new Promise(function (resolve) { return setTimeout(resolve, timeoutMs, "timeout"); });
                 done = new Promise(function (resolve) {
                     setInterval(function () {
                         if (_this.allDone()) {
                             resolve("done");
                         }
-                    }, checkIntervalMs, resolve);
+                    }, doneCheckIntervalMs, resolve);
                 });
                 return [2 /*return*/, Promise.race([timeout, done])];
             });
