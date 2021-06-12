@@ -11,6 +11,12 @@ WORKING.setContext("test.context");
 WORKING.setState(Response.ResponseState.WORKING);
 WORKING.setNextupdatein(ONE_TENTH);
 
+const COMPLETE = new Response();
+COMPLETE.setContext("test.context");
+COMPLETE.setState(Response.ResponseState.COMPLETE);
+COMPLETE.setNextupdatein(ONE_TENTH);
+
 export {
-    WORKING
+    WORKING,
+    COMPLETE
 }
