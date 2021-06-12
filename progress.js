@@ -112,6 +112,10 @@ var RequestProgress = /** @class */ (function () {
         });
         return x;
     };
+    // Cancels loops that are watching for stalls
+    RequestProgress.prototype.cancel = function () {
+        clearInterval(this.watcher);
+    };
     // Returns the number of responder still working
     RequestProgress.prototype.numWorking = function () {
         return this.countOfStatus(ResponderStatus.Working);
@@ -146,20 +150,24 @@ var RequestProgress = /** @class */ (function () {
     RequestProgress.prototype.waitForCompletion = function (timeoutMs) {
         if (timeoutMs === void 0) { timeoutMs = 3000; }
         return __awaiter(this, void 0, void 0, function () {
-            var doneCheckIntervalMs, stallCheckIntervalMs, timeout, done;
+            var doneCheckIntervalMs, doneChecker, timeout;
             var _this = this;
             return __generator(this, function (_a) {
                 doneCheckIntervalMs = 100;
-                stallCheckIntervalMs = 500;
                 timeout = new Promise(function (resolve) { return setTimeout(resolve, timeoutMs, "timeout"); });
-                done = new Promise(function (resolve) {
-                    setInterval(function () {
-                        if (_this.allDone()) {
-                            resolve("done");
-                        }
-                    }, doneCheckIntervalMs, resolve);
-                });
-                return [2 /*return*/, Promise.race([timeout, done])];
+                // Create the done promise
+                return [2 /*return*/, new Promise(function (resolve) {
+                        doneChecker = setInterval(function () {
+                            if (_this.allDone()) {
+                                clearInterval(doneChecker);
+                                resolve("done");
+                            }
+                        }, doneCheckIntervalMs, resolve);
+                        timeout.then(function () {
+                            clearInterval(doneChecker);
+                            resolve("timeout");
+                        });
+                    })];
             });
         });
     };

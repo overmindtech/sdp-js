@@ -88,6 +88,11 @@ export class RequestProgress {
         return x;
     }
 
+    // Cancels loops that are watching for stalls
+    cancel(): void {
+        clearInterval(this.watcher);
+    }
+
     // Returns the number of responder still working
     numWorking(): number {
         return this.countOfStatus(ResponderStatus.Working);
@@ -129,21 +134,25 @@ export class RequestProgress {
     async waitForCompletion(timeoutMs: number = 3000): Promise<string> {
         // How often to check for done-ness
         const doneCheckIntervalMs = 100;
-        const stallCheckIntervalMs = 500;
+        var doneChecker: NodeJS.Timeout
 
         // Create the timeout promise
         const timeout = new Promise<string>(resolve => setTimeout(resolve, timeoutMs, "timeout"));
 
         // Create the done promise
-        const done = new Promise<string>(resolve => {
-            setInterval(() => {
+        return new Promise<string>((resolve) => {
+            doneChecker = setInterval(() => {
                 if (this.allDone()) {
+                    clearInterval(doneChecker);
                     resolve("done");
                 }
             }, doneCheckIntervalMs, resolve)
-        })
 
-        return Promise.race([timeout, done]);
+            timeout.then(() => {
+                clearInterval(doneChecker);
+                resolve("timeout")
+            })
+        })
     }
 
     // Processes a response and updates tracking of responders. Note that the

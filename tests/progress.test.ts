@@ -67,26 +67,25 @@ describe('RequestProgress', () => {
     })
 
     describe("#waitForCompletion()", () => {
-        it('should complete successfully', () => {
+        it('should complete successfully', async () => {
             var progress = new RequestProgress(requests.FIND);
             
-            var status = progress.waitForCompletion();
             progress.processResponse(responses.WORKING);
             progress.processResponse(responses.COMPLETE)
 
-            status.then((result) => {
-                assert.strictEqual(result, "done")
-            })
+            var result = await progress.waitForCompletion();
+            
+            assert.strictEqual(result, "done")
         });
 
-        it('should timeout successfully', () => {
+        it('should timeout successfully', async () => {
             var progress = new RequestProgress(requests.FIND);
             
-            var status = progress.waitForCompletion(100);
+            var result = await progress.waitForCompletion(100);
 
-            status.then((result) => {
-                assert.strictEqual(result, "timeout")
-            })
+            progress.cancel()
+
+            assert.strictEqual(result, "timeout")
         });
 
         it('should stall successfully', async () => {

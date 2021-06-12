@@ -24,6 +24,7 @@ export declare class RequestProgress {
     private inFlight;
     constructor(request: ItemRequest, stallCheckIntervalMs?: number);
     private countOfStatus;
+    cancel(): void;
     numWorking(): number;
     numStalled(): number;
     numComplete(): number;
