@@ -2,7 +2,6 @@ import { Util, Item, ItemAttributes, RequestMethod } from '..';
 import * as testData from './items';
 import * as assert from 'assert';
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
-import { expect } from 'chai';
 
 
 describe('Util', function() {
