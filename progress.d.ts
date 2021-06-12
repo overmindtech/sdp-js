@@ -1,4 +1,4 @@
-import { ItemRequest } from ".";
+import { ItemRequest } from "./index";
 import { Response } from "./responses_pb";
 export declare enum ResponderStatus {
     Working = 0,

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RequestProgress = exports.Responder = exports.ResponderStatus = void 0;
-var _1 = require(".");
+var index_1 = require("./index");
 var responses_pb_1 = require("./responses_pb");
 // The status of a given responder
 var ResponderStatus;
@@ -62,7 +62,7 @@ var RequestProgress = /** @class */ (function () {
         // If there is a next update time the calculate it
         var nextUpdateIn = response.getNextupdatein();
         if (typeof nextUpdateIn != 'undefined') {
-            _1.Util.toDate(nextUpdateIn);
+            index_1.Util.toDate(nextUpdateIn);
         }
         var responder = this.responders.get(context);
         if (typeof responder == 'undefined') {

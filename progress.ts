@@ -1,5 +1,5 @@
-import { Util } from ".";
-import { ItemRequest } from ".";
+import { Util } from "./index";
+import { ItemRequest } from "./index";
 import { Response } from "./responses_pb";
 
 // The status of a given responder

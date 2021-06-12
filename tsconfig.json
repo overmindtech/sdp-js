@@ -70,10 +70,9 @@
   },
   "include": [
     "*.ts",   // Library files
-    // "*.d.ts", // Protobuf generated typescript
-    // "*.js"   // Protobuf generated javascript
   ],
   "exclude": [
-    "tests/*"
+    "tests/*",
+    "*.d.ts"
   ]
 }
