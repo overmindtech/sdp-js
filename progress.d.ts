@@ -1,3 +1,4 @@
+import { ItemRequestError } from "./errors_pb";
 import { ItemRequest } from "./index";
 import { Response } from "./responses_pb";
 export declare enum ResponderStatus {
@@ -25,6 +26,9 @@ export declare class RequestProgress {
     numStalled(): number;
     numComplete(): number;
     numFailed(): number;
+    numResponders(): number;
+    allDone(): boolean;
     processResponse(response: Response): void;
+    processError(error: ItemRequestError): void;
 }
 //# sourceMappingURL=progress.d.ts.map

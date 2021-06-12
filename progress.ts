@@ -1,3 +1,4 @@
+import { ItemRequestError } from "./errors_pb";
 import { Util } from "./index";
 import { ItemRequest } from "./index";
 import { Response } from "./responses_pb";
@@ -142,5 +143,14 @@ export class RequestProgress {
 
         // Save the value
         this.responders.set(context, responder);
+    }
+
+    processError(error: ItemRequestError): void {
+        const context = error.getContext();
+        var responder = this.responders.get(context) || new Responder(context);
+
+        responder.status = ResponderStatus.Failed;
+        responder.nextStatusTime = undefined;
+        responder.error = error.getErrorstring();
     }
 }

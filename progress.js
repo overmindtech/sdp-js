@@ -52,18 +52,37 @@ var RequestProgress = /** @class */ (function () {
         });
         return x;
     };
+    // Returns the number of responder still working
     RequestProgress.prototype.numWorking = function () {
         return this.countOfStatus(ResponderStatus.Working);
     };
+    // Returns the number of stalled responders
     RequestProgress.prototype.numStalled = function () {
         return this.countOfStatus(ResponderStatus.Stalled);
     };
+    // Returns the number of complete responders
     RequestProgress.prototype.numComplete = function () {
         return this.countOfStatus(ResponderStatus.Complete);
     };
+    // Returns the number of failed responders
     RequestProgress.prototype.numFailed = function () {
         return this.countOfStatus(ResponderStatus.Failed);
     };
+    // Returns the total number of responders for the query
+    RequestProgress.prototype.numResponders = function () {
+        return this.responders.size;
+    };
+    // Returns true if all responders are done or stalled
+    RequestProgress.prototype.allDone = function () {
+        if (this.numResponders() > 0) {
+            return (this.numWorking() == 0);
+        }
+        return false;
+    };
+    // Processes a response and updates tracking of responders. Note that the
+    // SDP protocol is not currently capable of sending an error as a response.
+    // The response is "DONE" then the error is sent on a different subject.
+    // This means that we need to process errors also
     RequestProgress.prototype.processResponse = function (response) {
         // Pull details out of the response
         var context = response.getContext();
@@ -101,6 +120,13 @@ var RequestProgress = /** @class */ (function () {
         responder.nextStatusTime = nextUpdateTime;
         // Save the value
         this.responders.set(context, responder);
+    };
+    RequestProgress.prototype.processError = function (error) {
+        var context = error.getContext();
+        var responder = this.responders.get(context) || new Responder(context);
+        responder.status = ResponderStatus.Failed;
+        responder.nextStatusTime = undefined;
+        responder.error = error.getErrorstring();
     };
     return RequestProgress;
 }());

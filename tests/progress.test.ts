@@ -2,6 +2,7 @@ import { assert } from 'chai';
 import { RequestProgress } from '../progress';
 import * as requests from './requests';
 import * as responses from './responses';
+import * as errors from './errors';
 
 describe('RequestProgress', () => {
     describe('#processResponse()', () => {
@@ -47,14 +48,26 @@ describe('RequestProgress', () => {
             assert.strictEqual(progress.numWorking(), 0)
         });
 
-        // it('marks as failed if failed response', () => {
-        
-        // });
-
         // it('marks as stalled if no response', () => {
         
         // });
         
     });
+
+    describe("#processError()", () => {
+        it('marks as failed if failed response', () => {
+            var progress = new RequestProgress(requests.FIND);
+            
+            progress.processResponse(responses.WORKING);
+
+            assert.strictEqual(progress.numWorking(), 1);
+            assert.strictEqual(progress.numFailed(), 0);
+
+            progress.processError(errors.NOTFOUND)
+
+            assert.strictEqual(progress.numWorking(), 0);
+            assert.strictEqual(progress.numFailed(), 1);
+        });
+    })
 
 });
