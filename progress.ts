@@ -55,25 +55,47 @@ export class RequestProgress {
             }
         })
 
-        return x
+        return x;
     }
 
+    // Returns the number of responder still working
     numWorking(): number {
-        return this.countOfStatus(ResponderStatus.Working)
+        return this.countOfStatus(ResponderStatus.Working);
     }
 
+    // Returns the number of stalled responders
     numStalled(): number {
-        return this.countOfStatus(ResponderStatus.Stalled)
+        return this.countOfStatus(ResponderStatus.Stalled);
     }
 
+    // Returns the number of complete responders
     numComplete(): number {
-        return this.countOfStatus(ResponderStatus.Complete)
+        return this.countOfStatus(ResponderStatus.Complete);
     }
 
+    // Returns the number of failed responders
     numFailed(): number {
-        return this.countOfStatus(ResponderStatus.Failed)
+        return this.countOfStatus(ResponderStatus.Failed);
     }
 
+    // Returns the total number of responders for the query
+    numResponders(): number {
+        return this.responders.size;
+    }
+
+    // Returns true if all responders are done or stalled
+    allDone(): boolean {
+        if (this.numResponders() > 0) {
+            return (this.numWorking() == 0)
+        }
+
+        return false
+    }
+
+    // Processes a response and updates tracking of responders. Note that the
+    // SDP protocol is not currently capable of sending an error as a response.
+    // The response is "DONE" then the error is sent on a different subject.
+    // This means that we need to process errors also
     processResponse(response: Response): void {
         // Pull details out of the response
         const context = response.getContext();
