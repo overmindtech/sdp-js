@@ -14,16 +14,17 @@ export enum ResponderStatus {
 export class Responder {
     context: string = "";
 	lastStatusTime: Date = new Date();
+    nextStatusTime: Date | undefined;
 	error: string = "";
 	private _lastStatus: ResponderStatus = ResponderStatus.Complete;
 
     constructor(context: string) {
         this.context = context;
-        this.lastStatus = ResponderStatus.Working;
+        this.status = ResponderStatus.Working;
     }
 
     // Sets the status and updates the LastStatus to the current time
-    set lastStatus(status: ResponderStatus) {
+    set status(status: ResponderStatus) {
         // Set last status time to now
         this.lastStatusTime = new Date();
 
@@ -31,7 +32,7 @@ export class Responder {
     }
 
     // Get the last status of this responder
-    get lastStatus(): ResponderStatus {
+    get status(): ResponderStatus {
         return this._lastStatus;
     }
 }
@@ -44,20 +45,49 @@ export class RequestProgress {
         this.request = request;
     }
 
+    // Return the count of items with a given status
+    private countOfStatus(status: ResponderStatus): number {
+        var x = 0;
+
+        this.responders.forEach((v) => {
+            if (v.status == status) {
+                x++
+            }
+        })
+
+        return x
+    }
+
+    numWorking(): number {
+        return this.countOfStatus(ResponderStatus.Working)
+    }
+
+    numStalled(): number {
+        return this.countOfStatus(ResponderStatus.Stalled)
+    }
+
+    numComplete(): number {
+        return this.countOfStatus(ResponderStatus.Complete)
+    }
+
+    numFailed(): number {
+        return this.countOfStatus(ResponderStatus.Failed)
+    }
+
     processResponse(response: Response): void {
         // Pull details out of the response
         const context = response.getContext();
-        var state: ResponderStatus;
+        var status: ResponderStatus;
         var nextUpdateTime: Date | undefined = undefined;
 
         // Map states
         switch(response.getState()) {
             case Response.ResponseState.COMPLETE: {
-                state = ResponderStatus.Complete;
+                status = ResponderStatus.Complete;
                 break;
             }
             case Response.ResponseState.WORKING: {
-                state = ResponderStatus.Working;
+                status = ResponderStatus.Working;
                 break;
             }
         }
@@ -65,19 +95,30 @@ export class RequestProgress {
         // If there is a next update time the calculate it
         var nextUpdateIn = response.getNextupdatein();
         if (typeof nextUpdateIn != 'undefined') {
-            Util.toDate(nextUpdateIn);
+            var nextUpdateMilliseconds: number = 0;
+
+            // Convert nanoseconds to milliseconds
+            nextUpdateMilliseconds = nextUpdateIn.getNanos() / 1000000
+
+            // Convert seconds to milliseconds and add
+            nextUpdateMilliseconds = nextUpdateMilliseconds + (nextUpdateIn.getSeconds() * 1000)
+
+            // Create a new date object representing the date that the update is
+            // expected by
+            var now = new Date();
+            nextUpdateTime = new Date(now.getTime() + nextUpdateMilliseconds);
         }
 
+        // Now actually start processing...
 
+        // Get the responder or create a new one
+        var responder = this.responders.get(context) || new Responder(context);
 
-        var responder = this.responders.get(context);
+        // Set properties from the response
+        responder.status = status;
+        responder.nextStatusTime = nextUpdateTime;
 
-        if (typeof responder == 'undefined') {
-            // If the responder iss undefined then we need to create one
-            responder = new Responder(context);
-            // responder.lastStatus =
-        } else {
-            // Update the responder
-        }
+        // Save the value
+        this.responders.set(context, responder);
     }
 }
