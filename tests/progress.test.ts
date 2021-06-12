@@ -1,5 +1,4 @@
 import { assert } from 'chai';
-import { ItemRequest } from '../dist/items_pb';
 import { RequestProgress } from '../progress';
 import * as requests from './requests';
 import * as responses from './responses';

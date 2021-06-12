@@ -1,9 +1,9 @@
 // This file contains the extra methods I want to add to the generated protobuf
 // code
 
-import { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './dist/items_pb';
-import { ItemRequestError } from './dist/errors_pb';
-import { Response } from './dist/responses_pb';
+import { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './items_pb';
+import { ItemRequestError } from './errors_pb';
+import { Response } from './responses_pb';
 import sha1 from 'sha1';
 import toDataView from 'to-data-view';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';

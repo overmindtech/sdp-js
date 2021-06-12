@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RequestProgress = exports.Responder = exports.ResponderStatus = void 0;
 var _1 = require(".");
-var responses_pb_1 = require("./dist/responses_pb");
+var responses_pb_1 = require("./responses_pb");
 // The status of a given responder
 var ResponderStatus;
 (function (ResponderStatus) {

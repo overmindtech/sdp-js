@@ -1,5 +1,5 @@
 import { Duration } from "google-protobuf/google/protobuf/duration_pb";
-import { Response } from "../dist/responses_pb";
+import { Response } from "../responses_pb";
 
 // One tenth of a second (100ms)
 const ONE_TENTH = new Duration();

@@ -1,5 +1,5 @@
 import { ItemRequest } from ".";
-import { Response } from "./dist/responses_pb";
+import { Response } from "./responses_pb";
 export declare enum ResponderStatus {
     Working = 0,
     Stalled = 1,

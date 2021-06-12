@@ -1,4 +1,4 @@
-import { ItemRequest, RequestMethod } from "../dist/items_pb";
+import { ItemRequest, RequestMethod } from "../items_pb";
 
 // Example FIND request
 const FIND = new ItemRequest();

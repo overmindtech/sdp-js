@@ -1,6 +1,6 @@
 import { Util } from ".";
 import { ItemRequest } from ".";
-import { Response } from "./dist/responses_pb";
+import { Response } from "./responses_pb";
 
 // The status of a given responder
 export enum ResponderStatus {
