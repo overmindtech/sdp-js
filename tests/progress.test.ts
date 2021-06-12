@@ -70,4 +70,28 @@ describe('RequestProgress', () => {
         });
     })
 
+    describe("#waitForCompletion()", () => {
+        it('should complete successfully', () => {
+            var progress = new RequestProgress(requests.FIND);
+            
+            var status = progress.waitForCompletion();
+            progress.processResponse(responses.WORKING);
+            progress.processResponse(responses.COMPLETE)
+
+            status.then((result) => {
+                assert.strictEqual(result, "done")
+            })
+        });
+
+        it('should timeout successfully', () => {
+            var progress = new RequestProgress(requests.FIND);
+            
+            var status = progress.waitForCompletion(100);
+
+            status.then((result) => {
+                assert.strictEqual(result, "timeout")
+            })
+        });
+    })
+
 });

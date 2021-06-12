@@ -11,12 +11,12 @@
 			"problemMatcher": [],
 			"label": "npm: test",
 			"detail": "mocha -r ts-node/register tests/**/*.test.ts",
-			"dependsOn": "tsc"
 		},
 		{
 			"type": "typescript",
 			"tsconfig": "tsconfig.json",
 			"option": "watch",
+			"isBackground": true,
 			"problemMatcher": [
 				"$tsc-watch"
 			],

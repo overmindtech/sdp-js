@@ -1,5 +1,4 @@
 import { ItemRequestError } from "./errors_pb";
-import { Util } from "./index";
 import { ItemRequest } from "./index";
 import { Response } from "./responses_pb";
 
@@ -41,6 +40,10 @@ export class Responder {
 export class RequestProgress {
     responders: Map<string, Responder> = new Map<string, Responder>();
     request: ItemRequest;
+
+    // Tracks the number of things currently being processed so that we can be
+    // sure that all processing is complete before returning
+    private inFlight: number = 0;
 
     constructor(request: ItemRequest) {
         this.request = request;
@@ -86,11 +89,34 @@ export class RequestProgress {
 
     // Returns true if all responders are done or stalled
     allDone(): boolean {
-        if (this.numResponders() > 0) {
+        if (this.numResponders() > 0 && this.inFlight == 0) {
             return (this.numWorking() == 0)
         }
 
         return false
+    }
+
+    // Waits for all to be completed, then returns. A timeout can be supplied
+    // which means that the function will return after the set timeout of no
+    // responses have been received. Returns a string containing either
+    // "timeout" or "done"
+    async waitForCompletion(timeoutMs: number = 3000): Promise<string> {
+        // How often to check for done-ness
+        const checkIntervalMs = 100;
+
+        // Create the timeout promise
+        const timeout = new Promise<string>(resolve => setTimeout(resolve, timeoutMs, "timeout"));
+
+        // Create the done promise
+        const done = new Promise<string>(resolve => {
+            setInterval(() => {
+                if (this.allDone()) {
+                    resolve("done");
+                }
+            }, checkIntervalMs, resolve)
+        })
+
+        return Promise.race([timeout, done]);
     }
 
     // Processes a response and updates tracking of responders. Note that the
@@ -98,6 +124,8 @@ export class RequestProgress {
     // The response is "DONE" then the error is sent on a different subject.
     // This means that we need to process errors also
     processResponse(response: Response): void {
+        this.inFlight++
+
         // Pull details out of the response
         const context = response.getContext();
         var status: ResponderStatus;
@@ -143,14 +171,20 @@ export class RequestProgress {
 
         // Save the value
         this.responders.set(context, responder);
+
+        this.inFlight--
     }
 
     processError(error: ItemRequestError): void {
+        this.inFlight++
+
         const context = error.getContext();
         var responder = this.responders.get(context) || new Responder(context);
 
         responder.status = ResponderStatus.Failed;
         responder.nextStatusTime = undefined;
         responder.error = error.getErrorstring();
+
+        this.inFlight--
     }
 }

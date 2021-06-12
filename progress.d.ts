@@ -20,6 +20,7 @@ export declare class Responder {
 export declare class RequestProgress {
     responders: Map<string, Responder>;
     request: ItemRequest;
+    private inFlight;
     constructor(request: ItemRequest);
     private countOfStatus;
     numWorking(): number;
@@ -28,6 +29,7 @@ export declare class RequestProgress {
     numFailed(): number;
     numResponders(): number;
     allDone(): boolean;
+    waitForCompletion(timeoutMs?: number): Promise<string>;
     processResponse(response: Response): void;
     processError(error: ItemRequestError): void;
 }
