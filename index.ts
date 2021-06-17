@@ -9,6 +9,7 @@ import toDataView from 'to-data-view';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue, Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
+import { RequestProgress, Responder, ResponderStatus } from './progress'
 
 // Re-Export all the stuff we just imported
 export {
@@ -22,6 +23,9 @@ export {
     RequestMethod,
     ItemRequestError,
     Response,
+    RequestProgress,
+    Responder,
+    ResponderStatus
 }
 
 export namespace Util {

@@ -3,7 +3,8 @@ import { ItemRequestError } from './errors_pb';
 import { Response } from './responses_pb';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue } from 'google-protobuf/google/protobuf/struct_pb';
-export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod, ItemRequestError, Response, };
+import { RequestProgress, Responder, ResponderStatus } from './progress';
+export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod, ItemRequestError, Response, RequestProgress, Responder, ResponderStatus };
 export declare namespace Util {
     function getGloballyuniquename(object: Reference | Item): string;
     function getHash(object: Reference | Item): string;

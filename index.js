@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Util = exports.Response = exports.ItemRequestError = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
+exports.Util = exports.ResponderStatus = exports.Responder = exports.RequestProgress = exports.Response = exports.ItemRequestError = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
 var items_pb_1 = require("./items_pb");
 Object.defineProperty(exports, "ItemRequest", { enumerable: true, get: function () { return items_pb_1.ItemRequest; } });
 Object.defineProperty(exports, "ItemAttributes", { enumerable: true, get: function () { return items_pb_1.ItemAttributes; } });
@@ -23,6 +23,10 @@ var to_data_view_1 = __importDefault(require("to-data-view"));
 var duration_pb_1 = require("google-protobuf/google/protobuf/duration_pb");
 var struct_pb_1 = require("google-protobuf/google/protobuf/struct_pb");
 var timestamp_pb_1 = require("google-protobuf/google/protobuf/timestamp_pb");
+var progress_1 = require("./progress");
+Object.defineProperty(exports, "RequestProgress", { enumerable: true, get: function () { return progress_1.RequestProgress; } });
+Object.defineProperty(exports, "Responder", { enumerable: true, get: function () { return progress_1.Responder; } });
+Object.defineProperty(exports, "ResponderStatus", { enumerable: true, get: function () { return progress_1.ResponderStatus; } });
 var Util;
 (function (Util) {
     function getGloballyuniquename(object) {
