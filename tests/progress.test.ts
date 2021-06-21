@@ -76,6 +76,7 @@ describe('RequestProgress', () => {
             var result = await progress.waitForCompletion();
             
             assert.strictEqual(result, "done")
+            assert.strictEqual(progress.percentComplete(), 100)
         });
 
         it('should timeout successfully', async () => {

@@ -31,6 +31,7 @@ export declare class RequestProgress {
     numFailed(): number;
     numResponders(): number;
     allDone(): boolean;
+    percentComplete(): number;
     waitForCompletion(timeoutMs?: number): Promise<string>;
     processResponse(response: Response): void;
     processError(error: ItemRequestError): void;

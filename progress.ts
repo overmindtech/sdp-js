@@ -127,6 +127,12 @@ export class RequestProgress {
         return false
     }
 
+    // percentComplete Returns a number between 1 and 100 representing the
+    // percentage complete of all responders.
+    percentComplete(): number {
+        return (this.numComplete() / this.numResponders()) * 100
+    }
+
     // Waits for all to be completed, then returns. A timeout can be supplied
     // which means that the function will return after the set timeout of no
     // responses have been received. Returns a string containing either
