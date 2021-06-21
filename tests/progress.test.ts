@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { RequestProgress } from '../progress';
+import { RequestProgress } from '../index';
 import * as requests from './requests';
 import * as responses from './responses';
 import * as errors from './errors';

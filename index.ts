@@ -1,6 +1,7 @@
 // This file contains the extra methods I want to add to the generated protobuf
 // code
 
+import { RequestProgress, Responder, ResponderStatus } from './progress'
 import { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './items_pb';
 import { ItemRequestError } from './errors_pb';
 import { Response } from './responses_pb';
@@ -9,7 +10,6 @@ import toDataView from 'to-data-view';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue, Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
-import { RequestProgress, Responder, ResponderStatus } from './progress'
 
 // Re-Export all the stuff we just imported
 export {
