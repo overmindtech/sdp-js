@@ -1,8 +1,9 @@
 export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './items_pb';
-export { RequestProgress, Responder, ResponderStatus } from './progress';
 export { ItemRequestError } from './errors_pb';
 export { Response } from './responses_pb';
 import { Reference, Item, ItemAttributes, Metadata, ItemRequest } from './items_pb';
+import { ItemRequestError } from './errors_pb';
+import { Response } from './responses_pb';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue } from 'google-protobuf/google/protobuf/struct_pb';
 export declare namespace Util {
@@ -52,5 +53,40 @@ export declare namespace Util {
         context: string;
     };
     function newReference(details: ReferenceData): Reference;
+}
+export declare enum ResponderStatus {
+    Working = 0,
+    Stalled = 1,
+    Complete = 2,
+    Failed = 3
+}
+export declare class Responder {
+    context: string;
+    lastStatusTime: Date;
+    nextStatusTime: Date | undefined;
+    error: string;
+    private _lastStatus;
+    constructor(context: string);
+    set status(status: ResponderStatus);
+    get status(): ResponderStatus;
+}
+export declare class RequestProgress {
+    responders: Map<string, Responder>;
+    request: ItemRequest;
+    private watcher;
+    private inFlight;
+    constructor(request: ItemRequest, stallCheckIntervalMs?: number);
+    private countOfStatus;
+    cancel(): void;
+    numWorking(): number;
+    numStalled(): number;
+    numComplete(): number;
+    numFailed(): number;
+    numResponders(): number;
+    allDone(): boolean;
+    percentComplete(): number;
+    waitForCompletion(timeoutMs?: number): Promise<string>;
+    processResponse(response: Response): void;
+    processError(error: ItemRequestError): void;
 }
 //# sourceMappingURL=index.d.ts.map
