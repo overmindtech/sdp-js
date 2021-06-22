@@ -1,32 +1,19 @@
 // This file contains the extra methods I want to add to the generated protobuf
 // code
 
-import { RequestProgress, Responder, ResponderStatus } from './progress'
-import { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './items_pb';
-import { ItemRequestError } from './errors_pb';
-import { Response } from './responses_pb';
+// Export things from other files
+export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './items_pb';
+export { RequestProgress, Responder, ResponderStatus } from './progress'
+export { ItemRequestError } from './errors_pb';
+export { Response } from './responses_pb';
+
+// Import things we need for the Util namespace
+import { Reference, Item, ItemAttributes, Metadata, ItemRequest, RequestMethod, RequestMethodMap } from './items_pb';
 import sha1 from 'sha1';
 import toDataView from 'to-data-view';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue, Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
-
-// Re-Export all the stuff we just imported
-export {
-    ItemRequest,
-    ItemAttributes,
-    Item,
-    Items,
-    Reference,
-    Metadata,
-    RequestMethodMap,
-    RequestMethod,
-    ItemRequestError,
-    Response,
-    RequestProgress,
-    Responder,
-    ResponderStatus
-}
 
 export namespace Util {
     export function getGloballyuniquename(object: Reference | Item): string {

@@ -1,10 +1,10 @@
-import { RequestProgress, Responder, ResponderStatus } from './progress';
-import { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './items_pb';
-import { ItemRequestError } from './errors_pb';
-import { Response } from './responses_pb';
+export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './items_pb';
+export { RequestProgress, Responder, ResponderStatus } from './progress';
+export { ItemRequestError } from './errors_pb';
+export { Response } from './responses_pb';
+import { Reference, Item, ItemAttributes, Metadata, ItemRequest } from './items_pb';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue } from 'google-protobuf/google/protobuf/struct_pb';
-export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod, ItemRequestError, Response, RequestProgress, Responder, ResponderStatus };
 export declare namespace Util {
     function getGloballyuniquename(object: Reference | Item): string;
     function getHash(object: Reference | Item): string;

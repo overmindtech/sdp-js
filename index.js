@@ -5,11 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Util = exports.ResponderStatus = exports.Responder = exports.RequestProgress = exports.Response = exports.ItemRequestError = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
-var progress_1 = require("./progress");
-Object.defineProperty(exports, "RequestProgress", { enumerable: true, get: function () { return progress_1.RequestProgress; } });
-Object.defineProperty(exports, "Responder", { enumerable: true, get: function () { return progress_1.Responder; } });
-Object.defineProperty(exports, "ResponderStatus", { enumerable: true, get: function () { return progress_1.ResponderStatus; } });
+exports.Util = exports.Response = exports.ItemRequestError = exports.ResponderStatus = exports.Responder = exports.RequestProgress = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
+// Export things from other files
 var items_pb_1 = require("./items_pb");
 Object.defineProperty(exports, "ItemRequest", { enumerable: true, get: function () { return items_pb_1.ItemRequest; } });
 Object.defineProperty(exports, "ItemAttributes", { enumerable: true, get: function () { return items_pb_1.ItemAttributes; } });
@@ -18,10 +15,16 @@ Object.defineProperty(exports, "Items", { enumerable: true, get: function () { r
 Object.defineProperty(exports, "Reference", { enumerable: true, get: function () { return items_pb_1.Reference; } });
 Object.defineProperty(exports, "Metadata", { enumerable: true, get: function () { return items_pb_1.Metadata; } });
 Object.defineProperty(exports, "RequestMethod", { enumerable: true, get: function () { return items_pb_1.RequestMethod; } });
+var progress_1 = require("./progress");
+Object.defineProperty(exports, "RequestProgress", { enumerable: true, get: function () { return progress_1.RequestProgress; } });
+Object.defineProperty(exports, "Responder", { enumerable: true, get: function () { return progress_1.Responder; } });
+Object.defineProperty(exports, "ResponderStatus", { enumerable: true, get: function () { return progress_1.ResponderStatus; } });
 var errors_pb_1 = require("./errors_pb");
 Object.defineProperty(exports, "ItemRequestError", { enumerable: true, get: function () { return errors_pb_1.ItemRequestError; } });
 var responses_pb_1 = require("./responses_pb");
 Object.defineProperty(exports, "Response", { enumerable: true, get: function () { return responses_pb_1.Response; } });
+// Import things we need for the Util namespace
+var items_pb_2 = require("./items_pb");
 var sha1_1 = __importDefault(require("sha1"));
 var to_data_view_1 = __importDefault(require("to-data-view"));
 var duration_pb_1 = require("google-protobuf/google/protobuf/duration_pb");
@@ -75,7 +78,7 @@ var Util;
     }
     Util.getAttributeValue = getAttributeValue;
     function getReference(item) {
-        var ref = new items_pb_1.Reference();
+        var ref = new items_pb_2.Reference();
         ref.setContext(item.getContext());
         ref.setType(item.getType());
         ref.setUniqueattributevalue(getUniqueattributevalue(item));
@@ -88,7 +91,7 @@ var Util;
     }
     Util.toDate = toDate;
     function newItem(details) {
-        var item = new items_pb_1.Item();
+        var item = new items_pb_2.Item();
         item.setType(details.type);
         item.setUniqueattribute(details.uniqueAttribute);
         item.setContext(details.context);
@@ -104,13 +107,13 @@ var Util;
     // NewItemAttributes creates a new ItemAttributes object from any javascript
     // object that has string keys
     function newItemAttributes(value) {
-        var attributes = new items_pb_1.ItemAttributes();
+        var attributes = new items_pb_2.ItemAttributes();
         attributes.setAttrstruct(struct_pb_1.Struct.fromJavaScript(value));
         return attributes;
     }
     Util.newItemAttributes = newItemAttributes;
     function newMetadata(data) {
-        var m = new items_pb_1.Metadata();
+        var m = new items_pb_2.Metadata();
         m.setBackendname(data.backendName);
         m.setRequestmethod(convertRequestMethod(data.requestMethod));
         var timestamp = new timestamp_pb_1.Timestamp();
@@ -129,7 +132,7 @@ var Util;
     }
     Util.newMetadata = newMetadata;
     function newItemRequest(details) {
-        var r = new items_pb_1.ItemRequest();
+        var r = new items_pb_2.ItemRequest();
         r.setType(details.type);
         r.setMethod(convertRequestMethod(details.method));
         r.setQuery(details.query);
@@ -143,7 +146,7 @@ var Util;
     }
     Util.newItemRequest = newItemRequest;
     function newReference(details) {
-        var r = new items_pb_1.Reference();
+        var r = new items_pb_2.Reference();
         r.setType(details.type);
         r.setUniqueattributevalue(details.uniqueAttributeValue);
         r.setContext(details.context);
@@ -157,13 +160,13 @@ var Util;
 function convertRequestMethod(method) {
     switch (method) {
         case 'GET': {
-            return items_pb_1.RequestMethod.GET;
+            return items_pb_2.RequestMethod.GET;
         }
         case 'FIND': {
-            return items_pb_1.RequestMethod.FIND;
+            return items_pb_2.RequestMethod.FIND;
         }
         case 'SEARCH': {
-            return items_pb_1.RequestMethod.SEARCH;
+            return items_pb_2.RequestMethod.SEARCH;
         }
     }
 }
