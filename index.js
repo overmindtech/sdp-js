@@ -66,6 +66,11 @@ var struct_pb_1 = require("google-protobuf/google/protobuf/struct_pb");
 var timestamp_pb_1 = require("google-protobuf/google/protobuf/timestamp_pb");
 var Util;
 (function (Util) {
+    /**
+     * Gets the globally unique name of an object
+     * @param object The object to get the globally unique name from
+     * @returns The globally unique name
+     */
     function getGloballyuniquename(object) {
         var elements = [
             object.getContext(),
@@ -75,6 +80,11 @@ var Util;
         return elements.join(".");
     }
     Util.getGloballyuniquename = getGloballyuniquename;
+    /**
+     * **(Experimental)** Gets the unique hash for the object. Used for database uniqueness.
+     * @param object The object to calculate the hash for
+     * @returns The hash as a string
+     */
     function getHash(object) {
         var bytes = sha1_1.default(getGloballyuniquename(object), {
             asBytes: true,
@@ -83,6 +93,11 @@ var Util;
         return base32String.substring(0, 11);
     }
     Util.getHash = getHash;
+    /**
+     * Gets the unique attribute value of an object
+     * @param object The object to get the unique attribute value for
+     * @returns The unique attribute value as a string
+     */
     function getUniqueattributevalue(object) {
         if ("getUniqueattributevalue" in object) {
             return object.getUniqueattributevalue();
@@ -100,6 +115,13 @@ var Util;
         }
     }
     Util.getUniqueattributevalue = getUniqueattributevalue;
+    /**
+     * Gets the value of a particular attribute. *Note:* that this only supports
+     * attributes at the top level currently
+     * @param attributes The attributes to query
+     * @param name The name of the attribute you are looking for
+     * @returns The value of the attribute
+     */
     function getAttributeValue(attributes, name) {
         var _a;
         var object = (_a = attributes.getAttrstruct()) === null || _a === void 0 ? void 0 : _a.toJavaScript();
@@ -111,6 +133,11 @@ var Util;
         }
     }
     Util.getAttributeValue = getAttributeValue;
+    /**
+     * Returns a reference to the supplied item
+     * @param item The item that you want a reference to
+     * @returns A reference to the supplied item
+     */
     function getReference(item) {
         var ref = new items_pb_2.Reference();
         ref.setContext(item.getContext());
@@ -119,7 +146,11 @@ var Util;
         return ref;
     }
     Util.getReference = getReference;
-    // Convert a durationpb to javascript Date object
+    /**
+     * Convert a durationpb to javascript Date object
+     * @param duration The duration object to convert
+     * @returns A javascript `Date` object
+     */
     function toDate(duration) {
         return new Date((duration.getSeconds() * 1000) + (duration.getNanos() / 1000000));
     }
@@ -135,6 +166,11 @@ var Util;
         return d;
     }
     Util.toDuration = toDuration;
+    /**
+     * Create a new `Item` object from a single object
+     * @param details The details of the item you want to create
+     * @returns A new Item object
+     */
     function newItem(details) {
         var item = new items_pb_2.Item();
         item.setType(details.type);
@@ -149,14 +185,23 @@ var Util;
         return item;
     }
     Util.newItem = newItem;
-    // NewItemAttributes creates a new ItemAttributes object from any javascript
-    // object that has string keys
+    /**
+     * Creates a new ItemAttributes object from any javascript object that has
+     * string keys
+     * @param value Any object with string keys
+     * @returns A new ItemAttributes object
+     */
     function newItemAttributes(value) {
         var attributes = new items_pb_2.ItemAttributes();
         attributes.setAttrstruct(struct_pb_1.Struct.fromJavaScript(value));
         return attributes;
     }
     Util.newItemAttributes = newItemAttributes;
+    /**
+     * Creates a new `Metadata` object from a object
+     * @param data The metadata you want the new object to have
+     * @returns A new Metadata object
+     */
     function newMetadata(data) {
         var m = new items_pb_2.Metadata();
         m.setBackendname(data.backendName);
@@ -176,6 +221,11 @@ var Util;
         return m;
     }
     Util.newMetadata = newMetadata;
+    /**
+     * Creates a new ItemRequest object from a single object
+     * @param details The details that you want the new ItemRequest to have
+     * @returns A new ItemRequest object
+     */
     function newItemRequest(details) {
         var r = new items_pb_2.ItemRequest();
         r.setType(details.type);
@@ -190,6 +240,11 @@ var Util;
         return r;
     }
     Util.newItemRequest = newItemRequest;
+    /**
+     * Create a new Reference from a single object
+     * @param details The details that you want the new reference to contain
+     * @returns The new Reference object
+     */
     function newReference(details) {
         var r = new items_pb_2.Reference();
         r.setType(details.type);
@@ -198,6 +253,11 @@ var Util;
         return r;
     }
     Util.newReference = newReference;
+    /**
+     * Creates a new Response object from a single object
+     * @param details The details you want the new Response object to have
+     * @returns The new Response object
+     */
     function newResponse(details) {
         var r = new responses_pb_2.Response();
         r.setContext(details.context);
@@ -217,8 +277,14 @@ var ResponderStatus;
     ResponderStatus[ResponderStatus["Complete"] = 2] = "Complete";
     ResponderStatus[ResponderStatus["Failed"] = 3] = "Failed";
 })(ResponderStatus = exports.ResponderStatus || (exports.ResponderStatus = {}));
-// Represents something that is responding to our query
+/**
+ * Represents something that is responding to our query
+ */
 var Responder = /** @class */ (function () {
+    /**
+     *
+     * @param context The context that this responder will respond for
+     */
     function Responder(context) {
         this.context = "";
         this.lastStatusTime = new Date();
@@ -245,6 +311,12 @@ var Responder = /** @class */ (function () {
 }());
 exports.Responder = Responder;
 var RequestProgress = /** @class */ (function () {
+    /**
+     *
+     * @param request The request for which ti track progress
+     * @param stallCheckIntervalMs How often to check to see if responders have
+     * stalled, in milliseconds
+     */
     function RequestProgress(request, stallCheckIntervalMs) {
         var _this = this;
         if (stallCheckIntervalMs === void 0) { stallCheckIntervalMs = 500; }
@@ -283,46 +355,70 @@ var RequestProgress = /** @class */ (function () {
         });
         return x;
     };
-    // Cancels loops that are watching for stalls
+    /**
+     * Cancels loops that are watching for stalls
+     */
     RequestProgress.prototype.cancel = function () {
         clearInterval(this.watcher);
     };
-    // Returns the number of responder still working
+    /**
+     *
+     * @returns The number of responder still working
+     */
     RequestProgress.prototype.numWorking = function () {
         return this.countOfStatus(ResponderStatus.Working);
     };
-    // Returns the number of stalled responders
+    /**
+     *
+     * @returns The number of stalled responders
+     */
     RequestProgress.prototype.numStalled = function () {
         return this.countOfStatus(ResponderStatus.Stalled);
     };
-    // Returns the number of complete responders
+    /**
+     *
+     * @returns The number of complete responders
+     */
     RequestProgress.prototype.numComplete = function () {
         return this.countOfStatus(ResponderStatus.Complete);
     };
-    // Returns the number of failed responders
+    /**
+     *
+     * @returns The number of failed responders
+     */
     RequestProgress.prototype.numFailed = function () {
         return this.countOfStatus(ResponderStatus.Failed);
     };
-    // Returns the total number of responders for the query
+    /**
+     *
+     * @returns The total number of responders for the query
+     */
     RequestProgress.prototype.numResponders = function () {
         return this.responders.size;
     };
-    // Returns true if all responders are done or stalled
+    /**
+     *
+     * @returns True if all responders are done or stalled
+     */
     RequestProgress.prototype.allDone = function () {
         if (this.numResponders() > 0 && this.inFlight == 0) {
             return (this.numWorking() == 0);
         }
         return false;
     };
-    // percentComplete Returns a number between 1 and 100 representing the
-    // percentage complete of all responders.
+    /**
+     * Returns a number between 1 and 100 representing the percentage complete
+     * of all responders.
+     * @returns The percentage of complete responders
+     */
     RequestProgress.prototype.percentComplete = function () {
         return (this.numComplete() / this.numResponders()) * 100;
     };
-    // Waits for all to be completed, then returns. A timeout can be supplied
-    // which means that the function will return after the set timeout of no
-    // responses have been received. Returns a string containing either
-    // "timeout" or "done"
+    /**
+     * Waits for all to be completed, then returns
+     * @param timeoutMs How long to wait before timing out
+     * @returns "timeout" or "done"
+     */
     RequestProgress.prototype.waitForCompletion = function (timeoutMs) {
         if (timeoutMs === void 0) { timeoutMs = 3000; }
         return __awaiter(this, void 0, void 0, function () {
@@ -347,10 +443,13 @@ var RequestProgress = /** @class */ (function () {
             });
         });
     };
-    // Processes a response and updates tracking of responders. Note that the
-    // SDP protocol is not currently capable of sending an error as a response.
-    // The response is "DONE" then the error is sent on a different subject.
-    // This means that we need to process errors also
+    /**
+     * Processes a response and updates tracking of responders. Note that the
+     * SDP protocol is not currently capable of sending an error as a response.
+     * The response is "DONE" then the error is sent on a different subject.
+     * This means that we need to process errors also using `#processError()`
+     * @param response The response to process
+     */
     RequestProgress.prototype.processResponse = function (response) {
         this.inFlight++;
         // Pull details out of the response
@@ -391,6 +490,10 @@ var RequestProgress = /** @class */ (function () {
         this.responders.set(context, responder);
         this.inFlight--;
     };
+    /**
+     * Process errors and update the overall progress
+     * @param error The error to process
+     */
     RequestProgress.prototype.processError = function (error) {
         this.inFlight++;
         var context = error.getContext();

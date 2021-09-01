@@ -18,6 +18,11 @@ import { JavaScriptValue, Struct } from 'google-protobuf/google/protobuf/struct_
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
 
 export namespace Util {
+    /**
+     * Gets the globally unique name of an object
+     * @param object The object to get the globally unique name from
+     * @returns The globally unique name
+     */
     export function getGloballyuniquename(object: Reference | Item): string {
         const elements: string[] = [
             object.getContext(),
@@ -28,6 +33,11 @@ export namespace Util {
         return elements.join(".");
     }
 
+    /**
+     * **(Experimental)** Gets the unique hash for the object. Used for database uniqueness.
+     * @param object The object to calculate the hash for
+     * @returns The hash as a string
+     */
     export function getHash(object: Reference | Item): string {
         const bytes = sha1(getGloballyuniquename(object), {
             asBytes: true,
@@ -38,6 +48,11 @@ export namespace Util {
         return base32String.substring(0,11)
     }
 
+    /**
+     * Gets the unique attribute value of an object
+     * @param object The object to get the unique attribute value for
+     * @returns The unique attribute value as a string
+     */
     export function getUniqueattributevalue(object: Item | Reference): string {
         if ("getUniqueattributevalue" in object) {
             return object.getUniqueattributevalue();
@@ -54,6 +69,13 @@ export namespace Util {
         }
     }
 
+    /**
+     * Gets the value of a particular attribute. *Note:* that this only supports
+     * attributes at the top level currently
+     * @param attributes The attributes to query
+     * @param name The name of the attribute you are looking for
+     * @returns The value of the attribute
+     */
     export function getAttributeValue(attributes: ItemAttributes, name: string): any {
         var object = attributes.getAttrstruct()?.toJavaScript()
 
@@ -64,6 +86,11 @@ export namespace Util {
         }
     }
 
+    /**
+     * Returns a reference to the supplied item
+     * @param item The item that you want a reference to
+     * @returns A reference to the supplied item
+     */
     export function getReference(item: Item): Reference {
         const ref = new Reference();
 
@@ -74,7 +101,11 @@ export namespace Util {
         return ref;    
     }
 
-    // Convert a durationpb to javascript Date object
+    /**
+     * Convert a durationpb to javascript Date object
+     * @param duration The duration object to convert
+     * @returns A javascript `Date` object
+     */
     export function toDate(duration: Duration): Date {
         return new Date((duration.getSeconds() * 1000) + (duration.getNanos() / 1000000));
     }
@@ -100,6 +131,11 @@ export namespace Util {
         linkedItems: Reference[],
     }
 
+    /**
+     * Create a new `Item` object from a single object
+     * @param details The details of the item you want to create
+     * @returns A new Item object
+     */
     export function newItem(details: ItemData): Item {
         const item = new Item();
 
@@ -118,8 +154,12 @@ export namespace Util {
         return item;
     }
 
-    // NewItemAttributes creates a new ItemAttributes object from any javascript
-    // object that has string keys
+    /**
+     * Creates a new ItemAttributes object from any javascript object that has
+     * string keys
+     * @param value Any object with string keys
+     * @returns A new ItemAttributes object
+     */
     export function newItemAttributes(value: {[key: string]: JavaScriptValue}): ItemAttributes {
         const attributes = new ItemAttributes();
         attributes.setAttrstruct(Struct.fromJavaScript(value));
@@ -136,6 +176,11 @@ export namespace Util {
         backendPackage: string,
     }
 
+    /**
+     * Creates a new `Metadata` object from a object
+     * @param data The metadata you want the new object to have
+     * @returns A new Metadata object
+     */
     export function newMetadata(data: MetadataData): Metadata {
         const m = new Metadata();
 
@@ -173,6 +218,11 @@ export namespace Util {
         errorSubject: string,
     }
 
+    /**
+     * Creates a new ItemRequest object from a single object
+     * @param details The details that you want the new ItemRequest to have
+     * @returns A new ItemRequest object
+     */
     export function newItemRequest(details: ItemRequestData): ItemRequest {
         const r = new ItemRequest();
 
@@ -195,6 +245,11 @@ export namespace Util {
         context: string,
     }
 
+    /**
+     * Create a new Reference from a single object
+     * @param details The details that you want the new reference to contain
+     * @returns The new Reference object
+     */
     export function newReference(details: ReferenceData): Reference {
         const r = new Reference();
 
@@ -211,6 +266,11 @@ export namespace Util {
         nextUpdateInMs?: number,
     }
 
+    /**
+     * Creates a new Response object from a single object
+     * @param details The details you want the new Response object to have
+     * @returns The new Response object
+     */
     export function newResponse(details: ResponseData): Response {
         const r = new Response();
 
@@ -233,7 +293,9 @@ export enum ResponderStatus {
     Failed,
 }
 
-// Represents something that is responding to our query
+/**
+ * Represents something that is responding to our query
+ */
 export class Responder {
     context: string = "";
 	lastStatusTime: Date = new Date();
@@ -241,6 +303,10 @@ export class Responder {
 	error: string = "";
 	private _lastStatus: ResponderStatus = ResponderStatus.Complete;
 
+    /**
+     *
+     * @param context The context that this responder will respond for
+     */
     constructor(context: string) {
         this.context = context;
         this.status = ResponderStatus.Working;
@@ -272,6 +338,12 @@ export class RequestProgress {
     // sure that all processing is complete before returning
     private inFlight: number = 0;
 
+    /**
+     *
+     * @param request The request for which ti track progress
+     * @param stallCheckIntervalMs How often to check to see if responders have
+     * stalled, in milliseconds
+     */
     constructor(request: ItemRequest, stallCheckIntervalMs: number = 500) {
         this.request = request;
 
@@ -311,37 +383,57 @@ export class RequestProgress {
         return x;
     }
 
-    // Cancels loops that are watching for stalls
+    /**
+     * Cancels loops that are watching for stalls
+     */
     cancel(): void {
         clearInterval(this.watcher);
     }
 
-    // Returns the number of responder still working
+    /**
+     * 
+     * @returns The number of responder still working
+     */
     numWorking(): number {
         return this.countOfStatus(ResponderStatus.Working);
     }
 
-    // Returns the number of stalled responders
+    /**
+     * 
+     * @returns The number of stalled responders
+     */
     numStalled(): number {
         return this.countOfStatus(ResponderStatus.Stalled);
     }
 
-    // Returns the number of complete responders
+    /**
+     * 
+     * @returns The number of complete responders
+     */
     numComplete(): number {
         return this.countOfStatus(ResponderStatus.Complete);
     }
 
-    // Returns the number of failed responders
+    /**
+     * 
+     * @returns The number of failed responders
+     */
     numFailed(): number {
         return this.countOfStatus(ResponderStatus.Failed);
     }
 
-    // Returns the total number of responders for the query
+    /**
+     * 
+     * @returns The total number of responders for the query
+     */
     numResponders(): number {
         return this.responders.size;
     }
 
-    // Returns true if all responders are done or stalled
+    /**
+     * 
+     * @returns True if all responders are done or stalled
+     */
     allDone(): boolean {
         if (this.numResponders() > 0 && this.inFlight == 0) {
             return (this.numWorking() == 0)
@@ -350,16 +442,20 @@ export class RequestProgress {
         return false
     }
 
-    // percentComplete Returns a number between 1 and 100 representing the
-    // percentage complete of all responders.
+    /**
+     * Returns a number between 1 and 100 representing the percentage complete
+     * of all responders.
+     * @returns The percentage of complete responders
+     */
     percentComplete(): number {
         return (this.numComplete() / this.numResponders()) * 100
     }
 
-    // Waits for all to be completed, then returns. A timeout can be supplied
-    // which means that the function will return after the set timeout of no
-    // responses have been received. Returns a string containing either
-    // "timeout" or "done"
+    /**
+     * Waits for all to be completed, then returns
+     * @param timeoutMs How long to wait before timing out
+     * @returns "timeout" or "done"
+     */
     async waitForCompletion(timeoutMs: number = 3000): Promise<string> {
         // How often to check for done-ness
         const doneCheckIntervalMs = 100;
@@ -384,10 +480,13 @@ export class RequestProgress {
         })
     }
 
-    // Processes a response and updates tracking of responders. Note that the
-    // SDP protocol is not currently capable of sending an error as a response.
-    // The response is "DONE" then the error is sent on a different subject.
-    // This means that we need to process errors also
+    /**
+     * Processes a response and updates tracking of responders. Note that the
+     * SDP protocol is not currently capable of sending an error as a response.
+     * The response is "DONE" then the error is sent on a different subject.
+     * This means that we need to process errors also using `#processError()`
+     * @param response The response to process
+     */
     processResponse(response: Response): void {
         this.inFlight++
 
@@ -440,6 +539,10 @@ export class RequestProgress {
         this.inFlight--
     }
 
+    /**
+     * Process errors and update the overall progress
+     * @param error The error to process
+     */
     processError(error: ItemRequestError): void {
         this.inFlight++
 
