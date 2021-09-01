@@ -2,6 +2,7 @@ import { Util, Item, ItemAttributes, RequestMethod } from '..';
 import * as testData from './items';
 import * as assert from 'assert';
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
+import { expect } from 'chai';
 
 
 describe('Util', function() {
@@ -28,6 +29,22 @@ describe('Util', function() {
 
     
   });
+
+  describe('#toDuration()', function() {
+    it('should handle nice round numbers', () => {
+      var d = Util.toDuration(1000);
+
+      assert.strictEqual(d.getSeconds(), 1);
+      assert.strictEqual(d.getNanos(), 0);
+    })
+
+    it('should handle less round numbers', () => {
+      var d = Util.toDuration(5432);
+
+      assert.strictEqual(d.getSeconds(), 5);
+      assert.strictEqual(d.getNanos(), 432000000);
+    })
+  })
 
   describe('#getAttributeValue()', function() {
     var equalData = {

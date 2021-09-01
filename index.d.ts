@@ -13,6 +13,11 @@ export declare namespace Util {
     function getAttributeValue(attributes: ItemAttributes, name: string): any;
     function getReference(item: Item): Reference;
     function toDate(duration: Duration): Date;
+    /**
+     * Converts a number of milliseconds to a duration
+     * @param ms The number of milliseconds
+     */
+    function toDuration(ms: number): Duration;
     type ItemData = {
         type: string;
         uniqueAttribute: string;
@@ -53,6 +58,12 @@ export declare namespace Util {
         context: string;
     };
     function newReference(details: ReferenceData): Reference;
+    type ResponseData = {
+        context: string;
+        state: Response.ResponseStateMap[keyof Response.ResponseStateMap];
+        nextUpdateInMs?: number;
+    };
+    function newResponse(details: ResponseData): Response;
 }
 export declare enum ResponderStatus {
     Working = 0,

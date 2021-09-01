@@ -124,6 +124,17 @@ var Util;
         return new Date((duration.getSeconds() * 1000) + (duration.getNanos() / 1000000));
     }
     Util.toDate = toDate;
+    /**
+     * Converts a number of milliseconds to a duration
+     * @param ms The number of milliseconds
+     */
+    function toDuration(ms) {
+        var d = new duration_pb_1.Duration();
+        d.setSeconds(Math.floor(ms / 1000));
+        d.setNanos((ms % 1000) * 1000000);
+        return d;
+    }
+    Util.toDuration = toDuration;
     function newItem(details) {
         var item = new items_pb_2.Item();
         item.setType(details.type);
@@ -187,6 +198,16 @@ var Util;
         return r;
     }
     Util.newReference = newReference;
+    function newResponse(details) {
+        var r = new responses_pb_2.Response();
+        r.setContext(details.context);
+        r.setState(details.state);
+        if (typeof details.nextUpdateInMs != 'undefined') {
+            r.setNextupdatein(Util.toDuration(details.nextUpdateInMs));
+        }
+        return r;
+    }
+    Util.newResponse = newResponse;
 })(Util = exports.Util || (exports.Util = {}));
 // The status of a given responder
 var ResponderStatus;

@@ -79,6 +79,17 @@ export namespace Util {
         return new Date((duration.getSeconds() * 1000) + (duration.getNanos() / 1000000));
     }
 
+    /**
+     * Converts a number of milliseconds to a duration
+     * @param ms The number of milliseconds
+     */
+    export function toDuration(ms: number): Duration {
+        var d = new Duration();
+        d.setSeconds(Math.floor(ms / 1000));
+        d.setNanos((ms % 1000) * 1000000);
+        return d;
+    }
+
     export type ItemData = {
         type: string,
         uniqueAttribute: string,
@@ -190,6 +201,25 @@ export namespace Util {
         r.setType(details.type);
         r.setUniqueattributevalue(details.uniqueAttributeValue);
         r.setContext(details.context);
+
+        return r;
+    }
+
+    export type ResponseData = {
+        context: string,
+        state: Response.ResponseStateMap[keyof Response.ResponseStateMap],
+        nextUpdateInMs?: number,
+    }
+
+    export function newResponse(details: ResponseData): Response {
+        const r = new Response();
+
+        r.setContext(details.context);
+        r.setState(details.state);
+
+        if (typeof details.nextUpdateInMs != 'undefined') {
+            r.setNextupdatein(Util.toDuration(details.nextUpdateInMs));
+        }
 
         return r;
     }
