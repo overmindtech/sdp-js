@@ -3,6 +3,7 @@ import * as testData from './items';
 import * as assert from 'assert';
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 import { expect } from 'chai';
+import { ItemRequestError } from '../errors_pb';
 
 
 describe('Util', function() {
@@ -78,6 +79,18 @@ describe('Util', function() {
       });
     }
   });
+
+  describe('#newItemRequestError()', () => {
+    var e = Util.newItemRequestError({
+      context: "cont",
+      errorString: "err",
+      errorType: ItemRequestError.ErrorType.NOTFOUND,
+    })
+
+    assert.strictEqual(e.getContext(), "cont");
+    assert.strictEqual(e.getErrorstring(), "err");
+    assert.strictEqual(e.getErrortype(), ItemRequestError.ErrorType.NOTFOUND);
+  })
 
   describe('#newReference()', function() {
     const data = {

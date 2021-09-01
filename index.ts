@@ -206,6 +206,28 @@ export namespace Util {
         return m;
     }
 
+    export type ItemRequestErrorData = {
+        context: string,
+        errorString: string,
+        errorType: ItemRequestError.ErrorTypeMap[keyof ItemRequestError.ErrorTypeMap],
+    }
+
+    /**
+     * Creates a new ItemRequestError from a single object
+     * @param details The details of the error to create
+     * @returns The new error object
+     */
+    export function newItemRequestError(details: ItemRequestErrorData): ItemRequestError {
+        var err = new ItemRequestError();
+
+        err.setContext(details.context);
+        err.setErrorstring(details.errorString);
+        err.setErrortype(details.errorType);
+
+        return err;
+
+    }
+
     export type ItemRequestData = {
         type: string,
         method: "GET" | "FIND" | "SEARCH",

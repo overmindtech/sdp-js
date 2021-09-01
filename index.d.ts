@@ -88,6 +88,17 @@ export declare namespace Util {
      * @returns A new Metadata object
      */
     function newMetadata(data: MetadataData): Metadata;
+    type ItemRequestErrorData = {
+        context: string;
+        errorString: string;
+        errorType: ItemRequestError.ErrorTypeMap[keyof ItemRequestError.ErrorTypeMap];
+    };
+    /**
+     * Creates a new ItemRequestError from a single object
+     * @param details The details of the error to create
+     * @returns The new error object
+     */
+    function newItemRequestError(details: ItemRequestErrorData): ItemRequestError;
     type ItemRequestData = {
         type: string;
         method: "GET" | "FIND" | "SEARCH";

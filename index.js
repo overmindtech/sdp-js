@@ -58,6 +58,7 @@ var responses_pb_1 = require("./responses_pb");
 Object.defineProperty(exports, "Response", { enumerable: true, get: function () { return responses_pb_1.Response; } });
 // Import things we need for the Util namespace
 var items_pb_2 = require("./items_pb");
+var errors_pb_2 = require("./errors_pb");
 var responses_pb_2 = require("./responses_pb");
 var sha1_1 = __importDefault(require("sha1"));
 var to_data_view_1 = __importDefault(require("to-data-view"));
@@ -221,6 +222,19 @@ var Util;
         return m;
     }
     Util.newMetadata = newMetadata;
+    /**
+     * Creates a new ItemRequestError from a single object
+     * @param details The details of the error to create
+     * @returns The new error object
+     */
+    function newItemRequestError(details) {
+        var err = new errors_pb_2.ItemRequestError();
+        err.setContext(details.context);
+        err.setErrorstring(details.errorString);
+        err.setErrortype(details.errorType);
+        return err;
+    }
+    Util.newItemRequestError = newItemRequestError;
     /**
      * Creates a new ItemRequest object from a single object
      * @param details The details that you want the new ItemRequest to have
