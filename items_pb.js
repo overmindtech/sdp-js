@@ -1463,7 +1463,7 @@ proto.Metadata.prototype.toObject = function(opt_includeInstance) {
 proto.Metadata.toObject = function(includeInstance, msg) {
   var f, obj = {
     backendname: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    requestmethod: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    sourcerequest: (f = msg.getSourcerequest()) && proto.ItemRequest.toObject(includeInstance, f),
     timestamp: (f = msg.getTimestamp()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     backendduration: (f = msg.getBackendduration()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
     backenddurationperitem: (f = msg.getBackenddurationperitem()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
@@ -1509,8 +1509,9 @@ proto.Metadata.deserializeBinaryFromReader = function(msg, reader) {
       msg.setBackendname(value);
       break;
     case 3:
-      var value = /** @type {!proto.RequestMethod} */ (reader.readEnum());
-      msg.setRequestmethod(value);
+      var value = new proto.ItemRequest;
+      reader.readMessage(value,proto.ItemRequest.deserializeBinaryFromReader);
+      msg.setSourcerequest(value);
       break;
     case 4:
       var value = new google_protobuf_timestamp_pb.Timestamp;
@@ -1567,11 +1568,12 @@ proto.Metadata.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getRequestmethod();
-  if (f !== 0.0) {
-    writer.writeEnum(
+  f = message.getSourcerequest();
+  if (f != null) {
+    writer.writeMessage(
       3,
-      f
+      f,
+      proto.ItemRequest.serializeBinaryToWriter
     );
   }
   f = message.getTimestamp();
@@ -1627,20 +1629,39 @@ proto.Metadata.prototype.setBackendname = function(value) {
 
 
 /**
- * optional RequestMethod requestMethod = 3;
- * @return {!proto.RequestMethod}
+ * optional ItemRequest sourceRequest = 3;
+ * @return {?proto.ItemRequest}
  */
-proto.Metadata.prototype.getRequestmethod = function() {
-  return /** @type {!proto.RequestMethod} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+proto.Metadata.prototype.getSourcerequest = function() {
+  return /** @type{?proto.ItemRequest} */ (
+    jspb.Message.getWrapperField(this, proto.ItemRequest, 3));
 };
 
 
 /**
- * @param {!proto.RequestMethod} value
+ * @param {?proto.ItemRequest|undefined} value
+ * @return {!proto.Metadata} returns this
+*/
+proto.Metadata.prototype.setSourcerequest = function(value) {
+  return jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
  * @return {!proto.Metadata} returns this
  */
-proto.Metadata.prototype.setRequestmethod = function(value) {
-  return jspb.Message.setProto3EnumField(this, 3, value);
+proto.Metadata.prototype.clearSourcerequest = function() {
+  return this.setSourcerequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.Metadata.prototype.hasSourcerequest = function() {
+  return jspb.Message.getField(this, 3) != null;
 };
 
 

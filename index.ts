@@ -169,7 +169,7 @@ export namespace Util {
 
     export type MetadataData = {
         backendName: string,
-        requestMethod: "GET" | "FIND" | "SEARCH",
+        sourceRequest: ItemRequestData,
         timestamp: Date;
         backendDuration: number; // milliseconds
         backendDurationPerItem: number; // milliseconds
@@ -185,7 +185,7 @@ export namespace Util {
         const m = new Metadata();
 
         m.setBackendname(data.backendName);
-        m.setRequestmethod(convertRequestMethod(data.requestMethod));
+        m.setSourcerequest(Util.newItemRequest(data.sourceRequest));
 
         const timestamp = new Timestamp();
         timestamp.fromDate(data.timestamp);

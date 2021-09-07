@@ -186,8 +186,10 @@ export class Metadata extends jspb.Message {
   getBackendname(): string;
   setBackendname(value: string): void;
 
-  getRequestmethod(): RequestMethodMap[keyof RequestMethodMap];
-  setRequestmethod(value: RequestMethodMap[keyof RequestMethodMap]): void;
+  hasSourcerequest(): boolean;
+  clearSourcerequest(): void;
+  getSourcerequest(): ItemRequest | undefined;
+  setSourcerequest(value?: ItemRequest): void;
 
   hasTimestamp(): boolean;
   clearTimestamp(): void;
@@ -220,7 +222,7 @@ export class Metadata extends jspb.Message {
 export namespace Metadata {
   export type AsObject = {
     backendname: string,
-    requestmethod: RequestMethodMap[keyof RequestMethodMap],
+    sourcerequest?: ItemRequest.AsObject,
     timestamp?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     backendduration?: google_protobuf_duration_pb.Duration.AsObject,
     backenddurationperitem?: google_protobuf_duration_pb.Duration.AsObject,
