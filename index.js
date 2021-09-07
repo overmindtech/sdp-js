@@ -206,7 +206,7 @@ var Util;
     function newMetadata(data) {
         var m = new items_pb_2.Metadata();
         m.setBackendname(data.backendName);
-        m.setRequestmethod(convertRequestMethod(data.requestMethod));
+        m.setSourcerequest(Util.newItemRequest(data.sourceRequest));
         var timestamp = new timestamp_pb_1.Timestamp();
         timestamp.fromDate(data.timestamp);
         m.setTimestamp(timestamp);

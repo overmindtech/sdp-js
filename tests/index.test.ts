@@ -2,7 +2,6 @@ import { Util, Item, ItemAttributes, RequestMethod } from '..';
 import * as testData from './items';
 import * as assert from 'assert';
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
-import { expect } from 'chai';
 import { ItemRequestError } from '../errors_pb';
 
 
@@ -170,7 +169,17 @@ describe('Util', function() {
   describe('#newMetadata()', function() {
     const data: Util.MetadataData = {
       backendName: "packages",
-      requestMethod: "FIND",
+      sourceRequest: {
+        context: "sourceContext",
+        errorSubject: "errors",
+        itemSubject: "items",
+        linkDepth: 0,
+        linkedItemSubject: "linked",
+        method: 'FIND',
+        query: "*",
+        responseSubject: "response",
+        type: "package",
+      },
       timestamp: new Date(),
       backendDuration: 1638,
       backendDurationPerItem: 23,
@@ -184,7 +193,21 @@ describe('Util', function() {
     })
 
     it('should have the correct Requestmethod', () => {
-      assert.strictEqual(m.getRequestmethod(), RequestMethod.FIND)
+      var sr = m.getSourcerequest();
+
+      if (typeof sr != 'undefined') {
+        assert.strictEqual(sr.getContext(),"sourceContext");
+        assert.strictEqual(sr.getErrorsubject(),"errors");
+        assert.strictEqual(sr.getItemsubject(),"items");
+        assert.strictEqual(sr.getLinkdepth(), 0);
+        assert.strictEqual(sr.getLinkeditemsubject(),"linked");
+        assert.strictEqual(sr.getMethod(), RequestMethod.FIND);
+        assert.strictEqual(sr.getQuery(),"*");
+        assert.strictEqual(sr.getResponsesubject(),"response");
+        assert.strictEqual(sr.getType(),"package");
+      } else {
+        assert.fail("SourceRequest was undefined")
+      }
     })
 
     it('should have the correct Timestamp', () => {

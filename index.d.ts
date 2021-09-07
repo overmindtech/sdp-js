@@ -76,7 +76,7 @@ export declare namespace Util {
     }): ItemAttributes;
     type MetadataData = {
         backendName: string;
-        requestMethod: "GET" | "FIND" | "SEARCH";
+        sourceRequest: ItemRequestData;
         timestamp: Date;
         backendDuration: number;
         backendDurationPerItem: number;
