@@ -1,5 +1,4 @@
-import { Item, ItemAttributes, Reference, Util } from '..';
-import { Struct } from "google-protobuf/google/protobuf/struct_pb";
+import { Util } from '..';
 
 export const process = Util.newItem({
     type: "process",
@@ -48,5 +47,3 @@ export const katie = Util.newItem({
 });
 
 export const items = [dylan, katie];
-
-

@@ -25,14 +25,8 @@ export class ItemRequest extends jspb.Message {
   getItemsubject(): string;
   setItemsubject(value: string): void;
 
-  getLinkeditemsubject(): string;
-  setLinkeditemsubject(value: string): void;
-
   getResponsesubject(): string;
   setResponsesubject(value: string): void;
-
-  getErrorsubject(): string;
-  setErrorsubject(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ItemRequest.AsObject;
@@ -52,9 +46,7 @@ export namespace ItemRequest {
     linkdepth: number,
     context: string,
     itemsubject: string,
-    linkeditemsubject: string,
     responsesubject: string,
-    errorsubject: string,
   }
 }
 

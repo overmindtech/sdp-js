@@ -3,14 +3,11 @@
 
 // Export things from other files
 export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './items_pb';
-// export { RequestProgress, Responder, ResponderStatus } from './progress'
-export { ItemRequestError } from './errors_pb';
 export { Response } from './responses_pb';
 
 // Import things we need for the Util namespace
 import { Reference, Item, ItemAttributes, Metadata, ItemRequest, RequestMethod, RequestMethodMap } from './items_pb';
-import { ItemRequestError } from './errors_pb';
-import { Response } from './responses_pb';
+import { Response, ItemRequestError } from './responses_pb';
 import sha1 from 'sha1';
 import toDataView from 'to-data-view';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
@@ -235,9 +232,7 @@ export namespace Util {
         linkDepth: number,
         context: string,
         itemSubject: string,
-        linkedItemSubject: string,
         responseSubject: string,
-        errorSubject: string,
     }
 
     /**
@@ -254,9 +249,7 @@ export namespace Util {
         r.setLinkdepth(details.linkDepth);
         r.setContext(details.context);
         r.setItemsubject(details.itemSubject);
-        r.setLinkeditemsubject(details.linkedItemSubject);
         r.setResponsesubject(details.responseSubject);
-        r.setErrorsubject(details.errorSubject);
 
         return r;
     }
@@ -286,6 +279,7 @@ export namespace Util {
         context: string,
         state: Response.ResponseStateMap[keyof Response.ResponseStateMap],
         nextUpdateInMs?: number,
+        error?: ItemRequestError,
     }
 
     /**
@@ -301,6 +295,10 @@ export namespace Util {
 
         if (typeof details.nextUpdateInMs != 'undefined') {
             r.setNextupdatein(Util.toDuration(details.nextUpdateInMs));
+        }
+
+        if (typeof details.error != 'undefined') {
+            r.setError(details.error);
         }
 
         return r;
@@ -322,7 +320,7 @@ export class Responder {
     context: string = "";
 	lastStatusTime: Date = new Date();
     nextStatusTime: Date | undefined;
-	error: string = "";
+	error?: ItemRequestError;
 	private _lastStatus: ResponderStatus = ResponderStatus.Complete;
 
     /**
@@ -362,7 +360,7 @@ export class RequestProgress {
 
     /**
      *
-     * @param request The request for which ti track progress
+     * @param request The request for which to track progress
      * @param stallCheckIntervalMs How often to check to see if responders have
      * stalled, in milliseconds
      */
@@ -517,6 +515,9 @@ export class RequestProgress {
         var status: ResponderStatus;
         var nextUpdateTime: Date | undefined = undefined;
 
+        // Get the responder or create a new one
+        var responder = this.responders.get(context) || new Responder(context);
+
         // Map states
         switch(response.getState()) {
             case Response.ResponseState.COMPLETE: {
@@ -525,6 +526,11 @@ export class RequestProgress {
             }
             case Response.ResponseState.WORKING: {
                 status = ResponderStatus.Working;
+                break;
+            }
+            case Response.ResponseState.ERROR: {
+                status = ResponderStatus.Failed;
+                responder.error = response.getError()
                 break;
             }
         }
@@ -546,34 +552,12 @@ export class RequestProgress {
             nextUpdateTime = new Date(now.getTime() + nextUpdateMilliseconds);
         }
 
-        // Now actually start processing...
-
-        // Get the responder or create a new one
-        var responder = this.responders.get(context) || new Responder(context);
-
         // Set properties from the response
         responder.status = status;
         responder.nextStatusTime = nextUpdateTime;
 
         // Save the value
         this.responders.set(context, responder);
-
-        this.inFlight--
-    }
-
-    /**
-     * Process errors and update the overall progress
-     * @param error The error to process
-     */
-    processError(error: ItemRequestError): void {
-        this.inFlight++
-
-        const context = error.getContext();
-        var responder = this.responders.get(context) || new Responder(context);
-
-        responder.status = ResponderStatus.Failed;
-        responder.nextStatusTime = undefined;
-        responder.error = error.getErrorstring();
 
         this.inFlight--
     }

@@ -1,9 +1,7 @@
 export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './items_pb';
-export { ItemRequestError } from './errors_pb';
 export { Response } from './responses_pb';
 import { Reference, Item, ItemAttributes, Metadata, ItemRequest } from './items_pb';
-import { ItemRequestError } from './errors_pb';
-import { Response } from './responses_pb';
+import { Response, ItemRequestError } from './responses_pb';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue } from 'google-protobuf/google/protobuf/struct_pb';
 export declare namespace Util {
@@ -106,9 +104,7 @@ export declare namespace Util {
         linkDepth: number;
         context: string;
         itemSubject: string;
-        linkedItemSubject: string;
         responseSubject: string;
-        errorSubject: string;
     };
     /**
      * Creates a new ItemRequest object from a single object
@@ -131,6 +127,7 @@ export declare namespace Util {
         context: string;
         state: Response.ResponseStateMap[keyof Response.ResponseStateMap];
         nextUpdateInMs?: number;
+        error?: ItemRequestError;
     };
     /**
      * Creates a new Response object from a single object
@@ -152,7 +149,7 @@ export declare class Responder {
     context: string;
     lastStatusTime: Date;
     nextStatusTime: Date | undefined;
-    error: string;
+    error?: ItemRequestError;
     private _lastStatus;
     /**
      *
@@ -169,7 +166,7 @@ export declare class RequestProgress {
     private inFlight;
     /**
      *
-     * @param request The request for which ti track progress
+     * @param request The request for which to track progress
      * @param stallCheckIntervalMs How often to check to see if responders have
      * stalled, in milliseconds
      */
@@ -229,10 +226,5 @@ export declare class RequestProgress {
      * @param response The response to process
      */
     processResponse(response: Response): void;
-    /**
-     * Process errors and update the overall progress
-     * @param error The error to process
-     */
-    processError(error: ItemRequestError): void;
 }
 //# sourceMappingURL=index.d.ts.map

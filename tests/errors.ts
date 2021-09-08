@@ -1,4 +1,4 @@
-import { ItemRequestError } from "../errors_pb";
+import { ItemRequestError } from "../responses_pb";
 
 const NOTFOUND = new ItemRequestError();
 NOTFOUND.setContext("test.context");

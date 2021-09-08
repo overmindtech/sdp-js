@@ -192,9 +192,7 @@ proto.ItemRequest.toObject = function(includeInstance, msg) {
     linkdepth: jspb.Message.getFieldWithDefault(msg, 4, 0),
     context: jspb.Message.getFieldWithDefault(msg, 5, ""),
     itemsubject: jspb.Message.getFieldWithDefault(msg, 16, ""),
-    linkeditemsubject: jspb.Message.getFieldWithDefault(msg, 19, ""),
-    responsesubject: jspb.Message.getFieldWithDefault(msg, 17, ""),
-    errorsubject: jspb.Message.getFieldWithDefault(msg, 18, "")
+    responsesubject: jspb.Message.getFieldWithDefault(msg, 17, "")
   };
 
   if (includeInstance) {
@@ -255,17 +253,9 @@ proto.ItemRequest.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setItemsubject(value);
       break;
-    case 19:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setLinkeditemsubject(value);
-      break;
     case 17:
       var value = /** @type {string} */ (reader.readString());
       msg.setResponsesubject(value);
-      break;
-    case 18:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setErrorsubject(value);
       break;
     default:
       reader.skipField();
@@ -338,24 +328,10 @@ proto.ItemRequest.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getLinkeditemsubject();
-  if (f.length > 0) {
-    writer.writeString(
-      19,
-      f
-    );
-  }
   f = message.getResponsesubject();
   if (f.length > 0) {
     writer.writeString(
       17,
-      f
-    );
-  }
-  f = message.getErrorsubject();
-  if (f.length > 0) {
-    writer.writeString(
-      18,
       f
     );
   }
@@ -471,24 +447,6 @@ proto.ItemRequest.prototype.setItemsubject = function(value) {
 
 
 /**
- * optional string linkedItemSubject = 19;
- * @return {string}
- */
-proto.ItemRequest.prototype.getLinkeditemsubject = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 19, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.ItemRequest} returns this
- */
-proto.ItemRequest.prototype.setLinkeditemsubject = function(value) {
-  return jspb.Message.setProto3StringField(this, 19, value);
-};
-
-
-/**
  * optional string responseSubject = 17;
  * @return {string}
  */
@@ -503,24 +461,6 @@ proto.ItemRequest.prototype.getResponsesubject = function() {
  */
 proto.ItemRequest.prototype.setResponsesubject = function(value) {
   return jspb.Message.setProto3StringField(this, 17, value);
-};
-
-
-/**
- * optional string errorSubject = 18;
- * @return {string}
- */
-proto.ItemRequest.prototype.getErrorsubject = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 18, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.ItemRequest} returns this
- */
-proto.ItemRequest.prototype.setErrorsubject = function(value) {
-  return jspb.Message.setProto3StringField(this, 18, value);
 };
 
 

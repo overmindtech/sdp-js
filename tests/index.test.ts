@@ -2,7 +2,7 @@ import { Util, Item, ItemAttributes, RequestMethod } from '..';
 import * as testData from './items';
 import * as assert from 'assert';
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
-import { ItemRequestError } from '../errors_pb';
+import { ItemRequestError } from '../responses_pb';
 
 
 describe('Util', function() {
@@ -121,9 +121,7 @@ describe('Util', function() {
         linkDepth: 10,
         context: "global",
         itemSubject: "subject1",
-        linkedItemSubject: "subject2",
         responseSubject: "subject3",
-        errorSubject: "subject4",
       }
 
       const ir = Util.newItemRequest(data);
@@ -152,16 +150,8 @@ describe('Util', function() {
         assert.strictEqual(ir.getItemsubject(), data.itemSubject);
       })
 
-      it('should have the correct Linkeditemsubject', () => {
-        assert.strictEqual(ir.getLinkeditemsubject(), data.linkedItemSubject);
-      })
-
       it('should have the correct Responsesubject', () => {
         assert.strictEqual(ir.getResponsesubject(), data.responseSubject);
-      })
-
-      it('should have the correct Errorsubject', () => {
-        assert.strictEqual(ir.getErrorsubject(), data.errorSubject);
       })
 
   });
@@ -171,10 +161,8 @@ describe('Util', function() {
       backendName: "packages",
       sourceRequest: {
         context: "sourceContext",
-        errorSubject: "errors",
         itemSubject: "items",
         linkDepth: 0,
-        linkedItemSubject: "linked",
         method: 'FIND',
         query: "*",
         responseSubject: "response",
@@ -197,10 +185,8 @@ describe('Util', function() {
 
       if (typeof sr != 'undefined') {
         assert.strictEqual(sr.getContext(),"sourceContext");
-        assert.strictEqual(sr.getErrorsubject(),"errors");
         assert.strictEqual(sr.getItemsubject(),"items");
         assert.strictEqual(sr.getLinkdepth(), 0);
-        assert.strictEqual(sr.getLinkeditemsubject(),"linked");
         assert.strictEqual(sr.getMethod(), RequestMethod.FIND);
         assert.strictEqual(sr.getQuery(),"*");
         assert.strictEqual(sr.getResponsesubject(),"response");

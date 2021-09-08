@@ -1,22 +1,59 @@
 import { Duration } from "google-protobuf/google/protobuf/duration_pb";
 import { Response } from "../responses_pb";
+import { ItemRequestError } from "../responses_pb";
+import { Util } from '../index'
 
-// One tenth of a second (100ms)
-const ONE_TENTH = new Duration();
-ONE_TENTH.setNanos(100000000);
-ONE_TENTH.setSeconds(0);
+// Create errors
+const NOTFOUND = new ItemRequestError();
+NOTFOUND.setContext("test.context");
+NOTFOUND.setErrortype(ItemRequestError.ErrorType.NOTFOUND)
+NOTFOUND.setErrorstring("Could not be found")
 
-const WORKING = new Response();
-WORKING.setContext("test.context");
-WORKING.setState(Response.ResponseState.WORKING);
-WORKING.setNextupdatein(ONE_TENTH);
+const NOCONTEXT = new ItemRequestError();
+NOCONTEXT.setContext("test.context");
+NOCONTEXT.setErrortype(ItemRequestError.ErrorType.NOCONTEXT)
+NOCONTEXT.setErrorstring("Context does not exist")
 
-const COMPLETE = new Response();
-COMPLETE.setContext("test.context");
-COMPLETE.setState(Response.ResponseState.COMPLETE);
-COMPLETE.setNextupdatein(ONE_TENTH);
+const OTHER = new ItemRequestError();
+OTHER.setContext("test.context");
+OTHER.setErrortype(ItemRequestError.ErrorType.OTHER)
+OTHER.setErrorstring("Unknown error")
+
+
+const WORKING = Util.newResponse({
+    context: "test.context",
+    state: Response.ResponseState.WORKING,
+    nextUpdateInMs: 100
+})
+
+const COMPLETE = Util.newResponse({
+    context: "test.context",
+    state: Response.ResponseState.COMPLETE,
+    nextUpdateInMs: 100,
+})
+
+const NOTFOUNDERROR = Util.newResponse({
+    context: "test.context",
+    state: Response.ResponseState.ERROR,
+    error: NOTFOUND,
+})
+
+const NOCONTEXTERROR = Util.newResponse({
+    context: "test.context",
+    state: Response.ResponseState.ERROR,
+    error: NOCONTEXT,
+})
+
+const OTHERERROR = Util.newResponse({
+    context: "test.context",
+    state: Response.ResponseState.ERROR,
+    error: OTHER,
+})
 
 export {
     WORKING,
-    COMPLETE
+    COMPLETE,
+    NOTFOUNDERROR,
+    NOCONTEXTERROR,
+    OTHERERROR
 }

@@ -16,6 +16,11 @@ export class Response extends jspb.Message {
   getNextupdatein(): google_protobuf_duration_pb.Duration | undefined;
   setNextupdatein(value?: google_protobuf_duration_pb.Duration): void;
 
+  hasError(): boolean;
+  clearError(): void;
+  getError(): ItemRequestError | undefined;
+  setError(value?: ItemRequestError): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Response.AsObject;
   static toObject(includeInstance: boolean, msg: Response): Response.AsObject;
@@ -31,13 +36,51 @@ export namespace Response {
     context: string,
     state: Response.ResponseStateMap[keyof Response.ResponseStateMap],
     nextupdatein?: google_protobuf_duration_pb.Duration.AsObject,
+    error?: ItemRequestError.AsObject,
   }
 
   export interface ResponseStateMap {
     WORKING: 0;
     COMPLETE: 1;
+    ERROR: 2;
   }
 
   export const ResponseState: ResponseStateMap;
+}
+
+export class ItemRequestError extends jspb.Message {
+  getErrortype(): ItemRequestError.ErrorTypeMap[keyof ItemRequestError.ErrorTypeMap];
+  setErrortype(value: ItemRequestError.ErrorTypeMap[keyof ItemRequestError.ErrorTypeMap]): void;
+
+  getErrorstring(): string;
+  setErrorstring(value: string): void;
+
+  getContext(): string;
+  setContext(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ItemRequestError.AsObject;
+  static toObject(includeInstance: boolean, msg: ItemRequestError): ItemRequestError.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: ItemRequestError, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ItemRequestError;
+  static deserializeBinaryFromReader(message: ItemRequestError, reader: jspb.BinaryReader): ItemRequestError;
+}
+
+export namespace ItemRequestError {
+  export type AsObject = {
+    errortype: ItemRequestError.ErrorTypeMap[keyof ItemRequestError.ErrorTypeMap],
+    errorstring: string,
+    context: string,
+  }
+
+  export interface ErrorTypeMap {
+    OTHER: 0;
+    NOTFOUND: 1;
+    NOCONTEXT: 2;
+  }
+
+  export const ErrorType: ErrorTypeMap;
 }
 

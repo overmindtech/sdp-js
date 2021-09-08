@@ -2,7 +2,6 @@ import { assert } from 'chai';
 import { RequestProgress } from '../index';
 import * as requests from './requests';
 import * as responses from './responses';
-import * as errors from './errors';
 
 describe('RequestProgress', () => {
     describe('#processResponse()', () => {
@@ -59,10 +58,11 @@ describe('RequestProgress', () => {
             assert.strictEqual(progress.numWorking(), 1);
             assert.strictEqual(progress.numFailed(), 0);
 
-            progress.processError(errors.NOTFOUND)
+            progress.processResponse(responses.NOCONTEXTERROR);
 
             assert.strictEqual(progress.numWorking(), 0);
             assert.strictEqual(progress.numFailed(), 1);
+            assert.strictEqual(progress.allDone(), true);
         });
     })
 

@@ -41,7 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RequestProgress = exports.Responder = exports.ResponderStatus = exports.Util = exports.Response = exports.ItemRequestError = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
+exports.RequestProgress = exports.Responder = exports.ResponderStatus = exports.Util = exports.Response = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
 // Export things from other files
 var items_pb_1 = require("./items_pb");
 Object.defineProperty(exports, "ItemRequest", { enumerable: true, get: function () { return items_pb_1.ItemRequest; } });
@@ -51,14 +51,10 @@ Object.defineProperty(exports, "Items", { enumerable: true, get: function () { r
 Object.defineProperty(exports, "Reference", { enumerable: true, get: function () { return items_pb_1.Reference; } });
 Object.defineProperty(exports, "Metadata", { enumerable: true, get: function () { return items_pb_1.Metadata; } });
 Object.defineProperty(exports, "RequestMethod", { enumerable: true, get: function () { return items_pb_1.RequestMethod; } });
-// export { RequestProgress, Responder, ResponderStatus } from './progress'
-var errors_pb_1 = require("./errors_pb");
-Object.defineProperty(exports, "ItemRequestError", { enumerable: true, get: function () { return errors_pb_1.ItemRequestError; } });
 var responses_pb_1 = require("./responses_pb");
 Object.defineProperty(exports, "Response", { enumerable: true, get: function () { return responses_pb_1.Response; } });
 // Import things we need for the Util namespace
 var items_pb_2 = require("./items_pb");
-var errors_pb_2 = require("./errors_pb");
 var responses_pb_2 = require("./responses_pb");
 var sha1_1 = __importDefault(require("sha1"));
 var to_data_view_1 = __importDefault(require("to-data-view"));
@@ -228,7 +224,7 @@ var Util;
      * @returns The new error object
      */
     function newItemRequestError(details) {
-        var err = new errors_pb_2.ItemRequestError();
+        var err = new responses_pb_2.ItemRequestError();
         err.setContext(details.context);
         err.setErrorstring(details.errorString);
         err.setErrortype(details.errorType);
@@ -248,9 +244,7 @@ var Util;
         r.setLinkdepth(details.linkDepth);
         r.setContext(details.context);
         r.setItemsubject(details.itemSubject);
-        r.setLinkeditemsubject(details.linkedItemSubject);
         r.setResponsesubject(details.responseSubject);
-        r.setErrorsubject(details.errorSubject);
         return r;
     }
     Util.newItemRequest = newItemRequest;
@@ -279,6 +273,9 @@ var Util;
         if (typeof details.nextUpdateInMs != 'undefined') {
             r.setNextupdatein(Util.toDuration(details.nextUpdateInMs));
         }
+        if (typeof details.error != 'undefined') {
+            r.setError(details.error);
+        }
         return r;
     }
     Util.newResponse = newResponse;
@@ -302,7 +299,6 @@ var Responder = /** @class */ (function () {
     function Responder(context) {
         this.context = "";
         this.lastStatusTime = new Date();
-        this.error = "";
         this._lastStatus = ResponderStatus.Complete;
         this.context = context;
         this.status = ResponderStatus.Working;
@@ -327,7 +323,7 @@ exports.Responder = Responder;
 var RequestProgress = /** @class */ (function () {
     /**
      *
-     * @param request The request for which ti track progress
+     * @param request The request for which to track progress
      * @param stallCheckIntervalMs How often to check to see if responders have
      * stalled, in milliseconds
      */
@@ -470,6 +466,8 @@ var RequestProgress = /** @class */ (function () {
         var context = response.getContext();
         var status;
         var nextUpdateTime = undefined;
+        // Get the responder or create a new one
+        var responder = this.responders.get(context) || new Responder(context);
         // Map states
         switch (response.getState()) {
             case responses_pb_2.Response.ResponseState.COMPLETE: {
@@ -478,6 +476,11 @@ var RequestProgress = /** @class */ (function () {
             }
             case responses_pb_2.Response.ResponseState.WORKING: {
                 status = ResponderStatus.Working;
+                break;
+            }
+            case responses_pb_2.Response.ResponseState.ERROR: {
+                status = ResponderStatus.Failed;
+                responder.error = response.getError();
                 break;
             }
         }
@@ -494,27 +497,11 @@ var RequestProgress = /** @class */ (function () {
             var now = new Date();
             nextUpdateTime = new Date(now.getTime() + nextUpdateMilliseconds);
         }
-        // Now actually start processing...
-        // Get the responder or create a new one
-        var responder = this.responders.get(context) || new Responder(context);
         // Set properties from the response
         responder.status = status;
         responder.nextStatusTime = nextUpdateTime;
         // Save the value
         this.responders.set(context, responder);
-        this.inFlight--;
-    };
-    /**
-     * Process errors and update the overall progress
-     * @param error The error to process
-     */
-    RequestProgress.prototype.processError = function (error) {
-        this.inFlight++;
-        var context = error.getContext();
-        var responder = this.responders.get(context) || new Responder(context);
-        responder.status = ResponderStatus.Failed;
-        responder.nextStatusTime = undefined;
-        responder.error = error.getErrorstring();
         this.inFlight--;
     };
     return RequestProgress;
