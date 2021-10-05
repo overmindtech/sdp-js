@@ -276,7 +276,7 @@ export namespace Util {
     }
 
     export type ResponseData = {
-        context: string,
+        responder: string,
         state: Response.ResponseStateMap[keyof Response.ResponseStateMap],
         nextUpdateInMs?: number,
         error?: ItemRequestError,
@@ -290,7 +290,7 @@ export namespace Util {
     export function newResponse(details: ResponseData): Response {
         const r = new Response();
 
-        r.setContext(details.context);
+        r.setResponder(details.responder);
         r.setState(details.state);
 
         if (typeof details.nextUpdateInMs != 'undefined') {
@@ -317,7 +317,7 @@ export enum ResponderStatus {
  * Represents something that is responding to our query
  */
 export class Responder {
-    context: string = "";
+    name: string = "";
 	lastStatusTime: Date = new Date();
     nextStatusTime: Date | undefined;
 	error?: ItemRequestError;
@@ -325,10 +325,10 @@ export class Responder {
 
     /**
      *
-     * @param context The context that this responder will respond for
+     * @param responder The responder that this responder will respond for
      */
-    constructor(context: string) {
-        this.context = context;
+    constructor(name: string) {
+        this.name = name;
         this.status = ResponderStatus.Working;
     }
 
@@ -511,12 +511,12 @@ export class RequestProgress {
         this.inFlight++
 
         // Pull details out of the response
-        const context = response.getContext();
+        const responderName = response.getResponder();
         var status: ResponderStatus;
         var nextUpdateTime: Date | undefined = undefined;
 
         // Get the responder or create a new one
-        var responder = this.responders.get(context) || new Responder(context);
+        var responder = this.responders.get(responderName) || new Responder(responderName);
 
         // Map states
         switch(response.getState()) {
@@ -557,7 +557,7 @@ export class RequestProgress {
         responder.nextStatusTime = nextUpdateTime;
 
         // Save the value
-        this.responders.set(context, responder);
+        this.responders.set(responderName, responder);
 
         this.inFlight--
     }

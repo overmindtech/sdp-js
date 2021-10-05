@@ -124,7 +124,7 @@ export declare namespace Util {
      */
     function newReference(details: ReferenceData): Reference;
     type ResponseData = {
-        context: string;
+        responder: string;
         state: Response.ResponseStateMap[keyof Response.ResponseStateMap];
         nextUpdateInMs?: number;
         error?: ItemRequestError;
@@ -146,16 +146,16 @@ export declare enum ResponderStatus {
  * Represents something that is responding to our query
  */
 export declare class Responder {
-    context: string;
+    name: string;
     lastStatusTime: Date;
     nextStatusTime: Date | undefined;
     error?: ItemRequestError;
     private _lastStatus;
     /**
      *
-     * @param context The context that this responder will respond for
+     * @param responder The responder that this responder will respond for
      */
-    constructor(context: string);
+    constructor(name: string);
     set status(status: ResponderStatus);
     get status(): ResponderStatus;
 }

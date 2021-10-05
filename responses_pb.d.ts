@@ -5,8 +5,8 @@ import * as jspb from "google-protobuf";
 import * as google_protobuf_duration_pb from "google-protobuf/google/protobuf/duration_pb";
 
 export class Response extends jspb.Message {
-  getContext(): string;
-  setContext(value: string): void;
+  getResponder(): string;
+  setResponder(value: string): void;
 
   getState(): Response.ResponseStateMap[keyof Response.ResponseStateMap];
   setState(value: Response.ResponseStateMap[keyof Response.ResponseStateMap]): void;
@@ -33,7 +33,7 @@ export class Response extends jspb.Message {
 
 export namespace Response {
   export type AsObject = {
-    context: string,
+    responder: string,
     state: Response.ResponseStateMap[keyof Response.ResponseStateMap],
     nextupdatein?: google_protobuf_duration_pb.Duration.AsObject,
     error?: ItemRequestError.AsObject,

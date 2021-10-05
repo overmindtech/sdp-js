@@ -21,31 +21,31 @@ OTHER.setErrorstring("Unknown error")
 
 
 const WORKING = Util.newResponse({
-    context: "test.context",
+    responder: "test.context",
     state: Response.ResponseState.WORKING,
     nextUpdateInMs: 100
 })
 
 const COMPLETE = Util.newResponse({
-    context: "test.context",
+    responder: "test.context",
     state: Response.ResponseState.COMPLETE,
     nextUpdateInMs: 100,
 })
 
 const NOTFOUNDERROR = Util.newResponse({
-    context: "test.context",
+    responder: "test.context",
     state: Response.ResponseState.ERROR,
     error: NOTFOUND,
 })
 
 const NOCONTEXTERROR = Util.newResponse({
-    context: "test.context",
+    responder: "test.context",
     state: Response.ResponseState.ERROR,
     error: NOCONTEXT,
 })
 
 const OTHERERROR = Util.newResponse({
-    context: "test.context",
+    responder: "test.context",
     state: Response.ResponseState.ERROR,
     error: OTHER,
 })

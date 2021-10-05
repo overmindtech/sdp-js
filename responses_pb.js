@@ -95,7 +95,7 @@ proto.Response.prototype.toObject = function(opt_includeInstance) {
  */
 proto.Response.toObject = function(includeInstance, msg) {
   var f, obj = {
-    context: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    responder: jspb.Message.getFieldWithDefault(msg, 1, ""),
     state: jspb.Message.getFieldWithDefault(msg, 2, 0),
     nextupdatein: (f = msg.getNextupdatein()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
     error: (f = msg.getError()) && proto.ItemRequestError.toObject(includeInstance, f)
@@ -137,7 +137,7 @@ proto.Response.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setContext(value);
+      msg.setResponder(value);
       break;
     case 2:
       var value = /** @type {!proto.Response.ResponseState} */ (reader.readEnum());
@@ -182,7 +182,7 @@ proto.Response.prototype.serializeBinary = function() {
  */
 proto.Response.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getContext();
+  f = message.getResponder();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -225,10 +225,10 @@ proto.Response.ResponseState = {
 };
 
 /**
- * optional string context = 1;
+ * optional string responder = 1;
  * @return {string}
  */
-proto.Response.prototype.getContext = function() {
+proto.Response.prototype.getResponder = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -237,7 +237,7 @@ proto.Response.prototype.getContext = function() {
  * @param {string} value
  * @return {!proto.Response} returns this
  */
-proto.Response.prototype.setContext = function(value) {
+proto.Response.prototype.setResponder = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 

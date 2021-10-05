@@ -268,7 +268,7 @@ var Util;
      */
     function newResponse(details) {
         var r = new responses_pb_2.Response();
-        r.setContext(details.context);
+        r.setResponder(details.responder);
         r.setState(details.state);
         if (typeof details.nextUpdateInMs != 'undefined') {
             r.setNextupdatein(Util.toDuration(details.nextUpdateInMs));
@@ -294,13 +294,13 @@ var ResponderStatus;
 var Responder = /** @class */ (function () {
     /**
      *
-     * @param context The context that this responder will respond for
+     * @param responder The responder that this responder will respond for
      */
-    function Responder(context) {
-        this.context = "";
+    function Responder(name) {
+        this.name = "";
         this.lastStatusTime = new Date();
         this._lastStatus = ResponderStatus.Complete;
-        this.context = context;
+        this.name = name;
         this.status = ResponderStatus.Working;
     }
     Object.defineProperty(Responder.prototype, "status", {
@@ -463,11 +463,11 @@ var RequestProgress = /** @class */ (function () {
     RequestProgress.prototype.processResponse = function (response) {
         this.inFlight++;
         // Pull details out of the response
-        var context = response.getContext();
+        var responderName = response.getResponder();
         var status;
         var nextUpdateTime = undefined;
         // Get the responder or create a new one
-        var responder = this.responders.get(context) || new Responder(context);
+        var responder = this.responders.get(responderName) || new Responder(responderName);
         // Map states
         switch (response.getState()) {
             case responses_pb_2.Response.ResponseState.COMPLETE: {
@@ -501,7 +501,7 @@ var RequestProgress = /** @class */ (function () {
         responder.status = status;
         responder.nextStatusTime = nextUpdateTime;
         // Save the value
-        this.responders.set(context, responder);
+        this.responders.set(responderName, responder);
         this.inFlight--;
     };
     return RequestProgress;
