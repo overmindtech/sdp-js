@@ -201,20 +201,19 @@ var Util;
      */
     function newMetadata(data) {
         var m = new items_pb_2.Metadata();
-        m.setBackendname(data.backendName);
+        m.setSourcename(data.sourceName);
         m.setSourcerequest(Util.newItemRequest(data.sourceRequest));
         var timestamp = new timestamp_pb_1.Timestamp();
         timestamp.fromDate(data.timestamp);
         m.setTimestamp(timestamp);
-        var backendDuration = new duration_pb_1.Duration();
-        backendDuration.setSeconds(Math.floor(data.backendDuration / 1000));
-        backendDuration.setNanos((data.backendDuration % 1000) * 1e6);
-        m.setBackendduration(backendDuration);
-        var backendDurationPerItem = new duration_pb_1.Duration();
-        backendDurationPerItem.setSeconds(Math.floor(data.backendDurationPerItem / 1000));
-        backendDurationPerItem.setNanos((data.backendDurationPerItem % 1000) * 1e6);
-        m.setBackenddurationperitem(backendDurationPerItem);
-        m.setBackendpackage(data.backendPackage);
+        var sourceDuration = new duration_pb_1.Duration();
+        sourceDuration.setSeconds(Math.floor(data.sourceDuration / 1000));
+        sourceDuration.setNanos((data.sourceDuration % 1000) * 1e6);
+        m.setSourceduration(sourceDuration);
+        var sourceDurationPerItem = new duration_pb_1.Duration();
+        sourceDurationPerItem.setSeconds(Math.floor(data.sourceDurationPerItem / 1000));
+        sourceDurationPerItem.setNanos((data.sourceDurationPerItem % 1000) * 1e6);
+        m.setSourcedurationperitem(sourceDurationPerItem);
         return m;
     }
     Util.newMetadata = newMetadata;

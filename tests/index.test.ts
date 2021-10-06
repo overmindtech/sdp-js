@@ -158,7 +158,7 @@ describe('Util', function() {
 
   describe('#newMetadata()', function() {
     const data: Util.MetadataData = {
-      backendName: "packages",
+      sourceName: "packages",
       sourceRequest: {
         context: "sourceContext",
         itemSubject: "items",
@@ -169,15 +169,14 @@ describe('Util', function() {
         type: "package",
       },
       timestamp: new Date(),
-      backendDuration: 1638,
-      backendDurationPerItem: 23,
-      backendPackage: "yum",
+      sourceDuration: 1638,
+      sourceDurationPerItem: 23,
     }
 
     const m = Util.newMetadata(data);
 
     it('should have the correct Backendname', () => {
-      assert.strictEqual(m.getBackendname(), data.backendName)
+      assert.strictEqual(m.getSourcename(), data.sourceName)
     })
 
     it('should have the correct Requestmethod', () => {
@@ -204,34 +203,30 @@ describe('Util', function() {
       }
     })
 
-    it('should have the correct Backendduration', () => {
-      const duration = m.getBackendduration();
+    it('should have the correct sourceduration', () => {
+      const duration = m.getSourceduration();
 
       if (typeof duration != "undefined") {
         const date = Util.toDate(duration);
 
         assert.strictEqual(
           (date.getSeconds() * 1000) + date.getMilliseconds(),
-          data.backendDuration
+          data.sourceDuration
         )
       }
     })
 
-    it('should have the correct Backenddurationperitem', () => {
-      const duration = m.getBackenddurationperitem();
+    it('should have the correct sourcedurationperitem', () => {
+      const duration = m.getSourcedurationperitem();
 
       if (typeof duration != "undefined") {
         const date = Util.toDate(duration);
 
         assert.strictEqual(
           (date.getSeconds() * 1000) + date.getMilliseconds(),
-          data.backendDurationPerItem
+          data.sourceDurationPerItem
         )
       }    
-    })
-
-    it('should have the correct Backendpackage', () => {
-      assert.strictEqual(m.getBackendpackage(), data.backendPackage)
     })
   });
 

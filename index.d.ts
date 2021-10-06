@@ -73,12 +73,11 @@ export declare namespace Util {
         [key: string]: JavaScriptValue;
     }): ItemAttributes;
     type MetadataData = {
-        backendName: string;
+        sourceName: string;
         sourceRequest: ItemRequestData;
         timestamp: Date;
-        backendDuration: number;
-        backendDurationPerItem: number;
-        backendPackage: string;
+        sourceDuration: number;
+        sourceDurationPerItem: number;
     };
     /**
      * Creates a new `Metadata` object from a object

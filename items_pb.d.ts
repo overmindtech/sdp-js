@@ -175,8 +175,8 @@ export namespace Reference {
 }
 
 export class Metadata extends jspb.Message {
-  getBackendname(): string;
-  setBackendname(value: string): void;
+  getSourcename(): string;
+  setSourcename(value: string): void;
 
   hasSourcerequest(): boolean;
   clearSourcerequest(): void;
@@ -188,18 +188,15 @@ export class Metadata extends jspb.Message {
   getTimestamp(): google_protobuf_timestamp_pb.Timestamp | undefined;
   setTimestamp(value?: google_protobuf_timestamp_pb.Timestamp): void;
 
-  hasBackendduration(): boolean;
-  clearBackendduration(): void;
-  getBackendduration(): google_protobuf_duration_pb.Duration | undefined;
-  setBackendduration(value?: google_protobuf_duration_pb.Duration): void;
+  hasSourceduration(): boolean;
+  clearSourceduration(): void;
+  getSourceduration(): google_protobuf_duration_pb.Duration | undefined;
+  setSourceduration(value?: google_protobuf_duration_pb.Duration): void;
 
-  hasBackenddurationperitem(): boolean;
-  clearBackenddurationperitem(): void;
-  getBackenddurationperitem(): google_protobuf_duration_pb.Duration | undefined;
-  setBackenddurationperitem(value?: google_protobuf_duration_pb.Duration): void;
-
-  getBackendpackage(): string;
-  setBackendpackage(value: string): void;
+  hasSourcedurationperitem(): boolean;
+  clearSourcedurationperitem(): void;
+  getSourcedurationperitem(): google_protobuf_duration_pb.Duration | undefined;
+  setSourcedurationperitem(value?: google_protobuf_duration_pb.Duration): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Metadata.AsObject;
@@ -213,12 +210,11 @@ export class Metadata extends jspb.Message {
 
 export namespace Metadata {
   export type AsObject = {
-    backendname: string,
+    sourcename: string,
     sourcerequest?: ItemRequest.AsObject,
     timestamp?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-    backendduration?: google_protobuf_duration_pb.Duration.AsObject,
-    backenddurationperitem?: google_protobuf_duration_pb.Duration.AsObject,
-    backendpackage: string,
+    sourceduration?: google_protobuf_duration_pb.Duration.AsObject,
+    sourcedurationperitem?: google_protobuf_duration_pb.Duration.AsObject,
   }
 }
 

@@ -1402,12 +1402,11 @@ proto.Metadata.prototype.toObject = function(opt_includeInstance) {
  */
 proto.Metadata.toObject = function(includeInstance, msg) {
   var f, obj = {
-    backendname: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    sourcename: jspb.Message.getFieldWithDefault(msg, 2, ""),
     sourcerequest: (f = msg.getSourcerequest()) && proto.ItemRequest.toObject(includeInstance, f),
     timestamp: (f = msg.getTimestamp()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    backendduration: (f = msg.getBackendduration()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
-    backenddurationperitem: (f = msg.getBackenddurationperitem()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
-    backendpackage: jspb.Message.getFieldWithDefault(msg, 7, "")
+    sourceduration: (f = msg.getSourceduration()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
+    sourcedurationperitem: (f = msg.getSourcedurationperitem()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1446,7 +1445,7 @@ proto.Metadata.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setBackendname(value);
+      msg.setSourcename(value);
       break;
     case 3:
       var value = new proto.ItemRequest;
@@ -1461,16 +1460,12 @@ proto.Metadata.deserializeBinaryFromReader = function(msg, reader) {
     case 5:
       var value = new google_protobuf_duration_pb.Duration;
       reader.readMessage(value,google_protobuf_duration_pb.Duration.deserializeBinaryFromReader);
-      msg.setBackendduration(value);
+      msg.setSourceduration(value);
       break;
     case 6:
       var value = new google_protobuf_duration_pb.Duration;
       reader.readMessage(value,google_protobuf_duration_pb.Duration.deserializeBinaryFromReader);
-      msg.setBackenddurationperitem(value);
-      break;
-    case 7:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setBackendpackage(value);
+      msg.setSourcedurationperitem(value);
       break;
     default:
       reader.skipField();
@@ -1501,7 +1496,7 @@ proto.Metadata.prototype.serializeBinary = function() {
  */
 proto.Metadata.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getBackendname();
+  f = message.getSourcename();
   if (f.length > 0) {
     writer.writeString(
       2,
@@ -1524,7 +1519,7 @@ proto.Metadata.serializeBinaryToWriter = function(message, writer) {
       google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     );
   }
-  f = message.getBackendduration();
+  f = message.getSourceduration();
   if (f != null) {
     writer.writeMessage(
       5,
@@ -1532,7 +1527,7 @@ proto.Metadata.serializeBinaryToWriter = function(message, writer) {
       google_protobuf_duration_pb.Duration.serializeBinaryToWriter
     );
   }
-  f = message.getBackenddurationperitem();
+  f = message.getSourcedurationperitem();
   if (f != null) {
     writer.writeMessage(
       6,
@@ -1540,21 +1535,14 @@ proto.Metadata.serializeBinaryToWriter = function(message, writer) {
       google_protobuf_duration_pb.Duration.serializeBinaryToWriter
     );
   }
-  f = message.getBackendpackage();
-  if (f.length > 0) {
-    writer.writeString(
-      7,
-      f
-    );
-  }
 };
 
 
 /**
- * optional string backendName = 2;
+ * optional string sourceName = 2;
  * @return {string}
  */
-proto.Metadata.prototype.getBackendname = function() {
+proto.Metadata.prototype.getSourcename = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -1563,7 +1551,7 @@ proto.Metadata.prototype.getBackendname = function() {
  * @param {string} value
  * @return {!proto.Metadata} returns this
  */
-proto.Metadata.prototype.setBackendname = function(value) {
+proto.Metadata.prototype.setSourcename = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -1643,10 +1631,10 @@ proto.Metadata.prototype.hasTimestamp = function() {
 
 
 /**
- * optional google.protobuf.Duration backendDuration = 5;
+ * optional google.protobuf.Duration sourceDuration = 5;
  * @return {?proto.google.protobuf.Duration}
  */
-proto.Metadata.prototype.getBackendduration = function() {
+proto.Metadata.prototype.getSourceduration = function() {
   return /** @type{?proto.google.protobuf.Duration} */ (
     jspb.Message.getWrapperField(this, google_protobuf_duration_pb.Duration, 5));
 };
@@ -1656,7 +1644,7 @@ proto.Metadata.prototype.getBackendduration = function() {
  * @param {?proto.google.protobuf.Duration|undefined} value
  * @return {!proto.Metadata} returns this
 */
-proto.Metadata.prototype.setBackendduration = function(value) {
+proto.Metadata.prototype.setSourceduration = function(value) {
   return jspb.Message.setWrapperField(this, 5, value);
 };
 
@@ -1665,8 +1653,8 @@ proto.Metadata.prototype.setBackendduration = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.Metadata} returns this
  */
-proto.Metadata.prototype.clearBackendduration = function() {
-  return this.setBackendduration(undefined);
+proto.Metadata.prototype.clearSourceduration = function() {
+  return this.setSourceduration(undefined);
 };
 
 
@@ -1674,16 +1662,16 @@ proto.Metadata.prototype.clearBackendduration = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.Metadata.prototype.hasBackendduration = function() {
+proto.Metadata.prototype.hasSourceduration = function() {
   return jspb.Message.getField(this, 5) != null;
 };
 
 
 /**
- * optional google.protobuf.Duration backendDurationPerItem = 6;
+ * optional google.protobuf.Duration sourceDurationPerItem = 6;
  * @return {?proto.google.protobuf.Duration}
  */
-proto.Metadata.prototype.getBackenddurationperitem = function() {
+proto.Metadata.prototype.getSourcedurationperitem = function() {
   return /** @type{?proto.google.protobuf.Duration} */ (
     jspb.Message.getWrapperField(this, google_protobuf_duration_pb.Duration, 6));
 };
@@ -1693,7 +1681,7 @@ proto.Metadata.prototype.getBackenddurationperitem = function() {
  * @param {?proto.google.protobuf.Duration|undefined} value
  * @return {!proto.Metadata} returns this
 */
-proto.Metadata.prototype.setBackenddurationperitem = function(value) {
+proto.Metadata.prototype.setSourcedurationperitem = function(value) {
   return jspb.Message.setWrapperField(this, 6, value);
 };
 
@@ -1702,8 +1690,8 @@ proto.Metadata.prototype.setBackenddurationperitem = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.Metadata} returns this
  */
-proto.Metadata.prototype.clearBackenddurationperitem = function() {
-  return this.setBackenddurationperitem(undefined);
+proto.Metadata.prototype.clearSourcedurationperitem = function() {
+  return this.setSourcedurationperitem(undefined);
 };
 
 
@@ -1711,26 +1699,8 @@ proto.Metadata.prototype.clearBackenddurationperitem = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.Metadata.prototype.hasBackenddurationperitem = function() {
+proto.Metadata.prototype.hasSourcedurationperitem = function() {
   return jspb.Message.getField(this, 6) != null;
-};
-
-
-/**
- * optional string backendPackage = 7;
- * @return {string}
- */
-proto.Metadata.prototype.getBackendpackage = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.Metadata} returns this
- */
-proto.Metadata.prototype.setBackendpackage = function(value) {
-  return jspb.Message.setProto3StringField(this, 7, value);
 };
 
 

@@ -165,12 +165,11 @@ export namespace Util {
     }
 
     export type MetadataData = {
-        backendName: string,
+        sourceName: string,
         sourceRequest: ItemRequestData,
         timestamp: Date;
-        backendDuration: number; // milliseconds
-        backendDurationPerItem: number; // milliseconds
-        backendPackage: string,
+        sourceDuration: number; // milliseconds
+        sourceDurationPerItem: number; // milliseconds
     }
 
     /**
@@ -181,24 +180,22 @@ export namespace Util {
     export function newMetadata(data: MetadataData): Metadata {
         const m = new Metadata();
 
-        m.setBackendname(data.backendName);
+        m.setSourcename(data.sourceName);
         m.setSourcerequest(Util.newItemRequest(data.sourceRequest));
 
         const timestamp = new Timestamp();
         timestamp.fromDate(data.timestamp);
         m.setTimestamp(timestamp);
 
-        const backendDuration = new Duration();
-        backendDuration.setSeconds(Math.floor(data.backendDuration / 1000));
-        backendDuration.setNanos((data.backendDuration % 1000) * 1e6);
-        m.setBackendduration(backendDuration);
+        const sourceDuration = new Duration();
+        sourceDuration.setSeconds(Math.floor(data.sourceDuration / 1000));
+        sourceDuration.setNanos((data.sourceDuration % 1000) * 1e6);
+        m.setSourceduration(sourceDuration);
         
-        const backendDurationPerItem = new Duration();
-        backendDurationPerItem.setSeconds(Math.floor(data.backendDurationPerItem / 1000));
-        backendDurationPerItem.setNanos((data.backendDurationPerItem % 1000) * 1e6);
-        m.setBackenddurationperitem(backendDurationPerItem);
-
-        m.setBackendpackage(data.backendPackage);
+        const sourceDurationPerItem = new Duration();
+        sourceDurationPerItem.setSeconds(Math.floor(data.sourceDurationPerItem / 1000));
+        sourceDurationPerItem.setNanos((data.sourceDurationPerItem % 1000) * 1e6);
+        m.setSourcedurationperitem(sourceDurationPerItem);
 
         return m;
     }
