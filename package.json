@@ -1,5 +1,5 @@
 {
-  "name": "@dylanratcliffe/sdp",
+  "name": "@overmindtech/sdp",
   "version": "0.0.37",
   "description": "Javascript and Typescript libraries for the State Description Protocol",
   "main": "index.js",
@@ -31,10 +31,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dylanratcliffe/sdp.js.git"
+    "url": "git+https://github.com/overmindtech/sdp-js.git"
   },
   "bugs": {
-    "url": "https://github.com/dylanratcliffe/sdp.js/issues"
+    "url": "https://github.com/overmindtech/sdp-js/issues"
   },
-  "homepage": "https://github.com/dylanratcliffe/sdp.js#readme"
+  "homepage": "https://github.com/overmindtech/sdp-js#readme"
 }

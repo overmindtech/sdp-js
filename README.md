@@ -1,6 +1,6 @@
 # sdp.js
 
-JavaScript libraries for the [SDP](https://github.com/dylanratcliffe/sdp) protocol.
+JavaScript libraries for the [SDP](https://github.com/overmindtech/sdp) protocol.
 
 ## Developing
 
