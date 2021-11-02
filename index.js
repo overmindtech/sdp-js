@@ -83,7 +83,7 @@ var Util;
      * @returns The hash as a string
      */
     function getHash(object) {
-        var bytes = sha1_1.default(getGloballyuniquename(object), {
+        var bytes = (0, sha1_1.default)(getGloballyuniquename(object), {
             asBytes: true,
         });
         var base32String = base32EncodeCustom(bytes);
@@ -527,7 +527,7 @@ function convertRequestMethod(method) {
 function base32EncodeCustom(data) {
     var alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEF';
     var padding = false;
-    var view = to_data_view_1.default(data);
+    var view = (0, to_data_view_1.default)(data);
     var bits = 0;
     var value = 0;
     var output = '';
