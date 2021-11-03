@@ -476,7 +476,7 @@ export class RequestProgress {
     async waitForCompletion(timeoutMs: number = 3000): Promise<string> {
         // How often to check for done-ness
         const doneCheckIntervalMs = 100;
-        var doneChecker: NodeJS.Timeout
+        var doneChecker: number
 
         // Create the timeout promise
         const timeout = new Promise<string>(resolve => setTimeout(resolve, timeoutMs, "timeout"));

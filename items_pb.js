@@ -1406,7 +1406,8 @@ proto.Metadata.toObject = function(includeInstance, msg) {
     sourcerequest: (f = msg.getSourcerequest()) && proto.ItemRequest.toObject(includeInstance, f),
     timestamp: (f = msg.getTimestamp()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     sourceduration: (f = msg.getSourceduration()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
-    sourcedurationperitem: (f = msg.getSourcedurationperitem()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f)
+    sourcedurationperitem: (f = msg.getSourcedurationperitem()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
+    hidden: jspb.Message.getBooleanFieldWithDefault(msg, 7, false)
   };
 
   if (includeInstance) {
@@ -1466,6 +1467,10 @@ proto.Metadata.deserializeBinaryFromReader = function(msg, reader) {
       var value = new google_protobuf_duration_pb.Duration;
       reader.readMessage(value,google_protobuf_duration_pb.Duration.deserializeBinaryFromReader);
       msg.setSourcedurationperitem(value);
+      break;
+    case 7:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setHidden(value);
       break;
     default:
       reader.skipField();
@@ -1533,6 +1538,13 @@ proto.Metadata.serializeBinaryToWriter = function(message, writer) {
       6,
       f,
       google_protobuf_duration_pb.Duration.serializeBinaryToWriter
+    );
+  }
+  f = message.getHidden();
+  if (f) {
+    writer.writeBool(
+      7,
+      f
     );
   }
 };
@@ -1701,6 +1713,24 @@ proto.Metadata.prototype.clearSourcedurationperitem = function() {
  */
 proto.Metadata.prototype.hasSourcedurationperitem = function() {
   return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * optional bool hidden = 7;
+ * @return {boolean}
+ */
+proto.Metadata.prototype.getHidden = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 7, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.Metadata} returns this
+ */
+proto.Metadata.prototype.setHidden = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 7, value);
 };
 
 

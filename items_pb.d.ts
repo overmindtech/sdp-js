@@ -198,6 +198,9 @@ export class Metadata extends jspb.Message {
   getSourcedurationperitem(): google_protobuf_duration_pb.Duration | undefined;
   setSourcedurationperitem(value?: google_protobuf_duration_pb.Duration): void;
 
+  getHidden(): boolean;
+  setHidden(value: boolean): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Metadata.AsObject;
   static toObject(includeInstance: boolean, msg: Metadata): Metadata.AsObject;
@@ -215,6 +218,7 @@ export namespace Metadata {
     timestamp?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     sourceduration?: google_protobuf_duration_pb.Duration.AsObject,
     sourcedurationperitem?: google_protobuf_duration_pb.Duration.AsObject,
+    hidden: boolean,
   }
 }
 
