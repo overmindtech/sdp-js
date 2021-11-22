@@ -191,6 +191,7 @@ proto.ItemRequest.toObject = function(includeInstance, msg) {
     query: jspb.Message.getFieldWithDefault(msg, 3, ""),
     linkdepth: jspb.Message.getFieldWithDefault(msg, 4, 0),
     context: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    ignorecache: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
     itemsubject: jspb.Message.getFieldWithDefault(msg, 16, ""),
     responsesubject: jspb.Message.getFieldWithDefault(msg, 17, "")
   };
@@ -248,6 +249,10 @@ proto.ItemRequest.deserializeBinaryFromReader = function(msg, reader) {
     case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.setContext(value);
+      break;
+    case 6:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIgnorecache(value);
       break;
     case 16:
       var value = /** @type {string} */ (reader.readString());
@@ -318,6 +323,13 @@ proto.ItemRequest.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       5,
+      f
+    );
+  }
+  f = message.getIgnorecache();
+  if (f) {
+    writer.writeBool(
+      6,
       f
     );
   }
@@ -425,6 +437,24 @@ proto.ItemRequest.prototype.getContext = function() {
  */
 proto.ItemRequest.prototype.setContext = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional bool ignoreCache = 6;
+ * @return {boolean}
+ */
+proto.ItemRequest.prototype.getIgnorecache = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 6, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.ItemRequest} returns this
+ */
+proto.ItemRequest.prototype.setIgnorecache = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 

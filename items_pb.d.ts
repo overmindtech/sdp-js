@@ -22,6 +22,9 @@ export class ItemRequest extends jspb.Message {
   getContext(): string;
   setContext(value: string): void;
 
+  getIgnorecache(): boolean;
+  setIgnorecache(value: boolean): void;
+
   getItemsubject(): string;
   setItemsubject(value: string): void;
 
@@ -45,6 +48,7 @@ export namespace ItemRequest {
     query: string,
     linkdepth: number,
     context: string,
+    ignorecache: boolean,
     itemsubject: string,
     responsesubject: string,
   }
