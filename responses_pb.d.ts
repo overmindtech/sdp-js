@@ -92,6 +92,7 @@ export namespace ItemRequestError {
     OTHER: 0;
     NOTFOUND: 1;
     NOCONTEXT: 2;
+    TIMEOUT: 3;
   }
 
   export const ErrorType: ErrorTypeMap;

@@ -543,7 +543,8 @@ proto.ItemRequestError.serializeBinaryToWriter = function(message, writer) {
 proto.ItemRequestError.ErrorType = {
   OTHER: 0,
   NOTFOUND: 1,
-  NOCONTEXT: 2
+  NOCONTEXT: 2,
+  TIMEOUT: 3
 };
 
 /**
