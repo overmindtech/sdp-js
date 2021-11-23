@@ -215,6 +215,7 @@ proto.ItemRequest.toObject = function(includeInstance, msg) {
     context: jspb.Message.getFieldWithDefault(msg, 5, ""),
     ignorecache: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
     uuid: msg.getUuid_asB64(),
+    timeout: (f = msg.getTimeout()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
     itemsubject: jspb.Message.getFieldWithDefault(msg, 16, ""),
     responsesubject: jspb.Message.getFieldWithDefault(msg, 17, "")
   };
@@ -280,6 +281,11 @@ proto.ItemRequest.deserializeBinaryFromReader = function(msg, reader) {
     case 7:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setUuid(value);
+      break;
+    case 8:
+      var value = new google_protobuf_duration_pb.Duration;
+      reader.readMessage(value,google_protobuf_duration_pb.Duration.deserializeBinaryFromReader);
+      msg.setTimeout(value);
       break;
     case 16:
       var value = /** @type {string} */ (reader.readString());
@@ -365,6 +371,14 @@ proto.ItemRequest.serializeBinaryToWriter = function(message, writer) {
     writer.writeBytes(
       7,
       f
+    );
+  }
+  f = message.getTimeout();
+  if (f != null) {
+    writer.writeMessage(
+      8,
+      f,
+      google_protobuf_duration_pb.Duration.serializeBinaryToWriter
     );
   }
   f = message.getItemsubject();
@@ -531,6 +545,43 @@ proto.ItemRequest.prototype.getUuid_asU8 = function() {
  */
 proto.ItemRequest.prototype.setUuid = function(value) {
   return jspb.Message.setProto3BytesField(this, 7, value);
+};
+
+
+/**
+ * optional google.protobuf.Duration timeout = 8;
+ * @return {?proto.google.protobuf.Duration}
+ */
+proto.ItemRequest.prototype.getTimeout = function() {
+  return /** @type{?proto.google.protobuf.Duration} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_duration_pb.Duration, 8));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.Duration|undefined} value
+ * @return {!proto.ItemRequest} returns this
+*/
+proto.ItemRequest.prototype.setTimeout = function(value) {
+  return jspb.Message.setWrapperField(this, 8, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.ItemRequest} returns this
+ */
+proto.ItemRequest.prototype.clearTimeout = function() {
+  return this.setTimeout(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.ItemRequest.prototype.hasTimeout = function() {
+  return jspb.Message.getField(this, 8) != null;
 };
 
 

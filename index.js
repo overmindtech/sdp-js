@@ -150,7 +150,7 @@ var Util;
      * @returns A javascript `Date` object
      */
     function toDate(duration) {
-        return new Date((duration.getSeconds() * 1000) + (duration.getNanos() / 1000000));
+        return new Date(toMs(duration));
     }
     Util.toDate = toDate;
     /**
@@ -164,6 +164,10 @@ var Util;
         return d;
     }
     Util.toDuration = toDuration;
+    function toMs(duration) {
+        return (duration.getSeconds() * 1000) + (duration.getNanos() / 1000000);
+    }
+    Util.toMs = toMs;
     /**
      * Create a new `Item` object from a single object
      * @param details The details of the item you want to create
@@ -245,6 +249,10 @@ var Util;
         r.setContext(details.context);
         r.setItemsubject(details.itemSubject);
         r.setResponsesubject(details.responseSubject);
+        r.setUuid(details.UUID);
+        if (typeof details.timeoutMs != 'undefined') {
+            r.setTimeout(Util.toDuration(details.timeoutMs));
+        }
         return r;
     }
     Util.newItemRequest = newItemRequest;

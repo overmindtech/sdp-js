@@ -5,8 +5,7 @@ import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 import { ItemRequestError } from '../responses_pb';
 import { Response } from '..';
 import { NOCONTEXT, OTHERERROR } from './responses';
-import { parse } from 'uuid';
-
+import { v4 as uuidv4, parse as uuidparse } from 'uuid';
 
 describe('Util', function() {
   describe('#getUniqueattributevalue()', function() {
@@ -117,49 +116,52 @@ describe('Util', function() {
   });
 
   describe('#newItemRequest()', function() {
-      const data: Util.ItemRequestData = {
-        type: "person",
-        method: "GET",
-        query: "Sebastian",
-        linkDepth: 10,
-        context: "global",
-        itemSubject: "subject1",
-        responseSubject: "subject3",
-      }
+    const data: Util.ItemRequestData = {
+      type: "person",
+      method: "GET",
+      query: "Sebastian",
+      linkDepth: 10,
+      context: "global",
+      itemSubject: "subject1",
+      responseSubject: "subject3",
+      UUID: Uint8Array.from(uuidparse(uuidv4())),
+      timeoutMs: 10000,
+    }
 
-      const ir = Util.newItemRequest(data);
+    const ir = Util.newItemRequest(data);
 
-      it('should have the correct Type', () => {
-        assert.strictEqual(ir.getType(), data.type);
-      })
+    it('should have the correct Type', () => {
+      assert.strictEqual(ir.getType(), data.type);
+    })
 
-      it('should have the correct Method', () => {
-        assert.strictEqual(ir.getMethod(), RequestMethod.GET);
-      })
+    it('should have the correct Method', () => {
+      assert.strictEqual(ir.getMethod(), RequestMethod.GET);
+    })
 
-      it('should have the correct Query', () => {
-        assert.strictEqual(ir.getQuery(), data.query);
-      })
+    it('should have the correct Query', () => {
+      assert.strictEqual(ir.getQuery(), data.query);
+    })
 
-      it('should have the correct Linkdepth', () => {
-        assert.strictEqual(ir.getLinkdepth(), data.linkDepth);
-      })
+    it('should have the correct Linkdepth', () => {
+      assert.strictEqual(ir.getLinkdepth(), data.linkDepth);
+    })
 
-      it('should have the correct Context', () => {
-        assert.strictEqual(ir.getContext(), data.context);
-      })
+    it('should have the correct Context', () => {
+      assert.strictEqual(ir.getContext(), data.context);
+    })
 
-      it('should have the correct Itemsubject', () => {
-        assert.strictEqual(ir.getItemsubject(), data.itemSubject);
-      })
+    it('should have the correct Itemsubject', () => {
+      assert.strictEqual(ir.getItemsubject(), data.itemSubject);
+    })
 
-      it('should have the correct Responsesubject', () => {
-        assert.strictEqual(ir.getResponsesubject(), data.responseSubject);
-      })
+    it('should have the correct Responsesubject', () => {
+      assert.strictEqual(ir.getResponsesubject(), data.responseSubject);
+    })
 
   });
 
   describe('#newMetadata()', function() {
+    const uuid = Uint8Array.from(uuidparse(uuidv4()))
     const data: Util.MetadataData = {
       sourceName: "packages",
       sourceRequest: {
@@ -170,6 +172,8 @@ describe('Util', function() {
         query: "*",
         responseSubject: "response",
         type: "package",
+        UUID: uuid,
+        timeoutMs: 10000,
       },
       timestamp: new Date(),
       sourceDuration: 1638,
@@ -193,6 +197,13 @@ describe('Util', function() {
         assert.strictEqual(sr.getQuery(),"*");
         assert.strictEqual(sr.getResponsesubject(),"response");
         assert.strictEqual(sr.getType(),"package");
+        assert.deepStrictEqual(sr.getUuid(), uuid)
+
+        var timeout = sr.getTimeout()
+
+        if (typeof timeout != 'undefined') {
+          assert.strictEqual(Util.toMs(timeout), 10000)
+        }
       } else {
         assert.fail("SourceRequest was undefined")
       }

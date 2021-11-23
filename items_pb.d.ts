@@ -30,6 +30,11 @@ export class ItemRequest extends jspb.Message {
   getUuid_asB64(): string;
   setUuid(value: Uint8Array | string): void;
 
+  hasTimeout(): boolean;
+  clearTimeout(): void;
+  getTimeout(): google_protobuf_duration_pb.Duration | undefined;
+  setTimeout(value?: google_protobuf_duration_pb.Duration): void;
+
   getItemsubject(): string;
   setItemsubject(value: string): void;
 
@@ -55,6 +60,7 @@ export namespace ItemRequest {
     context: string,
     ignorecache: boolean,
     uuid: Uint8Array | string,
+    timeout?: google_protobuf_duration_pb.Duration.AsObject,
     itemsubject: string,
     responsesubject: string,
   }

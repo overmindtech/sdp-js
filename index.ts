@@ -105,7 +105,7 @@ export namespace Util {
      * @returns A javascript `Date` object
      */
     export function toDate(duration: Duration): Date {
-        return new Date((duration.getSeconds() * 1000) + (duration.getNanos() / 1000000));
+        return new Date(toMs(duration));
     }
 
     /**
@@ -117,6 +117,10 @@ export namespace Util {
         d.setSeconds(Math.floor(ms / 1000));
         d.setNanos((ms % 1000) * 1000000);
         return d;
+    }
+
+    export function toMs(duration: Duration): number {
+        return (duration.getSeconds() * 1000) + (duration.getNanos() / 1_000_000)
     }
 
     export type ItemData = {
@@ -231,6 +235,8 @@ export namespace Util {
         context: string,
         itemSubject: string,
         responseSubject: string,
+        UUID: Uint8Array,
+        timeoutMs?: number,
     }
 
     /**
@@ -248,6 +254,11 @@ export namespace Util {
         r.setContext(details.context);
         r.setItemsubject(details.itemSubject);
         r.setResponsesubject(details.responseSubject);
+        r.setUuid(details.UUID);
+        
+        if (typeof details.timeoutMs != 'undefined') {
+            r.setTimeout(Util.toDuration(details.timeoutMs))
+        }
 
         return r;
     }

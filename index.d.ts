@@ -48,6 +48,7 @@ export declare namespace Util {
      * @param ms The number of milliseconds
      */
     function toDuration(ms: number): Duration;
+    function toMs(duration: Duration): number;
     type ItemData = {
         type: string;
         uniqueAttribute: string;
@@ -104,6 +105,8 @@ export declare namespace Util {
         context: string;
         itemSubject: string;
         responseSubject: string;
+        UUID: Uint8Array;
+        timeoutMs?: number;
     };
     /**
      * Creates a new ItemRequest object from a single object
