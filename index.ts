@@ -6,13 +6,14 @@ export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestM
 export { Response } from './responses_pb';
 
 // Import things we need for the Util namespace
-import { Reference, Item, ItemAttributes, Metadata, ItemRequest, RequestMethod, RequestMethodMap } from './items_pb';
+import { Reference, Item, ItemAttributes, Metadata, ItemRequest, RequestMethod, RequestMethodMap, CancelItemRequest } from './items_pb';
 import { Response, ItemRequestError } from './responses_pb';
 import sha1 from 'sha1';
 import toDataView from 'to-data-view';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue, Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
+import { parse as uuidParse } from 'uuid';
 
 export namespace Util {
     /**
@@ -300,6 +301,31 @@ export namespace Util {
 
         return r;
     }
+
+    export type CancelItemRequestData = {
+        UUID: string | Uint8Array,
+    }
+
+    /**
+     * Creates a new CancelItemRequest object from given params. Note that the
+     * UUID can be provided as a string e.g.
+     * "bcee962c-ca60-479b-8a96-ab970d878392" or directly uas a Uint8Array
+     * @param details The details you want the new CancelItemRequest object to
+     * have
+     * @returns The new CancelItemRequest object
+     */
+    export function newCancelItemRequest(details: CancelItemRequestData): CancelItemRequest {
+        const c = new CancelItemRequest();
+
+        if (typeof details.UUID == "string") {
+            var buffer = uuidParse(details.UUID);
+            c.setUuid(Uint8Array.from(buffer))
+        } else {
+            c.setUuid(details.UUID)
+        }
+
+        return c;
+    }
 }
 
 // The status of a given responder
@@ -308,6 +334,7 @@ export enum ResponderStatus {
     Stalled,
     Complete,
     Failed,
+    Cancelled,
 }
 
 /**
@@ -441,6 +468,14 @@ export class RequestProgress {
 
     /**
      * 
+     * @returns The number of cancelled responders
+     */
+    numCancelled(): number {
+        return this.countOfStatus(ResponderStatus.Cancelled);
+    }
+
+    /**
+     * 
      * @returns The total number of responders for the query
      */
     numResponders(): number {
@@ -498,10 +533,7 @@ export class RequestProgress {
     }
 
     /**
-     * Processes a response and updates tracking of responders. Note that the
-     * SDP protocol is not currently capable of sending an error as a response.
-     * The response is "DONE" then the error is sent on a different subject.
-     * This means that we need to process errors also using `#processError()`
+     * Processes a response and updates tracking of responders.
      * @param response The response to process
      */
     processResponse(response: Response): void {
@@ -528,6 +560,10 @@ export class RequestProgress {
             case Response.ResponseState.ERROR: {
                 status = ResponderStatus.Failed;
                 responder.error = response.getError()
+                break;
+            }
+            case Response.ResponseState.CANCELLED: {
+                status = ResponderStatus.Cancelled;
                 break;
             }
         }

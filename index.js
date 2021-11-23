@@ -61,6 +61,7 @@ var to_data_view_1 = __importDefault(require("to-data-view"));
 var duration_pb_1 = require("google-protobuf/google/protobuf/duration_pb");
 var struct_pb_1 = require("google-protobuf/google/protobuf/struct_pb");
 var timestamp_pb_1 = require("google-protobuf/google/protobuf/timestamp_pb");
+var uuid_1 = require("uuid");
 var Util;
 (function (Util) {
     /**
@@ -278,6 +279,26 @@ var Util;
         return r;
     }
     Util.newResponse = newResponse;
+    /**
+     * Creates a new CancelItemRequest object from given params. Note that the
+     * UUID can be provided as a string e.g.
+     * "bcee962c-ca60-479b-8a96-ab970d878392" or directly uas a Uint8Array
+     * @param details The details you want the new CancelItemRequest object to
+     * have
+     * @returns The new CancelItemRequest object
+     */
+    function newCancelItemRequest(details) {
+        var c = new items_pb_2.CancelItemRequest();
+        if (typeof details.UUID == "string") {
+            var buffer = (0, uuid_1.parse)(details.UUID);
+            c.setUuid(Uint8Array.from(buffer));
+        }
+        else {
+            c.setUuid(details.UUID);
+        }
+        return c;
+    }
+    Util.newCancelItemRequest = newCancelItemRequest;
 })(Util = exports.Util || (exports.Util = {}));
 // The status of a given responder
 var ResponderStatus;
@@ -286,6 +307,7 @@ var ResponderStatus;
     ResponderStatus[ResponderStatus["Stalled"] = 1] = "Stalled";
     ResponderStatus[ResponderStatus["Complete"] = 2] = "Complete";
     ResponderStatus[ResponderStatus["Failed"] = 3] = "Failed";
+    ResponderStatus[ResponderStatus["Cancelled"] = 4] = "Cancelled";
 })(ResponderStatus = exports.ResponderStatus || (exports.ResponderStatus = {}));
 /**
  * Represents something that is responding to our query
@@ -400,6 +422,13 @@ var RequestProgress = /** @class */ (function () {
     };
     /**
      *
+     * @returns The number of cancelled responders
+     */
+    RequestProgress.prototype.numCancelled = function () {
+        return this.countOfStatus(ResponderStatus.Cancelled);
+    };
+    /**
+     *
      * @returns The total number of responders for the query
      */
     RequestProgress.prototype.numResponders = function () {
@@ -453,10 +482,7 @@ var RequestProgress = /** @class */ (function () {
         });
     };
     /**
-     * Processes a response and updates tracking of responders. Note that the
-     * SDP protocol is not currently capable of sending an error as a response.
-     * The response is "DONE" then the error is sent on a different subject.
-     * This means that we need to process errors also using `#processError()`
+     * Processes a response and updates tracking of responders.
      * @param response The response to process
      */
     RequestProgress.prototype.processResponse = function (response) {
@@ -480,6 +506,10 @@ var RequestProgress = /** @class */ (function () {
             case responses_pb_2.Response.ResponseState.ERROR: {
                 status = ResponderStatus.Failed;
                 responder.error = response.getError();
+                break;
+            }
+            case responses_pb_2.Response.ResponseState.CANCELLED: {
+                status = ResponderStatus.Cancelled;
                 break;
             }
         }

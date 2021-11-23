@@ -25,6 +25,11 @@ export class ItemRequest extends jspb.Message {
   getIgnorecache(): boolean;
   setIgnorecache(value: boolean): void;
 
+  getUuid(): Uint8Array | string;
+  getUuid_asU8(): Uint8Array;
+  getUuid_asB64(): string;
+  setUuid(value: Uint8Array | string): void;
+
   getItemsubject(): string;
   setItemsubject(value: string): void;
 
@@ -49,8 +54,31 @@ export namespace ItemRequest {
     linkdepth: number,
     context: string,
     ignorecache: boolean,
+    uuid: Uint8Array | string,
     itemsubject: string,
     responsesubject: string,
+  }
+}
+
+export class CancelItemRequest extends jspb.Message {
+  getUuid(): Uint8Array | string;
+  getUuid_asU8(): Uint8Array;
+  getUuid_asB64(): string;
+  setUuid(value: Uint8Array | string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CancelItemRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: CancelItemRequest): CancelItemRequest.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: CancelItemRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CancelItemRequest;
+  static deserializeBinaryFromReader(message: CancelItemRequest, reader: jspb.BinaryReader): CancelItemRequest;
+}
+
+export namespace CancelItemRequest {
+  export type AsObject = {
+    uuid: Uint8Array | string,
   }
 }
 

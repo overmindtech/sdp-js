@@ -3,6 +3,9 @@ import * as testData from './items';
 import * as assert from 'assert';
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 import { ItemRequestError } from '../responses_pb';
+import { Response } from '..';
+import { NOCONTEXT, OTHERERROR } from './responses';
+import { parse } from 'uuid';
 
 
 describe('Util', function() {
@@ -276,6 +279,57 @@ describe('Util', function() {
       assert.strictEqual(i.getLinkeditemsList(), data.linkedItems)
     })
 
+  });
+
+  describe('#newResponse()', function() {
+    const data: Util.ResponseData = {
+      responder: "test.context",
+      state: Response.ResponseState.ERROR,
+      error: NOCONTEXT,
+      nextUpdateInMs: 0
+    }
+
+    const r = Util.newResponse(data);
+
+    it('should have the correct Responder', () => {
+      assert.strictEqual(r.getResponder(), "test.context")
+    })
+
+    it('should have the correct State', () => {
+      assert.strictEqual(r.getState(), Response.ResponseState.ERROR)
+    })
+
+    it('should have the correct Error', () => {
+      assert.strictEqual(r.getError(), NOCONTEXT)
+    })
+  });
+
+  describe('#newCancelItemRequest()', function() {
+    describe('with a string UUID', function() {
+      const data: Util.CancelItemRequestData = {
+        UUID: "bcee962c-ca60-479b-8a96-ab970d878392",
+      }
+  
+      const c = Util.newCancelItemRequest(data);
+  
+      it('should have the correct UUID', () => {
+        var expected = Uint8Array.from([188, 238, 150, 44, 202, 96, 71, 155, 138, 150, 171, 151, 13, 135, 131, 146])
+        assert.deepStrictEqual(c.getUuid(), expected)
+      })
+    });
+
+    describe('with a binary UUID', function() {
+      const data: Util.CancelItemRequestData = {
+        UUID: Uint8Array.from([188, 238, 150, 44, 202, 96, 71, 155, 138, 150, 171, 151, 13, 135, 131, 146]),
+      }
+  
+      const c = Util.newCancelItemRequest(data);
+  
+      it('should have the correct UUID', () => {
+        var expected = Uint8Array.from([188, 238, 150, 44, 202, 96, 71, 155, 138, 150, 171, 151, 13, 135, 131, 146])
+        assert.deepStrictEqual(c.getUuid(), expected)
+      })
+    });
   });
 
 });

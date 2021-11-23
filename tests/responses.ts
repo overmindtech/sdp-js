@@ -32,6 +32,11 @@ const COMPLETE = Util.newResponse({
     nextUpdateInMs: 100,
 })
 
+const CANCELLED = Util.newResponse({
+    responder: "test.context",
+    state: Response.ResponseState.CANCELLED,
+})
+
 const NOTFOUNDERROR = Util.newResponse({
     responder: "test.context",
     state: Response.ResponseState.ERROR,
@@ -55,5 +60,7 @@ export {
     COMPLETE,
     NOTFOUNDERROR,
     NOCONTEXTERROR,
-    OTHERERROR
+    OTHERERROR,
+    NOCONTEXT,
+    CANCELLED
 }

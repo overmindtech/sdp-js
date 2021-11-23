@@ -98,6 +98,7 @@ proto.Response.toObject = function(includeInstance, msg) {
     responder: jspb.Message.getFieldWithDefault(msg, 1, ""),
     state: jspb.Message.getFieldWithDefault(msg, 2, 0),
     nextupdatein: (f = msg.getNextupdatein()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
+    itemrequestuuid: msg.getItemrequestuuid_asB64(),
     error: (f = msg.getError()) && proto.ItemRequestError.toObject(includeInstance, f)
   };
 
@@ -147,6 +148,10 @@ proto.Response.deserializeBinaryFromReader = function(msg, reader) {
       var value = new google_protobuf_duration_pb.Duration;
       reader.readMessage(value,google_protobuf_duration_pb.Duration.deserializeBinaryFromReader);
       msg.setNextupdatein(value);
+      break;
+    case 4:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setItemrequestuuid(value);
       break;
     case 16:
       var value = new proto.ItemRequestError;
@@ -204,6 +209,13 @@ proto.Response.serializeBinaryToWriter = function(message, writer) {
       google_protobuf_duration_pb.Duration.serializeBinaryToWriter
     );
   }
+  f = message.getItemrequestuuid_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      4,
+      f
+    );
+  }
   f = message.getError();
   if (f != null) {
     writer.writeMessage(
@@ -221,7 +233,8 @@ proto.Response.serializeBinaryToWriter = function(message, writer) {
 proto.Response.ResponseState = {
   WORKING: 0,
   COMPLETE: 1,
-  ERROR: 2
+  ERROR: 2,
+  CANCELLED: 3
 };
 
 /**
@@ -298,6 +311,48 @@ proto.Response.prototype.hasNextupdatein = function() {
 
 
 /**
+ * optional bytes itemRequestUUID = 4;
+ * @return {!(string|Uint8Array)}
+ */
+proto.Response.prototype.getItemrequestuuid = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * optional bytes itemRequestUUID = 4;
+ * This is a type-conversion wrapper around `getItemrequestuuid()`
+ * @return {string}
+ */
+proto.Response.prototype.getItemrequestuuid_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getItemrequestuuid()));
+};
+
+
+/**
+ * optional bytes itemRequestUUID = 4;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getItemrequestuuid()`
+ * @return {!Uint8Array}
+ */
+proto.Response.prototype.getItemrequestuuid_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getItemrequestuuid()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.Response} returns this
+ */
+proto.Response.prototype.setItemrequestuuid = function(value) {
+  return jspb.Message.setProto3BytesField(this, 4, value);
+};
+
+
+/**
  * optional ItemRequestError error = 16;
  * @return {?proto.ItemRequestError}
  */
@@ -366,6 +421,7 @@ proto.ItemRequestError.prototype.toObject = function(opt_includeInstance) {
  */
 proto.ItemRequestError.toObject = function(includeInstance, msg) {
   var f, obj = {
+    itemrequestuuid: msg.getItemrequestuuid_asB64(),
     errortype: jspb.Message.getFieldWithDefault(msg, 2, 0),
     errorstring: jspb.Message.getFieldWithDefault(msg, 3, ""),
     context: jspb.Message.getFieldWithDefault(msg, 4, "")
@@ -405,6 +461,10 @@ proto.ItemRequestError.deserializeBinaryFromReader = function(msg, reader) {
     }
     var field = reader.getFieldNumber();
     switch (field) {
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setItemrequestuuid(value);
+      break;
     case 2:
       var value = /** @type {!proto.ItemRequestError.ErrorType} */ (reader.readEnum());
       msg.setErrortype(value);
@@ -446,6 +506,13 @@ proto.ItemRequestError.prototype.serializeBinary = function() {
  */
 proto.ItemRequestError.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getItemrequestuuid_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      1,
+      f
+    );
+  }
   f = message.getErrortype();
   if (f !== 0.0) {
     writer.writeEnum(
@@ -478,6 +545,48 @@ proto.ItemRequestError.ErrorType = {
   NOTFOUND: 1,
   NOCONTEXT: 2
 };
+
+/**
+ * optional bytes itemRequestUUID = 1;
+ * @return {!(string|Uint8Array)}
+ */
+proto.ItemRequestError.prototype.getItemrequestuuid = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * optional bytes itemRequestUUID = 1;
+ * This is a type-conversion wrapper around `getItemrequestuuid()`
+ * @return {string}
+ */
+proto.ItemRequestError.prototype.getItemrequestuuid_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getItemrequestuuid()));
+};
+
+
+/**
+ * optional bytes itemRequestUUID = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getItemrequestuuid()`
+ * @return {!Uint8Array}
+ */
+proto.ItemRequestError.prototype.getItemrequestuuid_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getItemrequestuuid()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.ItemRequestError} returns this
+ */
+proto.ItemRequestError.prototype.setItemrequestuuid = function(value) {
+  return jspb.Message.setProto3BytesField(this, 1, value);
+};
+
 
 /**
  * optional ErrorType errorType = 2;

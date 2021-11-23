@@ -16,6 +16,11 @@ export class Response extends jspb.Message {
   getNextupdatein(): google_protobuf_duration_pb.Duration | undefined;
   setNextupdatein(value?: google_protobuf_duration_pb.Duration): void;
 
+  getItemrequestuuid(): Uint8Array | string;
+  getItemrequestuuid_asU8(): Uint8Array;
+  getItemrequestuuid_asB64(): string;
+  setItemrequestuuid(value: Uint8Array | string): void;
+
   hasError(): boolean;
   clearError(): void;
   getError(): ItemRequestError | undefined;
@@ -36,6 +41,7 @@ export namespace Response {
     responder: string,
     state: Response.ResponseStateMap[keyof Response.ResponseStateMap],
     nextupdatein?: google_protobuf_duration_pb.Duration.AsObject,
+    itemrequestuuid: Uint8Array | string,
     error?: ItemRequestError.AsObject,
   }
 
@@ -43,12 +49,18 @@ export namespace Response {
     WORKING: 0;
     COMPLETE: 1;
     ERROR: 2;
+    CANCELLED: 3;
   }
 
   export const ResponseState: ResponseStateMap;
 }
 
 export class ItemRequestError extends jspb.Message {
+  getItemrequestuuid(): Uint8Array | string;
+  getItemrequestuuid_asU8(): Uint8Array;
+  getItemrequestuuid_asB64(): string;
+  setItemrequestuuid(value: Uint8Array | string): void;
+
   getErrortype(): ItemRequestError.ErrorTypeMap[keyof ItemRequestError.ErrorTypeMap];
   setErrortype(value: ItemRequestError.ErrorTypeMap[keyof ItemRequestError.ErrorTypeMap]): void;
 
@@ -70,6 +82,7 @@ export class ItemRequestError extends jspb.Message {
 
 export namespace ItemRequestError {
   export type AsObject = {
+    itemrequestuuid: Uint8Array | string,
     errortype: ItemRequestError.ErrorTypeMap[keyof ItemRequestError.ErrorTypeMap],
     errorstring: string,
     context: string,

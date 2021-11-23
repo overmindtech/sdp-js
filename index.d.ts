@@ -1,6 +1,6 @@
 export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './items_pb';
 export { Response } from './responses_pb';
-import { Reference, Item, ItemAttributes, Metadata, ItemRequest } from './items_pb';
+import { Reference, Item, ItemAttributes, Metadata, ItemRequest, CancelItemRequest } from './items_pb';
 import { Response, ItemRequestError } from './responses_pb';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue } from 'google-protobuf/google/protobuf/struct_pb';
@@ -134,12 +134,25 @@ export declare namespace Util {
      * @returns The new Response object
      */
     function newResponse(details: ResponseData): Response;
+    type CancelItemRequestData = {
+        UUID: string | Uint8Array;
+    };
+    /**
+     * Creates a new CancelItemRequest object from given params. Note that the
+     * UUID can be provided as a string e.g.
+     * "bcee962c-ca60-479b-8a96-ab970d878392" or directly uas a Uint8Array
+     * @param details The details you want the new CancelItemRequest object to
+     * have
+     * @returns The new CancelItemRequest object
+     */
+    function newCancelItemRequest(details: CancelItemRequestData): CancelItemRequest;
 }
 export declare enum ResponderStatus {
     Working = 0,
     Stalled = 1,
     Complete = 2,
-    Failed = 3
+    Failed = 3,
+    Cancelled = 4
 }
 /**
  * Represents something that is responding to our query
@@ -197,6 +210,11 @@ export declare class RequestProgress {
     numFailed(): number;
     /**
      *
+     * @returns The number of cancelled responders
+     */
+    numCancelled(): number;
+    /**
+     *
      * @returns The total number of responders for the query
      */
     numResponders(): number;
@@ -218,10 +236,7 @@ export declare class RequestProgress {
      */
     waitForCompletion(timeoutMs?: number): Promise<string>;
     /**
-     * Processes a response and updates tracking of responders. Note that the
-     * SDP protocol is not currently capable of sending an error as a response.
-     * The response is "DONE" then the error is sent on a different subject.
-     * This means that we need to process errors also using `#processError()`
+     * Processes a response and updates tracking of responders.
      * @param response The response to process
      */
     processResponse(response: Response): void;

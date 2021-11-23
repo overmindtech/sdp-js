@@ -46,11 +46,8 @@ describe('RequestProgress', () => {
 
             assert.strictEqual(progress.numWorking(), 0)
         });
-        
-    });
 
-    describe("#processError()", () => {
-        it('marks as failed if failed response', () => {
+        it('marks as failed if FAILED response', () => {
             var progress = new RequestProgress(requests.FIND);
             
             progress.processResponse(responses.WORKING);
@@ -64,7 +61,22 @@ describe('RequestProgress', () => {
             assert.strictEqual(progress.numFailed(), 1);
             assert.strictEqual(progress.allDone(), true);
         });
-    })
+
+        it('marks as done after a CANCELLED response', () => {
+            // Create the progress object
+            var progress = new RequestProgress(requests.FIND);
+
+            progress.processResponse(responses.WORKING);
+
+            assert.strictEqual(progress.numWorking(), 1)
+
+            progress.processResponse(responses.CANCELLED)
+
+            assert.strictEqual(progress.numWorking(), 0)
+            assert.strictEqual(progress.numCancelled(), 1)
+            assert.strictEqual(progress.allDone(), true);
+        });
+    });
 
     describe("#waitForCompletion()", () => {
         it('should complete successfully', async () => {
