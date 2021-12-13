@@ -6,6 +6,11 @@ import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue } from 'google-protobuf/google/protobuf/struct_pb';
 export declare namespace Util {
     /**
+     * Generates a new random UUID
+     * @returns A new UUIDv4 as a Uint8Array
+     */
+    function newUUID(): Uint8Array;
+    /**
      * Gets the globally unique name of an object
      * @param object The object to get the globally unique name from
      * @returns The globally unique name

@@ -8,6 +8,13 @@ import { NOCONTEXT, OTHERERROR } from './responses';
 import { v4 as uuidv4, parse as uuidparse } from 'uuid';
 
 describe('Util', function() {
+  describe('#newUUID', function() {
+    // Does not throw any errors
+    var u1 = Util.newUUID()
+    var u2 = Util.newUUID()
+
+    assert.notStrictEqual(u1, u2);
+  })
   describe('#getUniqueattributevalue()', function() {
     it('should handle an item with a string UAV', function() {
       testData.items.forEach((item: Item) => {

@@ -13,9 +13,17 @@ import toDataView from 'to-data-view';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue, Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
-import { parse as uuidParse } from 'uuid';
+import { parse as uuidParse, v4 as uuidv4 } from 'uuid';
 
 export namespace Util {
+    /**
+     * Generates a new random UUID
+     * @returns A new UUIDv4 as a Uint8Array
+     */
+    export function newUUID(): Uint8Array {
+        return Uint8Array.from(uuidParse(uuidv4()))
+    }
+
     /**
      * Gets the globally unique name of an object
      * @param object The object to get the globally unique name from

@@ -65,6 +65,14 @@ var uuid_1 = require("uuid");
 var Util;
 (function (Util) {
     /**
+     * Generates a new random UUID
+     * @returns A new UUIDv4 as a Uint8Array
+     */
+    function newUUID() {
+        return Uint8Array.from((0, uuid_1.parse)((0, uuid_1.v4)()));
+    }
+    Util.newUUID = newUUID;
+    /**
      * Gets the globally unique name of an object
      * @param object The object to get the globally unique name from
      * @returns The globally unique name
