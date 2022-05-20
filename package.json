@@ -1,6 +1,6 @@
 {
   "name": "@overmindtech/sdp",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Javascript and Typescript libraries for the State Description Protocol",
   "main": "index.js",
   "types": "index.d.ts",
