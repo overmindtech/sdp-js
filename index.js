@@ -365,8 +365,8 @@ var RequestProgress = /** @class */ (function () {
      * stalled, in milliseconds
      */
     function RequestProgress(request, stallCheckIntervalMs) {
-        var _this = this;
         if (stallCheckIntervalMs === void 0) { stallCheckIntervalMs = 500; }
+        var _this = this;
         this.responders = new Map();
         // Tracks the number of things currently being processed so that we can be
         // sure that all processing is complete before returning

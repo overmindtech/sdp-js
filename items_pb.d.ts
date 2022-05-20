@@ -260,6 +260,60 @@ export namespace Metadata {
   }
 }
 
+export class ReverseLinksRequest extends jspb.Message {
+  hasItem(): boolean;
+  clearItem(): void;
+  getItem(): Reference | undefined;
+  setItem(value?: Reference): void;
+
+  hasTimeout(): boolean;
+  clearTimeout(): void;
+  getTimeout(): google_protobuf_duration_pb.Duration | undefined;
+  setTimeout(value?: google_protobuf_duration_pb.Duration): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ReverseLinksRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: ReverseLinksRequest): ReverseLinksRequest.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: ReverseLinksRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ReverseLinksRequest;
+  static deserializeBinaryFromReader(message: ReverseLinksRequest, reader: jspb.BinaryReader): ReverseLinksRequest;
+}
+
+export namespace ReverseLinksRequest {
+  export type AsObject = {
+    item?: Reference.AsObject,
+    timeout?: google_protobuf_duration_pb.Duration.AsObject,
+  }
+}
+
+export class ReverseLinksResponse extends jspb.Message {
+  clearLinkeditemrequestsList(): void;
+  getLinkeditemrequestsList(): Array<ItemRequest>;
+  setLinkeditemrequestsList(value: Array<ItemRequest>): void;
+  addLinkeditemrequests(value?: ItemRequest, index?: number): ItemRequest;
+
+  getError(): string;
+  setError(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ReverseLinksResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: ReverseLinksResponse): ReverseLinksResponse.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: ReverseLinksResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ReverseLinksResponse;
+  static deserializeBinaryFromReader(message: ReverseLinksResponse, reader: jspb.BinaryReader): ReverseLinksResponse;
+}
+
+export namespace ReverseLinksResponse {
+  export type AsObject = {
+    linkeditemrequestsList: Array<ItemRequest.AsObject>,
+    error: string,
+  }
+}
+
 export interface RequestMethodMap {
   GET: 0;
   FIND: 1;
