@@ -2,7 +2,7 @@
 // code
 
 // Export things from other files
-export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './items_pb';
+export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod, CancelItemRequest, ReverseLinksRequest, ReverseLinksResponse } from './items_pb';
 export { Response } from './responses_pb';
 
 // Import things we need for the Util namespace

@@ -41,7 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RequestProgress = exports.Responder = exports.ResponderStatus = exports.Util = exports.Response = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
+exports.RequestProgress = exports.Responder = exports.ResponderStatus = exports.Util = exports.Response = exports.ReverseLinksResponse = exports.ReverseLinksRequest = exports.CancelItemRequest = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
 // Export things from other files
 var items_pb_1 = require("./items_pb");
 Object.defineProperty(exports, "ItemRequest", { enumerable: true, get: function () { return items_pb_1.ItemRequest; } });
@@ -51,6 +51,9 @@ Object.defineProperty(exports, "Items", { enumerable: true, get: function () { r
 Object.defineProperty(exports, "Reference", { enumerable: true, get: function () { return items_pb_1.Reference; } });
 Object.defineProperty(exports, "Metadata", { enumerable: true, get: function () { return items_pb_1.Metadata; } });
 Object.defineProperty(exports, "RequestMethod", { enumerable: true, get: function () { return items_pb_1.RequestMethod; } });
+Object.defineProperty(exports, "CancelItemRequest", { enumerable: true, get: function () { return items_pb_1.CancelItemRequest; } });
+Object.defineProperty(exports, "ReverseLinksRequest", { enumerable: true, get: function () { return items_pb_1.ReverseLinksRequest; } });
+Object.defineProperty(exports, "ReverseLinksResponse", { enumerable: true, get: function () { return items_pb_1.ReverseLinksResponse; } });
 var responses_pb_1 = require("./responses_pb");
 Object.defineProperty(exports, "Response", { enumerable: true, get: function () { return responses_pb_1.Response; } });
 // Import things we need for the Util namespace

@@ -1,4 +1,4 @@
-export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod } from './items_pb';
+export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod, CancelItemRequest, ReverseLinksRequest, ReverseLinksResponse } from './items_pb';
 export { Response } from './responses_pb';
 import { Reference, Item, ItemAttributes, Metadata, ItemRequest, CancelItemRequest } from './items_pb';
 import { Response, ItemRequestError } from './responses_pb';
