@@ -12,7 +12,6 @@
   "author": "Dylan Ratcliffe",
   "license": "ISC",
   "dependencies": {
-    "base32-encoding": "^1.0.0",
     "google-protobuf": "^3.15.6",
     "sha1": "^1.1.1",
     "to-data-view": "^1.1.0",
