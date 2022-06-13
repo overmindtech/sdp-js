@@ -38,6 +38,18 @@ describe('Util', function() {
 
     
   });
+  describe('#getHash()', function() {
+    it('should work for items', function() {
+      var hash = Util.getHash(testData.dylan);
+      assert.notStrictEqual(hash, "");
+    })
+
+    it('should work for references', function() {
+      var ref = Util.getReference(testData.dylan);
+      var hash = Util.getHash(ref);
+      assert.notStrictEqual(hash, "");
+    })
+  });
 
   describe('#toDuration()', function() {
     it('should handle nice round numbers', () => {
