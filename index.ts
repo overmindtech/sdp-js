@@ -634,16 +634,23 @@ function convertRequestMethod(method: "GET" | "FIND" | "SEARCH"): RequestMethodM
 
 // This is a copied and modified version of
 // https://github.com/LinusU/base32-encode made to support my custom encoding
-function base32EncodeCustom (data: Uint8Array | ArrayBuffer | Int8Array | Uint8ClampedArray) {
+function base32EncodeCustom (data: Uint8Array): string {
     const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEF'
     const padding = false;
-    const view = toDataView(data)
+
+    // For reasons that I cannot possibly fathom, it's possible (likely) that we
+    // can be passed a Uint8Array that is not an instance of Uint8Array. Sounds
+    // dumb right? Yes, yes it does. Someone smarter than me can probably
+    // explain how this can be justified but it makes no sense to me, Reference:
+    // https://medium.com/@simonwarta/limitations-of-the-instanceof-operator-f4bcdbe7a400
+    const actualData = new Uint8Array(data);
+    const view = toDataView(actualData)
   
     let bits = 0
     let value = 0
     let output = ''
   
-    for (var i = 0; i < view.byteLength; i++) {
+    for (let i = 0; i < view.byteLength; i++) {
       value = (value << 8) | view.getUint8(i)
       bits += 8
   

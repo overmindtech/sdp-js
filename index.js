@@ -576,7 +576,13 @@ function convertRequestMethod(method) {
 function base32EncodeCustom(data) {
     var alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEF';
     var padding = false;
-    var view = (0, to_data_view_1.default)(data);
+    // For reasons that I cannot possibly fathom, it's possible (likely) that we
+    // can be passed a Uint8Array that is not an instance of Uint8Array. Sounds
+    // dumb right? Yes, yes it does. Someone smarter than me can probably
+    // explain how this can be justified but it makes no sense to me, Reference:
+    // https://medium.com/@simonwarta/limitations-of-the-instanceof-operator-f4bcdbe7a400
+    var actualData = new Uint8Array(data);
+    var view = (0, to_data_view_1.default)(actualData);
     var bits = 0;
     var value = 0;
     var output = '';
