@@ -7,7 +7,7 @@ export { Response } from './responses_pb';
 
 // Import things we need for the Util namespace
 import { Reference, Item, ItemAttributes, Metadata, ItemRequest, RequestMethod, RequestMethodMap, CancelItemRequest } from './items_pb';
-import { Response, ItemRequestError } from './responses_pb';
+import { Response, ItemRequestError, ResponderStateMap, ResponderState } from './responses_pb';
 import sha1 from 'sha1';
 import toDataView from 'to-data-view';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
@@ -294,7 +294,7 @@ export namespace Util {
 
     export type ResponseData = {
         responder: string,
-        state: Response.ResponseStateMap[keyof Response.ResponseStateMap],
+        state: ResponderStateMap[keyof ResponderStateMap]
         nextUpdateInMs?: number,
         error?: ItemRequestError,
     }
@@ -568,20 +568,20 @@ export class RequestProgress {
 
         // Map states
         switch(response.getState()) {
-            case Response.ResponseState.COMPLETE: {
+            case ResponderState.COMPLETE: {
                 status = ResponderStatus.Complete;
                 break;
             }
-            case Response.ResponseState.WORKING: {
+            case ResponderState.WORKING: {
                 status = ResponderStatus.Working;
                 break;
             }
-            case Response.ResponseState.ERROR: {
+            case ResponderState.ERROR: {
                 status = ResponderStatus.Failed;
                 responder.error = response.getError()
                 break;
             }
-            case Response.ResponseState.CANCELLED: {
+            case ResponderState.CANCELLED: {
                 status = ResponderStatus.Cancelled;
                 break;
             }

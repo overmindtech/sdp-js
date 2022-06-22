@@ -1,7 +1,7 @@
 export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod, CancelItemRequest, ReverseLinksRequest, ReverseLinksResponse } from './items_pb';
 export { Response } from './responses_pb';
 import { Reference, Item, ItemAttributes, Metadata, ItemRequest, CancelItemRequest } from './items_pb';
-import { Response, ItemRequestError } from './responses_pb';
+import { Response, ItemRequestError, ResponderStateMap } from './responses_pb';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue } from 'google-protobuf/google/protobuf/struct_pb';
 export declare namespace Util {
@@ -132,7 +132,7 @@ export declare namespace Util {
     function newReference(details: ReferenceData): Reference;
     type ResponseData = {
         responder: string;
-        state: Response.ResponseStateMap[keyof Response.ResponseStateMap];
+        state: ResponderStateMap[keyof ResponderStateMap];
         nextUpdateInMs?: number;
         error?: ItemRequestError;
     };

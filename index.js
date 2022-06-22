@@ -514,20 +514,20 @@ var RequestProgress = /** @class */ (function () {
         var responder = this.responders.get(responderName) || new Responder(responderName);
         // Map states
         switch (response.getState()) {
-            case responses_pb_2.Response.ResponseState.COMPLETE: {
+            case responses_pb_2.ResponderState.COMPLETE: {
                 status = ResponderStatus.Complete;
                 break;
             }
-            case responses_pb_2.Response.ResponseState.WORKING: {
+            case responses_pb_2.ResponderState.WORKING: {
                 status = ResponderStatus.Working;
                 break;
             }
-            case responses_pb_2.Response.ResponseState.ERROR: {
+            case responses_pb_2.ResponderState.ERROR: {
                 status = ResponderStatus.Failed;
                 responder.error = response.getError();
                 break;
             }
-            case responses_pb_2.Response.ResponseState.CANCELLED: {
+            case responses_pb_2.ResponderState.CANCELLED: {
                 status = ResponderStatus.Cancelled;
                 break;
             }
