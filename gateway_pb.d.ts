@@ -12,11 +12,17 @@ export class GatewayRequest extends jspb.Message {
   getRequest(): items_pb.ItemRequest | undefined;
   setRequest(value?: items_pb.ItemRequest): void;
 
+  hasCancel(): boolean;
+  clearCancel(): void;
+  getCancel(): items_pb.CancelItemRequest | undefined;
+  setCancel(value?: items_pb.CancelItemRequest): void;
+
   hasMinstatusinterval(): boolean;
   clearMinstatusinterval(): void;
   getMinstatusinterval(): google_protobuf_duration_pb.Duration | undefined;
   setMinstatusinterval(value?: google_protobuf_duration_pb.Duration): void;
 
+  getRequestTypeCase(): GatewayRequest.RequestTypeCase;
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GatewayRequest.AsObject;
   static toObject(includeInstance: boolean, msg: GatewayRequest): GatewayRequest.AsObject;
@@ -30,7 +36,14 @@ export class GatewayRequest extends jspb.Message {
 export namespace GatewayRequest {
   export type AsObject = {
     request?: items_pb.ItemRequest.AsObject,
+    cancel?: items_pb.CancelItemRequest.AsObject,
     minstatusinterval?: google_protobuf_duration_pb.Duration.AsObject,
+  }
+
+  export enum RequestTypeCase {
+    REQUEST_TYPE_NOT_SET = 0,
+    REQUEST = 1,
+    CANCEL = 3,
   }
 }
 
@@ -45,10 +58,20 @@ export class GatewayResponse extends jspb.Message {
   getNewedge(): items_pb.Edge | undefined;
   setNewedge(value?: items_pb.Edge): void;
 
+  hasNewitemrequesterror(): boolean;
+  clearNewitemrequesterror(): void;
+  getNewitemrequesterror(): responses_pb.ItemRequestError | undefined;
+  setNewitemrequesterror(value?: responses_pb.ItemRequestError): void;
+
   hasStatus(): boolean;
   clearStatus(): void;
   getStatus(): GatewayRequestStatus | undefined;
   setStatus(value?: GatewayRequestStatus): void;
+
+  hasError(): boolean;
+  clearError(): void;
+  getError(): string;
+  setError(value: string): void;
 
   getResponseTypeCase(): GatewayResponse.ResponseTypeCase;
   serializeBinary(): Uint8Array;
@@ -65,22 +88,24 @@ export namespace GatewayResponse {
   export type AsObject = {
     newitem?: items_pb.Item.AsObject,
     newedge?: items_pb.Edge.AsObject,
+    newitemrequesterror?: responses_pb.ItemRequestError.AsObject,
     status?: GatewayRequestStatus.AsObject,
+    error: string,
   }
 
   export enum ResponseTypeCase {
     RESPONSE_TYPE_NOT_SET = 0,
     NEWITEM = 2,
     NEWEDGE = 3,
+    NEWITEMREQUESTERROR = 6,
     STATUS = 4,
+    ERROR = 5,
   }
 }
 
 export class GatewayRequestStatus extends jspb.Message {
   getResponderstatesMap(): jspb.Map<string, responses_pb.ResponderState[keyof responses_pb.ResponderState]>;
   clearResponderstatesMap(): void;
-  getRespondererrorsMap(): jspb.Map<string, responses_pb.ItemRequestError>;
-  clearRespondererrorsMap(): void;
   hasSummary(): boolean;
   clearSummary(): void;
   getSummary(): GatewayRequestStatus.Summary | undefined;
@@ -99,7 +124,6 @@ export class GatewayRequestStatus extends jspb.Message {
 export namespace GatewayRequestStatus {
   export type AsObject = {
     responderstatesMap: Array<[string, responses_pb.ResponderState[keyof responses_pb.ResponderState]]>,
-    respondererrorsMap: Array<[string, responses_pb.ItemRequestError.AsObject]>,
     summary?: GatewayRequestStatus.Summary.AsObject,
   }
 
@@ -113,8 +137,8 @@ export namespace GatewayRequestStatus {
     getComplete(): number;
     setComplete(value: number): void;
 
-    getFailed(): number;
-    setFailed(value: number): void;
+    getError(): number;
+    setError(value: number): void;
 
     getCancelled(): number;
     setCancelled(value: number): void;
@@ -137,7 +161,7 @@ export namespace GatewayRequestStatus {
       working: number,
       stalled: number,
       complete: number,
-      failed: number,
+      error: number,
       cancelled: number,
       responders: number,
     }

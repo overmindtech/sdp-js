@@ -134,7 +134,6 @@ export declare namespace Util {
         responder: string;
         state: ResponderStateMap[keyof ResponderStateMap];
         nextUpdateInMs?: number;
-        error?: ItemRequestError;
     };
     /**
      * Creates a new Response object from a single object

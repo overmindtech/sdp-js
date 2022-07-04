@@ -292,9 +292,6 @@ var Util;
         if (typeof details.nextUpdateInMs != 'undefined') {
             r.setNextupdatein(Util.toDuration(details.nextUpdateInMs));
         }
-        if (typeof details.error != 'undefined') {
-            r.setError(details.error);
-        }
         return r;
     }
     Util.newResponse = newResponse;
@@ -524,11 +521,14 @@ var RequestProgress = /** @class */ (function () {
             }
             case responses_pb_2.ResponderState.ERROR: {
                 status = ResponderStatus.Failed;
-                responder.error = response.getError();
                 break;
             }
             case responses_pb_2.ResponderState.CANCELLED: {
                 status = ResponderStatus.Cancelled;
+                break;
+            }
+            default: {
+                status = ResponderStatus.Stalled;
                 break;
             }
         }

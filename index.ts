@@ -296,7 +296,6 @@ export namespace Util {
         responder: string,
         state: ResponderStateMap[keyof ResponderStateMap]
         nextUpdateInMs?: number,
-        error?: ItemRequestError,
     }
 
     /**
@@ -312,10 +311,6 @@ export namespace Util {
 
         if (typeof details.nextUpdateInMs != 'undefined') {
             r.setNextupdatein(Util.toDuration(details.nextUpdateInMs));
-        }
-
-        if (typeof details.error != 'undefined') {
-            r.setError(details.error);
         }
 
         return r;
@@ -578,11 +573,14 @@ export class RequestProgress {
             }
             case ResponderState.ERROR: {
                 status = ResponderStatus.Failed;
-                responder.error = response.getError()
                 break;
             }
             case ResponderState.CANCELLED: {
                 status = ResponderStatus.Cancelled;
+                break;
+            }
+            default: {
+                status = ResponderStatus.Stalled
                 break;
             }
         }

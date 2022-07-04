@@ -3,8 +3,6 @@ import * as testData from './items';
 import * as assert from 'assert';
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 import { ItemRequestError, ResponderState } from '../responses_pb';
-import { Response } from '..';
-import { NOCONTEXT, OTHERERROR } from './responses';
 import { v4 as uuidv4, parse as uuidparse } from 'uuid';
 
 describe('Util', function() {
@@ -315,7 +313,6 @@ describe('Util', function() {
     const data: Util.ResponseData = {
       responder: "test.context",
       state: ResponderState.ERROR,
-      error: NOCONTEXT,
       nextUpdateInMs: 0
     }
 
@@ -327,10 +324,6 @@ describe('Util', function() {
 
     it('should have the correct State', () => {
       assert.strictEqual(r.getState(), ResponderState.ERROR)
-    })
-
-    it('should have the correct Error', () => {
-      assert.strictEqual(r.getError(), NOCONTEXT)
     })
   });
 

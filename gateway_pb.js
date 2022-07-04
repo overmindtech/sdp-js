@@ -28,6 +28,7 @@ goog.object.extend(proto, responses_pb);
 var google_protobuf_duration_pb = require('google-protobuf/google/protobuf/duration_pb.js');
 goog.object.extend(proto, google_protobuf_duration_pb);
 goog.exportSymbol('proto.GatewayRequest', null, global);
+goog.exportSymbol('proto.GatewayRequest.RequestTypeCase', null, global);
 goog.exportSymbol('proto.GatewayRequestStatus', null, global);
 goog.exportSymbol('proto.GatewayRequestStatus.Summary', null, global);
 goog.exportSymbol('proto.GatewayResponse', null, global);
@@ -43,7 +44,7 @@ goog.exportSymbol('proto.GatewayResponse.ResponseTypeCase', null, global);
  * @constructor
  */
 proto.GatewayRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.GatewayRequest.oneofGroups_);
 };
 goog.inherits(proto.GatewayRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -117,6 +118,32 @@ if (goog.DEBUG && !COMPILED) {
   proto.GatewayRequestStatus.Summary.displayName = 'proto.GatewayRequestStatus.Summary';
 }
 
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.GatewayRequest.oneofGroups_ = [[1,3]];
+
+/**
+ * @enum {number}
+ */
+proto.GatewayRequest.RequestTypeCase = {
+  REQUEST_TYPE_NOT_SET: 0,
+  REQUEST: 1,
+  CANCEL: 3
+};
+
+/**
+ * @return {proto.GatewayRequest.RequestTypeCase}
+ */
+proto.GatewayRequest.prototype.getRequestTypeCase = function() {
+  return /** @type {proto.GatewayRequest.RequestTypeCase} */(jspb.Message.computeOneofCase(this, proto.GatewayRequest.oneofGroups_[0]));
+};
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -149,6 +176,7 @@ proto.GatewayRequest.prototype.toObject = function(opt_includeInstance) {
 proto.GatewayRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     request: (f = msg.getRequest()) && items_pb.ItemRequest.toObject(includeInstance, f),
+    cancel: (f = msg.getCancel()) && items_pb.CancelItemRequest.toObject(includeInstance, f),
     minstatusinterval: (f = msg.getMinstatusinterval()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f)
   };
 
@@ -190,6 +218,11 @@ proto.GatewayRequest.deserializeBinaryFromReader = function(msg, reader) {
       var value = new items_pb.ItemRequest;
       reader.readMessage(value,items_pb.ItemRequest.deserializeBinaryFromReader);
       msg.setRequest(value);
+      break;
+    case 3:
+      var value = new items_pb.CancelItemRequest;
+      reader.readMessage(value,items_pb.CancelItemRequest.deserializeBinaryFromReader);
+      msg.setCancel(value);
       break;
     case 2:
       var value = new google_protobuf_duration_pb.Duration;
@@ -233,6 +266,14 @@ proto.GatewayRequest.serializeBinaryToWriter = function(message, writer) {
       items_pb.ItemRequest.serializeBinaryToWriter
     );
   }
+  f = message.getCancel();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      items_pb.CancelItemRequest.serializeBinaryToWriter
+    );
+  }
   f = message.getMinstatusinterval();
   if (f != null) {
     writer.writeMessage(
@@ -259,7 +300,7 @@ proto.GatewayRequest.prototype.getRequest = function() {
  * @return {!proto.GatewayRequest} returns this
 */
 proto.GatewayRequest.prototype.setRequest = function(value) {
-  return jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setOneofWrapperField(this, 1, proto.GatewayRequest.oneofGroups_[0], value);
 };
 
 
@@ -278,6 +319,43 @@ proto.GatewayRequest.prototype.clearRequest = function() {
  */
 proto.GatewayRequest.prototype.hasRequest = function() {
   return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional CancelItemRequest cancel = 3;
+ * @return {?proto.CancelItemRequest}
+ */
+proto.GatewayRequest.prototype.getCancel = function() {
+  return /** @type{?proto.CancelItemRequest} */ (
+    jspb.Message.getWrapperField(this, items_pb.CancelItemRequest, 3));
+};
+
+
+/**
+ * @param {?proto.CancelItemRequest|undefined} value
+ * @return {!proto.GatewayRequest} returns this
+*/
+proto.GatewayRequest.prototype.setCancel = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 3, proto.GatewayRequest.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.GatewayRequest} returns this
+ */
+proto.GatewayRequest.prototype.clearCancel = function() {
+  return this.setCancel(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.GatewayRequest.prototype.hasCancel = function() {
+  return jspb.Message.getField(this, 3) != null;
 };
 
 
@@ -327,7 +405,7 @@ proto.GatewayRequest.prototype.hasMinstatusinterval = function() {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.GatewayResponse.oneofGroups_ = [[2,3,4]];
+proto.GatewayResponse.oneofGroups_ = [[2,3,6,4,5]];
 
 /**
  * @enum {number}
@@ -336,7 +414,9 @@ proto.GatewayResponse.ResponseTypeCase = {
   RESPONSE_TYPE_NOT_SET: 0,
   NEWITEM: 2,
   NEWEDGE: 3,
-  STATUS: 4
+  NEWITEMREQUESTERROR: 6,
+  STATUS: 4,
+  ERROR: 5
 };
 
 /**
@@ -379,7 +459,9 @@ proto.GatewayResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     newitem: (f = msg.getNewitem()) && items_pb.Item.toObject(includeInstance, f),
     newedge: (f = msg.getNewedge()) && items_pb.Edge.toObject(includeInstance, f),
-    status: (f = msg.getStatus()) && proto.GatewayRequestStatus.toObject(includeInstance, f)
+    newitemrequesterror: (f = msg.getNewitemrequesterror()) && responses_pb.ItemRequestError.toObject(includeInstance, f),
+    status: (f = msg.getStatus()) && proto.GatewayRequestStatus.toObject(includeInstance, f),
+    error: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
   if (includeInstance) {
@@ -426,10 +508,19 @@ proto.GatewayResponse.deserializeBinaryFromReader = function(msg, reader) {
       reader.readMessage(value,items_pb.Edge.deserializeBinaryFromReader);
       msg.setNewedge(value);
       break;
+    case 6:
+      var value = new responses_pb.ItemRequestError;
+      reader.readMessage(value,responses_pb.ItemRequestError.deserializeBinaryFromReader);
+      msg.setNewitemrequesterror(value);
+      break;
     case 4:
       var value = new proto.GatewayRequestStatus;
       reader.readMessage(value,proto.GatewayRequestStatus.deserializeBinaryFromReader);
       msg.setStatus(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setError(value);
       break;
     default:
       reader.skipField();
@@ -476,12 +567,27 @@ proto.GatewayResponse.serializeBinaryToWriter = function(message, writer) {
       items_pb.Edge.serializeBinaryToWriter
     );
   }
+  f = message.getNewitemrequesterror();
+  if (f != null) {
+    writer.writeMessage(
+      6,
+      f,
+      responses_pb.ItemRequestError.serializeBinaryToWriter
+    );
+  }
   f = message.getStatus();
   if (f != null) {
     writer.writeMessage(
       4,
       f,
       proto.GatewayRequestStatus.serializeBinaryToWriter
+    );
+  }
+  f = /** @type {string} */ (jspb.Message.getField(message, 5));
+  if (f != null) {
+    writer.writeString(
+      5,
+      f
     );
   }
 };
@@ -562,6 +668,43 @@ proto.GatewayResponse.prototype.hasNewedge = function() {
 
 
 /**
+ * optional ItemRequestError newItemRequestError = 6;
+ * @return {?proto.ItemRequestError}
+ */
+proto.GatewayResponse.prototype.getNewitemrequesterror = function() {
+  return /** @type{?proto.ItemRequestError} */ (
+    jspb.Message.getWrapperField(this, responses_pb.ItemRequestError, 6));
+};
+
+
+/**
+ * @param {?proto.ItemRequestError|undefined} value
+ * @return {!proto.GatewayResponse} returns this
+*/
+proto.GatewayResponse.prototype.setNewitemrequesterror = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 6, proto.GatewayResponse.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.GatewayResponse} returns this
+ */
+proto.GatewayResponse.prototype.clearNewitemrequesterror = function() {
+  return this.setNewitemrequesterror(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.GatewayResponse.prototype.hasNewitemrequesterror = function() {
+  return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
  * optional GatewayRequestStatus status = 4;
  * @return {?proto.GatewayRequestStatus}
  */
@@ -598,6 +741,42 @@ proto.GatewayResponse.prototype.hasStatus = function() {
 };
 
 
+/**
+ * optional string error = 5;
+ * @return {string}
+ */
+proto.GatewayResponse.prototype.getError = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.GatewayResponse} returns this
+ */
+proto.GatewayResponse.prototype.setError = function(value) {
+  return jspb.Message.setOneofField(this, 5, proto.GatewayResponse.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.GatewayResponse} returns this
+ */
+proto.GatewayResponse.prototype.clearError = function() {
+  return jspb.Message.setOneofField(this, 5, proto.GatewayResponse.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.GatewayResponse.prototype.hasError = function() {
+  return jspb.Message.getField(this, 5) != null;
+};
+
+
 
 
 
@@ -631,7 +810,6 @@ proto.GatewayRequestStatus.prototype.toObject = function(opt_includeInstance) {
 proto.GatewayRequestStatus.toObject = function(includeInstance, msg) {
   var f, obj = {
     responderstatesMap: (f = msg.getResponderstatesMap()) ? f.toObject(includeInstance, undefined) : [],
-    respondererrorsMap: (f = msg.getRespondererrorsMap()) ? f.toObject(includeInstance, proto.ItemRequestError.toObject) : [],
     summary: (f = msg.getSummary()) && proto.GatewayRequestStatus.Summary.toObject(includeInstance, f)
   };
 
@@ -675,12 +853,6 @@ proto.GatewayRequestStatus.deserializeBinaryFromReader = function(msg, reader) {
         jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readEnum, null, "", 0);
          });
       break;
-    case 2:
-      var value = msg.getRespondererrorsMap();
-      reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.ItemRequestError.deserializeBinaryFromReader, "", new proto.ItemRequestError());
-         });
-      break;
     case 3:
       var value = new proto.GatewayRequestStatus.Summary;
       reader.readMessage(value,proto.GatewayRequestStatus.Summary.deserializeBinaryFromReader);
@@ -718,10 +890,6 @@ proto.GatewayRequestStatus.serializeBinaryToWriter = function(message, writer) {
   f = message.getResponderstatesMap(true);
   if (f && f.getLength() > 0) {
     f.serializeBinary(1, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeEnum);
-  }
-  f = message.getRespondererrorsMap(true);
-  if (f && f.getLength() > 0) {
-    f.serializeBinary(2, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.ItemRequestError.serializeBinaryToWriter);
   }
   f = message.getSummary();
   if (f != null) {
@@ -769,7 +937,7 @@ proto.GatewayRequestStatus.Summary.toObject = function(includeInstance, msg) {
     working: jspb.Message.getFieldWithDefault(msg, 1, 0),
     stalled: jspb.Message.getFieldWithDefault(msg, 2, 0),
     complete: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    failed: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    error: jspb.Message.getFieldWithDefault(msg, 4, 0),
     cancelled: jspb.Message.getFieldWithDefault(msg, 5, 0),
     responders: jspb.Message.getFieldWithDefault(msg, 6, 0)
   };
@@ -822,7 +990,7 @@ proto.GatewayRequestStatus.Summary.deserializeBinaryFromReader = function(msg, r
       break;
     case 4:
       var value = /** @type {number} */ (reader.readInt32());
-      msg.setFailed(value);
+      msg.setError(value);
       break;
     case 5:
       var value = /** @type {number} */ (reader.readInt32());
@@ -882,7 +1050,7 @@ proto.GatewayRequestStatus.Summary.serializeBinaryToWriter = function(message, w
       f
     );
   }
-  f = message.getFailed();
+  f = message.getError();
   if (f !== 0) {
     writer.writeInt32(
       4,
@@ -961,10 +1129,10 @@ proto.GatewayRequestStatus.Summary.prototype.setComplete = function(value) {
 
 
 /**
- * optional int32 failed = 4;
+ * optional int32 error = 4;
  * @return {number}
  */
-proto.GatewayRequestStatus.Summary.prototype.getFailed = function() {
+proto.GatewayRequestStatus.Summary.prototype.getError = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
@@ -973,7 +1141,7 @@ proto.GatewayRequestStatus.Summary.prototype.getFailed = function() {
  * @param {number} value
  * @return {!proto.GatewayRequestStatus.Summary} returns this
  */
-proto.GatewayRequestStatus.Summary.prototype.setFailed = function(value) {
+proto.GatewayRequestStatus.Summary.prototype.setError = function(value) {
   return jspb.Message.setProto3IntField(this, 4, value);
 };
 
@@ -1033,28 +1201,6 @@ proto.GatewayRequestStatus.prototype.getResponderstatesMap = function(opt_noLazy
  */
 proto.GatewayRequestStatus.prototype.clearResponderstatesMap = function() {
   this.getResponderstatesMap().clear();
-  return this;};
-
-
-/**
- * map<string, ItemRequestError> responderErrors = 2;
- * @param {boolean=} opt_noLazyCreate Do not create the map if
- * empty, instead returning `undefined`
- * @return {!jspb.Map<string,!proto.ItemRequestError>}
- */
-proto.GatewayRequestStatus.prototype.getRespondererrorsMap = function(opt_noLazyCreate) {
-  return /** @type {!jspb.Map<string,!proto.ItemRequestError>} */ (
-      jspb.Message.getMapField(this, 2, opt_noLazyCreate,
-      proto.ItemRequestError));
-};
-
-
-/**
- * Clears values from the map. The map will be non-null.
- * @return {!proto.GatewayRequestStatus} returns this
- */
-proto.GatewayRequestStatus.prototype.clearRespondererrorsMap = function() {
-  this.getRespondererrorsMap().clear();
   return this;};
 
 

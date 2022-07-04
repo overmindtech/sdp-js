@@ -21,11 +21,6 @@ export class Response extends jspb.Message {
   getItemrequestuuid_asB64(): string;
   setItemrequestuuid(value: Uint8Array | string): void;
 
-  hasError(): boolean;
-  clearError(): void;
-  getError(): ItemRequestError | undefined;
-  setError(value?: ItemRequestError): void;
-
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Response.AsObject;
   static toObject(includeInstance: boolean, msg: Response): Response.AsObject;
@@ -42,7 +37,6 @@ export namespace Response {
     state: ResponderStateMap[keyof ResponderStateMap],
     nextupdatein?: google_protobuf_duration_pb.Duration.AsObject,
     itemrequestuuid: Uint8Array | string,
-    error?: ItemRequestError.AsObject,
   }
 }
 
@@ -61,6 +55,15 @@ export class ItemRequestError extends jspb.Message {
   getContext(): string;
   setContext(value: string): void;
 
+  getSourcename(): string;
+  setSourcename(value: string): void;
+
+  getItemtype(): string;
+  setItemtype(value: string): void;
+
+  getRespondername(): string;
+  setRespondername(value: string): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ItemRequestError.AsObject;
   static toObject(includeInstance: boolean, msg: ItemRequestError): ItemRequestError.AsObject;
@@ -77,6 +80,9 @@ export namespace ItemRequestError {
     errortype: ItemRequestError.ErrorTypeMap[keyof ItemRequestError.ErrorTypeMap],
     errorstring: string,
     context: string,
+    sourcename: string,
+    itemtype: string,
+    respondername: string,
   }
 
   export interface ErrorTypeMap {
@@ -94,6 +100,7 @@ export interface ResponderStateMap {
   COMPLETE: 1;
   ERROR: 2;
   CANCELLED: 3;
+  STALLED: 4;
 }
 
 export const ResponderState: ResponderStateMap;

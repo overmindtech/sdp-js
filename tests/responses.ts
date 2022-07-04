@@ -1,5 +1,4 @@
-import { Duration } from "google-protobuf/google/protobuf/duration_pb";
-import { ResponderState, Response } from "../responses_pb";
+import { ResponderState } from "../responses_pb";
 import { ItemRequestError } from "../responses_pb";
 import { Util } from '../index'
 
@@ -37,30 +36,15 @@ const CANCELLED = Util.newResponse({
     state: ResponderState.CANCELLED,
 })
 
-const NOTFOUNDERROR = Util.newResponse({
+const ERROR = Util.newResponse({
     responder: "test.context",
     state: ResponderState.ERROR,
-    error: NOTFOUND,
-})
-
-const NOCONTEXTERROR = Util.newResponse({
-    responder: "test.context",
-    state: ResponderState.ERROR,
-    error: NOCONTEXT,
-})
-
-const OTHERERROR = Util.newResponse({
-    responder: "test.context",
-    state: ResponderState.ERROR,
-    error: OTHER,
 })
 
 export {
     WORKING,
     COMPLETE,
-    NOTFOUNDERROR,
-    NOCONTEXTERROR,
-    OTHERERROR,
+    ERROR,
     NOCONTEXT,
     CANCELLED
 }

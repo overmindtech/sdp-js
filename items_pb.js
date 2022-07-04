@@ -289,7 +289,8 @@ proto.ItemRequest.toObject = function(includeInstance, msg) {
     uuid: msg.getUuid_asB64(),
     timeout: (f = msg.getTimeout()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
     itemsubject: jspb.Message.getFieldWithDefault(msg, 16, ""),
-    responsesubject: jspb.Message.getFieldWithDefault(msg, 17, "")
+    responsesubject: jspb.Message.getFieldWithDefault(msg, 17, ""),
+    errorsubject: jspb.Message.getFieldWithDefault(msg, 18, "")
   };
 
   if (includeInstance) {
@@ -366,6 +367,10 @@ proto.ItemRequest.deserializeBinaryFromReader = function(msg, reader) {
     case 17:
       var value = /** @type {string} */ (reader.readString());
       msg.setResponsesubject(value);
+      break;
+    case 18:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setErrorsubject(value);
       break;
     default:
       reader.skipField();
@@ -464,6 +469,13 @@ proto.ItemRequest.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       17,
+      f
+    );
+  }
+  f = message.getErrorsubject();
+  if (f.length > 0) {
+    writer.writeString(
+      18,
       f
     );
   }
@@ -690,6 +702,24 @@ proto.ItemRequest.prototype.getResponsesubject = function() {
  */
 proto.ItemRequest.prototype.setResponsesubject = function(value) {
   return jspb.Message.setProto3StringField(this, 17, value);
+};
+
+
+/**
+ * optional string errorSubject = 18;
+ * @return {string}
+ */
+proto.ItemRequest.prototype.getErrorsubject = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 18, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.ItemRequest} returns this
+ */
+proto.ItemRequest.prototype.setErrorsubject = function(value) {
+  return jspb.Message.setProto3StringField(this, 18, value);
 };
 
 

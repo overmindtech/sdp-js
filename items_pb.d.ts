@@ -41,6 +41,9 @@ export class ItemRequest extends jspb.Message {
   getResponsesubject(): string;
   setResponsesubject(value: string): void;
 
+  getErrorsubject(): string;
+  setErrorsubject(value: string): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ItemRequest.AsObject;
   static toObject(includeInstance: boolean, msg: ItemRequest): ItemRequest.AsObject;
@@ -63,6 +66,7 @@ export namespace ItemRequest {
     timeout?: google_protobuf_duration_pb.Duration.AsObject,
     itemsubject: string,
     responsesubject: string,
+    errorsubject: string,
   }
 }
 
