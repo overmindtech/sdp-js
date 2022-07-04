@@ -154,20 +154,13 @@ export declare namespace Util {
      */
     function newCancelItemRequest(details: CancelItemRequestData): CancelItemRequest;
 }
-export declare enum ResponderStatus {
-    Working = 0,
-    Stalled = 1,
-    Complete = 2,
-    Failed = 3,
-    Cancelled = 4
-}
 /**
  * Represents something that is responding to our query
  */
 export declare class Responder {
     name: string;
-    lastStatusTime: Date;
-    nextStatusTime: Date | undefined;
+    lastStateTime: Date;
+    nextStateTime: Date | undefined;
     error?: ItemRequestError;
     private _lastStatus;
     /**
@@ -175,8 +168,8 @@ export declare class Responder {
      * @param responder The responder that this responder will respond for
      */
     constructor(name: string);
-    set status(status: ResponderStatus);
-    get status(): ResponderStatus;
+    set state(status: ResponderStateMap[keyof ResponderStateMap]);
+    get state(): ResponderStateMap[keyof ResponderStateMap];
 }
 export declare class RequestProgress {
     responders: Map<string, Responder>;
@@ -190,7 +183,7 @@ export declare class RequestProgress {
      * stalled, in milliseconds
      */
     constructor(request: ItemRequest, stallCheckIntervalMs?: number);
-    private countOfStatus;
+    private countOfState;
     /**
      * Cancels loops that are watching for stalls
      */

@@ -41,7 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RequestProgress = exports.Responder = exports.ResponderStatus = exports.Util = exports.Response = exports.ReverseLinksResponse = exports.ReverseLinksRequest = exports.CancelItemRequest = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
+exports.RequestProgress = exports.Responder = exports.Util = exports.Response = exports.ReverseLinksResponse = exports.ReverseLinksRequest = exports.CancelItemRequest = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
 // Export things from other files
 var items_pb_1 = require("./items_pb");
 Object.defineProperty(exports, "ItemRequest", { enumerable: true, get: function () { return items_pb_1.ItemRequest; } });
@@ -316,15 +316,6 @@ var Util;
     }
     Util.newCancelItemRequest = newCancelItemRequest;
 })(Util = exports.Util || (exports.Util = {}));
-// The status of a given responder
-var ResponderStatus;
-(function (ResponderStatus) {
-    ResponderStatus[ResponderStatus["Working"] = 0] = "Working";
-    ResponderStatus[ResponderStatus["Stalled"] = 1] = "Stalled";
-    ResponderStatus[ResponderStatus["Complete"] = 2] = "Complete";
-    ResponderStatus[ResponderStatus["Failed"] = 3] = "Failed";
-    ResponderStatus[ResponderStatus["Cancelled"] = 4] = "Cancelled";
-})(ResponderStatus = exports.ResponderStatus || (exports.ResponderStatus = {}));
 /**
  * Represents something that is responding to our query
  */
@@ -335,12 +326,12 @@ var Responder = /** @class */ (function () {
      */
     function Responder(name) {
         this.name = "";
-        this.lastStatusTime = new Date();
-        this._lastStatus = ResponderStatus.Complete;
+        this.lastStateTime = new Date();
+        this._lastStatus = responses_pb_2.ResponderState.WORKING;
         this.name = name;
-        this.status = ResponderStatus.Working;
+        this.state = responses_pb_2.ResponderState.WORKING;
     }
-    Object.defineProperty(Responder.prototype, "status", {
+    Object.defineProperty(Responder.prototype, "state", {
         // Get the last status of this responder
         get: function () {
             return this._lastStatus;
@@ -348,7 +339,7 @@ var Responder = /** @class */ (function () {
         // Sets the status and updates the LastStatus to the current time
         set: function (status) {
             // Set last status time to now
-            this.lastStatusTime = new Date();
+            this.lastStateTime = new Date();
             this._lastStatus = status;
         },
         enumerable: false,
@@ -383,20 +374,20 @@ var RequestProgress = /** @class */ (function () {
             var now = new Date();
             // Loop over all results and check for stalls
             _this.responders.forEach(function (responder) {
-                if (typeof responder.nextStatusTime != 'undefined') {
-                    if (responder.nextStatusTime < now) {
+                if (typeof responder.nextStateTime != 'undefined') {
+                    if (responder.nextStateTime < now) {
                         // This means that the responder has stalled
-                        responder.status = ResponderStatus.Stalled;
+                        responder.state = responses_pb_2.ResponderState.STALLED;
                     }
                 }
             });
         }, stallCheckIntervalMs);
     }
-    // Return the count of items with a given status
-    RequestProgress.prototype.countOfStatus = function (status) {
+    // Return the count of items with a given state
+    RequestProgress.prototype.countOfState = function (state) {
         var x = 0;
         this.responders.forEach(function (v) {
-            if (v.status == status) {
+            if (v.state == state) {
                 x++;
             }
         });
@@ -413,35 +404,35 @@ var RequestProgress = /** @class */ (function () {
      * @returns The number of responder still working
      */
     RequestProgress.prototype.numWorking = function () {
-        return this.countOfStatus(ResponderStatus.Working);
+        return this.countOfState(responses_pb_2.ResponderState.WORKING);
     };
     /**
      *
      * @returns The number of stalled responders
      */
     RequestProgress.prototype.numStalled = function () {
-        return this.countOfStatus(ResponderStatus.Stalled);
+        return this.countOfState(responses_pb_2.ResponderState.STALLED);
     };
     /**
      *
      * @returns The number of complete responders
      */
     RequestProgress.prototype.numComplete = function () {
-        return this.countOfStatus(ResponderStatus.Complete);
+        return this.countOfState(responses_pb_2.ResponderState.COMPLETE);
     };
     /**
      *
      * @returns The number of failed responders
      */
     RequestProgress.prototype.numFailed = function () {
-        return this.countOfStatus(ResponderStatus.Failed);
+        return this.countOfState(responses_pb_2.ResponderState.ERROR);
     };
     /**
      *
      * @returns The number of cancelled responders
      */
     RequestProgress.prototype.numCancelled = function () {
-        return this.countOfStatus(ResponderStatus.Cancelled);
+        return this.countOfState(responses_pb_2.ResponderState.CANCELLED);
     };
     /**
      *
@@ -505,33 +496,9 @@ var RequestProgress = /** @class */ (function () {
         this.inFlight++;
         // Pull details out of the response
         var responderName = response.getResponder();
-        var status;
         var nextUpdateTime = undefined;
         // Get the responder or create a new one
         var responder = this.responders.get(responderName) || new Responder(responderName);
-        // Map states
-        switch (response.getState()) {
-            case responses_pb_2.ResponderState.COMPLETE: {
-                status = ResponderStatus.Complete;
-                break;
-            }
-            case responses_pb_2.ResponderState.WORKING: {
-                status = ResponderStatus.Working;
-                break;
-            }
-            case responses_pb_2.ResponderState.ERROR: {
-                status = ResponderStatus.Failed;
-                break;
-            }
-            case responses_pb_2.ResponderState.CANCELLED: {
-                status = ResponderStatus.Cancelled;
-                break;
-            }
-            default: {
-                status = ResponderStatus.Stalled;
-                break;
-            }
-        }
         // If there is a next update time the calculate it
         var nextUpdateIn = response.getNextupdatein();
         if (typeof nextUpdateIn != 'undefined') {
@@ -546,8 +513,8 @@ var RequestProgress = /** @class */ (function () {
             nextUpdateTime = new Date(now.getTime() + nextUpdateMilliseconds);
         }
         // Set properties from the response
-        responder.status = status;
-        responder.nextStatusTime = nextUpdateTime;
+        responder.state = response.getState();
+        responder.nextStateTime = nextUpdateTime;
         // Save the value
         this.responders.set(responderName, responder);
         this.inFlight--;

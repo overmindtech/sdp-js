@@ -342,24 +342,15 @@ export namespace Util {
     }
 }
 
-// The status of a given responder
-export enum ResponderStatus {
-    Working,
-    Stalled,
-    Complete,
-    Failed,
-    Cancelled,
-}
-
 /**
  * Represents something that is responding to our query
  */
 export class Responder {
     name: string = "";
-	lastStatusTime: Date = new Date();
-    nextStatusTime: Date | undefined;
+	lastStateTime: Date = new Date();
+    nextStateTime: Date | undefined;
 	error?: ItemRequestError;
-	private _lastStatus: ResponderStatus = ResponderStatus.Complete;
+	private _lastStatus: ResponderStateMap[keyof ResponderStateMap] = ResponderState.WORKING;
 
     /**
      *
@@ -367,19 +358,19 @@ export class Responder {
      */
     constructor(name: string) {
         this.name = name;
-        this.status = ResponderStatus.Working;
+        this.state = ResponderState.WORKING;
     }
 
     // Sets the status and updates the LastStatus to the current time
-    set status(status: ResponderStatus) {
+    set state(status: ResponderStateMap[keyof ResponderStateMap]) {
         // Set last status time to now
-        this.lastStatusTime = new Date();
+        this.lastStateTime = new Date();
 
         this._lastStatus = status;
     }
 
     // Get the last status of this responder
-    get status(): ResponderStatus {
+    get state(): ResponderStateMap[keyof ResponderStateMap] {
         return this._lastStatus;
     }
 }
@@ -418,22 +409,22 @@ export class RequestProgress {
 
             // Loop over all results and check for stalls
             this.responders.forEach((responder) => {
-                if (typeof responder.nextStatusTime != 'undefined') {
-                    if (responder.nextStatusTime < now) {
+                if (typeof responder.nextStateTime != 'undefined') {
+                    if (responder.nextStateTime < now) {
                         // This means that the responder has stalled
-                        responder.status = ResponderStatus.Stalled
+                        responder.state = ResponderState.STALLED
                     }
                 }
             })
         }, stallCheckIntervalMs)
     }
 
-    // Return the count of items with a given status
-    private countOfStatus(status: ResponderStatus): number {
+    // Return the count of items with a given state
+    private countOfState(state: ResponderStateMap[keyof ResponderStateMap]): number {
         var x = 0;
 
         this.responders.forEach((v) => {
-            if (v.status == status) {
+            if (v.state == state) {
                 x++
             }
         })
@@ -453,7 +444,7 @@ export class RequestProgress {
      * @returns The number of responder still working
      */
     numWorking(): number {
-        return this.countOfStatus(ResponderStatus.Working);
+        return this.countOfState(ResponderState.WORKING);
     }
 
     /**
@@ -461,7 +452,7 @@ export class RequestProgress {
      * @returns The number of stalled responders
      */
     numStalled(): number {
-        return this.countOfStatus(ResponderStatus.Stalled);
+        return this.countOfState(ResponderState.STALLED);
     }
 
     /**
@@ -469,7 +460,7 @@ export class RequestProgress {
      * @returns The number of complete responders
      */
     numComplete(): number {
-        return this.countOfStatus(ResponderStatus.Complete);
+        return this.countOfState(ResponderState.COMPLETE);
     }
 
     /**
@@ -477,7 +468,7 @@ export class RequestProgress {
      * @returns The number of failed responders
      */
     numFailed(): number {
-        return this.countOfStatus(ResponderStatus.Failed);
+        return this.countOfState(ResponderState.ERROR);
     }
 
     /**
@@ -485,7 +476,7 @@ export class RequestProgress {
      * @returns The number of cancelled responders
      */
     numCancelled(): number {
-        return this.countOfStatus(ResponderStatus.Cancelled);
+        return this.countOfState(ResponderState.CANCELLED);
     }
 
     /**
@@ -555,35 +546,10 @@ export class RequestProgress {
 
         // Pull details out of the response
         const responderName = response.getResponder();
-        var status: ResponderStatus;
         var nextUpdateTime: Date | undefined = undefined;
 
         // Get the responder or create a new one
         var responder = this.responders.get(responderName) || new Responder(responderName);
-
-        // Map states
-        switch(response.getState()) {
-            case ResponderState.COMPLETE: {
-                status = ResponderStatus.Complete;
-                break;
-            }
-            case ResponderState.WORKING: {
-                status = ResponderStatus.Working;
-                break;
-            }
-            case ResponderState.ERROR: {
-                status = ResponderStatus.Failed;
-                break;
-            }
-            case ResponderState.CANCELLED: {
-                status = ResponderStatus.Cancelled;
-                break;
-            }
-            default: {
-                status = ResponderStatus.Stalled
-                break;
-            }
-        }
 
         // If there is a next update time the calculate it
         var nextUpdateIn = response.getNextupdatein();
@@ -603,8 +569,8 @@ export class RequestProgress {
         }
 
         // Set properties from the response
-        responder.status = status;
-        responder.nextStatusTime = nextUpdateTime;
+        responder.state = response.getState();
+        responder.nextStateTime = nextUpdateTime;
 
         // Save the value
         this.responders.set(responderName, responder);
