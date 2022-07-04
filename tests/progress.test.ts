@@ -55,7 +55,7 @@ describe('RequestProgress', () => {
             assert.strictEqual(progress.numWorking(), 1);
             assert.strictEqual(progress.numFailed(), 0);
 
-            progress.processResponse(responses.NOCONTEXTERROR);
+            progress.processResponse(responses.ERROR);
 
             assert.strictEqual(progress.numWorking(), 0);
             assert.strictEqual(progress.numFailed(), 1);

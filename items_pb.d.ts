@@ -41,6 +41,9 @@ export class ItemRequest extends jspb.Message {
   getResponsesubject(): string;
   setResponsesubject(value: string): void;
 
+  getErrorsubject(): string;
+  setErrorsubject(value: string): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ItemRequest.AsObject;
   static toObject(includeInstance: boolean, msg: ItemRequest): ItemRequest.AsObject;
@@ -63,6 +66,7 @@ export namespace ItemRequest {
     timeout?: google_protobuf_duration_pb.Duration.AsObject,
     itemsubject: string,
     responsesubject: string,
+    errorsubject: string,
   }
 }
 
@@ -209,6 +213,34 @@ export namespace Reference {
     type: string,
     uniqueattributevalue: string,
     context: string,
+  }
+}
+
+export class Edge extends jspb.Message {
+  hasFrom(): boolean;
+  clearFrom(): void;
+  getFrom(): Reference | undefined;
+  setFrom(value?: Reference): void;
+
+  hasTo(): boolean;
+  clearTo(): void;
+  getTo(): Reference | undefined;
+  setTo(value?: Reference): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): Edge.AsObject;
+  static toObject(includeInstance: boolean, msg: Edge): Edge.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: Edge, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Edge;
+  static deserializeBinaryFromReader(message: Edge, reader: jspb.BinaryReader): Edge;
+}
+
+export namespace Edge {
+  export type AsObject = {
+    from?: Reference.AsObject,
+    to?: Reference.AsObject,
   }
 }
 

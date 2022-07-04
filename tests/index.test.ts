@@ -2,9 +2,7 @@ import { Util, Item, ItemAttributes, RequestMethod } from '..';
 import * as testData from './items';
 import * as assert from 'assert';
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
-import { ItemRequestError } from '../responses_pb';
-import { Response } from '..';
-import { NOCONTEXT, OTHERERROR } from './responses';
+import { ItemRequestError, ResponderState } from '../responses_pb';
 import { v4 as uuidv4, parse as uuidparse } from 'uuid';
 
 describe('Util', function() {
@@ -314,8 +312,7 @@ describe('Util', function() {
   describe('#newResponse()', function() {
     const data: Util.ResponseData = {
       responder: "test.context",
-      state: Response.ResponseState.ERROR,
-      error: NOCONTEXT,
+      state: ResponderState.ERROR,
       nextUpdateInMs: 0
     }
 
@@ -326,11 +323,7 @@ describe('Util', function() {
     })
 
     it('should have the correct State', () => {
-      assert.strictEqual(r.getState(), Response.ResponseState.ERROR)
-    })
-
-    it('should have the correct Error', () => {
-      assert.strictEqual(r.getError(), NOCONTEXT)
+      assert.strictEqual(r.getState(), ResponderState.ERROR)
     })
   });
 

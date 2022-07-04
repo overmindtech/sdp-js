@@ -1,5 +1,4 @@
-import { Duration } from "google-protobuf/google/protobuf/duration_pb";
-import { Response } from "../responses_pb";
+import { ResponderState } from "../responses_pb";
 import { ItemRequestError } from "../responses_pb";
 import { Util } from '../index'
 
@@ -22,45 +21,30 @@ OTHER.setErrorstring("Unknown error")
 
 const WORKING = Util.newResponse({
     responder: "test.context",
-    state: Response.ResponseState.WORKING,
+    state: ResponderState.WORKING,
     nextUpdateInMs: 100
 })
 
 const COMPLETE = Util.newResponse({
     responder: "test.context",
-    state: Response.ResponseState.COMPLETE,
+    state: ResponderState.COMPLETE,
     nextUpdateInMs: 100,
 })
 
 const CANCELLED = Util.newResponse({
     responder: "test.context",
-    state: Response.ResponseState.CANCELLED,
+    state: ResponderState.CANCELLED,
 })
 
-const NOTFOUNDERROR = Util.newResponse({
+const ERROR = Util.newResponse({
     responder: "test.context",
-    state: Response.ResponseState.ERROR,
-    error: NOTFOUND,
-})
-
-const NOCONTEXTERROR = Util.newResponse({
-    responder: "test.context",
-    state: Response.ResponseState.ERROR,
-    error: NOCONTEXT,
-})
-
-const OTHERERROR = Util.newResponse({
-    responder: "test.context",
-    state: Response.ResponseState.ERROR,
-    error: OTHER,
+    state: ResponderState.ERROR,
 })
 
 export {
     WORKING,
     COMPLETE,
-    NOTFOUNDERROR,
-    NOCONTEXTERROR,
-    OTHERERROR,
+    ERROR,
     NOCONTEXT,
     CANCELLED
 }

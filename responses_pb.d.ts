@@ -8,8 +8,8 @@ export class Response extends jspb.Message {
   getResponder(): string;
   setResponder(value: string): void;
 
-  getState(): Response.ResponseStateMap[keyof Response.ResponseStateMap];
-  setState(value: Response.ResponseStateMap[keyof Response.ResponseStateMap]): void;
+  getState(): ResponderStateMap[keyof ResponderStateMap];
+  setState(value: ResponderStateMap[keyof ResponderStateMap]): void;
 
   hasNextupdatein(): boolean;
   clearNextupdatein(): void;
@@ -20,11 +20,6 @@ export class Response extends jspb.Message {
   getItemrequestuuid_asU8(): Uint8Array;
   getItemrequestuuid_asB64(): string;
   setItemrequestuuid(value: Uint8Array | string): void;
-
-  hasError(): boolean;
-  clearError(): void;
-  getError(): ItemRequestError | undefined;
-  setError(value?: ItemRequestError): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Response.AsObject;
@@ -39,20 +34,10 @@ export class Response extends jspb.Message {
 export namespace Response {
   export type AsObject = {
     responder: string,
-    state: Response.ResponseStateMap[keyof Response.ResponseStateMap],
+    state: ResponderStateMap[keyof ResponderStateMap],
     nextupdatein?: google_protobuf_duration_pb.Duration.AsObject,
     itemrequestuuid: Uint8Array | string,
-    error?: ItemRequestError.AsObject,
   }
-
-  export interface ResponseStateMap {
-    WORKING: 0;
-    COMPLETE: 1;
-    ERROR: 2;
-    CANCELLED: 3;
-  }
-
-  export const ResponseState: ResponseStateMap;
 }
 
 export class ItemRequestError extends jspb.Message {
@@ -70,6 +55,15 @@ export class ItemRequestError extends jspb.Message {
   getContext(): string;
   setContext(value: string): void;
 
+  getSourcename(): string;
+  setSourcename(value: string): void;
+
+  getItemtype(): string;
+  setItemtype(value: string): void;
+
+  getRespondername(): string;
+  setRespondername(value: string): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ItemRequestError.AsObject;
   static toObject(includeInstance: boolean, msg: ItemRequestError): ItemRequestError.AsObject;
@@ -86,6 +80,9 @@ export namespace ItemRequestError {
     errortype: ItemRequestError.ErrorTypeMap[keyof ItemRequestError.ErrorTypeMap],
     errorstring: string,
     context: string,
+    sourcename: string,
+    itemtype: string,
+    respondername: string,
   }
 
   export interface ErrorTypeMap {
@@ -97,4 +94,14 @@ export namespace ItemRequestError {
 
   export const ErrorType: ErrorTypeMap;
 }
+
+export interface ResponderStateMap {
+  WORKING: 0;
+  COMPLETE: 1;
+  ERROR: 2;
+  CANCELLED: 3;
+  STALLED: 4;
+}
+
+export const ResponderState: ResponderStateMap;
 
