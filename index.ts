@@ -350,7 +350,7 @@ export class Responder {
 	lastStateTime: Date = new Date();
     nextStateTime: Date | undefined;
 	error?: ItemRequestError;
-	private _lastStatus: ResponderStateMap[keyof ResponderStateMap] = ResponderState.WORKING;
+	private _lastState: ResponderStateMap[keyof ResponderStateMap] = ResponderState.WORKING;
 
     /**
      *
@@ -361,17 +361,17 @@ export class Responder {
         this.state = ResponderState.WORKING;
     }
 
-    // Sets the status and updates the LastStatus to the current time
-    set state(status: ResponderStateMap[keyof ResponderStateMap]) {
-        // Set last status time to now
+    // Sets the state and updates the LastState to the current time
+    set state(state: ResponderStateMap[keyof ResponderStateMap]) {
+        // Set last state time to now
         this.lastStateTime = new Date();
 
-        this._lastStatus = status;
+        this._lastState = state;
     }
 
-    // Get the last status of this responder
+    // Get the last state of this responder
     get state(): ResponderStateMap[keyof ResponderStateMap] {
-        return this._lastStatus;
+        return this._lastState;
     }
 }
 

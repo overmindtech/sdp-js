@@ -327,20 +327,20 @@ var Responder = /** @class */ (function () {
     function Responder(name) {
         this.name = "";
         this.lastStateTime = new Date();
-        this._lastStatus = responses_pb_2.ResponderState.WORKING;
+        this._lastState = responses_pb_2.ResponderState.WORKING;
         this.name = name;
         this.state = responses_pb_2.ResponderState.WORKING;
     }
     Object.defineProperty(Responder.prototype, "state", {
-        // Get the last status of this responder
+        // Get the last state of this responder
         get: function () {
-            return this._lastStatus;
+            return this._lastState;
         },
-        // Sets the status and updates the LastStatus to the current time
-        set: function (status) {
-            // Set last status time to now
+        // Sets the state and updates the LastState to the current time
+        set: function (state) {
+            // Set last state time to now
             this.lastStateTime = new Date();
-            this._lastStatus = status;
+            this._lastState = state;
         },
         enumerable: false,
         configurable: true

@@ -162,13 +162,13 @@ export declare class Responder {
     lastStateTime: Date;
     nextStateTime: Date | undefined;
     error?: ItemRequestError;
-    private _lastStatus;
+    private _lastState;
     /**
      *
      * @param responder The responder that this responder will respond for
      */
     constructor(name: string);
-    set state(status: ResponderStateMap[keyof ResponderStateMap]);
+    set state(state: ResponderStateMap[keyof ResponderStateMap]);
     get state(): ResponderStateMap[keyof ResponderStateMap];
 }
 export declare class RequestProgress {
