@@ -7,7 +7,7 @@ export { Response } from './responses_pb';
 export { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb'
 
 // Import things we need for the Util namespace
-import { Reference, Item, ItemAttributes, Metadata, ItemRequest, RequestMethod, RequestMethodMap, CancelItemRequest } from './items_pb';
+import { Reference, Item, ItemAttributes, Metadata, ItemRequest, RequestMethod, RequestMethodMap, CancelItemRequest, Edge } from './items_pb';
 import { Response, ItemRequestError, ResponderStateMap, ResponderState } from './responses_pb';
 import sha1 from 'sha1';
 import toDataView from 'to-data-view';
@@ -341,6 +341,25 @@ export namespace Util {
         }
 
         return c;
+    }
+
+    export type EdgeData = {
+        from: ReferenceData,
+        to: ReferenceData,
+    }
+
+    /**
+     * Creates a new Edge object
+     * @param data Data to be used in the object
+     * @returns A new Edge object
+     */
+    export function newEdge(data: EdgeData): Edge {
+        var e = new Edge();
+
+        e.setFrom(Util.newReference(data.from));
+        e.setTo(Util.newReference(data.to));
+
+        return e;
     }
 
     /**

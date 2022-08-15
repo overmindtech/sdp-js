@@ -321,6 +321,18 @@ var Util;
     }
     Util.newCancelItemRequest = newCancelItemRequest;
     /**
+     * Creates a new Edge object
+     * @param data Data to be used in the object
+     * @returns A new Edge object
+     */
+    function newEdge(data) {
+        var e = new items_pb_2.Edge();
+        e.setFrom(Util.newReference(data.from));
+        e.setTo(Util.newReference(data.to));
+        return e;
+    }
+    Util.newEdge = newEdge;
+    /**
      * Creates a new GatewayRequest object. This is an abstraction that wraps
      * either an ItemRequest or a CancelItemRequest, along with a timeout
      * @param request The ItemRequest or CancelItemRequest to send

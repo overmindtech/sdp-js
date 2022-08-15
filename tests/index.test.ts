@@ -406,4 +406,32 @@ describe('Util', function() {
       })
     })
   })
+
+  describe('#newEdge()', function() {
+    var e = Util.newEdge({
+      from: {
+        context: 'global',
+        type: 'person',
+        uniqueAttributeValue: 'dylan',
+      },
+      to: {
+        context: 'global',
+        type: 'person',
+        uniqueAttributeValue: 'katelyn',
+      }
+    })
+
+    it('should contain references', () => {
+      assert.strictEqual(e.hasFrom(), true);
+      assert.strictEqual(e.hasTo(), true);
+  
+      assert.strictEqual(e.getFrom()?.getContext(), 'global');
+      assert.strictEqual(e.getTo()?.getContext(), 'global');
+      assert.strictEqual(e.getFrom()?.getType(), 'person');
+      assert.strictEqual(e.getTo()?.getType(), 'person');
+      assert.strictEqual(e.getFrom()?.getUniqueattributevalue(), 'dylan');
+      assert.strictEqual(e.getTo()?.getUniqueattributevalue(), 'katelyn');
+    })
+    
+  })
 });

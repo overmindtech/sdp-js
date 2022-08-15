@@ -1,7 +1,7 @@
 export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod, CancelItemRequest, ReverseLinksRequest, ReverseLinksResponse } from './items_pb';
 export { Response } from './responses_pb';
 export { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb';
-import { Reference, Item, ItemAttributes, Metadata, ItemRequest, CancelItemRequest } from './items_pb';
+import { Reference, Item, ItemAttributes, Metadata, ItemRequest, CancelItemRequest, Edge } from './items_pb';
 import { Response, ItemRequestError, ResponderStateMap } from './responses_pb';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue } from 'google-protobuf/google/protobuf/struct_pb';
@@ -155,6 +155,16 @@ export declare namespace Util {
      * @returns The new CancelItemRequest object
      */
     function newCancelItemRequest(details: CancelItemRequestData): CancelItemRequest;
+    type EdgeData = {
+        from: ReferenceData;
+        to: ReferenceData;
+    };
+    /**
+     * Creates a new Edge object
+     * @param data Data to be used in the object
+     * @returns A new Edge object
+     */
+    function newEdge(data: EdgeData): Edge;
     /**
      * Creates a new GatewayRequest object. This is an abstraction that wraps
      * either an ItemRequest or a CancelItemRequest, along with a timeout
