@@ -4,6 +4,7 @@
 // Export things from other files
 export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod, CancelItemRequest, ReverseLinksRequest, ReverseLinksResponse } from './items_pb';
 export { Response } from './responses_pb';
+export { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb'
 
 // Import things we need for the Util namespace
 import { Reference, Item, ItemAttributes, Metadata, ItemRequest, RequestMethod, RequestMethodMap, CancelItemRequest } from './items_pb';
@@ -14,6 +15,7 @@ import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue, Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
 import { parse as uuidParse, v4 as uuidv4 } from 'uuid';
+import { GatewayRequest, GatewayRequestStatus } from './gateway_pb';
 
 export namespace Util {
     /**
@@ -339,6 +341,47 @@ export namespace Util {
         }
 
         return c;
+    }
+
+    /**
+     * Creates a new GatewayRequest object. This is an abstraction that wraps
+     * either an ItemRequest or a CancelItemRequest, along with a timeout
+     * @param request The ItemRequest or CancelItemRequest to send
+     * @param minStatusIntervalMs The minimum duration between status responses
+     * @returns A new GatewayRequest
+     */
+    export function newGatewayRequest(request: ItemRequestData | CancelItemRequestData, minStatusIntervalMs: number): GatewayRequest {
+        var gr = new GatewayRequest();
+        
+        if ('method' in request) {
+            var ir = Util.newItemRequest(request);
+            gr.setRequest(ir);
+        } else {
+            var cancel = Util.newCancelItemRequest(request);
+            gr.setCancel(cancel);
+        }
+
+        if (minStatusIntervalMs > 0) {
+            gr.setMinstatusinterval(Util.toDuration(minStatusIntervalMs));
+        }
+
+        return gr;
+    }
+
+    /**
+     * Checks if a gateway request is done, this means that there are no more
+     * responders working and all post-processing is complete
+     * @param g The GatewayRequestStatus to check
+     * @returns True of the request is done, false otherwise
+     */
+    export function gatewayRequestStatusDone(g: GatewayRequestStatus): boolean {
+        var summary = g.getSummary()
+
+        if (typeof summary != 'undefined') {
+            return g.getPostprocessingcomplete() && (summary.getWorking() == 0)
+        }
+
+        return false
     }
 }
 

@@ -41,7 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RequestProgress = exports.Responder = exports.Util = exports.Response = exports.ReverseLinksResponse = exports.ReverseLinksRequest = exports.CancelItemRequest = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
+exports.RequestProgress = exports.Responder = exports.Util = exports.GatewayResponse = exports.GatewayRequestStatus = exports.GatewayRequest = exports.Response = exports.ReverseLinksResponse = exports.ReverseLinksRequest = exports.CancelItemRequest = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
 // Export things from other files
 var items_pb_1 = require("./items_pb");
 Object.defineProperty(exports, "ItemRequest", { enumerable: true, get: function () { return items_pb_1.ItemRequest; } });
@@ -56,6 +56,10 @@ Object.defineProperty(exports, "ReverseLinksRequest", { enumerable: true, get: f
 Object.defineProperty(exports, "ReverseLinksResponse", { enumerable: true, get: function () { return items_pb_1.ReverseLinksResponse; } });
 var responses_pb_1 = require("./responses_pb");
 Object.defineProperty(exports, "Response", { enumerable: true, get: function () { return responses_pb_1.Response; } });
+var gateway_pb_1 = require("./gateway_pb");
+Object.defineProperty(exports, "GatewayRequest", { enumerable: true, get: function () { return gateway_pb_1.GatewayRequest; } });
+Object.defineProperty(exports, "GatewayRequestStatus", { enumerable: true, get: function () { return gateway_pb_1.GatewayRequestStatus; } });
+Object.defineProperty(exports, "GatewayResponse", { enumerable: true, get: function () { return gateway_pb_1.GatewayResponse; } });
 // Import things we need for the Util namespace
 var items_pb_2 = require("./items_pb");
 var responses_pb_2 = require("./responses_pb");
@@ -65,6 +69,7 @@ var duration_pb_1 = require("google-protobuf/google/protobuf/duration_pb");
 var struct_pb_1 = require("google-protobuf/google/protobuf/struct_pb");
 var timestamp_pb_1 = require("google-protobuf/google/protobuf/timestamp_pb");
 var uuid_1 = require("uuid");
+var gateway_pb_2 = require("./gateway_pb");
 var Util;
 (function (Util) {
     /**
@@ -315,6 +320,43 @@ var Util;
         return c;
     }
     Util.newCancelItemRequest = newCancelItemRequest;
+    /**
+     * Creates a new GatewayRequest object. This is an abstraction that wraps
+     * either an ItemRequest or a CancelItemRequest, along with a timeout
+     * @param request The ItemRequest or CancelItemRequest to send
+     * @param minStatusIntervalMs The minimum duration between status responses
+     * @returns A new GatewayRequest
+     */
+    function newGatewayRequest(request, minStatusIntervalMs) {
+        var gr = new gateway_pb_2.GatewayRequest();
+        if ('method' in request) {
+            var ir = Util.newItemRequest(request);
+            gr.setRequest(ir);
+        }
+        else {
+            var cancel = Util.newCancelItemRequest(request);
+            gr.setCancel(cancel);
+        }
+        if (minStatusIntervalMs > 0) {
+            gr.setMinstatusinterval(Util.toDuration(minStatusIntervalMs));
+        }
+        return gr;
+    }
+    Util.newGatewayRequest = newGatewayRequest;
+    /**
+     * Checks if a gateway request is done, this means that there are no more
+     * responders working and all post-processing is complete
+     * @param g The GatewayRequestStatus to check
+     * @returns True of the request is done, false otherwise
+     */
+    function gatewayRequestStatusDone(g) {
+        var summary = g.getSummary();
+        if (typeof summary != 'undefined') {
+            return g.getPostprocessingcomplete() && (summary.getWorking() == 0);
+        }
+        return false;
+    }
+    Util.gatewayRequestStatusDone = gatewayRequestStatusDone;
 })(Util = exports.Util || (exports.Util = {}));
 /**
  * Represents something that is responding to our query
