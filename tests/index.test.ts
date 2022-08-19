@@ -5,6 +5,7 @@ import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 import { ItemRequestError, ResponderState } from '../responses_pb';
 import { v4 as uuidv4, parse as uuidparse } from 'uuid';
 import { ResponderStateMap } from '../responses_pb';
+import { AssertionError } from 'chai';
 
 
 describe('Util', function() {
@@ -493,5 +494,46 @@ describe('Util', function() {
       }
     })
 
+  })
+
+  describe('#gatewayRequestStatusDone()', function() {
+    var states = new Map<string, ResponderStateMap[keyof ResponderStateMap]>();
+    states.set("responder.cancel", ResponderState.CANCELLED);
+    states.set("responder.complete", ResponderState.COMPLETE);
+    states.set("responder.error", ResponderState.ERROR);
+    states.set("responder.working", ResponderState.WORKING);
+
+    var s = Util.newGatewayRequestStatus({
+      summary: {
+        cancelled: 1,
+        complete: 1,
+        error: 1,
+        responders: 4,
+        stalled: 1,
+        working: 0,
+      },
+      postProcessingComplete: false,
+      responderStates: states,
+    })
+
+    it('handles when people are still responding', () => {
+      assert.strictEqual(Util.gatewayRequestStatusDone(s), false);
+    })
+
+    it('handles when all responders are complete but post-processing isnt', () => {
+      s.getSummary()?.setWorking(0);
+      s.getSummary()?.setComplete(2);
+      assert.strictEqual(Util.gatewayRequestStatusDone(s), false);
+    })
+
+    it('handles when all responders are complete and so is prost-processing', () => {
+      s.setPostprocessingcomplete(true);
+      assert.strictEqual(Util.gatewayRequestStatusDone(s), true);
+    })
+
+    it('handles when post processing is complete and workers arent', () => {
+      s.getSummary()?.setWorking(1);
+      assert.strictEqual(Util.gatewayRequestStatusDone(s), false);
+    })
   })
 });
