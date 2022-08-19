@@ -437,6 +437,74 @@ export namespace Util {
 
         return false
     }
+
+    export type GatewayResponseData = ItemData | EdgeData | ItemRequestErrorData | GatewayRequestStatusData | string
+
+    function isItemData(x: any): x is ItemData {
+        const hasType  = "type" in x
+        const hasUniqueAttribute  = "uniqueAttribute" in x
+        const hasContext  = "context" in x
+        const hasAttributes  = "attributes" in x
+        const hasMetadata  = "metadata" in x
+        const hasLinkedItemRequests  = "linkedItemRequests" in x
+        const hasLinkedItems  = "linkedItems" in x
+
+        return hasType && hasUniqueAttribute && hasContext && hasAttributes && hasMetadata && hasLinkedItemRequests && hasLinkedItems
+    }
+
+    function isEdgeData(x: any): x is EdgeData {
+        const hasFrom = ("from" in x);
+        const hasTo = ("to" in x);
+
+        return hasFrom && hasTo
+    }
+
+    function isItemRequestErrorData(x: any): x is ItemRequestErrorData {
+        const hasContext = ("context" in x);
+        const hasErrorString = ("errorString" in x);
+        const hasErrorType = ("errorType" in x);
+
+        return hasContext && hasErrorString && hasErrorType
+    }
+
+    function isGatewayRequestStatusData(x: any): x is GatewayRequestStatusData {
+        const hasResponderStates = ("responderStates" in x);``
+        const hasSummary = ("summary" in x);``
+        const hasPostProcessingComplete = ("postProcessingComplete" in x);``
+
+        return hasResponderStates && hasSummary && hasPostProcessingComplete
+    }
+
+    export function newGatewayResponse(data: GatewayResponseData): GatewayResponse {
+        var gr = new GatewayResponse();
+
+        if (typeof data == 'string') {
+            gr.setError(data);
+            return gr;
+        } else if (typeof data == 'object') {
+            if (isItemData(data)) {
+                gr.setNewitem(Util.newItem(data));
+                return gr;
+            }
+    
+            if (isEdgeData(data)) {
+                gr.setNewedge(Util.newEdge(data));
+                return gr;
+            }
+            
+            if (isItemRequestErrorData(data)) {
+                gr.setNewitemrequesterror(Util.newItemRequestError(data));
+                return gr;
+            }
+            
+            if (isGatewayRequestStatusData(data)) {
+                gr.setStatus(Util.newGatewayRequestStatus(data));
+                return gr;
+            }    
+        }
+        
+        return gr;
+    }
 }
 
 /**

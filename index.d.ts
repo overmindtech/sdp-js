@@ -5,7 +5,7 @@ import { Reference, Item, ItemAttributes, Metadata, ItemRequest, CancelItemReque
 import { Response, ItemRequestError, ResponderStateMap } from './responses_pb';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue } from 'google-protobuf/google/protobuf/struct_pb';
-import { GatewayRequest, GatewayRequestStatus } from './gateway_pb';
+import { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb';
 export declare namespace Util {
     /**
      * Generates a new random UUID
@@ -193,6 +193,8 @@ export declare namespace Util {
      * @returns True of the request is done, false otherwise
      */
     function gatewayRequestStatusDone(g: GatewayRequestStatus): boolean;
+    type GatewayResponseData = ItemData | EdgeData | ItemRequestErrorData | GatewayRequestStatusData | string;
+    function newGatewayResponse(data: GatewayResponseData): GatewayResponse;
 }
 /**
  * Represents something that is responding to our query

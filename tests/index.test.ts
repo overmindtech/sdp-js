@@ -536,4 +536,89 @@ describe('Util', function() {
       assert.strictEqual(Util.gatewayRequestStatusDone(s), false);
     })
   })
+
+  describe('#newGatewayResponse()', () => {
+    describe('with ItemData', () => {
+      const data: Util.ItemData = {
+        type: "person",
+        uniqueAttribute: "name",
+        context: "global",
+        attributes: Util.newItemAttributes({
+          "name": "Dylan"
+        }),
+        metadata: undefined,
+        linkedItemRequests: [],
+        linkedItems: [],
+      }
+      
+      it('should return the correct type', () => {
+        const resp = Util.newGatewayResponse(data);
+        assert.strictEqual(resp.hasNewitem(), true);
+      })
+    })
+    describe('with EdgeData', () => {
+      const data = {
+        from: {
+          context: 'global',
+          type: 'person',
+          uniqueAttributeValue: 'dylan',
+        },
+        to: {
+          context: 'global',
+          type: 'person',
+          uniqueAttributeValue: 'katelyn',
+        }
+      }
+
+      it('should return the correct type', () => {
+        const resp = Util.newGatewayResponse(data);
+        assert.strictEqual(resp.hasNewedge(), true);
+      })
+    })
+    describe('with ItemRequestErrorData', () => {
+      const data = {
+        context: "cont",
+        errorString: "err",
+        errorType: ItemRequestError.ErrorType.NOTFOUND,
+      }
+
+      it('should return the correct type', () => {
+        const resp = Util.newGatewayResponse(data);
+        assert.strictEqual(resp.hasNewitemrequesterror(), true);
+      })
+    })
+    describe('with GatewayRequestStatusData', () => {
+      var states = new Map<string, ResponderStateMap[keyof ResponderStateMap]>();
+      states.set("responder.cancel", ResponderState.CANCELLED);
+      states.set("responder.complete", ResponderState.COMPLETE);
+      states.set("responder.error", ResponderState.ERROR);
+      states.set("responder.working", ResponderState.WORKING);
+  
+      const data = {
+        summary: {
+          cancelled: 1,
+          complete: 1,
+          error: 1,
+          responders: 4,
+          stalled: 1,
+          working: 0,
+        },
+        postProcessingComplete: false,
+        responderStates: states,
+      }
+
+      it('should return the correct type', () => {
+        const resp = Util.newGatewayResponse(data);
+        assert.strictEqual(resp.hasStatus(), true);
+      })
+    })
+    describe('with string', () => {
+      const data = "foo"
+
+      it('should return the correct type', () => {
+        const resp = Util.newGatewayResponse(data);
+        assert.strictEqual(resp.hasError(), true);
+      })
+    })
+  })
 });

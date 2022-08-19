@@ -360,6 +360,63 @@ var Util;
         return false;
     }
     Util.gatewayRequestStatusDone = gatewayRequestStatusDone;
+    function isItemData(x) {
+        const hasType = "type" in x;
+        const hasUniqueAttribute = "uniqueAttribute" in x;
+        const hasContext = "context" in x;
+        const hasAttributes = "attributes" in x;
+        const hasMetadata = "metadata" in x;
+        const hasLinkedItemRequests = "linkedItemRequests" in x;
+        const hasLinkedItems = "linkedItems" in x;
+        return hasType && hasUniqueAttribute && hasContext && hasAttributes && hasMetadata && hasLinkedItemRequests && hasLinkedItems;
+    }
+    function isEdgeData(x) {
+        const hasFrom = ("from" in x);
+        const hasTo = ("to" in x);
+        return hasFrom && hasTo;
+    }
+    function isItemRequestErrorData(x) {
+        const hasContext = ("context" in x);
+        const hasErrorString = ("errorString" in x);
+        const hasErrorType = ("errorType" in x);
+        return hasContext && hasErrorString && hasErrorType;
+    }
+    function isGatewayRequestStatusData(x) {
+        const hasResponderStates = ("responderStates" in x);
+        ``;
+        const hasSummary = ("summary" in x);
+        ``;
+        const hasPostProcessingComplete = ("postProcessingComplete" in x);
+        ``;
+        return hasResponderStates && hasSummary && hasPostProcessingComplete;
+    }
+    function newGatewayResponse(data) {
+        var gr = new gateway_pb_2.GatewayResponse();
+        if (typeof data == 'string') {
+            gr.setError(data);
+            return gr;
+        }
+        else if (typeof data == 'object') {
+            if (isItemData(data)) {
+                gr.setNewitem(Util.newItem(data));
+                return gr;
+            }
+            if (isEdgeData(data)) {
+                gr.setNewedge(Util.newEdge(data));
+                return gr;
+            }
+            if (isItemRequestErrorData(data)) {
+                gr.setNewitemrequesterror(Util.newItemRequestError(data));
+                return gr;
+            }
+            if (isGatewayRequestStatusData(data)) {
+                gr.setStatus(Util.newGatewayRequestStatus(data));
+                return gr;
+            }
+        }
+        return gr;
+    }
+    Util.newGatewayResponse = newGatewayResponse;
 })(Util = exports.Util || (exports.Util = {}));
 /**
  * Represents something that is responding to our query
