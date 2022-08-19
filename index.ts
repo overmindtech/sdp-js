@@ -4,9 +4,10 @@
 // Export things from other files
 export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod, CancelItemRequest, ReverseLinksRequest, ReverseLinksResponse } from './items_pb';
 export { Response } from './responses_pb';
+export { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb'
 
 // Import things we need for the Util namespace
-import { Reference, Item, ItemAttributes, Metadata, ItemRequest, RequestMethod, RequestMethodMap, CancelItemRequest } from './items_pb';
+import { Reference, Item, ItemAttributes, Metadata, ItemRequest, RequestMethod, RequestMethodMap, CancelItemRequest, Edge } from './items_pb';
 import { Response, ItemRequestError, ResponderStateMap, ResponderState } from './responses_pb';
 import sha1 from 'sha1';
 import toDataView from 'to-data-view';
@@ -14,6 +15,7 @@ import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue, Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
 import { parse as uuidParse, v4 as uuidv4 } from 'uuid';
+import { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb';
 
 export namespace Util {
     /**
@@ -339,6 +341,169 @@ export namespace Util {
         }
 
         return c;
+    }
+
+    export type EdgeData = {
+        from: ReferenceData,
+        to: ReferenceData,
+    }
+
+    /**
+     * Creates a new Edge object
+     * @param data Data to be used in the object
+     * @returns A new Edge object
+     */
+    export function newEdge(data: EdgeData): Edge {
+        var e = new Edge();
+
+        e.setFrom(Util.newReference(data.from));
+        e.setTo(Util.newReference(data.to));
+
+        return e;
+    }
+
+    export type GatewayRequestStatusData = {
+        responderStates: Map<string, ResponderStateMap[keyof ResponderStateMap]>, 
+        summary: {
+            working: number,
+            stalled: number,
+            complete: number,
+            error: number,
+            cancelled: number,
+            responders: number,      
+        }
+        postProcessingComplete: boolean,
+    }
+
+    export function newGatewayRequestStatus(data: GatewayRequestStatusData): GatewayRequestStatus {
+        var grs = new GatewayRequestStatus();
+        var responders = grs.getResponderstatesMap();
+        var summary = new GatewayRequestStatus.Summary();
+
+        for (let [responder, state] of data.responderStates) {
+            responders.set(responder, state);
+        }
+
+        summary.setWorking(data.summary.working);
+        summary.setStalled(data.summary.stalled);
+        summary.setComplete(data.summary.complete);
+        summary.setError(data.summary.error);
+        summary.setCancelled(data.summary.cancelled);
+        summary.setResponders(data.summary.responders);
+        grs.setSummary(summary);
+
+        grs.setPostprocessingcomplete(data.postProcessingComplete);
+
+        return grs;
+    }
+
+    /**
+     * Creates a new GatewayRequest object. This is an abstraction that wraps
+     * either an ItemRequest or a CancelItemRequest, along with a timeout
+     * @param request The ItemRequest or CancelItemRequest to send
+     * @param minStatusIntervalMs The minimum duration between status responses
+     * @returns A new GatewayRequest
+     */
+    export function newGatewayRequest(request: ItemRequestData | CancelItemRequestData, minStatusIntervalMs: number): GatewayRequest {
+        var gr = new GatewayRequest();
+        
+        if ('method' in request) {
+            var ir = Util.newItemRequest(request);
+            gr.setRequest(ir);
+        } else {
+            var cancel = Util.newCancelItemRequest(request);
+            gr.setCancel(cancel);
+        }
+
+        if (minStatusIntervalMs > 0) {
+            gr.setMinstatusinterval(Util.toDuration(minStatusIntervalMs));
+        }
+
+        return gr;
+    }
+
+    /**
+     * Checks if a gateway request is done, this means that there are no more
+     * responders working and all post-processing is complete
+     * @param g The GatewayRequestStatus to check
+     * @returns True of the request is done, false otherwise
+     */
+    export function gatewayRequestStatusDone(g: GatewayRequestStatus): boolean {
+        var summary = g.getSummary()
+
+        if (typeof summary != 'undefined') {
+            return g.getPostprocessingcomplete() && (summary.getWorking() == 0)
+        }
+
+        return false
+    }
+
+    export type GatewayResponseData = ItemData | EdgeData | ItemRequestErrorData | GatewayRequestStatusData | string
+
+    function isItemData(x: any): x is ItemData {
+        const hasType  = "type" in x
+        const hasUniqueAttribute  = "uniqueAttribute" in x
+        const hasContext  = "context" in x
+        const hasAttributes  = "attributes" in x
+        const hasMetadata  = "metadata" in x
+        const hasLinkedItemRequests  = "linkedItemRequests" in x
+        const hasLinkedItems  = "linkedItems" in x
+
+        return hasType && hasUniqueAttribute && hasContext && hasAttributes && hasMetadata && hasLinkedItemRequests && hasLinkedItems
+    }
+
+    function isEdgeData(x: any): x is EdgeData {
+        const hasFrom = ("from" in x);
+        const hasTo = ("to" in x);
+
+        return hasFrom && hasTo
+    }
+
+    function isItemRequestErrorData(x: any): x is ItemRequestErrorData {
+        const hasContext = ("context" in x);
+        const hasErrorString = ("errorString" in x);
+        const hasErrorType = ("errorType" in x);
+
+        return hasContext && hasErrorString && hasErrorType
+    }
+
+    function isGatewayRequestStatusData(x: any): x is GatewayRequestStatusData {
+        const hasResponderStates = ("responderStates" in x);``
+        const hasSummary = ("summary" in x);``
+        const hasPostProcessingComplete = ("postProcessingComplete" in x);``
+
+        return hasResponderStates && hasSummary && hasPostProcessingComplete
+    }
+
+    export function newGatewayResponse(data: GatewayResponseData): GatewayResponse {
+        var gr = new GatewayResponse();
+
+        if (typeof data == 'string') {
+            gr.setError(data);
+            return gr;
+        } else if (typeof data == 'object') {
+            if (isItemData(data)) {
+                gr.setNewitem(Util.newItem(data));
+                return gr;
+            }
+    
+            if (isEdgeData(data)) {
+                gr.setNewedge(Util.newEdge(data));
+                return gr;
+            }
+            
+            if (isItemRequestErrorData(data)) {
+                gr.setNewitemrequesterror(Util.newItemRequestError(data));
+                return gr;
+            }
+            
+            if (isGatewayRequestStatusData(data)) {
+                gr.setStatus(Util.newGatewayRequestStatus(data));
+                return gr;
+            }    
+        }
+        
+        return gr;
     }
 }
 
