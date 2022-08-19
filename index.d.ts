@@ -1,9 +1,11 @@
 export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod, CancelItemRequest, ReverseLinksRequest, ReverseLinksResponse } from './items_pb';
 export { Response } from './responses_pb';
-import { Reference, Item, ItemAttributes, Metadata, ItemRequest, CancelItemRequest } from './items_pb';
+export { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb';
+import { Reference, Item, ItemAttributes, Metadata, ItemRequest, CancelItemRequest, Edge } from './items_pb';
 import { Response, ItemRequestError, ResponderStateMap } from './responses_pb';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue } from 'google-protobuf/google/protobuf/struct_pb';
+import { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb';
 export declare namespace Util {
     /**
      * Generates a new random UUID
@@ -153,6 +155,46 @@ export declare namespace Util {
      * @returns The new CancelItemRequest object
      */
     function newCancelItemRequest(details: CancelItemRequestData): CancelItemRequest;
+    type EdgeData = {
+        from: ReferenceData;
+        to: ReferenceData;
+    };
+    /**
+     * Creates a new Edge object
+     * @param data Data to be used in the object
+     * @returns A new Edge object
+     */
+    function newEdge(data: EdgeData): Edge;
+    type GatewayRequestStatusData = {
+        responderStates: Map<string, ResponderStateMap[keyof ResponderStateMap]>;
+        summary: {
+            working: number;
+            stalled: number;
+            complete: number;
+            error: number;
+            cancelled: number;
+            responders: number;
+        };
+        postProcessingComplete: boolean;
+    };
+    function newGatewayRequestStatus(data: GatewayRequestStatusData): GatewayRequestStatus;
+    /**
+     * Creates a new GatewayRequest object. This is an abstraction that wraps
+     * either an ItemRequest or a CancelItemRequest, along with a timeout
+     * @param request The ItemRequest or CancelItemRequest to send
+     * @param minStatusIntervalMs The minimum duration between status responses
+     * @returns A new GatewayRequest
+     */
+    function newGatewayRequest(request: ItemRequestData | CancelItemRequestData, minStatusIntervalMs: number): GatewayRequest;
+    /**
+     * Checks if a gateway request is done, this means that there are no more
+     * responders working and all post-processing is complete
+     * @param g The GatewayRequestStatus to check
+     * @returns True of the request is done, false otherwise
+     */
+    function gatewayRequestStatusDone(g: GatewayRequestStatus): boolean;
+    type GatewayResponseData = ItemData | EdgeData | ItemRequestErrorData | GatewayRequestStatusData | string;
+    function newGatewayResponse(data: GatewayResponseData): GatewayResponse;
 }
 /**
  * Represents something that is responding to our query

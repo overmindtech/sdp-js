@@ -13,13 +13,7 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = (function() {
-  if (this) { return this; }
-  if (typeof window !== 'undefined') { return window; }
-  if (typeof global !== 'undefined') { return global; }
-  if (typeof self !== 'undefined') { return self; }
-  return Function('return this')();
-}.call(null));
+var global = (function() { return this || window || global || self || Function('return this')(); }).call(null);
 
 var items_pb = require('./items_pb.js');
 goog.object.extend(proto, items_pb);
@@ -810,7 +804,8 @@ proto.GatewayRequestStatus.prototype.toObject = function(opt_includeInstance) {
 proto.GatewayRequestStatus.toObject = function(includeInstance, msg) {
   var f, obj = {
     responderstatesMap: (f = msg.getResponderstatesMap()) ? f.toObject(includeInstance, undefined) : [],
-    summary: (f = msg.getSummary()) && proto.GatewayRequestStatus.Summary.toObject(includeInstance, f)
+    summary: (f = msg.getSummary()) && proto.GatewayRequestStatus.Summary.toObject(includeInstance, f),
+    postprocessingcomplete: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
   };
 
   if (includeInstance) {
@@ -858,6 +853,10 @@ proto.GatewayRequestStatus.deserializeBinaryFromReader = function(msg, reader) {
       reader.readMessage(value,proto.GatewayRequestStatus.Summary.deserializeBinaryFromReader);
       msg.setSummary(value);
       break;
+    case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setPostprocessingcomplete(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -897,6 +896,13 @@ proto.GatewayRequestStatus.serializeBinaryToWriter = function(message, writer) {
       3,
       f,
       proto.GatewayRequestStatus.Summary.serializeBinaryToWriter
+    );
+  }
+  f = message.getPostprocessingcomplete();
+  if (f) {
+    writer.writeBool(
+      4,
+      f
     );
   }
 };
@@ -1238,6 +1244,24 @@ proto.GatewayRequestStatus.prototype.clearSummary = function() {
  */
 proto.GatewayRequestStatus.prototype.hasSummary = function() {
   return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional bool postProcessingComplete = 4;
+ * @return {boolean}
+ */
+proto.GatewayRequestStatus.prototype.getPostprocessingcomplete = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.GatewayRequestStatus} returns this
+ */
+proto.GatewayRequestStatus.prototype.setPostprocessingcomplete = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 

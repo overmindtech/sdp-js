@@ -111,6 +111,9 @@ export class GatewayRequestStatus extends jspb.Message {
   getSummary(): GatewayRequestStatus.Summary | undefined;
   setSummary(value?: GatewayRequestStatus.Summary): void;
 
+  getPostprocessingcomplete(): boolean;
+  setPostprocessingcomplete(value: boolean): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GatewayRequestStatus.AsObject;
   static toObject(includeInstance: boolean, msg: GatewayRequestStatus): GatewayRequestStatus.AsObject;
@@ -125,6 +128,7 @@ export namespace GatewayRequestStatus {
   export type AsObject = {
     responderstatesMap: Array<[string, responses_pb.ResponderState[keyof responses_pb.ResponderState]]>,
     summary?: GatewayRequestStatus.Summary.AsObject,
+    postprocessingcomplete: boolean,
   }
 
   export class Summary extends jspb.Message {

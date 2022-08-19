@@ -10,38 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RequestProgress = exports.Responder = exports.Util = exports.Response = exports.ReverseLinksResponse = exports.ReverseLinksRequest = exports.CancelItemRequest = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
+exports.RequestProgress = exports.Responder = exports.Util = exports.GatewayResponse = exports.GatewayRequestStatus = exports.GatewayRequest = exports.Response = exports.ReverseLinksResponse = exports.ReverseLinksRequest = exports.CancelItemRequest = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
 // Export things from other files
 var items_pb_1 = require("./items_pb");
 Object.defineProperty(exports, "ItemRequest", { enumerable: true, get: function () { return items_pb_1.ItemRequest; } });
@@ -56,15 +29,20 @@ Object.defineProperty(exports, "ReverseLinksRequest", { enumerable: true, get: f
 Object.defineProperty(exports, "ReverseLinksResponse", { enumerable: true, get: function () { return items_pb_1.ReverseLinksResponse; } });
 var responses_pb_1 = require("./responses_pb");
 Object.defineProperty(exports, "Response", { enumerable: true, get: function () { return responses_pb_1.Response; } });
+var gateway_pb_1 = require("./gateway_pb");
+Object.defineProperty(exports, "GatewayRequest", { enumerable: true, get: function () { return gateway_pb_1.GatewayRequest; } });
+Object.defineProperty(exports, "GatewayRequestStatus", { enumerable: true, get: function () { return gateway_pb_1.GatewayRequestStatus; } });
+Object.defineProperty(exports, "GatewayResponse", { enumerable: true, get: function () { return gateway_pb_1.GatewayResponse; } });
 // Import things we need for the Util namespace
-var items_pb_2 = require("./items_pb");
-var responses_pb_2 = require("./responses_pb");
-var sha1_1 = __importDefault(require("sha1"));
-var to_data_view_1 = __importDefault(require("to-data-view"));
-var duration_pb_1 = require("google-protobuf/google/protobuf/duration_pb");
-var struct_pb_1 = require("google-protobuf/google/protobuf/struct_pb");
-var timestamp_pb_1 = require("google-protobuf/google/protobuf/timestamp_pb");
-var uuid_1 = require("uuid");
+const items_pb_2 = require("./items_pb");
+const responses_pb_2 = require("./responses_pb");
+const sha1_1 = __importDefault(require("sha1"));
+const to_data_view_1 = __importDefault(require("to-data-view"));
+const duration_pb_1 = require("google-protobuf/google/protobuf/duration_pb");
+const struct_pb_1 = require("google-protobuf/google/protobuf/struct_pb");
+const timestamp_pb_1 = require("google-protobuf/google/protobuf/timestamp_pb");
+const uuid_1 = require("uuid");
+const gateway_pb_2 = require("./gateway_pb");
 var Util;
 (function (Util) {
     /**
@@ -81,7 +59,7 @@ var Util;
      * @returns The globally unique name
      */
     function getGloballyuniquename(object) {
-        var elements = [
+        const elements = [
             object.getContext(),
             object.getType(),
             getUniqueattributevalue(object),
@@ -95,10 +73,10 @@ var Util;
      * @returns The hash as a string
      */
     function getHash(object) {
-        var bytes = (0, sha1_1.default)(getGloballyuniquename(object), {
+        const bytes = (0, sha1_1.default)(getGloballyuniquename(object), {
             asBytes: true,
         });
-        var base32String = base32EncodeCustom(bytes);
+        const base32String = base32EncodeCustom(bytes);
         return base32String.substring(0, 11);
     }
     Util.getHash = getHash;
@@ -112,10 +90,10 @@ var Util;
             return object.getUniqueattributevalue();
         }
         else {
-            var uniqueAttribute = object.getUniqueattribute();
-            var attributes = object.getAttributes();
+            const uniqueAttribute = object.getUniqueattribute();
+            const attributes = object.getAttributes();
             if (typeof attributes != "undefined") {
-                var value = Util.getAttributeValue(attributes, uniqueAttribute);
+                const value = Util.getAttributeValue(attributes, uniqueAttribute);
                 return String(value);
             }
             else {
@@ -148,7 +126,7 @@ var Util;
      * @returns A reference to the supplied item
      */
     function getReference(item) {
-        var ref = new items_pb_2.Reference();
+        const ref = new items_pb_2.Reference();
         ref.setContext(item.getContext());
         ref.setType(item.getType());
         ref.setUniqueattributevalue(getUniqueattributevalue(item));
@@ -185,7 +163,7 @@ var Util;
      * @returns A new Item object
      */
     function newItem(details) {
-        var item = new items_pb_2.Item();
+        const item = new items_pb_2.Item();
         item.setType(details.type);
         item.setUniqueattribute(details.uniqueAttribute);
         item.setContext(details.context);
@@ -205,7 +183,7 @@ var Util;
      * @returns A new ItemAttributes object
      */
     function newItemAttributes(value) {
-        var attributes = new items_pb_2.ItemAttributes();
+        const attributes = new items_pb_2.ItemAttributes();
         attributes.setAttrstruct(struct_pb_1.Struct.fromJavaScript(value));
         return attributes;
     }
@@ -216,17 +194,17 @@ var Util;
      * @returns A new Metadata object
      */
     function newMetadata(data) {
-        var m = new items_pb_2.Metadata();
+        const m = new items_pb_2.Metadata();
         m.setSourcename(data.sourceName);
         m.setSourcerequest(Util.newItemRequest(data.sourceRequest));
-        var timestamp = new timestamp_pb_1.Timestamp();
+        const timestamp = new timestamp_pb_1.Timestamp();
         timestamp.fromDate(data.timestamp);
         m.setTimestamp(timestamp);
-        var sourceDuration = new duration_pb_1.Duration();
+        const sourceDuration = new duration_pb_1.Duration();
         sourceDuration.setSeconds(Math.floor(data.sourceDuration / 1000));
         sourceDuration.setNanos((data.sourceDuration % 1000) * 1e6);
         m.setSourceduration(sourceDuration);
-        var sourceDurationPerItem = new duration_pb_1.Duration();
+        const sourceDurationPerItem = new duration_pb_1.Duration();
         sourceDurationPerItem.setSeconds(Math.floor(data.sourceDurationPerItem / 1000));
         sourceDurationPerItem.setNanos((data.sourceDurationPerItem % 1000) * 1e6);
         m.setSourcedurationperitem(sourceDurationPerItem);
@@ -252,7 +230,7 @@ var Util;
      * @returns A new ItemRequest object
      */
     function newItemRequest(details) {
-        var r = new items_pb_2.ItemRequest();
+        const r = new items_pb_2.ItemRequest();
         r.setType(details.type);
         r.setMethod(convertRequestMethod(details.method));
         r.setQuery(details.query);
@@ -273,7 +251,7 @@ var Util;
      * @returns The new Reference object
      */
     function newReference(details) {
-        var r = new items_pb_2.Reference();
+        const r = new items_pb_2.Reference();
         r.setType(details.type);
         r.setUniqueattributevalue(details.uniqueAttributeValue);
         r.setContext(details.context);
@@ -286,7 +264,7 @@ var Util;
      * @returns The new Response object
      */
     function newResponse(details) {
-        var r = new responses_pb_2.Response();
+        const r = new responses_pb_2.Response();
         r.setResponder(details.responder);
         r.setState(details.state);
         if (typeof details.nextUpdateInMs != 'undefined') {
@@ -304,7 +282,7 @@ var Util;
      * @returns The new CancelItemRequest object
      */
     function newCancelItemRequest(details) {
-        var c = new items_pb_2.CancelItemRequest();
+        const c = new items_pb_2.CancelItemRequest();
         if (typeof details.UUID == "string") {
             var buffer = (0, uuid_1.parse)(details.UUID);
             c.setUuid(Uint8Array.from(buffer));
@@ -315,65 +293,182 @@ var Util;
         return c;
     }
     Util.newCancelItemRequest = newCancelItemRequest;
+    /**
+     * Creates a new Edge object
+     * @param data Data to be used in the object
+     * @returns A new Edge object
+     */
+    function newEdge(data) {
+        var e = new items_pb_2.Edge();
+        e.setFrom(Util.newReference(data.from));
+        e.setTo(Util.newReference(data.to));
+        return e;
+    }
+    Util.newEdge = newEdge;
+    function newGatewayRequestStatus(data) {
+        var grs = new gateway_pb_2.GatewayRequestStatus();
+        var responders = grs.getResponderstatesMap();
+        var summary = new gateway_pb_2.GatewayRequestStatus.Summary();
+        for (let [responder, state] of data.responderStates) {
+            responders.set(responder, state);
+        }
+        summary.setWorking(data.summary.working);
+        summary.setStalled(data.summary.stalled);
+        summary.setComplete(data.summary.complete);
+        summary.setError(data.summary.error);
+        summary.setCancelled(data.summary.cancelled);
+        summary.setResponders(data.summary.responders);
+        grs.setSummary(summary);
+        grs.setPostprocessingcomplete(data.postProcessingComplete);
+        return grs;
+    }
+    Util.newGatewayRequestStatus = newGatewayRequestStatus;
+    /**
+     * Creates a new GatewayRequest object. This is an abstraction that wraps
+     * either an ItemRequest or a CancelItemRequest, along with a timeout
+     * @param request The ItemRequest or CancelItemRequest to send
+     * @param minStatusIntervalMs The minimum duration between status responses
+     * @returns A new GatewayRequest
+     */
+    function newGatewayRequest(request, minStatusIntervalMs) {
+        var gr = new gateway_pb_2.GatewayRequest();
+        if ('method' in request) {
+            var ir = Util.newItemRequest(request);
+            gr.setRequest(ir);
+        }
+        else {
+            var cancel = Util.newCancelItemRequest(request);
+            gr.setCancel(cancel);
+        }
+        if (minStatusIntervalMs > 0) {
+            gr.setMinstatusinterval(Util.toDuration(minStatusIntervalMs));
+        }
+        return gr;
+    }
+    Util.newGatewayRequest = newGatewayRequest;
+    /**
+     * Checks if a gateway request is done, this means that there are no more
+     * responders working and all post-processing is complete
+     * @param g The GatewayRequestStatus to check
+     * @returns True of the request is done, false otherwise
+     */
+    function gatewayRequestStatusDone(g) {
+        var summary = g.getSummary();
+        if (typeof summary != 'undefined') {
+            return g.getPostprocessingcomplete() && (summary.getWorking() == 0);
+        }
+        return false;
+    }
+    Util.gatewayRequestStatusDone = gatewayRequestStatusDone;
+    function isItemData(x) {
+        const hasType = "type" in x;
+        const hasUniqueAttribute = "uniqueAttribute" in x;
+        const hasContext = "context" in x;
+        const hasAttributes = "attributes" in x;
+        const hasMetadata = "metadata" in x;
+        const hasLinkedItemRequests = "linkedItemRequests" in x;
+        const hasLinkedItems = "linkedItems" in x;
+        return hasType && hasUniqueAttribute && hasContext && hasAttributes && hasMetadata && hasLinkedItemRequests && hasLinkedItems;
+    }
+    function isEdgeData(x) {
+        const hasFrom = ("from" in x);
+        const hasTo = ("to" in x);
+        return hasFrom && hasTo;
+    }
+    function isItemRequestErrorData(x) {
+        const hasContext = ("context" in x);
+        const hasErrorString = ("errorString" in x);
+        const hasErrorType = ("errorType" in x);
+        return hasContext && hasErrorString && hasErrorType;
+    }
+    function isGatewayRequestStatusData(x) {
+        const hasResponderStates = ("responderStates" in x);
+        ``;
+        const hasSummary = ("summary" in x);
+        ``;
+        const hasPostProcessingComplete = ("postProcessingComplete" in x);
+        ``;
+        return hasResponderStates && hasSummary && hasPostProcessingComplete;
+    }
+    function newGatewayResponse(data) {
+        var gr = new gateway_pb_2.GatewayResponse();
+        if (typeof data == 'string') {
+            gr.setError(data);
+            return gr;
+        }
+        else if (typeof data == 'object') {
+            if (isItemData(data)) {
+                gr.setNewitem(Util.newItem(data));
+                return gr;
+            }
+            if (isEdgeData(data)) {
+                gr.setNewedge(Util.newEdge(data));
+                return gr;
+            }
+            if (isItemRequestErrorData(data)) {
+                gr.setNewitemrequesterror(Util.newItemRequestError(data));
+                return gr;
+            }
+            if (isGatewayRequestStatusData(data)) {
+                gr.setStatus(Util.newGatewayRequestStatus(data));
+                return gr;
+            }
+        }
+        return gr;
+    }
+    Util.newGatewayResponse = newGatewayResponse;
 })(Util = exports.Util || (exports.Util = {}));
 /**
  * Represents something that is responding to our query
  */
-var Responder = /** @class */ (function () {
+class Responder {
     /**
      *
      * @param responder The responder that this responder will respond for
      */
-    function Responder(name) {
+    constructor(name) {
         this.name = "";
         this.lastStateTime = new Date();
         this._lastState = responses_pb_2.ResponderState.WORKING;
         this.name = name;
         this.state = responses_pb_2.ResponderState.WORKING;
     }
-    Object.defineProperty(Responder.prototype, "state", {
-        // Get the last state of this responder
-        get: function () {
-            return this._lastState;
-        },
-        // Sets the state and updates the LastState to the current time
-        set: function (state) {
-            // Set last state time to now
-            this.lastStateTime = new Date();
-            this._lastState = state;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    return Responder;
-}());
+    // Sets the state and updates the LastState to the current time
+    set state(state) {
+        // Set last state time to now
+        this.lastStateTime = new Date();
+        this._lastState = state;
+    }
+    // Get the last state of this responder
+    get state() {
+        return this._lastState;
+    }
+}
 exports.Responder = Responder;
-var RequestProgress = /** @class */ (function () {
+class RequestProgress {
     /**
      *
      * @param request The request for which to track progress
      * @param stallCheckIntervalMs How often to check to see if responders have
      * stalled, in milliseconds
      */
-    function RequestProgress(request, stallCheckIntervalMs) {
-        if (stallCheckIntervalMs === void 0) { stallCheckIntervalMs = 500; }
-        var _this = this;
+    constructor(request, stallCheckIntervalMs = 500) {
         this.responders = new Map();
         // Tracks the number of things currently being processed so that we can be
         // sure that all processing is complete before returning
         this.inFlight = 0;
         this.request = request;
         // Start watching for stalls
-        this.watcher = setInterval(function () {
+        this.watcher = setInterval(() => {
             // Check to see if the request is complete, if it is we need to stop
             // checking
-            if (_this.allDone()) {
-                clearInterval(_this.watcher);
+            if (this.allDone()) {
+                clearInterval(this.watcher);
             }
             // Get the current time
             var now = new Date();
             // Loop over all results and check for stalls
-            _this.responders.forEach(function (responder) {
+            this.responders.forEach((responder) => {
                 if (typeof responder.nextStateTime != 'undefined') {
                     if (responder.nextStateTime < now) {
                         // This means that the responder has stalled
@@ -384,118 +479,116 @@ var RequestProgress = /** @class */ (function () {
         }, stallCheckIntervalMs);
     }
     // Return the count of items with a given state
-    RequestProgress.prototype.countOfState = function (state) {
+    countOfState(state) {
         var x = 0;
-        this.responders.forEach(function (v) {
+        this.responders.forEach((v) => {
             if (v.state == state) {
                 x++;
             }
         });
         return x;
-    };
+    }
     /**
      * Cancels loops that are watching for stalls
      */
-    RequestProgress.prototype.cancel = function () {
+    cancel() {
         clearInterval(this.watcher);
-    };
+    }
     /**
      *
      * @returns The number of responder still working
      */
-    RequestProgress.prototype.numWorking = function () {
+    numWorking() {
         return this.countOfState(responses_pb_2.ResponderState.WORKING);
-    };
+    }
     /**
      *
      * @returns The number of stalled responders
      */
-    RequestProgress.prototype.numStalled = function () {
+    numStalled() {
         return this.countOfState(responses_pb_2.ResponderState.STALLED);
-    };
+    }
     /**
      *
      * @returns The number of complete responders
      */
-    RequestProgress.prototype.numComplete = function () {
+    numComplete() {
         return this.countOfState(responses_pb_2.ResponderState.COMPLETE);
-    };
+    }
     /**
      *
      * @returns The number of failed responders
      */
-    RequestProgress.prototype.numFailed = function () {
+    numFailed() {
         return this.countOfState(responses_pb_2.ResponderState.ERROR);
-    };
+    }
     /**
      *
      * @returns The number of cancelled responders
      */
-    RequestProgress.prototype.numCancelled = function () {
+    numCancelled() {
         return this.countOfState(responses_pb_2.ResponderState.CANCELLED);
-    };
+    }
     /**
      *
      * @returns The total number of responders for the query
      */
-    RequestProgress.prototype.numResponders = function () {
+    numResponders() {
         return this.responders.size;
-    };
+    }
     /**
      *
      * @returns True if all responders are done or stalled
      */
-    RequestProgress.prototype.allDone = function () {
+    allDone() {
         if (this.numResponders() > 0 && this.inFlight == 0) {
             return (this.numWorking() == 0);
         }
         return false;
-    };
+    }
     /**
      * Returns a number between 1 and 100 representing the percentage complete
      * of all responders.
      * @returns The percentage of complete responders
      */
-    RequestProgress.prototype.percentComplete = function () {
+    percentComplete() {
         return (this.numComplete() / this.numResponders()) * 100;
-    };
+    }
     /**
      * Waits for all to be completed, then returns
      * @param timeoutMs How long to wait before timing out
      * @returns "timeout" or "done"
      */
-    RequestProgress.prototype.waitForCompletion = function (timeoutMs) {
-        if (timeoutMs === void 0) { timeoutMs = 3000; }
-        return __awaiter(this, void 0, void 0, function () {
-            var doneCheckIntervalMs, doneChecker, timeout;
-            var _this = this;
-            return __generator(this, function (_a) {
-                doneCheckIntervalMs = 100;
-                timeout = new Promise(function (resolve) { return setTimeout(resolve, timeoutMs, "timeout"); });
-                // Create the done promise
-                return [2 /*return*/, new Promise(function (resolve) {
-                        doneChecker = setInterval(function () {
-                            if (_this.allDone()) {
-                                clearInterval(doneChecker);
-                                resolve("done");
-                            }
-                        }, doneCheckIntervalMs, resolve);
-                        timeout.then(function () {
-                            clearInterval(doneChecker);
-                            resolve("timeout");
-                        });
-                    })];
+    waitForCompletion(timeoutMs = 3000) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // How often to check for done-ness
+            const doneCheckIntervalMs = 100;
+            var doneChecker;
+            // Create the timeout promise
+            const timeout = new Promise(resolve => setTimeout(resolve, timeoutMs, "timeout"));
+            // Create the done promise
+            return new Promise((resolve) => {
+                doneChecker = setInterval(() => {
+                    if (this.allDone()) {
+                        clearInterval(doneChecker);
+                        resolve("done");
+                    }
+                }, doneCheckIntervalMs, resolve);
+                timeout.then(() => {
+                    clearInterval(doneChecker);
+                    resolve("timeout");
+                });
             });
         });
-    };
+    }
     /**
      * Processes a response and updates tracking of responders.
      * @param response The response to process
      */
-    RequestProgress.prototype.processResponse = function (response) {
+    processResponse(response) {
         this.inFlight++;
         // Pull details out of the response
-        var responderName = response.getResponder();
+        const responderName = response.getResponder();
         var nextUpdateTime = undefined;
         // Get the responder or create a new one
         var responder = this.responders.get(responderName) || new Responder(responderName);
@@ -518,9 +611,8 @@ var RequestProgress = /** @class */ (function () {
         // Save the value
         this.responders.set(responderName, responder);
         this.inFlight--;
-    };
-    return RequestProgress;
-}());
+    }
+}
 exports.RequestProgress = RequestProgress;
 //
 // Private helper functions
@@ -541,19 +633,19 @@ function convertRequestMethod(method) {
 // This is a copied and modified version of
 // https://github.com/LinusU/base32-encode made to support my custom encoding
 function base32EncodeCustom(data) {
-    var alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEF';
-    var padding = false;
+    const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEF';
+    const padding = false;
     // For reasons that I cannot possibly fathom, it's possible (likely) that we
     // can be passed a Uint8Array that is not an instance of Uint8Array. Sounds
     // dumb right? Yes, yes it does. Someone smarter than me can probably
     // explain how this can be justified but it makes no sense to me, Reference:
     // https://medium.com/@simonwarta/limitations-of-the-instanceof-operator-f4bcdbe7a400
-    var actualData = new Uint8Array(data);
-    var view = (0, to_data_view_1.default)(actualData);
-    var bits = 0;
-    var value = 0;
-    var output = '';
-    for (var i = 0; i < view.byteLength; i++) {
+    const actualData = new Uint8Array(data);
+    const view = (0, to_data_view_1.default)(actualData);
+    let bits = 0;
+    let value = 0;
+    let output = '';
+    for (let i = 0; i < view.byteLength; i++) {
         value = (value << 8) | view.getUint8(i);
         bits += 8;
         while (bits >= 5) {
