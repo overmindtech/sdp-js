@@ -4,6 +4,8 @@ import * as assert from 'assert';
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 import { ItemRequestError, ResponderState } from '../responses_pb';
 import { v4 as uuidv4, parse as uuidparse } from 'uuid';
+import { ResponderStateMap } from '../responses_pb';
+
 
 describe('Util', function() {
   describe('#newUUID', function() {
@@ -432,6 +434,64 @@ describe('Util', function() {
       assert.strictEqual(e.getFrom()?.getUniqueattributevalue(), 'dylan');
       assert.strictEqual(e.getTo()?.getUniqueattributevalue(), 'katelyn');
     })
-    
+  })
+
+  describe('#newGatewayRequestStatus()', function() {
+    var states = new Map<string, ResponderStateMap[keyof ResponderStateMap]>();
+    states.set("responder.cancel", ResponderState.CANCELLED);
+    states.set("responder.complete", ResponderState.COMPLETE);
+    states.set("responder.error", ResponderState.ERROR);
+    states.set("responder.working", ResponderState.WORKING);
+
+    var s = Util.newGatewayRequestStatus({
+      summary: {
+        cancelled: 1,
+        complete: 1,
+        error: 1,
+        responders: 4,
+        stalled: 1,
+        working: 0,
+      },
+      postProcessingComplete: false,
+      responderStates: states,
+    })
+
+    it('should have an accurate summary', () => {
+      it('should have the correct value for Cancelled', () => {
+        assert.strictEqual(s.getSummary()?.getCancelled(), 1);
+      })
+      it('should have the correct value for Complete', () => {
+        assert.strictEqual(s.getSummary()?.getComplete(), 1);
+      })
+      it('should have the correct value for Error', () => {
+        assert.strictEqual(s.getSummary()?.getError(), 1);
+      })
+      it('should have the correct value for Responders', () => {
+        assert.strictEqual(s.getSummary()?.getResponders(), 4);
+      })
+      it('should have the correct value for Stalled', () => {
+        assert.strictEqual(s.getSummary()?.getStalled(), 1);
+      })
+      it('should have the correct value for Working', () => {
+        assert.strictEqual(s.getSummary()?.getWorking(), 0);
+      })
+    })
+
+    it('should have postProcessingComplete', () => {
+      assert.strictEqual(s.getPostprocessingcomplete(), false);
+    })
+
+    it('should have responders map with enough entries', () => {
+      var finalResponders = s.getResponderstatesMap();
+
+      assert.strictEqual(finalResponders.getLength(), 4);
+
+      for (let [responder, state] of states) {
+        it(`Responder ${responder} state matches`, () => {
+          assert.strictEqual(finalResponders.get(responder), state);
+        })
+      }
+    })
+
   })
 });

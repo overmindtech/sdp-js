@@ -15,7 +15,7 @@ import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue, Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
 import { parse as uuidParse, v4 as uuidv4 } from 'uuid';
-import { GatewayRequest, GatewayRequestStatus } from './gateway_pb';
+import { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb';
 
 export namespace Util {
     /**
@@ -360,6 +360,41 @@ export namespace Util {
         e.setTo(Util.newReference(data.to));
 
         return e;
+    }
+
+    export type GatewayRequestStatusData = {
+        responderStates: Map<string, ResponderStateMap[keyof ResponderStateMap]>, 
+        summary: {
+            working: number,
+            stalled: number,
+            complete: number,
+            error: number,
+            cancelled: number,
+            responders: number,      
+        }
+        postProcessingComplete: boolean,
+    }
+
+    export function newGatewayRequestStatus(data: GatewayRequestStatusData): GatewayRequestStatus {
+        var grs = new GatewayRequestStatus();
+        var responders = grs.getResponderstatesMap();
+        var summary = new GatewayRequestStatus.Summary();
+
+        for (let [responder, state] of data.responderStates) {
+            responders.set(responder, state);
+        }
+
+        summary.setWorking(data.summary.working);
+        summary.setStalled(data.summary.stalled);
+        summary.setComplete(data.summary.complete);
+        summary.setError(data.summary.error);
+        summary.setCancelled(data.summary.cancelled);
+        summary.setResponders(data.summary.responders);
+        grs.setSummary(summary);
+
+        grs.setPostprocessingcomplete(data.postProcessingComplete);
+
+        return grs;
     }
 
     /**

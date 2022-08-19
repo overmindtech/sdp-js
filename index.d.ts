@@ -165,6 +165,19 @@ export declare namespace Util {
      * @returns A new Edge object
      */
     function newEdge(data: EdgeData): Edge;
+    type GatewayRequestStatusData = {
+        responderStates: Map<string, ResponderStateMap[keyof ResponderStateMap]>;
+        summary: {
+            working: number;
+            stalled: number;
+            complete: number;
+            error: number;
+            cancelled: number;
+            responders: number;
+        };
+        postProcessingComplete: boolean;
+    };
+    function newGatewayRequestStatus(data: GatewayRequestStatusData): GatewayRequestStatus;
     /**
      * Creates a new GatewayRequest object. This is an abstraction that wraps
      * either an ItemRequest or a CancelItemRequest, along with a timeout
