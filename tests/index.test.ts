@@ -144,6 +144,7 @@ describe('Util', function() {
       context: "global",
       itemSubject: "subject1",
       responseSubject: "subject3",
+      errorSubject: "subject2",
       UUID: Uint8Array.from(uuidparse(uuidv4())),
       timeoutMs: 10000,
     }
@@ -191,6 +192,7 @@ describe('Util', function() {
         method: 'FIND',
         query: "*",
         responseSubject: "response",
+        errorSubject: "error",
         type: "package",
         UUID: uuid,
         timeoutMs: 10000,
@@ -380,6 +382,7 @@ describe('Util', function() {
         linkDepth: 10,
         context: "global",
         itemSubject: "subject1",
+        errorSubject: "subject2",
         responseSubject: "subject3",
         UUID: Uint8Array.from(uuidparse(uuidv4())),
         timeoutMs: 10000,

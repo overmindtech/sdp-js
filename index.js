@@ -238,6 +238,7 @@ var Util;
         r.setContext(details.context);
         r.setItemsubject(details.itemSubject);
         r.setResponsesubject(details.responseSubject);
+        r.setErrorsubject(details.errorSubject);
         r.setUuid(details.UUID);
         if (typeof details.timeoutMs != 'undefined') {
             r.setTimeout(Util.toDuration(details.timeoutMs));
