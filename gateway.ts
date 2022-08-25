@@ -2,6 +2,7 @@ import { GatewayRequest, GatewayRequestStatus, GatewayResponse } from "./gateway
 import { Edge, Item } from "./items_pb";
 import * as WS from 'ws';
 import { ItemRequestError } from "./responses_pb";
+import { EventEmitter } from "node:events";
 
 type ErrorCallback = (error: string) => void;
 type NewItemCallback = (item: Item) => void;
@@ -9,7 +10,7 @@ type NewEdgeCallback = (edge: Edge) => void;
 type ItemRequestErrorCallback = (error: ItemRequestError) => void;
 type NewStatusCallback = (status: GatewayRequestStatus) => void;
 
-export class GatewaySession {
+export class GatewaySession extends EventEmitter {
     _socket: WS.WebSocket
     ready: Promise<void>
     status?: GatewayRequestStatus.AsObject
@@ -22,6 +23,8 @@ export class GatewaySession {
     _newStatusCallbacks: NewStatusCallback[] = [];
     
     constructor(url: string) {
+        super();
+
         this._socket = new WS.WebSocket(url);
         
         this.ready = new Promise((resolve, reject) => {
@@ -55,84 +58,80 @@ export class GatewaySession {
         const response = GatewayResponse.deserializeBinary(buffer)
         
         if (response.hasError()) {
-            this._processError(response.getError());
+            this.emit('error', response.getError());
         } else if (response.hasNewitem()) {
             const item = response.getNewitem()
             
             if (typeof item != 'undefined') {
-                this._processNewItem(item);
+                this.emit('new-item', item);
             }
         } else if (response.hasNewedge()) {
             const edge = response.getNewedge()
             
             if (typeof edge != 'undefined') {
-                this._processNewEdge(edge);
+                this.emit('new-edge', edge);
             }
         } else if (response.hasNewitemrequesterror()) {
             const e = response.getNewitemrequesterror()
             
             if (typeof e != 'undefined') {
-                this._processNewItemRequestError(e);
+                this.emit('item-request-error', e);
             }
         } else if (response.hasStatus()) {
             const status = response.getStatus()
             
             if (typeof status != 'undefined') {
-                this._processStatus(status);
+                this.emit('status', status);
             }
         }
     }
-    
-    /**
-    * Process incoming error messages
-    * @param error The error
-    */
-    _processError(error: string) {
-        for (let cb of this._errorCallbacks) {
-            cb(error);
-        }
+
+    // TODO: I should really find some good place to document the types of
+    // events (other than the type definitions here)
+
+    on(eventName: 'error', listener: (this: GatewaySession, error: string) => void): this;
+    on(eventName: 'new-item', listener: (this: GatewaySession, item: Item) => void): this;
+    on(eventName: 'new-edge', listener: (this: GatewaySession, edge: Edge) => void): this;
+    on(eventName: 'item-request-error', listener: (this: GatewaySession, error: ItemRequestError) => void): this;
+    on(eventName: 'status', listener: (this: GatewaySession, status: GatewayRequestStatus) => void): this;
+    on(eventName: string | symbol, listener: (...args: any[]) => void): this {
+        return super.on(eventName, listener);
     }
-    
-    /**
-    * Process incoming items
-    * @param item The item
-    */
-    _processNewItem(item : Item) {
-        for (let cb of this._newItemCallbacks) {
-            cb(item);
-        }
+
+    addListener(eventName: 'error', listener: (this: GatewaySession, error: string) => void): this;
+    addListener(eventName: 'new-item', listener: (this: GatewaySession, item: Item) => void): this;
+    addListener(eventName: 'new-edge', listener: (this: GatewaySession, edge: Edge) => void): this;
+    addListener(eventName: 'item-request-error', listener: (this: GatewaySession, error: ItemRequestError) => void): this;
+    addListener(eventName: 'status', listener: (this: GatewaySession, status: GatewayRequestStatus) => void): this;
+    addListener(eventName: string | symbol, listener: (...args: any[]) => void): this {
+        return super.addListener(eventName, listener);
     }
-    
-    /**
-    * Process incoming edges
-    * @param edge The edge
-    */
-    _processNewEdge(edge: Edge) {
-        for (let cb of this._newEdgeCallbacks) {
-            cb(edge);
-        }
+
+    once(eventName: 'error', listener: (this: GatewaySession, error: string) => void): this;
+    once(eventName: 'new-item', listener: (this: GatewaySession, item: Item) => void): this;
+    once(eventName: 'new-edge', listener: (this: GatewaySession, edge: Edge) => void): this;
+    once(eventName: 'item-request-error', listener: (this: GatewaySession, error: ItemRequestError) => void): this;
+    once(eventName: 'status', listener: (this: GatewaySession, status: GatewayRequestStatus) => void): this;
+    once(eventName: string | symbol, listener: (...args: any[]) => void): this {
+        return super.once(eventName, listener);
     }
-    
-    /**
-    * Process incoming item request errors
-    * @param error The error
-    */
-    _processNewItemRequestError(error: ItemRequestError) {
-        for (let cb of this._itemRequestErrorCallbacks) {
-            cb(error);
-        }
+
+    off(eventName: 'error', listener: (this: GatewaySession, error: string) => void): this;
+    off(eventName: 'new-item', listener: (this: GatewaySession, item: Item) => void): this;
+    off(eventName: 'new-edge', listener: (this: GatewaySession, edge: Edge) => void): this;
+    off(eventName: 'item-request-error', listener: (this: GatewaySession, error: ItemRequestError) => void): this;
+    off(eventName: 'status', listener: (this: GatewaySession, status: GatewayRequestStatus) => void): this;
+    off(eventName: string | symbol, listener: (...args: any[]) => void): this {
+        return super.off(eventName, listener)
     }
-    
-    /**
-    * Process incoming status messages
-    * @param status The status
-    */
-    _processStatus(status: GatewayRequestStatus) {
-        this.status = status.toObject();
-        
-        for (let cb of this._newStatusCallbacks) {
-            cb(status);
-        }
+
+    removeListener(eventName: 'error', listener: (this: GatewaySession, error: string) => void): this;
+    removeListener(eventName: 'new-item', listener: (this: GatewaySession, item: Item) => void): this;
+    removeListener(eventName: 'new-edge', listener: (this: GatewaySession, edge: Edge) => void): this;
+    removeListener(eventName: 'item-request-error', listener: (this: GatewaySession, error: ItemRequestError) => void): this;
+    removeListener(eventName: 'status', listener: (this: GatewaySession, status: GatewayRequestStatus) => void): this;
+    removeListener(eventName: string | symbol, listener: (...args: any[]) => void): this {
+        return super.removeListener(eventName, listener)
     }
     
     /**
@@ -144,65 +143,6 @@ export class GatewaySession {
         this._socket.send(binary, {
             binary: true,
         });
-    }
-    
-    /**
-    * Register a callback that is called when the gateway returns an error
-    * running a request. These are arrors from the gateway itself which mean
-    * the request couldn't be executed as opoosed to error like "not found"
-    * that come from responders
-    * @param cb The callback
-    * @returns This object
-    */
-    onError(cb: ErrorCallback): this {
-        this._errorCallbacks.push(cb);
-        return this;
-    }
-    
-    /**
-    * Register a callback that is called when a new item is found
-    * @param cb The callback
-    * @returns This object
-    */
-    onNewItem(cb: NewItemCallback): this {
-        this._newItemCallbacks.push(cb);
-        return this;
-    }
-    
-    /**
-    * Register a callback that will be called when a new edge is found. Edges
-    * will only be sen *after* both the source and target of the edge have been
-    * sent
-    * @param cb The callback
-    * @returns This object
-    */
-    onNewEdge(cb: NewEdgeCallback): this {
-        this._newEdgeCallbacks.push(cb);
-        return this;
-    }
-    
-    /**
-    * Register a callback that is called when an item request error is
-    * encoutered. It is up to the user to detemine what to do about these
-    * errors as their importance will likely depend on the context of what is
-    * being executed
-    * @param cb The callback
-    * @returns This object
-    */
-    onNewItemRequestError(cb: ItemRequestErrorCallback): this {
-        this._itemRequestErrorCallbacks.push(cb);
-        return this;
-    }
-    
-    /**
-    * Register a callback that is called when a new status updates is received.
-    * The status can also be checked at any time with the `#status` method
-    * @param cb The callback
-    * @returns This object
-    */
-    onStatus(cb: NewStatusCallback): this {
-        this._newStatusCallbacks.push(cb);
-        return this;
     }
     
     /**

@@ -152,7 +152,7 @@ describe('GatewaySession', () => {
                 var response = Util.newGatewayResponse("some error")
 
                 // Register the callbacks
-                gs.onError((error) => {
+                gs.on('error', (error) => {
                     assert.strictEqual(error, "some error")
                     done();
                 })
@@ -165,7 +165,7 @@ describe('GatewaySession', () => {
                 var response = Util.newGatewayResponse(data.itemData.dylan)
 
                 // Register the callbacks
-                gs.onNewItem((item) => {
+                gs.on('new-item', (item) => {
                     assert.strictEqual(item.getType(), data.item.dylan.getType())
                     done();
                 })
@@ -178,7 +178,7 @@ describe('GatewaySession', () => {
                 var response = Util.newGatewayResponse(data.edgeData.basic)
 
                 // Register the callbacks
-                gs.onNewEdge((edge) => {
+                gs.on('new-edge', (edge) => {
                     assert.deepEqual(edge.getFrom(), data.edge.basic.getFrom());
                     assert.deepEqual(edge.getTo(), data.edge.basic.getTo());
                     done();
