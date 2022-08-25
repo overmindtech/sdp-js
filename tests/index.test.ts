@@ -1,6 +1,6 @@
 import { Util, Item, ItemAttributes, RequestMethod } from '..';
-import * as testData from './items';
 import * as assert from 'assert';
+import * as data from './sampledata';
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 import { ItemRequestError, ResponderState } from '../responses_pb';
 import { v4 as uuidv4, parse as uuidparse } from 'uuid';
@@ -18,7 +18,7 @@ describe('Util', function() {
   })
   describe('#getUniqueattributevalue()', function() {
     it('should handle an item with a string UAV', function() {
-      testData.items.forEach((item: Item) => {
+      data.items.forEach((item: Item) => {
         var uav = Util.getUniqueattributevalue(item);
         
         assert.notStrictEqual(uav, "")
@@ -26,13 +26,13 @@ describe('Util', function() {
     });
     
     it('should actually return the unadulterated string', function() {
-      var uav = Util.getUniqueattributevalue(testData.dylan);
+      var uav = Util.getUniqueattributevalue(data.item.dylan);
       
       assert.strictEqual(uav, "dylan")
     });
     
     it('should actually return the unadulterated integer (as a string)', function() {
-      var uav = Util.getUniqueattributevalue(testData.process);
+      var uav = Util.getUniqueattributevalue(data.item.process);
       
       assert.strictEqual(uav, "12323")
     });
@@ -41,12 +41,12 @@ describe('Util', function() {
   });
   describe('#getHash()', function() {
     it('should work for items', function() {
-      var hash = Util.getHash(testData.dylan);
+      var hash = Util.getHash(data.item.dylan);
       assert.notStrictEqual(hash, "");
     })
     
     it('should work for references', function() {
-      var ref = Util.getReference(testData.dylan);
+      var ref = Util.getReference(data.item.dylan);
       var hash = Util.getHash(ref);
       assert.notStrictEqual(hash, "");
     })
