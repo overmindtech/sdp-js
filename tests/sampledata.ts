@@ -1,5 +1,5 @@
 import { Util, RequestMethod } from '../index'
-import { ResponderState } from "../responses_pb";
+import { ResponderState, ResponderStateMap } from "../responses_pb";
 import { ItemRequestError } from "../responses_pb";
 
 export const errorData = {
@@ -148,6 +148,48 @@ export const gatewayRequestData = {
 export const gatewayRequest = {
     itemRequest: Util.newGatewayRequest(gatewayRequestData.itemRequest, 0),
     cancel: Util.newGatewayRequest(gatewayRequestData.cancel, 0),
+}
+
+export const gatewayStatusData = {
+    working: {
+        responderStates: new Map([
+            ["responder.cancel", ResponderState.CANCELLED],
+            ["responder.complete", ResponderState.COMPLETE],
+            ["responder.error", ResponderState.ERROR],
+            ["responder.working", ResponderState.WORKING],
+        ]),
+        summary: {
+            cancelled: 1,
+            complete: 1,
+            error: 1,
+            responders: 4,
+            stalled: 0,
+            working: 1,
+        },
+        postProcessingComplete: false,
+    },
+    done: {
+        responderStates: new Map([
+            ["responder.cancel", ResponderState.CANCELLED],
+            ["responder.complete", ResponderState.COMPLETE],
+            ["responder.error", ResponderState.ERROR],
+            ["responder.working", ResponderState.COMPLETE],
+        ]),
+        summary: {
+            cancelled: 1,
+            complete: 2,
+            error: 1,
+            responders: 4,
+            stalled: 0,
+            working: 0,
+        },
+        postProcessingComplete: true,
+    }
+}
+
+export const gatewayStatus = {
+    working: Util.newGatewayRequestStatus(gatewayStatusData.working),
+    done: Util.newGatewayRequestStatus(gatewayStatusData.done),
 }
 
 export const edgeData = {

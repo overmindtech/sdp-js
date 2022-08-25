@@ -188,17 +188,56 @@ describe('GatewaySession', () => {
             })
         })
         describe('NewItemRequestError', () => {
-            it('should call the callback', () => {
+            it('should call the callback', (done) => {
+                var response = Util.newGatewayResponse(data.errorData.NOCONTEXT)
 
+                // Register the callbacks
+                gs.on('item-request-error', (error) => {
+                    assert.strictEqual(error.getContext(), data.error.NOCONTEXT.getContext());
+                    assert.strictEqual(error.getErrortype(), data.error.NOCONTEXT.getErrortype());
+                    done();
+                })
+
+                server.send(response);
             })
         })
         describe('Status', () => {
-            it('should call the callback', () => {
-                
+            it('should call the callback', (done) => {
+                var response = Util.newGatewayResponse(data.gatewayStatusData.working)
+
+                // Register the callbacks
+                gs.on('status', (status) => {
+                    assert.strictEqual(status.getPostprocessingcomplete(), data.gatewayStatus.working.getPostprocessingcomplete());
+                    assert.deepEqual(status.getSummary()?.toObject(), data.gatewayStatus.working.getSummary()?.toObject());
+                    gs.removeAllListeners('status');
+                    done();
+                })
+
+                server.send(response);
             })
             
-            it('should update the status', () => {
-                
+            it('should update the status', (done) => {
+                var working = Util.newGatewayResponse(data.gatewayStatusData.working)
+                var doneResponse = Util.newGatewayResponse(data.gatewayStatusData.done)
+
+                // Register the callbacks
+                gs.on('status', () => {
+                    assert.strictEqual(gs.status?.postprocessingcomplete, data.gatewayStatus.working.getPostprocessingcomplete());
+                    assert.deepEqual(gs.status?.summary, data.gatewayStatus.working.getSummary()?.toObject());
+                    gs.removeAllListeners('status');
+
+                    // Add the second test
+                    gs.on('status', () => {
+                        assert.strictEqual(gs.status?.postprocessingcomplete, data.gatewayStatus.done.getPostprocessingcomplete());
+                        assert.deepEqual(gs.status?.summary, data.gatewayStatus.done.getSummary()?.toObject());
+                        gs.removeAllListeners('status');
+                        done();
+                    })
+
+                    server.send(doneResponse);
+                })
+
+                server.send(working);
             })
         })
     })

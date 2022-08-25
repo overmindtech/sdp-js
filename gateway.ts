@@ -4,23 +4,10 @@ import * as WS from 'ws';
 import { ItemRequestError } from "./responses_pb";
 import { EventEmitter } from "node:events";
 
-type ErrorCallback = (error: string) => void;
-type NewItemCallback = (item: Item) => void;
-type NewEdgeCallback = (edge: Edge) => void;
-type ItemRequestErrorCallback = (error: ItemRequestError) => void;
-type NewStatusCallback = (status: GatewayRequestStatus) => void;
-
 export class GatewaySession extends EventEmitter {
     _socket: WS.WebSocket
     ready: Promise<void>
     status?: GatewayRequestStatus.AsObject
-    
-    // Callback Storage
-    _newItemCallbacks: NewItemCallback[] = [];
-    _newEdgeCallbacks: NewEdgeCallback[] = [];
-    _errorCallbacks: ErrorCallback[] = [];
-    _itemRequestErrorCallbacks: ItemRequestErrorCallback[] = [];
-    _newStatusCallbacks: NewStatusCallback[] = [];
     
     constructor(url: string) {
         super();
@@ -78,9 +65,11 @@ export class GatewaySession extends EventEmitter {
                 this.emit('item-request-error', e);
             }
         } else if (response.hasStatus()) {
-            const status = response.getStatus()
+            const status = response.getStatus();
             
             if (typeof status != 'undefined') {
+                this.status = status.toObject();
+
                 this.emit('status', status);
             }
         }

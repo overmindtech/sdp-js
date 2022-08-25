@@ -5,20 +5,10 @@ import { Edge, Item } from "./items_pb";
 import * as WS from 'ws';
 import { ItemRequestError } from "./responses_pb";
 import { EventEmitter } from "node:events";
-declare type ErrorCallback = (error: string) => void;
-declare type NewItemCallback = (item: Item) => void;
-declare type NewEdgeCallback = (edge: Edge) => void;
-declare type ItemRequestErrorCallback = (error: ItemRequestError) => void;
-declare type NewStatusCallback = (status: GatewayRequestStatus) => void;
 export declare class GatewaySession extends EventEmitter {
     _socket: WS.WebSocket;
     ready: Promise<void>;
     status?: GatewayRequestStatus.AsObject;
-    _newItemCallbacks: NewItemCallback[];
-    _newEdgeCallbacks: NewEdgeCallback[];
-    _errorCallbacks: ErrorCallback[];
-    _itemRequestErrorCallbacks: ItemRequestErrorCallback[];
-    _newStatusCallbacks: NewStatusCallback[];
     constructor(url: string);
     /**
     * Processing inbound messages
@@ -65,5 +55,4 @@ export declare class GatewaySession extends EventEmitter {
     */
     state(): typeof WS.CONNECTING | typeof WS.OPEN | typeof WS.CLOSING | typeof WS.CLOSED;
 }
-export {};
 //# sourceMappingURL=gateway.d.ts.map

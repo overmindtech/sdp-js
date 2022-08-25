@@ -30,12 +30,6 @@ const node_events_1 = require("node:events");
 class GatewaySession extends node_events_1.EventEmitter {
     constructor(url) {
         super();
-        // Callback Storage
-        this._newItemCallbacks = [];
-        this._newEdgeCallbacks = [];
-        this._errorCallbacks = [];
-        this._itemRequestErrorCallbacks = [];
-        this._newStatusCallbacks = [];
         this._socket = new WS.WebSocket(url);
         this.ready = new Promise((resolve, reject) => {
             this._socket.on('open', () => {
@@ -89,6 +83,7 @@ class GatewaySession extends node_events_1.EventEmitter {
         else if (response.hasStatus()) {
             const status = response.getStatus();
             if (typeof status != 'undefined') {
+                this.status = status.toObject();
                 this.emit('status', status);
             }
         }
