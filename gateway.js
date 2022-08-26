@@ -25,8 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GatewaySession = void 0;
 const gateway_pb_1 = require("./gateway_pb");
-const WS = __importStar(require("ws"));
 const node_events_1 = require("node:events");
+const WS = __importStar(require("ws"));
 class GatewaySession extends node_events_1.EventEmitter {
     constructor(url) {
         super();
@@ -45,11 +45,11 @@ class GatewaySession extends node_events_1.EventEmitter {
                     this._processMessage(data);
                 }
                 else {
-                    throw new Error(`Unexected data: ${data}`);
+                    throw new Error(`Unexpected data: ${data}`);
                 }
             }
             else {
-                throw new Error('Reveived non-binary message on websocket');
+                throw new Error('Received non-binary message on websocket');
             }
         });
     }
@@ -128,4 +128,36 @@ class GatewaySession extends node_events_1.EventEmitter {
     }
 }
 exports.GatewaySession = GatewaySession;
+(function (GatewaySession) {
+    // Here I'm storing the event types so that they have some central documentation. This means that I can document the event types without having to rewrite it for each `on`, `off` etc.
+    /**
+     * An error event is sent when the gateway itself encounters an error when
+     * running the request. An error here means that the request wasn't started
+     */
+    GatewaySession.ErrorEvent = 'error';
+    /**
+     * Ths event is sent when a new item is discovered as a result of the
+     * queries that have been started during the session
+     */
+    GatewaySession.NewItemEvent = 'new-item';
+    /**
+     * This event is sent when a new edge between two items is discovered. Note
+     * that edges will only be sent after both items have been sent, so an edge
+     * should never refer to a non-existent item
+     */
+    GatewaySession.NewEdgeEvent = 'new-edge';
+    /**
+     * This event means that an error was encountered by one of the responders
+     * when responding to the request. This could indicate a failure, or might
+     * be expected. It s up to the user to determine how these errors should be
+     * surfaced and handled
+     */
+    GatewaySession.NewItemRequestErrorEvent = 'item-request-error';
+    /**
+     * Status events are sent at an interval determined in the `GatewayRequest`,
+     * subsequent gateway requests will update the interval. If the status has
+     * not changed since the last interval elapsed, nothing will be sent
+     */
+    GatewaySession.StatusEvent = 'status';
+})(GatewaySession = exports.GatewaySession || (exports.GatewaySession = {}));
 //# sourceMappingURL=gateway.js.map
