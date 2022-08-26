@@ -75,9 +75,6 @@ export class GatewaySession extends EventEmitter {
         }
     }
 
-    // TODO: I should really find some good place to document the types of
-    // events (other than the type definitions here)
-
     on(eventName: typeof GatewaySession.ErrorEvent, listener: (this: GatewaySession, error: string) => void): this;
     on(eventName: typeof GatewaySession.NewItemEvent, listener: (this: GatewaySession, item: Item) => void): this;
     on(eventName: typeof GatewaySession.NewEdgeEvent, listener: (this: GatewaySession, edge: Edge) => void): this;
