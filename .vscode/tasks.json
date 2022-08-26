@@ -11,6 +11,9 @@
 			"problemMatcher": [],
 			"label": "npm: test",
 			"detail": "mocha -r ts-node/register tests/**/*.test.ts",
+			"dependsOn": [
+				"tsc",
+			]
 		},
 		{
 			"type": "typescript",

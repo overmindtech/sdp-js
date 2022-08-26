@@ -152,7 +152,7 @@ describe('GatewaySession', () => {
                 var response = Util.newGatewayResponse("some error")
 
                 // Register the callbacks
-                gs.on('error', (error) => {
+                gs.on(GatewaySession.ErrorEvent, (error) => {
                     assert.strictEqual(error, "some error")
                     done();
                 })
@@ -165,7 +165,7 @@ describe('GatewaySession', () => {
                 var response = Util.newGatewayResponse(data.itemData.dylan)
 
                 // Register the callbacks
-                gs.on('new-item', (item) => {
+                gs.on(GatewaySession.NewItemEvent, (item) => {
                     assert.strictEqual(item.getType(), data.item.dylan.getType())
                     done();
                 })
@@ -178,7 +178,7 @@ describe('GatewaySession', () => {
                 var response = Util.newGatewayResponse(data.edgeData.basic)
 
                 // Register the callbacks
-                gs.on('new-edge', (edge) => {
+                gs.on(GatewaySession.NewEdgeEvent, (edge) => {
                     assert.deepEqual(edge.getFrom(), data.edge.basic.getFrom());
                     assert.deepEqual(edge.getTo(), data.edge.basic.getTo());
                     done();
@@ -192,7 +192,7 @@ describe('GatewaySession', () => {
                 var response = Util.newGatewayResponse(data.errorData.NOCONTEXT)
 
                 // Register the callbacks
-                gs.on('item-request-error', (error) => {
+                gs.on(GatewaySession.NewItemRequestErrorEvent, (error) => {
                     assert.strictEqual(error.getContext(), data.error.NOCONTEXT.getContext());
                     assert.strictEqual(error.getErrortype(), data.error.NOCONTEXT.getErrortype());
                     done();
@@ -206,10 +206,10 @@ describe('GatewaySession', () => {
                 var response = Util.newGatewayResponse(data.gatewayStatusData.working)
 
                 // Register the callbacks
-                gs.on('status', (status) => {
+                gs.on(GatewaySession.StatusEvent, (status) => {
                     assert.strictEqual(status.getPostprocessingcomplete(), data.gatewayStatus.working.getPostprocessingcomplete());
                     assert.deepEqual(status.getSummary()?.toObject(), data.gatewayStatus.working.getSummary()?.toObject());
-                    gs.removeAllListeners('status');
+                    gs.removeAllListeners(GatewaySession.StatusEvent);
                     done();
                 })
 
@@ -221,16 +221,16 @@ describe('GatewaySession', () => {
                 var doneResponse = Util.newGatewayResponse(data.gatewayStatusData.done)
 
                 // Register the callbacks
-                gs.on('status', () => {
+                gs.on(GatewaySession.StatusEvent, () => {
                     assert.strictEqual(gs.status?.postprocessingcomplete, data.gatewayStatus.working.getPostprocessingcomplete());
                     assert.deepEqual(gs.status?.summary, data.gatewayStatus.working.getSummary()?.toObject());
-                    gs.removeAllListeners('status');
+                    gs.removeAllListeners(GatewaySession.StatusEvent);
 
                     // Add the second test
-                    gs.on('status', () => {
+                    gs.on(GatewaySession.StatusEvent, () => {
                         assert.strictEqual(gs.status?.postprocessingcomplete, data.gatewayStatus.done.getPostprocessingcomplete());
                         assert.deepEqual(gs.status?.summary, data.gatewayStatus.done.getSummary()?.toObject());
-                        gs.removeAllListeners('status');
+                        gs.removeAllListeners(GatewaySession.StatusEvent);
                         done();
                     })
 
