@@ -135,7 +135,7 @@ describe('GatewaySession', () => {
         })
     })
     
-    describe('processing inbound messages', async () => {
+    describe('Processing inbound messages', async () => {
 
         var server = new TestServer();
         var gs = new GatewaySession(server.address);
@@ -240,9 +240,5 @@ describe('GatewaySession', () => {
                 server.send(working);
             })
         })
-    })
-    
-    describe('making requests', () => {
-        
-    })
+    })   
 })
