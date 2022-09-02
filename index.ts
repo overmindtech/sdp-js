@@ -5,6 +5,7 @@
 export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod, CancelItemRequest, ReverseLinksRequest, ReverseLinksResponse } from './items_pb';
 export { Response } from './responses_pb';
 export { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb'
+export { GatewaySession } from './gateway'
 
 // Import things we need for the Util namespace
 import { Reference, Item, ItemAttributes, Metadata, ItemRequest, RequestMethod, RequestMethodMap, CancelItemRequest, Edge } from './items_pb';

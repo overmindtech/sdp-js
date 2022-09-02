@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RequestProgress = exports.Responder = exports.Util = exports.GatewayResponse = exports.GatewayRequestStatus = exports.GatewayRequest = exports.Response = exports.ReverseLinksResponse = exports.ReverseLinksRequest = exports.CancelItemRequest = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
+exports.RequestProgress = exports.Responder = exports.Util = exports.GatewaySession = exports.GatewayResponse = exports.GatewayRequestStatus = exports.GatewayRequest = exports.Response = exports.ReverseLinksResponse = exports.ReverseLinksRequest = exports.CancelItemRequest = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
 // Export things from other files
 var items_pb_1 = require("./items_pb");
 Object.defineProperty(exports, "ItemRequest", { enumerable: true, get: function () { return items_pb_1.ItemRequest; } });
@@ -33,6 +33,8 @@ var gateway_pb_1 = require("./gateway_pb");
 Object.defineProperty(exports, "GatewayRequest", { enumerable: true, get: function () { return gateway_pb_1.GatewayRequest; } });
 Object.defineProperty(exports, "GatewayRequestStatus", { enumerable: true, get: function () { return gateway_pb_1.GatewayRequestStatus; } });
 Object.defineProperty(exports, "GatewayResponse", { enumerable: true, get: function () { return gateway_pb_1.GatewayResponse; } });
+var gateway_1 = require("./gateway");
+Object.defineProperty(exports, "GatewaySession", { enumerable: true, get: function () { return gateway_1.GatewaySession; } });
 // Import things we need for the Util namespace
 const items_pb_2 = require("./items_pb");
 const responses_pb_2 = require("./responses_pb");
