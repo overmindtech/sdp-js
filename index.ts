@@ -2,14 +2,14 @@
 // code
 
 // Export things from other files
-export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod, CancelItemRequest, ReverseLinksRequest, ReverseLinksResponse } from './items_pb';
+export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethod, CancelItemRequest, ReverseLinksRequest, ReverseLinksResponse } from './items_pb';
 export { Response } from './responses_pb';
 export { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb'
 export { GatewaySession } from './gateway'
 
 // Import things we need for the Util namespace
-import { Reference, Item, ItemAttributes, Metadata, ItemRequest, RequestMethod, RequestMethodMap, CancelItemRequest, Edge } from './items_pb';
-import { Response, ItemRequestError, ResponderStateMap, ResponderState } from './responses_pb';
+import { Reference, Item, ItemAttributes, Metadata, ItemRequest, RequestMethod, CancelItemRequest, Edge } from './items_pb';
+import { Response, ItemRequestError, ResponderState } from './responses_pb';
 import sha1 from 'sha1';
 import toDataView from 'to-data-view';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
@@ -219,7 +219,7 @@ export namespace Util {
     export type ItemRequestErrorData = {
         context: string,
         errorString: string,
-        errorType: ItemRequestError.ErrorTypeMap[keyof ItemRequestError.ErrorTypeMap],
+        errorType: ItemRequestError.ErrorType,
     }
 
     /**
@@ -299,7 +299,7 @@ export namespace Util {
 
     export type ResponseData = {
         responder: string,
-        state: ResponderStateMap[keyof ResponderStateMap]
+        state: ResponderState
         nextUpdateInMs?: number,
     }
 
@@ -366,7 +366,7 @@ export namespace Util {
     }
 
     export type GatewayRequestStatusData = {
-        responderStates: Map<string, ResponderStateMap[keyof ResponderStateMap]>, 
+        responderStates: Map<string, ResponderState>, 
         summary: {
             working: number,
             stalled: number,
@@ -518,7 +518,7 @@ export class Responder {
 	lastStateTime: Date = new Date();
     nextStateTime: Date | undefined;
 	error?: ItemRequestError;
-	private _lastState: ResponderStateMap[keyof ResponderStateMap] = ResponderState.WORKING;
+	private _lastState: ResponderState = ResponderState.WORKING;
 
     /**
      *
@@ -530,7 +530,7 @@ export class Responder {
     }
 
     // Sets the state and updates the LastState to the current time
-    set state(state: ResponderStateMap[keyof ResponderStateMap]) {
+    set state(state: ResponderState) {
         // Set last state time to now
         this.lastStateTime = new Date();
 
@@ -538,7 +538,7 @@ export class Responder {
     }
 
     // Get the last state of this responder
-    get state(): ResponderStateMap[keyof ResponderStateMap] {
+    get state(): ResponderState {
         return this._lastState;
     }
 }
@@ -588,7 +588,7 @@ export class RequestProgress {
     }
 
     // Return the count of items with a given state
-    private countOfState(state: ResponderStateMap[keyof ResponderStateMap]): number {
+    private countOfState(state: ResponderState): number {
         var x = 0;
 
         this.responders.forEach((v) => {
@@ -750,7 +750,7 @@ export class RequestProgress {
 //
 // Private helper functions
 //
-function convertRequestMethod(method: "GET" | "FIND" | "SEARCH"): RequestMethodMap[keyof RequestMethodMap] {
+function convertRequestMethod(method: "GET" | "FIND" | "SEARCH"): RequestMethod {
     switch(method) { 
         case 'GET': { 
            return RequestMethod.GET;

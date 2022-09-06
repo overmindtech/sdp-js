@@ -4,8 +4,6 @@ import * as data from './sampledata';
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 import { ItemRequestError, ResponderState } from '../responses_pb';
 import { v4 as uuidv4, parse as uuidparse } from 'uuid';
-import { ResponderStateMap } from '../responses_pb';
-import { AssertionError } from 'chai';
 
 
 describe('Util', function() {
@@ -441,7 +439,7 @@ describe('Util', function() {
   })
 
   describe('#newGatewayRequestStatus()', function() {
-    var states = new Map<string, ResponderStateMap[keyof ResponderStateMap]>();
+    var states = new Map<string, ResponderState>();
     states.set("responder.cancel", ResponderState.CANCELLED);
     states.set("responder.complete", ResponderState.COMPLETE);
     states.set("responder.error", ResponderState.ERROR);
@@ -500,7 +498,7 @@ describe('Util', function() {
   })
 
   describe('#gatewayRequestStatusDone()', function() {
-    var states = new Map<string, ResponderStateMap[keyof ResponderStateMap]>();
+    var states = new Map<string, ResponderState>();
     states.set("responder.cancel", ResponderState.CANCELLED);
     states.set("responder.complete", ResponderState.COMPLETE);
     states.set("responder.error", ResponderState.ERROR);
@@ -591,7 +589,7 @@ describe('Util', function() {
       })
     })
     describe('with GatewayRequestStatusData', () => {
-      var states = new Map<string, ResponderStateMap[keyof ResponderStateMap]>();
+      var states = new Map<string, ResponderState>();
       states.set("responder.cancel", ResponderState.CANCELLED);
       states.set("responder.complete", ResponderState.COMPLETE);
       states.set("responder.error", ResponderState.ERROR);

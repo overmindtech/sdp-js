@@ -1,9 +1,9 @@
-export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethodMap, RequestMethod, CancelItemRequest, ReverseLinksRequest, ReverseLinksResponse } from './items_pb';
+export { ItemRequest, ItemAttributes, Item, Items, Reference, Metadata, RequestMethod, CancelItemRequest, ReverseLinksRequest, ReverseLinksResponse } from './items_pb';
 export { Response } from './responses_pb';
 export { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb';
 export { GatewaySession } from './gateway';
 import { Reference, Item, ItemAttributes, Metadata, ItemRequest, CancelItemRequest, Edge } from './items_pb';
-import { Response, ItemRequestError, ResponderStateMap } from './responses_pb';
+import { Response, ItemRequestError, ResponderState } from './responses_pb';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue } from 'google-protobuf/google/protobuf/struct_pb';
 import { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb';
@@ -97,7 +97,7 @@ export declare namespace Util {
     type ItemRequestErrorData = {
         context: string;
         errorString: string;
-        errorType: ItemRequestError.ErrorTypeMap[keyof ItemRequestError.ErrorTypeMap];
+        errorType: ItemRequestError.ErrorType;
     };
     /**
      * Creates a new ItemRequestError from a single object
@@ -136,7 +136,7 @@ export declare namespace Util {
     function newReference(details: ReferenceData): Reference;
     type ResponseData = {
         responder: string;
-        state: ResponderStateMap[keyof ResponderStateMap];
+        state: ResponderState;
         nextUpdateInMs?: number;
     };
     /**
@@ -168,7 +168,7 @@ export declare namespace Util {
      */
     function newEdge(data: EdgeData): Edge;
     type GatewayRequestStatusData = {
-        responderStates: Map<string, ResponderStateMap[keyof ResponderStateMap]>;
+        responderStates: Map<string, ResponderState>;
         summary: {
             working: number;
             stalled: number;
@@ -212,8 +212,8 @@ export declare class Responder {
      * @param responder The responder that this responder will respond for
      */
     constructor(name: string);
-    set state(state: ResponderStateMap[keyof ResponderStateMap]);
-    get state(): ResponderStateMap[keyof ResponderStateMap];
+    set state(state: ResponderState);
+    get state(): ResponderState;
 }
 export declare class RequestProgress {
     responders: Map<string, Responder>;
