@@ -1,57 +1,31 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GatewaySession = void 0;
 const gateway_pb_1 = require("./gateway_pb");
-const node_events_1 = require("node:events");
-const WS = __importStar(require("ws"));
-class GatewaySession extends node_events_1.EventEmitter {
+class GatewaySession extends EventTarget {
     constructor(url) {
         super();
-        this._socket = new WS.WebSocket(url);
+        this._socket = new WebSocket(url);
         this.ready = new Promise((resolve, reject) => {
-            this._socket.on('open', () => {
+            this._socket.onopen = () => {
                 resolve();
-            });
-            this._socket.on('error', (err) => {
+            };
+            this._socket.onerror = (err) => {
                 reject(err);
-            });
+            };
         });
-        this._socket.on('message', (data, isBinary) => {
-            if (isBinary) {
-                if ('buffer' in data) {
-                    this._processMessage(data);
-                }
-                else {
-                    throw new Error(`Unexpected data: ${data}`);
-                }
+        this._socket.onmessage = (ev) => {
+            // if (isBinary) {
+            if ('buffer' in ev.data) {
+                this._processMessage(ev.data);
             }
             else {
-                throw new Error('Received non-binary message on websocket');
+                throw new Error(`Unexpected data: ${ev.data}`);
             }
-        });
+            // } else {
+            // throw new Error('Received non-binary message on websocket')
+            // }
+        };
     }
     /**
     * Processing inbound messages
@@ -60,48 +34,49 @@ class GatewaySession extends node_events_1.EventEmitter {
     _processMessage(buffer) {
         const response = gateway_pb_1.GatewayResponse.deserializeBinary(buffer);
         if (response.hasError()) {
-            this.emit('error', response.getError());
+            this.dispatchEvent(new CustomEvent(GatewaySession.ErrorEvent, {
+                detail: response.getError()
+            }));
         }
         else if (response.hasNewitem()) {
             const item = response.getNewitem();
             if (typeof item != 'undefined') {
-                this.emit('new-item', item);
+                this.dispatchEvent(new CustomEvent(GatewaySession.NewItemEvent, {
+                    detail: item,
+                }));
             }
         }
         else if (response.hasNewedge()) {
             const edge = response.getNewedge();
             if (typeof edge != 'undefined') {
-                this.emit('new-edge', edge);
+                this.dispatchEvent(new CustomEvent(GatewaySession.NewEdgeEvent, {
+                    detail: edge,
+                }));
             }
         }
         else if (response.hasNewitemrequesterror()) {
             const e = response.getNewitemrequesterror();
             if (typeof e != 'undefined') {
-                this.emit('item-request-error', e);
+                this.dispatchEvent(new CustomEvent(GatewaySession.NewItemRequestErrorEvent, {
+                    detail: e,
+                }));
             }
         }
         else if (response.hasStatus()) {
             const status = response.getStatus();
             if (typeof status != 'undefined') {
                 this.status = status.toObject();
-                this.emit('status', status);
+                this.dispatchEvent(new CustomEvent(GatewaySession.StatusEvent, {
+                    detail: status,
+                }));
             }
         }
     }
-    on(eventName, listener) {
-        return super.on(eventName, listener);
+    addEventListener(type, callback, options) {
+        super.addEventListener(type, callback, options);
     }
-    addListener(eventName, listener) {
-        return super.addListener(eventName, listener);
-    }
-    once(eventName, listener) {
-        return super.once(eventName, listener);
-    }
-    off(eventName, listener) {
-        return super.off(eventName, listener);
-    }
-    removeListener(eventName, listener) {
-        return super.removeListener(eventName, listener);
+    removeEventListener(type, callback, options) {
+        super.removeEventListener(type, callback, options);
     }
     /**
     * Sends a request to the gateway
@@ -109,9 +84,7 @@ class GatewaySession extends node_events_1.EventEmitter {
     */
     sendRequest(request) {
         var binary = request.serializeBinary();
-        this._socket.send(binary, {
-            binary: true,
-        });
+        this._socket.send(binary);
     }
     /**
     * Closes the session

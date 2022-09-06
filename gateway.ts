@@ -1,40 +1,46 @@
 import { GatewayRequest, GatewayRequestStatus, GatewayResponse } from "./gateway_pb";
 import { Edge, Item } from "./items_pb";
 import { ItemRequestError } from "./responses_pb";
-import { EventEmitter } from "node:events";
-import * as WS from 'ws';
 
-export class GatewaySession extends EventEmitter {
-    _socket: WS.WebSocket
+interface CustomEventListener<T> {
+    (evt: CustomEvent<T>): void;
+}
+interface CustomEventListenerObject<T> {
+    handleEvent(object: CustomEvent<T>): void;
+}
+type CustomEventListenerOrEventListenerObject<T> = CustomEventListener<T> | CustomEventListenerObject<T>;
+
+export class GatewaySession extends EventTarget {
+    _socket: WebSocket
     ready: Promise<void>
     status?: GatewayRequestStatus.AsObject
     
     constructor(url: string) {
         super();
 
-        this._socket = new WS.WebSocket(url);
+        this._socket = new WebSocket(url);
         
         this.ready = new Promise((resolve, reject) => {
-            this._socket.on('open', () => {
+            this._socket.onopen = () => {
                 resolve();
-            })
+            }
             
-            this._socket.on('error', (err) => {
+            this._socket.onerror = (err) => {
                 reject(err);
-            })
-        })
-        
-        this._socket.on('message', (data, isBinary) => {
-            if (isBinary) {
-                if ('buffer' in data) {
-                    this._processMessage(data);
-                } else {
-                    throw new Error(`Unexpected data: ${data}`)
-                }
-            } else {
-                throw new Error('Received non-binary message on websocket')
             }
         })
+
+        this._socket.onmessage = (ev) => {
+            // if (isBinary) {
+                if ('buffer' in ev.data) {
+                    this._processMessage(ev.data);
+                } else {
+                    throw new Error(`Unexpected data: ${ev.data}`)
+                }
+            // } else {
+                // throw new Error('Received non-binary message on websocket')
+            // }
+        }
     }
     
     /**
@@ -45,24 +51,32 @@ export class GatewaySession extends EventEmitter {
         const response = GatewayResponse.deserializeBinary(buffer)
         
         if (response.hasError()) {
-            this.emit('error', response.getError());
+            this.dispatchEvent(new CustomEvent<string>(GatewaySession.ErrorEvent, {
+                detail: response.getError()
+            }))
         } else if (response.hasNewitem()) {
             const item = response.getNewitem()
             
             if (typeof item != 'undefined') {
-                this.emit('new-item', item);
+                this.dispatchEvent(new CustomEvent<Item>(GatewaySession.NewItemEvent, {
+                    detail: item,
+                }))
             }
         } else if (response.hasNewedge()) {
             const edge = response.getNewedge()
             
             if (typeof edge != 'undefined') {
-                this.emit('new-edge', edge);
+                this.dispatchEvent(new CustomEvent<Edge>(GatewaySession.NewEdgeEvent, {
+                    detail: edge,
+                }))
             }
         } else if (response.hasNewitemrequesterror()) {
             const e = response.getNewitemrequesterror()
             
             if (typeof e != 'undefined') {
-                this.emit('item-request-error', e);
+                this.dispatchEvent(new CustomEvent<ItemRequestError>(GatewaySession.NewItemRequestErrorEvent, {
+                    detail: e,
+                }))
             }
         } else if (response.hasStatus()) {
             const status = response.getStatus();
@@ -70,54 +84,30 @@ export class GatewaySession extends EventEmitter {
             if (typeof status != 'undefined') {
                 this.status = status.toObject();
 
-                this.emit('status', status);
+                this.dispatchEvent(new CustomEvent<GatewayRequestStatus>(GatewaySession.StatusEvent, {
+                    detail: status,
+                }))
+
             }
         }
     }
 
-    on(eventName: typeof GatewaySession.ErrorEvent, listener: (this: GatewaySession, error: string) => void): this;
-    on(eventName: typeof GatewaySession.NewItemEvent, listener: (this: GatewaySession, item: Item) => void): this;
-    on(eventName: typeof GatewaySession.NewEdgeEvent, listener: (this: GatewaySession, edge: Edge) => void): this;
-    on(eventName: typeof GatewaySession.NewItemRequestErrorEvent, listener: (this: GatewaySession, error: ItemRequestError) => void): this;
-    on(eventName: typeof GatewaySession.StatusEvent, listener: (this: GatewaySession, status: GatewayRequestStatus) => void): this;
-    on(eventName: string | symbol, listener: (...args: any[]) => void): this {
-        return super.on(eventName, listener);
+    addEventListener(type: typeof GatewaySession.ErrorEvent, callback: CustomEventListenerOrEventListenerObject<string> | null, options?: boolean | AddEventListenerOptions | undefined): void
+    addEventListener(type: typeof GatewaySession.NewItemEvent, callback: CustomEventListenerOrEventListenerObject<Item> | null, options?: boolean | AddEventListenerOptions | undefined): void
+    addEventListener(type: typeof GatewaySession.NewEdgeEvent, callback: CustomEventListenerOrEventListenerObject<Edge> | null, options?: boolean | AddEventListenerOptions | undefined): void
+    addEventListener(type: typeof GatewaySession.NewItemRequestErrorEvent, callback: CustomEventListenerOrEventListenerObject<ItemRequestError> | null, options?: boolean | AddEventListenerOptions | undefined): void
+    addEventListener(type: typeof GatewaySession.StatusEvent, callback: CustomEventListenerOrEventListenerObject<GatewayRequestStatus> | null, options?: boolean | AddEventListenerOptions | undefined): void
+    addEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: AddEventListenerOptions | boolean): void {
+        super.addEventListener(type, callback, options);
     }
 
-    addListener(eventName: typeof GatewaySession.ErrorEvent, listener: (this: GatewaySession, error: string) => void): this;
-    addListener(eventName: typeof GatewaySession.NewItemEvent, listener: (this: GatewaySession, item: Item) => void): this;
-    addListener(eventName: typeof GatewaySession.NewEdgeEvent, listener: (this: GatewaySession, edge: Edge) => void): this;
-    addListener(eventName: typeof GatewaySession.NewItemRequestErrorEvent, listener: (this: GatewaySession, error: ItemRequestError) => void): this;
-    addListener(eventName: typeof GatewaySession.StatusEvent, listener: (this: GatewaySession, status: GatewayRequestStatus) => void): this;
-    addListener(eventName: string | symbol, listener: (...args: any[]) => void): this {
-        return super.addListener(eventName, listener);
-    }
-
-    once(eventName: typeof GatewaySession.ErrorEvent, listener: (this: GatewaySession, error: string) => void): this;
-    once(eventName: typeof GatewaySession.NewItemEvent, listener: (this: GatewaySession, item: Item) => void): this;
-    once(eventName: typeof GatewaySession.NewEdgeEvent, listener: (this: GatewaySession, edge: Edge) => void): this;
-    once(eventName: typeof GatewaySession.NewItemRequestErrorEvent, listener: (this: GatewaySession, error: ItemRequestError) => void): this;
-    once(eventName: typeof GatewaySession.StatusEvent, listener: (this: GatewaySession, status: GatewayRequestStatus) => void): this;
-    once(eventName: string | symbol, listener: (...args: any[]) => void): this {
-        return super.once(eventName, listener);
-    }
-
-    off(eventName: typeof GatewaySession.ErrorEvent, listener: (this: GatewaySession, error: string) => void): this;
-    off(eventName: typeof GatewaySession.NewItemEvent, listener: (this: GatewaySession, item: Item) => void): this;
-    off(eventName: typeof GatewaySession.NewEdgeEvent, listener: (this: GatewaySession, edge: Edge) => void): this;
-    off(eventName: typeof GatewaySession.NewItemRequestErrorEvent, listener: (this: GatewaySession, error: ItemRequestError) => void): this;
-    off(eventName: typeof GatewaySession.StatusEvent, listener: (this: GatewaySession, status: GatewayRequestStatus) => void): this;
-    off(eventName: string | symbol, listener: (...args: any[]) => void): this {
-        return super.off(eventName, listener)
-    }
-
-    removeListener(eventName: typeof GatewaySession.ErrorEvent, listener: (this: GatewaySession, error: string) => void): this;
-    removeListener(eventName: typeof GatewaySession.NewItemEvent, listener: (this: GatewaySession, item: Item) => void): this;
-    removeListener(eventName: typeof GatewaySession.NewEdgeEvent, listener: (this: GatewaySession, edge: Edge) => void): this;
-    removeListener(eventName: typeof GatewaySession.NewItemRequestErrorEvent, listener: (this: GatewaySession, error: ItemRequestError) => void): this;
-    removeListener(eventName: typeof GatewaySession.StatusEvent, listener: (this: GatewaySession, status: GatewayRequestStatus) => void): this;
-    removeListener(eventName: string | symbol, listener: (...args: any[]) => void): this {
-        return super.removeListener(eventName, listener)
+    removeEventListener(type: typeof GatewaySession.ErrorEvent, callback: CustomEventListenerOrEventListenerObject<string> | null, options?: boolean | AddEventListenerOptions | undefined): void
+    removeEventListener(type: typeof GatewaySession.NewItemEvent, callback: CustomEventListenerOrEventListenerObject<Item> | null, options?: boolean | AddEventListenerOptions | undefined): void
+    removeEventListener(type: typeof GatewaySession.NewEdgeEvent, callback: CustomEventListenerOrEventListenerObject<Edge> | null, options?: boolean | AddEventListenerOptions | undefined): void
+    removeEventListener(type: typeof GatewaySession.NewItemRequestErrorEvent, callback: CustomEventListenerOrEventListenerObject<ItemRequestError> | null, options?: boolean | AddEventListenerOptions | undefined): void
+    removeEventListener(type: typeof GatewaySession.StatusEvent, callback: CustomEventListenerOrEventListenerObject<GatewayRequestStatus> | null, options?: boolean | AddEventListenerOptions | undefined): void
+    removeEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: boolean | EventListenerOptions | undefined): void {
+        super.removeEventListener(type, callback, options);
     }
     
     /**
@@ -126,9 +116,7 @@ export class GatewaySession extends EventEmitter {
     */
     sendRequest(request: GatewayRequest) {
         var binary = request.serializeBinary();
-        this._socket.send(binary, {
-            binary: true,
-        });
+        this._socket.send(binary);
     }
     
     /**
@@ -142,7 +130,7 @@ export class GatewaySession extends EventEmitter {
     * 
     * @returns The current state of the websocket connection
     */
-    state(): typeof WS.CONNECTING | typeof WS.OPEN | typeof WS.CLOSING | typeof WS.CLOSED {
+    state(): typeof WebSocket.CONNECTING | typeof WebSocket.OPEN | typeof WebSocket.CLOSING | typeof WebSocket.CLOSED {
         return this._socket.readyState;
     }
 }
