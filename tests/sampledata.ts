@@ -1,5 +1,5 @@
 import { Util, RequestMethod } from '../index'
-import { ResponderState, ResponderStateMap } from "../responses_pb";
+import { ResponderState } from "../responses_pb";
 import { ItemRequestError } from "../responses_pb";
 
 export const errorData = {
