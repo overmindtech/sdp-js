@@ -1,5 +1,5 @@
-import { assert } from 'chai';
-import { RequestProgress } from '../index';
+import { describe, expect, it } from '@jest/globals';
+import { RequestProgress } from '../../';
 import * as data from './sampledata';
 
 describe('RequestProgress', () => {
@@ -8,29 +8,29 @@ describe('RequestProgress', () => {
             // Create the progress object
             var progress = new RequestProgress(data.request.FIND);
 
-            assert.strictEqual(progress.numWorking(), 0)
+            expect(progress.numWorking()).toEqual(0)
 
             // Process a WORKING response
             progress.processResponse(data.response.WORKING);
 
-            assert.strictEqual(progress.numWorking(), 1)
+            expect(progress.numWorking()).toEqual(1)
         });
 
         it('updates after a second WORKING response', () => {
             // Create the progress object
             var progress = new RequestProgress(data.request.FIND);
 
-            assert.strictEqual(progress.numWorking(), 0)
+            expect(progress.numWorking()).toEqual(0)
 
             // Process a WORKING response
             progress.processResponse(data.response.WORKING);
 
-            assert.strictEqual(progress.numWorking(), 1)
+            expect(progress.numWorking()).toEqual(1)
 
             progress.processResponse(data.response.WORKING);
 
             // Should still be one since it was for the same context
-            assert.strictEqual(progress.numWorking(), 1)
+            expect(progress.numWorking()).toEqual(1)
         });
 
         it('marks as done after a COMPLETE response', () => {
@@ -39,11 +39,11 @@ describe('RequestProgress', () => {
 
             progress.processResponse(data.response.WORKING);
 
-            assert.strictEqual(progress.numWorking(), 1)
+            expect(progress.numWorking()).toEqual(1)
 
             progress.processResponse(data.response.COMPLETE)
 
-            assert.strictEqual(progress.numWorking(), 0)
+            expect(progress.numWorking()).toEqual(0)
         });
 
         it('marks as failed if FAILED response', () => {
@@ -51,14 +51,14 @@ describe('RequestProgress', () => {
             
             progress.processResponse(data.response.WORKING);
 
-            assert.strictEqual(progress.numWorking(), 1);
-            assert.strictEqual(progress.numFailed(), 0);
+            expect(progress.numWorking()).toEqual(1);
+            expect(progress.numFailed()).toEqual(0);
 
             progress.processResponse(data.response.ERROR);
 
-            assert.strictEqual(progress.numWorking(), 0);
-            assert.strictEqual(progress.numFailed(), 1);
-            assert.strictEqual(progress.allDone(), true);
+            expect(progress.numWorking()).toEqual(0);
+            expect(progress.numFailed()).toEqual(1);
+            expect(progress.allDone()).toEqual(true);
         });
 
         it('marks as done after a CANCELLED response', () => {
@@ -67,13 +67,13 @@ describe('RequestProgress', () => {
 
             progress.processResponse(data.response.WORKING);
 
-            assert.strictEqual(progress.numWorking(), 1)
+            expect(progress.numWorking()).toEqual(1)
 
             progress.processResponse(data.response.CANCELLED)
 
-            assert.strictEqual(progress.numWorking(), 0)
-            assert.strictEqual(progress.numCancelled(), 1)
-            assert.strictEqual(progress.allDone(), true);
+            expect(progress.numWorking()).toEqual(0)
+            expect(progress.numCancelled()).toEqual(1)
+            expect(progress.allDone()).toEqual(true);
         });
     });
 
@@ -86,8 +86,8 @@ describe('RequestProgress', () => {
 
             var result = await progress.waitForCompletion();
             
-            assert.strictEqual(result, "done")
-            assert.strictEqual(progress.percentComplete(), 100)
+            expect(result).toEqual("done")
+            expect(progress.percentComplete()).toEqual(100)
         });
 
         it('should timeout successfully', async () => {
@@ -97,7 +97,7 @@ describe('RequestProgress', () => {
 
             progress.cancel()
 
-            assert.strictEqual(result, "timeout")
+            expect(result).toEqual("timeout")
         });
 
         it('should stall successfully', async () => {
@@ -107,7 +107,7 @@ describe('RequestProgress', () => {
 
             await new Promise(resolve => setTimeout(resolve, 150))
 
-            assert.strictEqual(progress.numStalled(), 1)
+            expect(progress.numStalled()).toEqual(1)
         });
     })
 
