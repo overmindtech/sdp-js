@@ -73,6 +73,7 @@
   ],
   "exclude": [
     "tests/*",
-    "*.d.ts"
+    "*.d.ts",
+    "jest.config.ts"
   ]
 }

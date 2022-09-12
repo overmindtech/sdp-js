@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { GatewayRequest, GatewayRequestStatus } from "./gateway_pb";
 import { Edge, Item } from "./items_pb";
 import { ItemRequestError } from "./responses_pb";
@@ -10,7 +9,7 @@ interface CustomEventListenerObject<T> {
 }
 declare type CustomEventListenerOrEventListenerObject<T> = CustomEventListener<T> | CustomEventListenerObject<T>;
 export declare class GatewaySession extends EventTarget {
-    _socket: WebSocket;
+    private socket;
     ready: Promise<void>;
     status?: GatewayRequestStatus.AsObject;
     constructor(url: string);
@@ -18,7 +17,7 @@ export declare class GatewaySession extends EventTarget {
     * Processing inbound messages
     * @param buffer A buffer containing the binary message
     */
-    _processMessage(buffer: Buffer): any;
+    _processMessage(buffer: ArrayBuffer): any;
     addEventListener(type: typeof GatewaySession.ErrorEvent, callback: CustomEventListenerOrEventListenerObject<string> | null, options?: boolean | AddEventListenerOptions | undefined): void;
     addEventListener(type: typeof GatewaySession.NewItemEvent, callback: CustomEventListenerOrEventListenerObject<Item> | null, options?: boolean | AddEventListenerOptions | undefined): void;
     addEventListener(type: typeof GatewaySession.NewEdgeEvent, callback: CustomEventListenerOrEventListenerObject<Edge> | null, options?: boolean | AddEventListenerOptions | undefined): void;

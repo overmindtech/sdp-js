@@ -11,44 +11,38 @@ interface CustomEventListenerObject<T> {
 type CustomEventListenerOrEventListenerObject<T> = CustomEventListener<T> | CustomEventListenerObject<T>;
 
 export class GatewaySession extends EventTarget {
-    _socket: WebSocket
+    private socket: WebSocket
     ready: Promise<void>
     status?: GatewayRequestStatus.AsObject
     
     constructor(url: string) {
         super();
 
-        this._socket = new WebSocket(url);
+        this.socket = new WebSocket(url);
+        this.socket.binaryType = "arraybuffer"
         
         this.ready = new Promise((resolve, reject) => {
-            this._socket.onopen = () => {
+            this.socket.onopen = () => {
                 resolve();
             }
             
-            this._socket.onerror = (err) => {
+            this.socket.onerror = (err) => {
                 reject(err);
             }
         })
 
-        this._socket.onmessage = (ev) => {
-            // if (isBinary) {
-                if ('buffer' in ev.data) {
-                    this._processMessage(ev.data);
-                } else {
-                    throw new Error(`Unexpected data: ${ev.data}`)
-                }
-            // } else {
-                // throw new Error('Received non-binary message on websocket')
-            // }
-        }
+        this.socket.addEventListener("message", (ev: MessageEvent<ArrayBuffer>) => {
+            this._processMessage(ev.data);
+        });
     }
     
     /**
     * Processing inbound messages
     * @param buffer A buffer containing the binary message
     */
-    _processMessage(buffer: Buffer): any {
-        const response = GatewayResponse.deserializeBinary(buffer)
+    _processMessage(buffer: ArrayBuffer): any {
+        const binary = new Uint8Array(buffer);
+        const response = GatewayResponse.deserializeBinary(binary);
         
         if (response.hasError()) {
             this.dispatchEvent(new CustomEvent<string>(GatewaySession.ErrorEvent, {
@@ -116,14 +110,14 @@ export class GatewaySession extends EventTarget {
     */
     sendRequest(request: GatewayRequest) {
         var binary = request.serializeBinary();
-        this._socket.send(binary);
+        this.socket.send(binary);
     }
     
     /**
     * Closes the session
     */
     close() {
-        this._socket.close();
+        this.socket.close();
     }
     
     /**
@@ -131,7 +125,7 @@ export class GatewaySession extends EventTarget {
     * @returns The current state of the websocket connection
     */
     state(): typeof WebSocket.CONNECTING | typeof WebSocket.OPEN | typeof WebSocket.CLOSING | typeof WebSocket.CLOSED {
-        return this._socket.readyState;
+        return this.socket.readyState;
     }
 }
 

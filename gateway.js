@@ -5,34 +5,27 @@ const gateway_pb_1 = require("./gateway_pb");
 class GatewaySession extends EventTarget {
     constructor(url) {
         super();
-        this._socket = new WebSocket(url);
+        this.socket = new WebSocket(url);
+        this.socket.binaryType = "arraybuffer";
         this.ready = new Promise((resolve, reject) => {
-            this._socket.onopen = () => {
+            this.socket.onopen = () => {
                 resolve();
             };
-            this._socket.onerror = (err) => {
+            this.socket.onerror = (err) => {
                 reject(err);
             };
         });
-        this._socket.onmessage = (ev) => {
-            // if (isBinary) {
-            if ('buffer' in ev.data) {
-                this._processMessage(ev.data);
-            }
-            else {
-                throw new Error(`Unexpected data: ${ev.data}`);
-            }
-            // } else {
-            // throw new Error('Received non-binary message on websocket')
-            // }
-        };
+        this.socket.addEventListener("message", (ev) => {
+            this._processMessage(ev.data);
+        });
     }
     /**
     * Processing inbound messages
     * @param buffer A buffer containing the binary message
     */
     _processMessage(buffer) {
-        const response = gateway_pb_1.GatewayResponse.deserializeBinary(buffer);
+        const binary = new Uint8Array(buffer);
+        const response = gateway_pb_1.GatewayResponse.deserializeBinary(binary);
         if (response.hasError()) {
             this.dispatchEvent(new CustomEvent(GatewaySession.ErrorEvent, {
                 detail: response.getError()
@@ -84,20 +77,20 @@ class GatewaySession extends EventTarget {
     */
     sendRequest(request) {
         var binary = request.serializeBinary();
-        this._socket.send(binary);
+        this.socket.send(binary);
     }
     /**
     * Closes the session
     */
     close() {
-        this._socket.close();
+        this.socket.close();
     }
     /**
     *
     * @returns The current state of the websocket connection
     */
     state() {
-        return this._socket.readyState;
+        return this.socket.readyState;
     }
 }
 exports.GatewaySession = GatewaySession;
