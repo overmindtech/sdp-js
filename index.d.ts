@@ -306,11 +306,15 @@ export declare class GatewaySession extends EventTarget {
     addEventListener(type: typeof GatewaySession.NewEdgeEvent, callback: CustomEventListenerOrEventListenerObject<Edge> | null, options?: boolean | AddEventListenerOptions | undefined): void;
     addEventListener(type: typeof GatewaySession.NewItemRequestErrorEvent, callback: CustomEventListenerOrEventListenerObject<ItemRequestError> | null, options?: boolean | AddEventListenerOptions | undefined): void;
     addEventListener(type: typeof GatewaySession.StatusEvent, callback: CustomEventListenerOrEventListenerObject<GatewayRequestStatus> | null, options?: boolean | AddEventListenerOptions | undefined): void;
+    addEventListener(type: typeof GatewaySession.SocketErrorEvent, callback: CustomEventListenerOrEventListenerObject<Event> | null, options?: boolean | AddEventListenerOptions | undefined): void;
+    addEventListener(type: typeof GatewaySession.CloseEvent, callback: CustomEventListenerOrEventListenerObject<CloseEvent> | null, options?: boolean | AddEventListenerOptions | undefined): void;
     removeEventListener(type: typeof GatewaySession.ErrorEvent, callback: CustomEventListenerOrEventListenerObject<string> | null, options?: boolean | AddEventListenerOptions | undefined): void;
     removeEventListener(type: typeof GatewaySession.NewItemEvent, callback: CustomEventListenerOrEventListenerObject<Item> | null, options?: boolean | AddEventListenerOptions | undefined): void;
     removeEventListener(type: typeof GatewaySession.NewEdgeEvent, callback: CustomEventListenerOrEventListenerObject<Edge> | null, options?: boolean | AddEventListenerOptions | undefined): void;
     removeEventListener(type: typeof GatewaySession.NewItemRequestErrorEvent, callback: CustomEventListenerOrEventListenerObject<ItemRequestError> | null, options?: boolean | AddEventListenerOptions | undefined): void;
     removeEventListener(type: typeof GatewaySession.StatusEvent, callback: CustomEventListenerOrEventListenerObject<GatewayRequestStatus> | null, options?: boolean | AddEventListenerOptions | undefined): void;
+    removeEventListener(type: typeof GatewaySession.SocketErrorEvent, callback: CustomEventListenerOrEventListenerObject<Event> | null, options?: boolean | AddEventListenerOptions | undefined): void;
+    removeEventListener(type: typeof GatewaySession.CloseEvent, callback: CustomEventListenerOrEventListenerObject<CloseEvent> | null, options?: boolean | AddEventListenerOptions | undefined): void;
     /**
     * Sends a request to the gateway
     * @param request The request to send
@@ -356,5 +360,15 @@ export declare namespace GatewaySession {
      * not changed since the last interval elapsed, nothing will be sent
      */
     const StatusEvent = "status";
+    /**
+     * Socket errors are errors surfaced from the underlying websocket
+     * connection itself and usually mean there has been some network-level
+     * issue
+     */
+    const SocketErrorEvent = "socket-error";
+    /**
+     * Closed events are sent when a connection is closed
+     */
+    const CloseEvent = "close";
 }
 //# sourceMappingURL=index.d.ts.map
