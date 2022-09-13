@@ -246,7 +246,7 @@ export namespace Util {
         itemSubject: string,
         responseSubject: string,
         errorSubject: string,
-        UUID: Uint8Array,
+        UUID: string | Uint8Array,
         timeoutMs?: number,
     }
 
@@ -266,7 +266,12 @@ export namespace Util {
         r.setItemsubject(details.itemSubject);
         r.setResponsesubject(details.responseSubject);
         r.setErrorsubject(details.errorSubject);
-        r.setUuid(details.UUID);
+
+        if (typeof details.UUID == 'string') {
+            r.setUuid(Uint8Array.from(uuidParse(details.UUID)));
+        } else {
+            r.setUuid(details.UUID);
+        }
         
         if (typeof details.timeoutMs != 'undefined') {
             r.setTimeout(Util.toDuration(details.timeoutMs))

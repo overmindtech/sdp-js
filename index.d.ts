@@ -113,7 +113,7 @@ export declare namespace Util {
         itemSubject: string;
         responseSubject: string;
         errorSubject: string;
-        UUID: Uint8Array;
+        UUID: string | Uint8Array;
         timeoutMs?: number;
     };
     /**

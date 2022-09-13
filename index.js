@@ -239,7 +239,12 @@ var Util;
         r.setItemsubject(details.itemSubject);
         r.setResponsesubject(details.responseSubject);
         r.setErrorsubject(details.errorSubject);
-        r.setUuid(details.UUID);
+        if (typeof details.UUID == 'string') {
+            r.setUuid(Uint8Array.from((0, uuid_1.parse)(details.UUID)));
+        }
+        else {
+            r.setUuid(details.UUID);
+        }
         if (typeof details.timeoutMs != 'undefined') {
             r.setTimeout(Util.toDuration(details.timeoutMs));
         }

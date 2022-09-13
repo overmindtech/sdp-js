@@ -210,6 +210,15 @@ describe("Util namespace", () => {
             expect(ir.getResponsesubject()).toEqual(data.responseSubject);
         })
         
+        describe('with a string UUID', () => {
+            data.UUID = uuidv4();
+            
+            const ir = Util.newItemRequest(data);
+
+            it('should have parsed the UUID', () => {
+                expect(ir.getUuid().length).toBeGreaterThan(0);
+            })
+        })
     });
     
     describe('#newMetadata()', function() {
