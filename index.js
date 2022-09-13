@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RequestProgress = exports.Responder = exports.Util = exports.GatewaySession = exports.GatewayResponse = exports.GatewayRequestStatus = exports.GatewayRequest = exports.Response = exports.ReverseLinksResponse = exports.ReverseLinksRequest = exports.CancelItemRequest = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
+exports.GatewaySession = exports.RequestProgress = exports.Responder = exports.Util = exports.GatewayResponse = exports.GatewayRequestStatus = exports.GatewayRequest = exports.Response = exports.ReverseLinksResponse = exports.ReverseLinksRequest = exports.CancelItemRequest = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
 // Export things from other files
 var items_pb_1 = require("./items_pb");
 Object.defineProperty(exports, "ItemRequest", { enumerable: true, get: function () { return items_pb_1.ItemRequest; } });
@@ -33,8 +33,6 @@ var gateway_pb_1 = require("./gateway_pb");
 Object.defineProperty(exports, "GatewayRequest", { enumerable: true, get: function () { return gateway_pb_1.GatewayRequest; } });
 Object.defineProperty(exports, "GatewayRequestStatus", { enumerable: true, get: function () { return gateway_pb_1.GatewayRequestStatus; } });
 Object.defineProperty(exports, "GatewayResponse", { enumerable: true, get: function () { return gateway_pb_1.GatewayResponse; } });
-var gateway_1 = require("./gateway");
-Object.defineProperty(exports, "GatewaySession", { enumerable: true, get: function () { return gateway_1.GatewaySession; } });
 // Import things we need for the Util namespace
 const items_pb_2 = require("./items_pb");
 const responses_pb_2 = require("./responses_pb");
@@ -666,4 +664,128 @@ function base32EncodeCustom(data) {
     }
     return output;
 }
+class GatewaySession extends EventTarget {
+    constructor(url) {
+        super();
+        this.socket = new WebSocket(url);
+        this.socket.binaryType = "arraybuffer";
+        this.ready = new Promise((resolve, reject) => {
+            this.socket.onopen = () => {
+                resolve();
+            };
+            this.socket.onerror = (err) => {
+                reject(err);
+            };
+        });
+        this.socket.addEventListener("message", (ev) => {
+            this._processMessage(ev.data);
+        });
+    }
+    /**
+    * Processing inbound messages
+    * @param buffer A buffer containing the binary message
+    */
+    _processMessage(buffer) {
+        const binary = new Uint8Array(buffer);
+        const response = gateway_pb_2.GatewayResponse.deserializeBinary(binary);
+        if (response.hasError()) {
+            this.dispatchEvent(new CustomEvent(GatewaySession.ErrorEvent, {
+                detail: response.getError()
+            }));
+        }
+        else if (response.hasNewitem()) {
+            const item = response.getNewitem();
+            if (typeof item != 'undefined') {
+                this.dispatchEvent(new CustomEvent(GatewaySession.NewItemEvent, {
+                    detail: item,
+                }));
+            }
+        }
+        else if (response.hasNewedge()) {
+            const edge = response.getNewedge();
+            if (typeof edge != 'undefined') {
+                this.dispatchEvent(new CustomEvent(GatewaySession.NewEdgeEvent, {
+                    detail: edge,
+                }));
+            }
+        }
+        else if (response.hasNewitemrequesterror()) {
+            const e = response.getNewitemrequesterror();
+            if (typeof e != 'undefined') {
+                this.dispatchEvent(new CustomEvent(GatewaySession.NewItemRequestErrorEvent, {
+                    detail: e,
+                }));
+            }
+        }
+        else if (response.hasStatus()) {
+            const status = response.getStatus();
+            if (typeof status != 'undefined') {
+                this.status = status.toObject();
+                this.dispatchEvent(new CustomEvent(GatewaySession.StatusEvent, {
+                    detail: status,
+                }));
+            }
+        }
+    }
+    addEventListener(type, callback, options) {
+        super.addEventListener(type, callback, options);
+    }
+    removeEventListener(type, callback, options) {
+        super.removeEventListener(type, callback, options);
+    }
+    /**
+    * Sends a request to the gateway
+    * @param request The request to send
+    */
+    sendRequest(request) {
+        var binary = request.serializeBinary();
+        this.socket.send(binary);
+    }
+    /**
+    * Closes the session
+    */
+    close() {
+        this.socket.close();
+    }
+    /**
+    *
+    * @returns The current state of the websocket connection
+    */
+    state() {
+        return this.socket.readyState;
+    }
+}
+exports.GatewaySession = GatewaySession;
+(function (GatewaySession) {
+    // Here I'm storing the event types so that they have some central documentation. This means that I can document the event types without having to rewrite it for each `on`, `off` etc.
+    /**
+     * An error event is sent when the gateway itself encounters an error when
+     * running the request. An error here means that the request wasn't started
+     */
+    GatewaySession.ErrorEvent = 'error';
+    /**
+     * Ths event is sent when a new item is discovered as a result of the
+     * queries that have been started during the session
+     */
+    GatewaySession.NewItemEvent = 'new-item';
+    /**
+     * This event is sent when a new edge between two items is discovered. Note
+     * that edges will only be sent after both items have been sent, so an edge
+     * should never refer to a non-existent item
+     */
+    GatewaySession.NewEdgeEvent = 'new-edge';
+    /**
+     * This event means that an error was encountered by one of the responders
+     * when responding to the request. This could indicate a failure, or might
+     * be expected. It s up to the user to determine how these errors should be
+     * surfaced and handled
+     */
+    GatewaySession.NewItemRequestErrorEvent = 'item-request-error';
+    /**
+     * Status events are sent at an interval determined in the `GatewayRequest`,
+     * subsequent gateway requests will update the interval. If the status has
+     * not changed since the last interval elapsed, nothing will be sent
+     */
+    GatewaySession.StatusEvent = 'status';
+})(GatewaySession = exports.GatewaySession || (exports.GatewaySession = {}));
 //# sourceMappingURL=index.js.map
