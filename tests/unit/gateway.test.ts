@@ -1,7 +1,6 @@
 import WS from "jest-websocket-mock";
 import { describe, expect, it, beforeAll } from '@jest/globals';
-import { GatewaySession } from '../../gateway'
-import { Util } from '../../'
+import { Util, GatewaySession } from '../../'
 import * as data from './sampledata'
 
 // create a WS instance
