@@ -675,12 +675,22 @@ class GatewaySession extends EventTarget {
         this.socket = new WebSocket(url);
         this.socket.binaryType = "arraybuffer";
         this.ready = new Promise((resolve, reject) => {
-            this.socket.onopen = () => {
+            this.socket.addEventListener('open', () => {
                 resolve();
-            };
-            this.socket.onerror = (err) => {
-                reject(err);
-            };
+            }, { once: true });
+            this.socket.addEventListener('error', (event) => {
+                reject(event);
+            }, { once: true });
+        });
+        this.socket.addEventListener('error', (event) => {
+            this.dispatchEvent(new CustomEvent(GatewaySession.SocketErrorEvent, {
+                detail: event,
+            }));
+        });
+        this.socket.addEventListener('close', (closeEvent) => {
+            this.dispatchEvent(new CustomEvent(GatewaySession.CloseEvent, {
+                detail: closeEvent,
+            }));
         });
         this.socket.addEventListener("message", (ev) => {
             this._processMessage(ev.data);
@@ -792,5 +802,15 @@ exports.GatewaySession = GatewaySession;
      * not changed since the last interval elapsed, nothing will be sent
      */
     GatewaySession.StatusEvent = 'status';
+    /**
+     * Socket errors are errors surfaced from the underlying websocket
+     * connection itself and usually mean there has been some network-level
+     * issue
+     */
+    GatewaySession.SocketErrorEvent = 'socket-error';
+    /**
+     * Closed events are sent when a connection is closed
+     */
+    GatewaySession.CloseEvent = 'close';
 })(GatewaySession = exports.GatewaySession || (exports.GatewaySession = {}));
 //# sourceMappingURL=index.js.map

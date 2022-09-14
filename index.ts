@@ -826,17 +826,29 @@ export class GatewaySession extends EventTarget {
         super();
 
         this.socket = new WebSocket(url);
-        this.socket.binaryType = "arraybuffer"
+        this.socket.binaryType = "arraybuffer";
         
         this.ready = new Promise((resolve, reject) => {
-            this.socket.onopen = () => {
+            this.socket.addEventListener('open', () => {
                 resolve();
-            }
+            }, { once: true })
             
-            this.socket.onerror = (err) => {
-                reject(err);
-            }
-        })
+            this.socket.addEventListener('error', (event) => {
+                reject(event);
+            }, { once: true })
+        });
+
+        this.socket.addEventListener('error', (event) => {
+            this.dispatchEvent(new CustomEvent<Event>(GatewaySession.SocketErrorEvent, {
+                detail: event,
+            }))
+        });
+
+        this.socket.addEventListener('close', (closeEvent) => {
+            this.dispatchEvent(new CustomEvent<CloseEvent>(GatewaySession.CloseEvent, {
+                detail: closeEvent,
+            }))
+        });
 
         this.socket.addEventListener("message", (ev: MessageEvent<ArrayBuffer>) => {
             this._processMessage(ev.data);
@@ -898,6 +910,8 @@ export class GatewaySession extends EventTarget {
     addEventListener(type: typeof GatewaySession.NewEdgeEvent, callback: CustomEventListenerOrEventListenerObject<Edge> | null, options?: boolean | AddEventListenerOptions | undefined): void
     addEventListener(type: typeof GatewaySession.NewItemRequestErrorEvent, callback: CustomEventListenerOrEventListenerObject<ItemRequestError> | null, options?: boolean | AddEventListenerOptions | undefined): void
     addEventListener(type: typeof GatewaySession.StatusEvent, callback: CustomEventListenerOrEventListenerObject<GatewayRequestStatus> | null, options?: boolean | AddEventListenerOptions | undefined): void
+    addEventListener(type: typeof GatewaySession.SocketErrorEvent, callback: CustomEventListenerOrEventListenerObject<Event> | null, options?: boolean | AddEventListenerOptions | undefined): void
+    addEventListener(type: typeof GatewaySession.CloseEvent, callback: CustomEventListenerOrEventListenerObject<CloseEvent> | null, options?: boolean | AddEventListenerOptions | undefined): void
     addEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: AddEventListenerOptions | boolean): void {
         super.addEventListener(type, callback, options);
     }
@@ -907,6 +921,8 @@ export class GatewaySession extends EventTarget {
     removeEventListener(type: typeof GatewaySession.NewEdgeEvent, callback: CustomEventListenerOrEventListenerObject<Edge> | null, options?: boolean | AddEventListenerOptions | undefined): void
     removeEventListener(type: typeof GatewaySession.NewItemRequestErrorEvent, callback: CustomEventListenerOrEventListenerObject<ItemRequestError> | null, options?: boolean | AddEventListenerOptions | undefined): void
     removeEventListener(type: typeof GatewaySession.StatusEvent, callback: CustomEventListenerOrEventListenerObject<GatewayRequestStatus> | null, options?: boolean | AddEventListenerOptions | undefined): void
+    removeEventListener(type: typeof GatewaySession.SocketErrorEvent, callback: CustomEventListenerOrEventListenerObject<Event> | null, options?: boolean | AddEventListenerOptions | undefined): void
+    removeEventListener(type: typeof GatewaySession.CloseEvent, callback: CustomEventListenerOrEventListenerObject<CloseEvent> | null, options?: boolean | AddEventListenerOptions | undefined): void
     removeEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: boolean | EventListenerOptions | undefined): void {
         super.removeEventListener(type, callback, options);
     }
@@ -972,4 +988,16 @@ export namespace GatewaySession {
      * not changed since the last interval elapsed, nothing will be sent
      */
     export const StatusEvent = 'status'
+
+    /**
+     * Socket errors are errors surfaced from the underlying websocket
+     * connection itself and usually mean there has been some network-level
+     * issue
+     */
+    export const SocketErrorEvent = 'socket-error'
+
+    /**
+     * Closed events are sent when a connection is closed
+     */
+    export const CloseEvent = 'close'
 }
