@@ -290,7 +290,7 @@ interface CustomEventListener<T> {
 interface CustomEventListenerObject<T> {
     handleEvent(object: CustomEvent<T>): void;
 }
-declare type CustomEventListenerOrEventListenerObject<T> = CustomEventListener<T> | CustomEventListenerObject<T>;
+type CustomEventListenerOrEventListenerObject<T> = CustomEventListener<T> | CustomEventListenerObject<T>;
 export declare class GatewaySession extends EventTarget {
     private socket;
     ready: Promise<void>;
