@@ -16,6 +16,7 @@ import { JavaScriptValue, Struct } from 'google-protobuf/google/protobuf/struct_
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
 import { parse as uuidParse, v4 as uuidv4 } from 'uuid';
 import { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb';
+import { thisExpression, tSMethodSignature } from '@babel/types';
 
 export namespace Util {
     /**
@@ -243,10 +244,10 @@ export namespace Util {
         query: string,
         linkDepth: number,
         context: string,
-        itemSubject: string,
-        responseSubject: string,
-        errorSubject: string,
         UUID: string | Uint8Array,
+        itemSubject?: string,
+        responseSubject?: string,
+        errorSubject?: string,
         timeoutMs?: number,
     }
 
@@ -263,9 +264,9 @@ export namespace Util {
         r.setQuery(details.query);
         r.setLinkdepth(details.linkDepth);
         r.setContext(details.context);
-        r.setItemsubject(details.itemSubject);
-        r.setResponsesubject(details.responseSubject);
-        r.setErrorsubject(details.errorSubject);
+        r.setItemsubject(details.itemSubject || '');
+        r.setResponsesubject(details.responseSubject || '');
+        r.setErrorsubject(details.errorSubject || '');
 
         if (typeof details.UUID == 'string') {
             r.setUuid(Uint8Array.from(uuidParse(details.UUID)));
@@ -1000,4 +1001,133 @@ export namespace GatewaySession {
      * Closed events are sent when a connection is closed
      */
     export const CloseEvent = 'close'
+}
+
+/**
+ * Result that combines the actual result with the score
+ */
+type AutocompleteResult = {
+    value: string
+    score: number,
+}
+
+export enum AutocompleteField {
+    TYPE = 0,
+    CONTEXT = 1,
+}
+
+/**
+ * I'm not really sure what the API should look like for autocomplete, as in how
+ * the data should come in and out. I'm going to take a stab but once we know
+ * how it'll be consumed by the front end we should change it to be more
+ * appropriate
+ */
+export class Autocomplete {
+    field: AutocompleteField;
+    
+    results: AutocompleteResult[] = [];
+
+    private _prompt: string = "";
+    private session: GatewaySession;
+    private currentRequestUUID: string = "";
+
+    /**
+     * 
+     * @param session The gateway session that requests should be sent on
+     */
+    constructor(session: GatewaySession, field: AutocompleteField) {
+        this.session = session;
+        this.field = field;
+
+        // Listen for results
+        this.session.addEventListener('new-item', (item) => this.processItem(item.detail))
+    }
+
+    /**
+     * The suggested type values for the provided typePrompt
+     */
+    get suggestions(): string[] {
+        return this.results.map((result) => result.value)
+    }
+
+    /**
+     * The prompt to search for
+     */
+    get prompt(): string {
+        return this._prompt;
+    }
+
+    /**
+     * The prompt to search for
+     */
+    set prompt(prompt: string) {
+        this._prompt = prompt;
+
+        if (this.currentRequestUUID !== '') {
+            // Cancel any running requests
+            this.session.sendRequest(Util.newGatewayRequest({
+                UUID: this.currentRequestUUID,
+            }, 1000))
+        }
+        
+
+        // Delete current autocomplete options
+        this.results = [];
+
+        const uuid = Util.newUUID()
+
+        let type: string
+
+        switch (this.field) {
+            case AutocompleteField.CONTEXT:
+                type = 'overmind-context'
+                break;
+            case AutocompleteField.TYPE:
+                type = 'overmind-type'
+                break;
+        }
+
+        // Create a new request
+        let request = Util.newGatewayRequest({
+            context: "global",
+            linkDepth: 0,
+            type: type,
+            method: 'SEARCH',
+            query: prompt,
+            UUID: uuid,
+            timeoutMs: 2_000,
+        }, 500)
+        
+        // Set the UUID so we know which responses to use and which to ignore
+        this.currentRequestUUID = uuid.toString()
+
+        // Start the request
+        this.session.sendRequest(request);
+    }
+
+
+    /**
+     * Processes incoming items and extracts autocomplete responses
+     * 
+     * @param item The item to process
+     */
+    private processItem(item: Item):void {
+        if (item.getMetadata()?.getSourcerequest()?.getUuid_asB64() == this.currentRequestUUID) {
+            let score: number = 0;
+            let attributes = item.getAttributes();
+
+            if (attributes !== undefined) {
+                score = Util.getAttributeValue(attributes, "score")
+            }
+
+            // Add the result
+            this.results.push({
+                value: Util.getUniqueattributevalue(item),
+                score: score,
+            })
+
+            // Re-sort
+            this.results.sort((a, b) => a.score - b.score)
+        }
+    }
 }
