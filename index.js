@@ -54,6 +54,14 @@ var Util;
     }
     Util.newUUID = newUUID;
     /**
+     * Generates a new random UUID
+     * @returns A new UUID as a string
+     */
+    function newUUIDString() {
+        return (0, uuid_1.v4)();
+    }
+    Util.newUUIDString = newUUIDString;
+    /**
      * Gets the globally unique name of an object
      * @param object The object to get the globally unique name from
      * @returns The globally unique name
@@ -675,11 +683,13 @@ class GatewaySession extends EventTarget {
         this.socket = new WebSocket(url);
         this.socket.binaryType = "arraybuffer";
         this.ready = new Promise((resolve, reject) => {
-            this.socket.addEventListener('open', () => {
-                resolve();
-            }, { once: true });
-            this.socket.addEventListener('error', (event) => {
+            let rejecter = (event) => {
                 reject(event);
+            };
+            this.socket.addEventListener('error', rejecter, { once: true });
+            this.socket.addEventListener('open', () => {
+                this.removeEventListener('error', rejecter);
+                resolve();
             }, { once: true });
         });
         this.socket.addEventListener('error', (event) => {
@@ -833,6 +843,13 @@ class Autocomplete {
         this.results = [];
         this._prompt = "";
         this.currentRequestUUID = "";
+        if (session.state() != WebSocket.OPEN) {
+            // We are failing here because I can't find a good spot in this API
+            // to put an async method. If we review this later we might want to
+            // remove this requirement and just have the object be smart enough
+            // to wait until the session is ready before sending anything
+            throw new Error("session must be OPEN for autocomplete");
+        }
         this.session = session;
         this.field = field;
         // Listen for results
@@ -863,7 +880,7 @@ class Autocomplete {
         }
         // Delete current autocomplete options
         this.results = [];
-        const uuid = Util.newUUID();
+        const uuid = Util.newUUIDString();
         let type;
         switch (this.field) {
             case AutocompleteField.CONTEXT:
@@ -884,7 +901,7 @@ class Autocomplete {
             timeoutMs: 2000,
         }, 500);
         // Set the UUID so we know which responses to use and which to ignore
-        this.currentRequestUUID = uuid.toString();
+        this.currentRequestUUID = uuid;
         // Start the request
         this.session.sendRequest(request);
     }

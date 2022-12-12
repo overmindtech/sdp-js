@@ -13,6 +13,11 @@ export declare namespace Util {
      */
     function newUUID(): Uint8Array;
     /**
+     * Generates a new random UUID
+     * @returns A new UUID as a string
+     */
+    function newUUIDString(): string;
+    /**
      * Gets the globally unique name of an object
      * @param object The object to get the globally unique name from
      * @returns The globally unique name

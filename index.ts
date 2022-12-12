@@ -16,7 +16,6 @@ import { JavaScriptValue, Struct } from 'google-protobuf/google/protobuf/struct_
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
 import { parse as uuidParse, v4 as uuidv4 } from 'uuid';
 import { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb';
-import { thisExpression, tSMethodSignature } from '@babel/types';
 
 export namespace Util {
     /**
@@ -24,7 +23,15 @@ export namespace Util {
      * @returns A new UUIDv4 as a Uint8Array
      */
     export function newUUID(): Uint8Array {
-        return Uint8Array.from(uuidParse(uuidv4()))
+        return Uint8Array.from(uuidParse(uuidv4()));
+    }
+
+    /**
+     * Generates a new random UUID
+     * @returns A new UUID as a string
+     */
+    export function newUUIDString(): string {
+        return uuidv4();
     }
 
     /**
@@ -830,13 +837,15 @@ export class GatewaySession extends EventTarget {
         this.socket.binaryType = "arraybuffer";
         
         this.ready = new Promise((resolve, reject) => {
+            let rejecter = (event: Event) => {
+                reject(event)
+            }
+
+            this.socket.addEventListener('error', rejecter, { once: true })
             this.socket.addEventListener('open', () => {
+                this.removeEventListener('error', rejecter)
                 resolve();
-            }, { once: true })
-            
-            this.socket.addEventListener('error', (event) => {
-                reject(event);
-            }, { once: true })
+            }, { once: true })            
         });
 
         this.socket.addEventListener('error', (event) => {
@@ -1024,7 +1033,6 @@ export enum AutocompleteField {
  */
 export class Autocomplete {
     field: AutocompleteField;
-    
     results: AutocompleteResult[] = [];
 
     private _prompt: string = "";
@@ -1036,6 +1044,14 @@ export class Autocomplete {
      * @param session The gateway session that requests should be sent on
      */
     constructor(session: GatewaySession, field: AutocompleteField) {
+        if (session.state() != WebSocket.OPEN) {
+            // We are failing here because I can't find a good spot in this API
+            // to put an async method. If we review this later we might want to
+            // remove this requirement and just have the object be smart enough
+            // to wait until the session is ready before sending anything
+            throw new Error("session must be OPEN for autocomplete");
+        }
+
         this.session = session;
         this.field = field;
 
@@ -1074,7 +1090,7 @@ export class Autocomplete {
         // Delete current autocomplete options
         this.results = [];
 
-        const uuid = Util.newUUID()
+        const uuid = Util.newUUIDString()
 
         let type: string
 
@@ -1099,7 +1115,7 @@ export class Autocomplete {
         }, 500)
         
         // Set the UUID so we know which responses to use and which to ignore
-        this.currentRequestUUID = uuid.toString()
+        this.currentRequestUUID = uuid
 
         // Start the request
         this.session.sendRequest(request);
