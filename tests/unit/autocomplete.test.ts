@@ -1,6 +1,6 @@
-import { describe, expect, it, afterAll, beforeAll } from '@jest/globals';
+import { describe, expect, it, afterEach, beforeEach } from '@jest/globals';
 import WS from "jest-websocket-mock";
-import { Autocomplete, AutocompleteField, GatewaySession, GatewayRequest } from '../../';
+import { Autocomplete, AutocompleteField, GatewaySession, GatewayRequest, Util } from '../../';
 
 const TestServerAddress = 'ws://localhost:31035'
 
@@ -18,7 +18,7 @@ describe('Autocomplete', () => {
             
             await session.ready
 
-            ac = new Autocomplete(session, AutocompleteField.CONTEXT)
+            ac = new Autocomplete(session, AutocompleteField.TYPE)
         });
 
         afterEach(() => {
@@ -51,7 +51,7 @@ describe('Autocomplete', () => {
                 if (msg instanceof Uint8Array) {
                     let req = GatewayRequest.deserializeBinary(msg)
 
-                    expect(req.getRequest()?.getType()).toEqual('overmind-context')
+                    expect(req.getRequest()?.getType()).toEqual('overmind-type')
                     expect(req.getRequest()?.getQuery()).toEqual(ac.prompt)
                     expect(req.getRequest()?.getContext()).toEqual('global')
                 } else {
@@ -79,9 +79,66 @@ describe('Autocomplete', () => {
                 if (msg instanceof Uint8Array) {
                     let req = GatewayRequest.deserializeBinary(msg)
 
-                    expect(req.getRequest()?.getType()).toEqual('overmind-context')
+                    expect(req.getRequest()?.getType()).toEqual('overmind-type')
                     expect(req.getRequest()?.getQuery()).toEqual(ac.prompt)
                     expect(req.getRequest()?.getContext()).toEqual('global')
+                } else {
+                    // Is there a better way to fail here?
+                    expect(false).toBeTruthy()
+                }
+            })
+        })
+
+        describe('#prompt()', () => {
+            it('should populate suggestions', async () => {
+                ac.prompt = "per"
+
+                // Send just the new request
+                let msg = await server.nextMessage
+
+                expect(msg).not.toBeUndefined()
+                if (msg instanceof Uint8Array) {
+                    let req = GatewayRequest.deserializeBinary(msg)
+
+                    expect(req.getRequest()?.getType()).toEqual('overmind-type')
+                    expect(req.getRequest()?.getQuery()).toEqual(ac.prompt)
+                    expect(req.getRequest()?.getContext()).toEqual('global')
+
+                    let u = req.getRequest()?.getUuid_asU8()
+
+                    let resp = Util.newGatewayResponse({
+                        type: 'overmind-type',
+                        uniqueAttribute: 'name',
+                        context: 'global',
+                        attributes: Util.newItemAttributes({
+                            name: 'person',
+                        }),
+                        metadata: Util.newMetadata({
+                            sourceDuration: 0,
+                            sourceDurationPerItem: 0,
+                            sourceName: 'overmind-type-metasource',
+                            sourceRequest: {
+                                context: 'global',
+                                linkDepth: 0,
+                                method: 'GET',
+                                query: ac.prompt,
+                                type: 'overmind-type',
+                                UUID: u || '',
+                            },
+                            timestamp: new Date(),
+                        }),
+                        linkedItemRequests: [],
+                        linkedItems: [],            
+                    })
+    
+                    let respBin = resp.serializeBinary()
+    
+                    server.send(respBin.buffer)
+    
+                    // Wait 200ms
+                    await new Promise(r => setTimeout(r, 100));
+    
+                    expect(ac.suggestions.length).toBe(1)
                 } else {
                     // Is there a better way to fail here?
                     expect(false).toBeTruthy()

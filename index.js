@@ -912,19 +912,23 @@ class Autocomplete {
      */
     processItem(item) {
         var _a, _b;
-        if (((_b = (_a = item.getMetadata()) === null || _a === void 0 ? void 0 : _a.getSourcerequest()) === null || _b === void 0 ? void 0 : _b.getUuid_asB64()) == this.currentRequestUUID) {
-            let score = 0;
-            let attributes = item.getAttributes();
-            if (attributes !== undefined) {
-                score = Util.getAttributeValue(attributes, "score");
+        let itemUUID = (_b = (_a = item.getMetadata()) === null || _a === void 0 ? void 0 : _a.getSourcerequest()) === null || _b === void 0 ? void 0 : _b.getUuid_asU8();
+        if (typeof itemUUID != 'undefined') {
+            let itemUUIDString = (0, uuid_1.stringify)(itemUUID);
+            if (itemUUIDString == this.currentRequestUUID) {
+                let score = 0;
+                let attributes = item.getAttributes();
+                if (attributes !== undefined) {
+                    score = Util.getAttributeValue(attributes, "score");
+                }
+                // Add the result
+                this.results.push({
+                    value: Util.getUniqueattributevalue(item),
+                    score: score,
+                });
+                // Re-sort
+                this.results.sort((a, b) => a.score - b.score);
             }
-            // Add the result
-            this.results.push({
-                value: Util.getUniqueattributevalue(item),
-                score: score,
-            });
-            // Re-sort
-            this.results.sort((a, b) => a.score - b.score);
         }
     }
 }

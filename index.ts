@@ -14,7 +14,7 @@ import toDataView from 'to-data-view';
 import { Duration } from 'google-protobuf/google/protobuf/duration_pb';
 import { JavaScriptValue, Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb';
-import { parse as uuidParse, v4 as uuidv4 } from 'uuid';
+import { parse as uuidParse, v4 as uuidv4, stringify as uuidStringify } from 'uuid';
 import { GatewayRequest, GatewayRequestStatus, GatewayResponse } from './gateway_pb';
 
 export namespace Util {
@@ -1127,23 +1127,29 @@ export class Autocomplete {
      * 
      * @param item The item to process
      */
-    private processItem(item: Item):void {
-        if (item.getMetadata()?.getSourcerequest()?.getUuid_asB64() == this.currentRequestUUID) {
-            let score: number = 0;
-            let attributes = item.getAttributes();
+    processItem(item: Item): void {
+        let itemUUID = item.getMetadata()?.getSourcerequest()?.getUuid_asU8()
 
-            if (attributes !== undefined) {
-                score = Util.getAttributeValue(attributes, "score")
+        if (typeof itemUUID != 'undefined') {
+            let itemUUIDString = uuidStringify(itemUUID)
+
+            if (itemUUIDString == this.currentRequestUUID) {
+                let score: number = 0;
+                let attributes = item.getAttributes();
+    
+                if (attributes !== undefined) {
+                    score = Util.getAttributeValue(attributes, "score")
+                }
+    
+                // Add the result
+                this.results.push({
+                    value: Util.getUniqueattributevalue(item),
+                    score: score,
+                })
+    
+                // Re-sort
+                this.results.sort((a, b) => a.score - b.score)
             }
-
-            // Add the result
-            this.results.push({
-                value: Util.getUniqueattributevalue(item),
-                score: score,
-            })
-
-            // Re-sort
-            this.results.sort((a, b) => a.score - b.score)
         }
     }
 }

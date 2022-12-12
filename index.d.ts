@@ -421,6 +421,6 @@ export declare class Autocomplete {
      *
      * @param item The item to process
      */
-    private processItem;
+    processItem(item: Item): void;
 }
 //# sourceMappingURL=index.d.ts.map
