@@ -64,7 +64,7 @@ export declare namespace Util {
     type ItemData = {
         type: string;
         uniqueAttribute: string;
-        context: string;
+        scope: string;
         attributes: ItemAttributes;
         metadata: Metadata | undefined;
         linkedItemRequests: ItemRequest[];
@@ -99,7 +99,7 @@ export declare namespace Util {
      */
     function newMetadata(data: MetadataData): Metadata;
     type ItemRequestErrorData = {
-        context: string;
+        scope: string;
         errorString: string;
         errorType: ItemRequestError.ErrorType;
     };
@@ -111,10 +111,10 @@ export declare namespace Util {
     function newItemRequestError(details: ItemRequestErrorData): ItemRequestError;
     type ItemRequestData = {
         type: string;
-        method: "GET" | "FIND" | "SEARCH";
+        method: "GET" | "LIST" | "SEARCH";
         query: string;
         linkDepth: number;
-        context: string;
+        scope: string;
         UUID: string | Uint8Array;
         itemSubject?: string;
         responseSubject?: string;
@@ -130,7 +130,7 @@ export declare namespace Util {
     type ReferenceData = {
         type: string;
         uniqueAttributeValue: string;
-        context: string;
+        scope: string;
     };
     /**
      * Create a new Reference from a single object

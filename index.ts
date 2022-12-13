@@ -41,7 +41,7 @@ export namespace Util {
      */
     export function getGloballyuniquename(object: Reference | Item): string {
         const elements: string[] = [
-            object.getContext(),
+            object.getScope(),
             object.getType(),
             getUniqueattributevalue(object),
         ];
@@ -110,7 +110,7 @@ export namespace Util {
     export function getReference(item: Item): Reference {
         const ref = new Reference();
 
-        ref.setContext(item.getContext());
+        ref.setScope(item.getScope());
         ref.setType(item.getType());
         ref.setUniqueattributevalue(getUniqueattributevalue(item));
     
@@ -144,7 +144,7 @@ export namespace Util {
     export type ItemData = {
         type: string,
         uniqueAttribute: string,
-        context: string,
+        scope: string,
         attributes: ItemAttributes,
         metadata: Metadata | undefined,
         linkedItemRequests: ItemRequest[],
@@ -161,7 +161,7 @@ export namespace Util {
 
         item.setType(details.type);
         item.setUniqueattribute(details.uniqueAttribute);
-        item.setContext(details.context);
+        item.setScope(details.scope);
         item.setAttributes(details.attributes);
 
         if (typeof details.metadata != "undefined") {
@@ -224,7 +224,7 @@ export namespace Util {
     }
 
     export type ItemRequestErrorData = {
-        context: string,
+        scope: string,
         errorString: string,
         errorType: ItemRequestError.ErrorType,
     }
@@ -237,7 +237,7 @@ export namespace Util {
     export function newItemRequestError(details: ItemRequestErrorData): ItemRequestError {
         var err = new ItemRequestError();
 
-        err.setContext(details.context);
+        err.setScope(details.scope);
         err.setErrorstring(details.errorString);
         err.setErrortype(details.errorType);
 
@@ -247,10 +247,10 @@ export namespace Util {
 
     export type ItemRequestData = {
         type: string,
-        method: "GET" | "FIND" | "SEARCH",
+        method: "GET" | "LIST" | "SEARCH",
         query: string,
         linkDepth: number,
-        context: string,
+        scope: string,
         UUID: string | Uint8Array,
         itemSubject?: string,
         responseSubject?: string,
@@ -270,7 +270,7 @@ export namespace Util {
         r.setMethod(convertRequestMethod(details.method));
         r.setQuery(details.query);
         r.setLinkdepth(details.linkDepth);
-        r.setContext(details.context);
+        r.setScope(details.scope);
         r.setItemsubject(details.itemSubject || '');
         r.setResponsesubject(details.responseSubject || '');
         r.setErrorsubject(details.errorSubject || '');
@@ -291,7 +291,7 @@ export namespace Util {
     export type ReferenceData = {
         type: string,
         uniqueAttributeValue: string,
-        context: string,
+        scope: string,
     }
 
     /**
@@ -304,7 +304,7 @@ export namespace Util {
 
         r.setType(details.type);
         r.setUniqueattributevalue(details.uniqueAttributeValue);
-        r.setContext(details.context);
+        r.setScope(details.scope);
 
         return r;
     }
@@ -458,13 +458,13 @@ export namespace Util {
     function isItemData(x: any): x is ItemData {
         const hasType  = "type" in x
         const hasUniqueAttribute  = "uniqueAttribute" in x
-        const hasContext  = "context" in x
+        const hasScope  = "scope" in x
         const hasAttributes  = "attributes" in x
         const hasMetadata  = "metadata" in x
         const hasLinkedItemRequests  = "linkedItemRequests" in x
         const hasLinkedItems  = "linkedItems" in x
 
-        return hasType && hasUniqueAttribute && hasContext && hasAttributes && hasMetadata && hasLinkedItemRequests && hasLinkedItems
+        return hasType && hasUniqueAttribute && hasScope && hasAttributes && hasMetadata && hasLinkedItemRequests && hasLinkedItems
     }
 
     function isEdgeData(x: any): x is EdgeData {
@@ -475,11 +475,11 @@ export namespace Util {
     }
 
     function isItemRequestErrorData(x: any): x is ItemRequestErrorData {
-        const hasContext = ("context" in x);
+        const hasScope = ("scope" in x);
         const hasErrorString = ("errorString" in x);
         const hasErrorType = ("errorType" in x);
 
-        return hasContext && hasErrorString && hasErrorType
+        return hasScope && hasErrorString && hasErrorType
     }
 
     function isGatewayRequestStatusData(x: any): x is GatewayRequestStatusData {
@@ -762,13 +762,13 @@ export class RequestProgress {
 //
 // Private helper functions
 //
-function convertRequestMethod(method: "GET" | "FIND" | "SEARCH"): RequestMethod {
+function convertRequestMethod(method: "GET" | "LIST" | "SEARCH"): RequestMethod {
     switch(method) { 
         case 'GET': { 
            return RequestMethod.GET;
         } 
-        case 'FIND': { 
-            return RequestMethod.FIND;
+        case 'LIST': { 
+            return RequestMethod.LIST;
         } 
         case 'SEARCH': { 
             return RequestMethod.SEARCH;
@@ -1096,7 +1096,7 @@ export class Autocomplete {
 
         switch (this.field) {
             case AutocompleteField.CONTEXT:
-                type = 'overmind-context'
+                type = 'overmind-scope'
                 break;
             case AutocompleteField.TYPE:
                 type = 'overmind-type'
@@ -1105,7 +1105,7 @@ export class Autocomplete {
 
         // Create a new request
         let request = Util.newGatewayRequest({
-            context: "global",
+            scope: "global",
             linkDepth: 0,
             type: type,
             method: 'SEARCH',

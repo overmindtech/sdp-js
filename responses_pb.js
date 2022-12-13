@@ -363,7 +363,7 @@ proto.ItemRequestError.toObject = function(includeInstance, msg) {
     itemrequestuuid: msg.getItemrequestuuid_asB64(),
     errortype: jspb.Message.getFieldWithDefault(msg, 2, 0),
     errorstring: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    context: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    scope: jspb.Message.getFieldWithDefault(msg, 4, ""),
     sourcename: jspb.Message.getFieldWithDefault(msg, 5, ""),
     itemtype: jspb.Message.getFieldWithDefault(msg, 6, ""),
     respondername: jspb.Message.getFieldWithDefault(msg, 7, "")
@@ -417,7 +417,7 @@ proto.ItemRequestError.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.setContext(value);
+      msg.setScope(value);
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
@@ -481,7 +481,7 @@ proto.ItemRequestError.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getContext();
+  f = message.getScope();
   if (f.length > 0) {
     writer.writeString(
       4,
@@ -518,7 +518,7 @@ proto.ItemRequestError.serializeBinaryToWriter = function(message, writer) {
 proto.ItemRequestError.ErrorType = {
   OTHER: 0,
   NOTFOUND: 1,
-  NOCONTEXT: 2,
+  NOSCOPE: 2,
   TIMEOUT: 3
 };
 
@@ -601,10 +601,10 @@ proto.ItemRequestError.prototype.setErrorstring = function(value) {
 
 
 /**
- * optional string context = 4;
+ * optional string scope = 4;
  * @return {string}
  */
-proto.ItemRequestError.prototype.getContext = function() {
+proto.ItemRequestError.prototype.getScope = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -613,7 +613,7 @@ proto.ItemRequestError.prototype.getContext = function() {
  * @param {string} value
  * @return {!proto.ItemRequestError} returns this
  */
-proto.ItemRequestError.prototype.setContext = function(value) {
+proto.ItemRequestError.prototype.setScope = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 

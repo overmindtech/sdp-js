@@ -4,17 +4,17 @@ import { ItemRequestError } from "../../responses_pb";
 
 export const errorData = {
     NOTFOUND: {
-        context: "test.context",
+        scope: "test.scope",
         errorType: ItemRequestError.ErrorType.NOTFOUND,
         errorString: "Could not be found",
     },
-    NOCONTEXT: {
-        context: "test.context",
-        errorType: ItemRequestError.ErrorType.NOCONTEXT,
-        errorString: "Context does not exist",
+    NOSCOPE: {
+        scope: "test.scope",
+        errorType: ItemRequestError.ErrorType.NOSCOPE,
+        errorString: "Scope does not exist",
     },
     OTHER: {
-        context: "test.context",
+        scope: "test.scope",
         errorType: ItemRequestError.ErrorType.OTHER,
         errorString: "Unknown error",
     },
@@ -22,27 +22,27 @@ export const errorData = {
 
 export const error = {
     NOTFOUND: Util.newItemRequestError(errorData.NOTFOUND),
-    NOCONTEXT: Util.newItemRequestError(errorData.NOCONTEXT),
+    NOSCOPE: Util.newItemRequestError(errorData.NOSCOPE),
     OTHER: Util.newItemRequestError(errorData.OTHER),
 }
 
 export const responseData = {
     WORKING: {
-        responder: "test.context",
+        responder: "test.scope",
         state: ResponderState.WORKING,
         nextUpdateInMs: 100
     },
     COMPLETE: {
-        responder: "test.context",
+        responder: "test.scope",
         state: ResponderState.COMPLETE,
         nextUpdateInMs: 100,
     },
     CANCELLED: {
-        responder: "test.context",
+        responder: "test.scope",
         state: ResponderState.CANCELLED,
     },
     ERROR: {
-        responder: "test.context",
+        responder: "test.scope",
         state: ResponderState.ERROR,
     },  
 }
@@ -54,11 +54,11 @@ export const response = {
     ERROR: Util.newResponse(responseData.ERROR),
 }
 
-const FindData: Util.ItemRequestData = {
+const ListData: Util.ItemRequestData = {
     type: "package",
-    method: "FIND",
+    method: "LIST",
     linkDepth: 90,
-    context: "test.context",
+    scope: "test.scope",
     itemSubject: "itemSubject",
     responseSubject: "responseSubject",
     errorSubject: "errorSubject",
@@ -67,17 +67,17 @@ const FindData: Util.ItemRequestData = {
 }
 
 export const requestData = {
-    FIND: FindData,
+    LIST: ListData,
 }
 
 export const request = {
-    FIND: Util.newItemRequest(requestData.FIND)
+    LIST: Util.newItemRequest(requestData.LIST)
 }
 
 export const itemData = {
     process: {
         type: "process",
-        context: "myPod",
+        scope: "myPod",
         uniqueAttribute: "pid",
         attributes: Util.newItemAttributes({
             "pid": 12323,
@@ -89,7 +89,7 @@ export const itemData = {
         metadata: undefined,
     },
     dylan: {
-        context: "global",
+        scope: "global",
         uniqueAttribute: "name",
         type: "person",
         attributes: Util.newItemAttributes({
@@ -99,7 +99,7 @@ export const itemData = {
         linkedItemRequests: [],
         linkedItems: [
             Util.newReference({
-                context: "global",
+                scope: "global",
                 type: "person",
                 uniqueAttributeValue: "katie",
             }),
@@ -107,7 +107,7 @@ export const itemData = {
         metadata: undefined,
     },
     katie: {
-        context: "global",
+        scope: "global",
         uniqueAttribute: "name",
         type: "person",
         attributes: Util.newItemAttributes({
@@ -130,7 +130,7 @@ export const items = [item.process, item.dylan, item.katie];
 
 export const gatewayRequestData = {
     itemRequest: {
-        context: 'test',
+        scope: 'test',
         linkDepth: 10,
         method: 'GET',
         query: 'Dylan',
@@ -195,12 +195,12 @@ export const gatewayStatus = {
 export const edgeData = {
     basic: {
         from: {
-            context: 'test',
+            scope: 'test',
             type: 'user',
             uniqueAttributeValue: 'Dyan',
         },
         to: {
-            context: 'test',
+            scope: 'test',
             type: 'dog',
             uniqueAttributeValue: 'Manny',
         }

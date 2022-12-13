@@ -278,7 +278,7 @@ proto.ItemRequest.toObject = function(includeInstance, msg) {
     method: jspb.Message.getFieldWithDefault(msg, 2, 0),
     query: jspb.Message.getFieldWithDefault(msg, 3, ""),
     linkdepth: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    context: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    scope: jspb.Message.getFieldWithDefault(msg, 5, ""),
     ignorecache: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
     uuid: msg.getUuid_asB64(),
     timeout: (f = msg.getTimeout()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
@@ -339,7 +339,7 @@ proto.ItemRequest.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.setContext(value);
+      msg.setScope(value);
       break;
     case 6:
       var value = /** @type {boolean} */ (reader.readBool());
@@ -423,7 +423,7 @@ proto.ItemRequest.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getContext();
+  f = message.getScope();
   if (f.length > 0) {
     writer.writeString(
       5,
@@ -549,10 +549,10 @@ proto.ItemRequest.prototype.setLinkdepth = function(value) {
 
 
 /**
- * optional string context = 5;
+ * optional string scope = 5;
  * @return {string}
  */
-proto.ItemRequest.prototype.getContext = function() {
+proto.ItemRequest.prototype.getScope = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -561,7 +561,7 @@ proto.ItemRequest.prototype.getContext = function() {
  * @param {string} value
  * @return {!proto.ItemRequest} returns this
  */
-proto.ItemRequest.prototype.setContext = function(value) {
+proto.ItemRequest.prototype.setScope = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 
@@ -1065,7 +1065,7 @@ proto.Item.toObject = function(includeInstance, msg) {
     uniqueattribute: jspb.Message.getFieldWithDefault(msg, 2, ""),
     attributes: (f = msg.getAttributes()) && proto.ItemAttributes.toObject(includeInstance, f),
     metadata: (f = msg.getMetadata()) && proto.Metadata.toObject(includeInstance, f),
-    context: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    scope: jspb.Message.getFieldWithDefault(msg, 5, ""),
     linkeditemrequestsList: jspb.Message.toObjectList(msg.getLinkeditemrequestsList(),
     proto.ItemRequest.toObject, includeInstance),
     linkeditemsList: jspb.Message.toObjectList(msg.getLinkeditemsList(),
@@ -1126,7 +1126,7 @@ proto.Item.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.setContext(value);
+      msg.setScope(value);
       break;
     case 16:
       var value = new proto.ItemRequest;
@@ -1197,7 +1197,7 @@ proto.Item.serializeBinaryToWriter = function(message, writer) {
       proto.Metadata.serializeBinaryToWriter
     );
   }
-  f = message.getContext();
+  f = message.getScope();
   if (f.length > 0) {
     writer.writeString(
       5,
@@ -1334,10 +1334,10 @@ proto.Item.prototype.hasMetadata = function() {
 
 
 /**
- * optional string context = 5;
+ * optional string scope = 5;
  * @return {string}
  */
-proto.Item.prototype.getContext = function() {
+proto.Item.prototype.getScope = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -1346,7 +1346,7 @@ proto.Item.prototype.getContext = function() {
  * @param {string} value
  * @return {!proto.Item} returns this
  */
-proto.Item.prototype.setContext = function(value) {
+proto.Item.prototype.setScope = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 
@@ -1621,7 +1621,7 @@ proto.Reference.toObject = function(includeInstance, msg) {
   var f, obj = {
     type: jspb.Message.getFieldWithDefault(msg, 1, ""),
     uniqueattributevalue: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    context: jspb.Message.getFieldWithDefault(msg, 3, "")
+    scope: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -1668,7 +1668,7 @@ proto.Reference.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setContext(value);
+      msg.setScope(value);
       break;
     default:
       reader.skipField();
@@ -1713,7 +1713,7 @@ proto.Reference.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getContext();
+  f = message.getScope();
   if (f.length > 0) {
     writer.writeString(
       3,
@@ -1760,10 +1760,10 @@ proto.Reference.prototype.setUniqueattributevalue = function(value) {
 
 
 /**
- * optional string context = 3;
+ * optional string scope = 3;
  * @return {string}
  */
-proto.Reference.prototype.getContext = function() {
+proto.Reference.prototype.getScope = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -1772,7 +1772,7 @@ proto.Reference.prototype.getContext = function() {
  * @param {string} value
  * @return {!proto.Reference} returns this
  */
-proto.Reference.prototype.setContext = function(value) {
+proto.Reference.prototype.setScope = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -2740,7 +2740,7 @@ proto.ReverseLinksResponse.prototype.setError = function(value) {
  */
 proto.RequestMethod = {
   GET: 0,
-  FIND: 1,
+  LIST: 1,
   SEARCH: 2
 };
 

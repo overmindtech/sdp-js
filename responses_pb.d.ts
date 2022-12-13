@@ -50,8 +50,8 @@ export class ItemRequestError extends jspb.Message {
     setErrortype(value: ItemRequestError.ErrorType): ItemRequestError;
     getErrorstring(): string;
     setErrorstring(value: string): ItemRequestError;
-    getContext(): string;
-    setContext(value: string): ItemRequestError;
+    getScope(): string;
+    setScope(value: string): ItemRequestError;
     getSourcename(): string;
     setSourcename(value: string): ItemRequestError;
     getItemtype(): string;
@@ -74,7 +74,7 @@ export namespace ItemRequestError {
         itemrequestuuid: Uint8Array | string,
         errortype: ItemRequestError.ErrorType,
         errorstring: string,
-        context: string,
+        scope: string,
         sourcename: string,
         itemtype: string,
         respondername: string,
@@ -83,7 +83,7 @@ export namespace ItemRequestError {
     export enum ErrorType {
     OTHER = 0,
     NOTFOUND = 1,
-    NOCONTEXT = 2,
+    NOSCOPE = 2,
     TIMEOUT = 3,
     }
 
