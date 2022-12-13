@@ -53,7 +53,7 @@ describe('Autocomplete', () => {
 
                     expect(req.getRequest()?.getType()).toEqual('overmind-type')
                     expect(req.getRequest()?.getQuery()).toEqual(ac.prompt)
-                    expect(req.getRequest()?.getContext()).toEqual('global')
+                    expect(req.getRequest()?.getScope()).toEqual('global')
                 } else {
                     // Is there a better way to fail here?
                     expect(false).toBeTruthy()
@@ -81,7 +81,7 @@ describe('Autocomplete', () => {
 
                     expect(req.getRequest()?.getType()).toEqual('overmind-type')
                     expect(req.getRequest()?.getQuery()).toEqual(ac.prompt)
-                    expect(req.getRequest()?.getContext()).toEqual('global')
+                    expect(req.getRequest()?.getScope()).toEqual('global')
                 } else {
                     // Is there a better way to fail here?
                     expect(false).toBeTruthy()
@@ -102,14 +102,14 @@ describe('Autocomplete', () => {
 
                     expect(req.getRequest()?.getType()).toEqual('overmind-type')
                     expect(req.getRequest()?.getQuery()).toEqual(ac.prompt)
-                    expect(req.getRequest()?.getContext()).toEqual('global')
+                    expect(req.getRequest()?.getScope()).toEqual('global')
 
                     let u = req.getRequest()?.getUuid_asU8()
 
                     let resp = Util.newGatewayResponse({
                         type: 'overmind-type',
                         uniqueAttribute: 'name',
-                        context: 'global',
+                        scope: 'global',
                         attributes: Util.newItemAttributes({
                             name: 'person',
                         }),
@@ -118,7 +118,7 @@ describe('Autocomplete', () => {
                             sourceDurationPerItem: 0,
                             sourceName: 'overmind-type-metasource',
                             sourceRequest: {
-                                context: 'global',
+                                scope: 'global',
                                 linkDepth: 0,
                                 method: 'GET',
                                 query: ac.prompt,

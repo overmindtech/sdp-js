@@ -6,7 +6,7 @@ describe('RequestProgress', () => {
     describe('#processResponse()', () => {
         it('processes an initial WORKING response', () => {
             // Create the progress object
-            var progress = new RequestProgress(data.request.FIND);
+            var progress = new RequestProgress(data.request.LIST);
 
             expect(progress.numWorking()).toEqual(0)
 
@@ -18,7 +18,7 @@ describe('RequestProgress', () => {
 
         it('updates after a second WORKING response', () => {
             // Create the progress object
-            var progress = new RequestProgress(data.request.FIND);
+            var progress = new RequestProgress(data.request.LIST);
 
             expect(progress.numWorking()).toEqual(0)
 
@@ -29,13 +29,13 @@ describe('RequestProgress', () => {
 
             progress.processResponse(data.response.WORKING);
 
-            // Should still be one since it was for the same context
+            // Should still be one since it was for the same scope
             expect(progress.numWorking()).toEqual(1)
         });
 
         it('marks as done after a COMPLETE response', () => {
             // Create the progress object
-            var progress = new RequestProgress(data.request.FIND);
+            var progress = new RequestProgress(data.request.LIST);
 
             progress.processResponse(data.response.WORKING);
 
@@ -47,7 +47,7 @@ describe('RequestProgress', () => {
         });
 
         it('marks as failed if FAILED response', () => {
-            var progress = new RequestProgress(data.request.FIND);
+            var progress = new RequestProgress(data.request.LIST);
             
             progress.processResponse(data.response.WORKING);
 
@@ -63,7 +63,7 @@ describe('RequestProgress', () => {
 
         it('marks as done after a CANCELLED response', () => {
             // Create the progress object
-            var progress = new RequestProgress(data.request.FIND);
+            var progress = new RequestProgress(data.request.LIST);
 
             progress.processResponse(data.response.WORKING);
 
@@ -79,7 +79,7 @@ describe('RequestProgress', () => {
 
     describe("#waitForCompletion()", () => {
         it('should complete successfully', async () => {
-            var progress = new RequestProgress(data.request.FIND);
+            var progress = new RequestProgress(data.request.LIST);
             
             progress.processResponse(data.response.WORKING);
             progress.processResponse(data.response.COMPLETE)
@@ -91,7 +91,7 @@ describe('RequestProgress', () => {
         });
 
         it('should timeout successfully', async () => {
-            var progress = new RequestProgress(data.request.FIND);
+            var progress = new RequestProgress(data.request.LIST);
             
             var result = await progress.waitForCompletion(100);
 
@@ -101,7 +101,7 @@ describe('RequestProgress', () => {
         });
 
         it('should stall successfully', async () => {
-            var progress = new RequestProgress(data.request.FIND, 10);
+            var progress = new RequestProgress(data.request.LIST, 10);
             
             progress.processResponse(data.response.WORKING);
 

@@ -18,8 +18,8 @@ export class ItemRequest extends jspb.Message {
     setQuery(value: string): ItemRequest;
     getLinkdepth(): number;
     setLinkdepth(value: number): ItemRequest;
-    getContext(): string;
-    setContext(value: string): ItemRequest;
+    getScope(): string;
+    setScope(value: string): ItemRequest;
     getIgnorecache(): boolean;
     setIgnorecache(value: boolean): ItemRequest;
     getUuid(): Uint8Array | string;
@@ -54,7 +54,7 @@ export namespace ItemRequest {
         method: RequestMethod,
         query: string,
         linkdepth: number,
-        context: string,
+        scope: string,
         ignorecache: boolean,
         uuid: Uint8Array | string,
         timeout?: google_protobuf_duration_pb.Duration.AsObject,
@@ -124,8 +124,8 @@ export class Item extends jspb.Message {
     clearMetadata(): void;
     getMetadata(): Metadata | undefined;
     setMetadata(value?: Metadata): Item;
-    getContext(): string;
-    setContext(value: string): Item;
+    getScope(): string;
+    setScope(value: string): Item;
     clearLinkeditemrequestsList(): void;
     getLinkeditemrequestsList(): Array<ItemRequest>;
     setLinkeditemrequestsList(value: Array<ItemRequest>): Item;
@@ -151,7 +151,7 @@ export namespace Item {
         uniqueattribute: string,
         attributes?: ItemAttributes.AsObject,
         metadata?: Metadata.AsObject,
-        context: string,
+        scope: string,
         linkeditemrequestsList: Array<ItemRequest.AsObject>,
         linkeditemsList: Array<Reference.AsObject>,
     }
@@ -184,8 +184,8 @@ export class Reference extends jspb.Message {
     setType(value: string): Reference;
     getUniqueattributevalue(): string;
     setUniqueattributevalue(value: string): Reference;
-    getContext(): string;
-    setContext(value: string): Reference;
+    getScope(): string;
+    setScope(value: string): Reference;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Reference.AsObject;
@@ -201,7 +201,7 @@ export namespace Reference {
     export type AsObject = {
         type: string,
         uniqueattributevalue: string,
-        context: string,
+        scope: string,
     }
 }
 
@@ -337,6 +337,6 @@ export namespace ReverseLinksResponse {
 
 export enum RequestMethod {
     GET = 0,
-    FIND = 1,
+    LIST = 1,
     SEARCH = 2,
 }

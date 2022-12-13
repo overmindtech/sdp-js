@@ -134,12 +134,12 @@ describe("Util namespace", () => {
     
     describe('#newItemRequestError()', () => {
         var e = Util.newItemRequestError({
-            context: "cont",
+            scope: "cont",
             errorString: "err",
             errorType: ItemRequestError.ErrorType.NOTFOUND,
         })
         
-        expect(e.getContext()).toEqual("cont");
+        expect(e.getScope()).toEqual("cont");
         expect(e.getErrorstring()).toEqual("err");
         expect(e.getErrortype()).toEqual(ItemRequestError.ErrorType.NOTFOUND);
     })
@@ -148,7 +148,7 @@ describe("Util namespace", () => {
         const data = {
             type: "person",
             uniqueAttributeValue: "Sebastian",
-            context: "global",
+            scope: "global",
         }
         
         const ref = Util.newReference(data);
@@ -161,8 +161,8 @@ describe("Util namespace", () => {
             expect(ref.getUniqueattributevalue()).toEqual(data.uniqueAttributeValue);
         })
         
-        it('should have the correct Context', () => {
-            expect(ref.getContext()).toEqual(data.context);
+        it('should have the correct Scope', () => {
+            expect(ref.getScope()).toEqual(data.scope);
         })
     });
     
@@ -172,7 +172,7 @@ describe("Util namespace", () => {
             method: "GET",
             query: "Sebastian",
             linkDepth: 10,
-            context: "global",
+            scope: "global",
             itemSubject: "subject1",
             responseSubject: "subject3",
             errorSubject: "subject2",
@@ -198,8 +198,8 @@ describe("Util namespace", () => {
             expect(ir.getLinkdepth()).toEqual(data.linkDepth);
         })
         
-        it('should have the correct Context', () => {
-            expect(ir.getContext()).toEqual(data.context);
+        it('should have the correct Scope', () => {
+            expect(ir.getScope()).toEqual(data.scope);
         })
         
         it('should have the correct Itemsubject', () => {
@@ -226,10 +226,10 @@ describe("Util namespace", () => {
         const data: Util.MetadataData = {
             sourceName: "packages",
             sourceRequest: {
-                context: "sourceContext",
+                scope: "sourceScope",
                 itemSubject: "items",
                 linkDepth: 0,
-                method: 'FIND',
+                method: 'LIST',
                 query: "*",
                 responseSubject: "response",
                 errorSubject: "error",
@@ -254,10 +254,10 @@ describe("Util namespace", () => {
             expect(sr).not.toBeUndefined
             
             if (typeof sr != 'undefined') {
-                expect(sr.getContext()).toEqual("sourceContext");
+                expect(sr.getScope()).toEqual("sourceScope");
                 expect(sr.getItemsubject()).toEqual("items");
                 expect(sr.getLinkdepth()).toEqual(0);
-                expect(sr.getMethod()).toEqual(RequestMethod.FIND);
+                expect(sr.getMethod()).toEqual(RequestMethod.LIST);
                 expect(sr.getQuery()).toEqual("*");
                 expect(sr.getResponsesubject()).toEqual("response");
                 expect(sr.getType()).toEqual("package");
@@ -305,7 +305,7 @@ describe("Util namespace", () => {
         const data: Util.ItemData = {
             type: "person",
             uniqueAttribute: "name",
-            context: "global",
+            scope: "global",
             attributes: Util.newItemAttributes({
                 "name": "Dylan"
             }),
@@ -332,8 +332,8 @@ describe("Util namespace", () => {
             expect(i.getMetadata()).toEqual(data.metadata)
         })
         
-        it('should have the correct Context', () => {
-            expect(i.getContext()).toEqual(data.context)
+        it('should have the correct Scope', () => {
+            expect(i.getScope()).toEqual(data.scope)
         })
         
         it('should have the correct LinkeditemrequestsList', () => {
@@ -348,7 +348,7 @@ describe("Util namespace", () => {
     
     describe('#newResponse()', function() {
         const data: Util.ResponseData = {
-            responder: "test.context",
+            responder: "test.scope",
             state: ResponderState.ERROR,
             nextUpdateInMs: 0
         }
@@ -356,7 +356,7 @@ describe("Util namespace", () => {
         const r = Util.newResponse(data);
         
         it('should have the correct Responder', () => {
-            expect(r.getResponder()).toEqual("test.context")
+            expect(r.getResponder()).toEqual("test.scope")
         })
         
         it('should have the correct State', () => {
@@ -420,7 +420,7 @@ describe("Util namespace", () => {
                 method: "GET",
                 query: "Sebastian",
                 linkDepth: 10,
-                context: "global",
+                scope: "global",
                 itemSubject: "subject1",
                 errorSubject: "subject2",
                 responseSubject: "subject3",
@@ -445,7 +445,7 @@ describe("Util namespace", () => {
                     expect(req.getMethod()).toEqual(RequestMethod.GET);
                     expect(req.getQuery()).toEqual(data.query);
                     expect(req.getLinkdepth()).toEqual(data.linkDepth);
-                    expect(req.getContext()).toEqual(data.context);
+                    expect(req.getScope()).toEqual(data.scope);
                     expect(req.getItemsubject()).toEqual(data.itemSubject);
                     expect(req.getResponsesubject()).toEqual(data.responseSubject);
                 }
@@ -456,12 +456,12 @@ describe("Util namespace", () => {
     describe('#newEdge()', function() {
         var e = Util.newEdge({
             from: {
-                context: 'global',
+                scope: 'global',
                 type: 'person',
                 uniqueAttributeValue: 'dylan',
             },
             to: {
-                context: 'global',
+                scope: 'global',
                 type: 'person',
                 uniqueAttributeValue: 'katelyn',
             }
@@ -471,8 +471,8 @@ describe("Util namespace", () => {
             expect(e.hasFrom()).toEqual(true);
             expect(e.hasTo()).toEqual(true);
             
-            expect(e.getFrom()?.getContext()).toEqual('global');
-            expect(e.getTo()?.getContext()).toEqual('global');
+            expect(e.getFrom()?.getScope()).toEqual('global');
+            expect(e.getTo()?.getScope()).toEqual('global');
             expect(e.getFrom()?.getType()).toEqual('person');
             expect(e.getTo()?.getType()).toEqual('person');
             expect(e.getFrom()?.getUniqueattributevalue()).toEqual('dylan');
@@ -583,7 +583,7 @@ describe("Util namespace", () => {
             const data: Util.ItemData = {
                 type: "person",
                 uniqueAttribute: "name",
-                context: "global",
+                scope: "global",
                 attributes: Util.newItemAttributes({
                     "name": "Dylan"
                 }),
@@ -600,12 +600,12 @@ describe("Util namespace", () => {
         describe('with EdgeData', () => {
             const data = {
                 from: {
-                    context: 'global',
+                    scope: 'global',
                     type: 'person',
                     uniqueAttributeValue: 'dylan',
                 },
                 to: {
-                    context: 'global',
+                    scope: 'global',
                     type: 'person',
                     uniqueAttributeValue: 'katelyn',
                 }
@@ -618,7 +618,7 @@ describe("Util namespace", () => {
         })
         describe('with ItemRequestErrorData', () => {
             const data = {
-                context: "cont",
+                scope: "cont",
                 errorString: "err",
                 errorType: ItemRequestError.ErrorType.NOTFOUND,
             }

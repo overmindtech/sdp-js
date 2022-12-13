@@ -68,7 +68,7 @@ var Util;
      */
     function getGloballyuniquename(object) {
         const elements = [
-            object.getContext(),
+            object.getScope(),
             object.getType(),
             getUniqueattributevalue(object),
         ];
@@ -135,7 +135,7 @@ var Util;
      */
     function getReference(item) {
         const ref = new items_pb_2.Reference();
-        ref.setContext(item.getContext());
+        ref.setScope(item.getScope());
         ref.setType(item.getType());
         ref.setUniqueattributevalue(getUniqueattributevalue(item));
         return ref;
@@ -174,7 +174,7 @@ var Util;
         const item = new items_pb_2.Item();
         item.setType(details.type);
         item.setUniqueattribute(details.uniqueAttribute);
-        item.setContext(details.context);
+        item.setScope(details.scope);
         item.setAttributes(details.attributes);
         if (typeof details.metadata != "undefined") {
             item.setMetadata(details.metadata);
@@ -226,7 +226,7 @@ var Util;
      */
     function newItemRequestError(details) {
         var err = new responses_pb_2.ItemRequestError();
-        err.setContext(details.context);
+        err.setScope(details.scope);
         err.setErrorstring(details.errorString);
         err.setErrortype(details.errorType);
         return err;
@@ -243,7 +243,7 @@ var Util;
         r.setMethod(convertRequestMethod(details.method));
         r.setQuery(details.query);
         r.setLinkdepth(details.linkDepth);
-        r.setContext(details.context);
+        r.setScope(details.scope);
         r.setItemsubject(details.itemSubject || '');
         r.setResponsesubject(details.responseSubject || '');
         r.setErrorsubject(details.errorSubject || '');
@@ -268,7 +268,7 @@ var Util;
         const r = new items_pb_2.Reference();
         r.setType(details.type);
         r.setUniqueattributevalue(details.uniqueAttributeValue);
-        r.setContext(details.context);
+        r.setScope(details.scope);
         return r;
     }
     Util.newReference = newReference;
@@ -377,12 +377,12 @@ var Util;
     function isItemData(x) {
         const hasType = "type" in x;
         const hasUniqueAttribute = "uniqueAttribute" in x;
-        const hasContext = "context" in x;
+        const hasScope = "scope" in x;
         const hasAttributes = "attributes" in x;
         const hasMetadata = "metadata" in x;
         const hasLinkedItemRequests = "linkedItemRequests" in x;
         const hasLinkedItems = "linkedItems" in x;
-        return hasType && hasUniqueAttribute && hasContext && hasAttributes && hasMetadata && hasLinkedItemRequests && hasLinkedItems;
+        return hasType && hasUniqueAttribute && hasScope && hasAttributes && hasMetadata && hasLinkedItemRequests && hasLinkedItems;
     }
     function isEdgeData(x) {
         const hasFrom = ("from" in x);
@@ -390,10 +390,10 @@ var Util;
         return hasFrom && hasTo;
     }
     function isItemRequestErrorData(x) {
-        const hasContext = ("context" in x);
+        const hasScope = ("scope" in x);
         const hasErrorString = ("errorString" in x);
         const hasErrorType = ("errorType" in x);
-        return hasContext && hasErrorString && hasErrorType;
+        return hasScope && hasErrorString && hasErrorType;
     }
     function isGatewayRequestStatusData(x) {
         const hasResponderStates = ("responderStates" in x);
@@ -636,8 +636,8 @@ function convertRequestMethod(method) {
         case 'GET': {
             return items_pb_2.RequestMethod.GET;
         }
-        case 'FIND': {
-            return items_pb_2.RequestMethod.FIND;
+        case 'LIST': {
+            return items_pb_2.RequestMethod.LIST;
         }
         case 'SEARCH': {
             return items_pb_2.RequestMethod.SEARCH;
@@ -884,7 +884,7 @@ class Autocomplete {
         let type;
         switch (this.field) {
             case AutocompleteField.CONTEXT:
-                type = 'overmind-context';
+                type = 'overmind-scope';
                 break;
             case AutocompleteField.TYPE:
                 type = 'overmind-type';
@@ -892,7 +892,7 @@ class Autocomplete {
         }
         // Create a new request
         let request = Util.newGatewayRequest({
-            context: "global",
+            scope: "global",
             linkDepth: 0,
             type: type,
             method: 'SEARCH',

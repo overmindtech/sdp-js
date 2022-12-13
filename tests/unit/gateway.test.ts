@@ -91,12 +91,12 @@ describe('GatewaySession', () => {
             })
             describe('NewItemRequestError', () => {
                 it('should call the callback', (done) => {
-                    var response = Util.newGatewayResponse(data.errorData.NOCONTEXT)
+                    var response = Util.newGatewayResponse(data.errorData.NOSCOPE)
     
                     // Register the callbacks
                     gs.addEventListener(GatewaySession.NewItemRequestErrorEvent, (event) => {
-                        expect(event.detail.getContext()).toEqual(data.error.NOCONTEXT.getContext());
-                        expect(event.detail.getErrortype()).toEqual(data.error.NOCONTEXT.getErrortype());
+                        expect(event.detail.getScope()).toEqual(data.error.NOSCOPE.getScope());
+                        expect(event.detail.getErrortype()).toEqual(data.error.NOSCOPE.getErrortype());
                         done();
                     }, { once: true })
     
