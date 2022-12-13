@@ -13,6 +13,11 @@ export declare namespace Util {
      */
     function newUUID(): Uint8Array;
     /**
+     * Generates a new random UUID
+     * @returns A new UUID as a string
+     */
+    function newUUIDString(): string;
+    /**
      * Gets the globally unique name of an object
      * @param object The object to get the globally unique name from
      * @returns The globally unique name
@@ -110,10 +115,10 @@ export declare namespace Util {
         query: string;
         linkDepth: number;
         context: string;
-        itemSubject: string;
-        responseSubject: string;
-        errorSubject: string;
         UUID: string | Uint8Array;
+        itemSubject?: string;
+        responseSubject?: string;
+        errorSubject?: string;
         timeoutMs?: number;
     };
     /**
@@ -290,7 +295,7 @@ interface CustomEventListener<T> {
 interface CustomEventListenerObject<T> {
     handleEvent(object: CustomEvent<T>): void;
 }
-declare type CustomEventListenerOrEventListenerObject<T> = CustomEventListener<T> | CustomEventListenerObject<T>;
+type CustomEventListenerOrEventListenerObject<T> = CustomEventListener<T> | CustomEventListenerObject<T>;
 export declare class GatewaySession extends EventTarget {
     private socket;
     ready: Promise<void>;
@@ -370,5 +375,52 @@ export declare namespace GatewaySession {
      * Closed events are sent when a connection is closed
      */
     const CloseEvent = "close";
+}
+/**
+ * Result that combines the actual result with the score
+ */
+type AutocompleteResult = {
+    value: string;
+    score: number;
+};
+export declare enum AutocompleteField {
+    TYPE = 0,
+    CONTEXT = 1
+}
+/**
+ * I'm not really sure what the API should look like for autocomplete, as in how
+ * the data should come in and out. I'm going to take a stab but once we know
+ * how it'll be consumed by the front end we should change it to be more
+ * appropriate
+ */
+export declare class Autocomplete {
+    field: AutocompleteField;
+    results: AutocompleteResult[];
+    private _prompt;
+    private session;
+    private currentRequestUUID;
+    /**
+     *
+     * @param session The gateway session that requests should be sent on
+     */
+    constructor(session: GatewaySession, field: AutocompleteField);
+    /**
+     * The suggested type values for the provided typePrompt
+     */
+    get suggestions(): string[];
+    /**
+     * The prompt to search for
+     */
+    get prompt(): string;
+    /**
+     * The prompt to search for
+     */
+    set prompt(prompt: string);
+    /**
+     * Processes incoming items and extracts autocomplete responses
+     *
+     * @param item The item to process
+     */
+    processItem(item: Item): void;
 }
 //# sourceMappingURL=index.d.ts.map

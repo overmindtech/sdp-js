@@ -10,7 +10,7 @@ describe('GatewaySession', () => {
     describe('with a running server', () => {
         var server = new WS(TestServerAddress, {
             jsonProtocol: false,
-        });  
+        });
 
         afterAll(() => {
             server.close();

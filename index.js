@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GatewaySession = exports.RequestProgress = exports.Responder = exports.Util = exports.GatewayResponse = exports.GatewayRequestStatus = exports.GatewayRequest = exports.Response = exports.ReverseLinksResponse = exports.ReverseLinksRequest = exports.CancelItemRequest = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
+exports.Autocomplete = exports.AutocompleteField = exports.GatewaySession = exports.RequestProgress = exports.Responder = exports.Util = exports.GatewayResponse = exports.GatewayRequestStatus = exports.GatewayRequest = exports.Response = exports.ReverseLinksResponse = exports.ReverseLinksRequest = exports.CancelItemRequest = exports.RequestMethod = exports.Metadata = exports.Reference = exports.Items = exports.Item = exports.ItemAttributes = exports.ItemRequest = void 0;
 // Export things from other files
 var items_pb_1 = require("./items_pb");
 Object.defineProperty(exports, "ItemRequest", { enumerable: true, get: function () { return items_pb_1.ItemRequest; } });
@@ -53,6 +53,14 @@ var Util;
         return Uint8Array.from((0, uuid_1.parse)((0, uuid_1.v4)()));
     }
     Util.newUUID = newUUID;
+    /**
+     * Generates a new random UUID
+     * @returns A new UUID as a string
+     */
+    function newUUIDString() {
+        return (0, uuid_1.v4)();
+    }
+    Util.newUUIDString = newUUIDString;
     /**
      * Gets the globally unique name of an object
      * @param object The object to get the globally unique name from
@@ -236,9 +244,9 @@ var Util;
         r.setQuery(details.query);
         r.setLinkdepth(details.linkDepth);
         r.setContext(details.context);
-        r.setItemsubject(details.itemSubject);
-        r.setResponsesubject(details.responseSubject);
-        r.setErrorsubject(details.errorSubject);
+        r.setItemsubject(details.itemSubject || '');
+        r.setResponsesubject(details.responseSubject || '');
+        r.setErrorsubject(details.errorSubject || '');
         if (typeof details.UUID == 'string') {
             r.setUuid(Uint8Array.from((0, uuid_1.parse)(details.UUID)));
         }
@@ -675,11 +683,13 @@ class GatewaySession extends EventTarget {
         this.socket = new WebSocket(url);
         this.socket.binaryType = "arraybuffer";
         this.ready = new Promise((resolve, reject) => {
-            this.socket.addEventListener('open', () => {
-                resolve();
-            }, { once: true });
-            this.socket.addEventListener('error', (event) => {
+            let rejecter = (event) => {
                 reject(event);
+            };
+            this.socket.addEventListener('error', rejecter, { once: true });
+            this.socket.addEventListener('open', () => {
+                this.removeEventListener('error', rejecter);
+                resolve();
             }, { once: true });
         });
         this.socket.addEventListener('error', (event) => {
@@ -813,4 +823,114 @@ exports.GatewaySession = GatewaySession;
      */
     GatewaySession.CloseEvent = 'close';
 })(GatewaySession = exports.GatewaySession || (exports.GatewaySession = {}));
+var AutocompleteField;
+(function (AutocompleteField) {
+    AutocompleteField[AutocompleteField["TYPE"] = 0] = "TYPE";
+    AutocompleteField[AutocompleteField["CONTEXT"] = 1] = "CONTEXT";
+})(AutocompleteField = exports.AutocompleteField || (exports.AutocompleteField = {}));
+/**
+ * I'm not really sure what the API should look like for autocomplete, as in how
+ * the data should come in and out. I'm going to take a stab but once we know
+ * how it'll be consumed by the front end we should change it to be more
+ * appropriate
+ */
+class Autocomplete {
+    /**
+     *
+     * @param session The gateway session that requests should be sent on
+     */
+    constructor(session, field) {
+        this.results = [];
+        this._prompt = "";
+        this.currentRequestUUID = "";
+        if (session.state() != WebSocket.OPEN) {
+            // We are failing here because I can't find a good spot in this API
+            // to put an async method. If we review this later we might want to
+            // remove this requirement and just have the object be smart enough
+            // to wait until the session is ready before sending anything
+            throw new Error("session must be OPEN for autocomplete");
+        }
+        this.session = session;
+        this.field = field;
+        // Listen for results
+        this.session.addEventListener('new-item', (item) => this.processItem(item.detail));
+    }
+    /**
+     * The suggested type values for the provided typePrompt
+     */
+    get suggestions() {
+        return this.results.map((result) => result.value);
+    }
+    /**
+     * The prompt to search for
+     */
+    get prompt() {
+        return this._prompt;
+    }
+    /**
+     * The prompt to search for
+     */
+    set prompt(prompt) {
+        this._prompt = prompt;
+        if (this.currentRequestUUID !== '') {
+            // Cancel any running requests
+            this.session.sendRequest(Util.newGatewayRequest({
+                UUID: this.currentRequestUUID,
+            }, 1000));
+        }
+        // Delete current autocomplete options
+        this.results = [];
+        const uuid = Util.newUUIDString();
+        let type;
+        switch (this.field) {
+            case AutocompleteField.CONTEXT:
+                type = 'overmind-context';
+                break;
+            case AutocompleteField.TYPE:
+                type = 'overmind-type';
+                break;
+        }
+        // Create a new request
+        let request = Util.newGatewayRequest({
+            context: "global",
+            linkDepth: 0,
+            type: type,
+            method: 'SEARCH',
+            query: prompt,
+            UUID: uuid,
+            timeoutMs: 2000,
+        }, 500);
+        // Set the UUID so we know which responses to use and which to ignore
+        this.currentRequestUUID = uuid;
+        // Start the request
+        this.session.sendRequest(request);
+    }
+    /**
+     * Processes incoming items and extracts autocomplete responses
+     *
+     * @param item The item to process
+     */
+    processItem(item) {
+        var _a, _b;
+        let itemUUID = (_b = (_a = item.getMetadata()) === null || _a === void 0 ? void 0 : _a.getSourcerequest()) === null || _b === void 0 ? void 0 : _b.getUuid_asU8();
+        if (typeof itemUUID != 'undefined') {
+            let itemUUIDString = (0, uuid_1.stringify)(itemUUID);
+            if (itemUUIDString == this.currentRequestUUID) {
+                let score = 0;
+                let attributes = item.getAttributes();
+                if (attributes !== undefined) {
+                    score = Util.getAttributeValue(attributes, "score");
+                }
+                // Add the result
+                this.results.push({
+                    value: Util.getUniqueattributevalue(item),
+                    score: score,
+                });
+                // Re-sort
+                this.results.sort((a, b) => a.score - b.score);
+            }
+        }
+    }
+}
+exports.Autocomplete = Autocomplete;
 //# sourceMappingURL=index.js.map
