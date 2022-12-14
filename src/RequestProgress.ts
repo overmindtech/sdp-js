@@ -12,7 +12,7 @@ export class RequestProgress {
 
   // Tracks the number of things currently being processed so that we can be
   // sure that all processing is complete before returning
-  private inFlight: number = 0;
+  private inFlight = 0;
 
   /**
    *
@@ -20,7 +20,7 @@ export class RequestProgress {
    * @param stallCheckIntervalMs How often to check to see if responders have
    * stalled, in milliseconds
    */
-  constructor(request: ItemRequest, stallCheckIntervalMs: number = 500) {
+  constructor(request: ItemRequest, stallCheckIntervalMs = 500) {
     this.request = request;
 
     // Start watching for stalls
@@ -32,7 +32,7 @@ export class RequestProgress {
       }
 
       // Get the current time
-      var now = new Date();
+      const now = new Date();
 
       // Loop over all results and check for stalls
       this.responders.forEach((responder) => {
@@ -48,7 +48,7 @@ export class RequestProgress {
 
   // Return the count of items with a given state
   private countOfState(state: ResponderState): number {
-    var x = 0;
+    let x = 0;
 
     this.responders.forEach((v) => {
       if (v.state == state) {
@@ -140,10 +140,10 @@ export class RequestProgress {
    * @param timeoutMs How long to wait before timing out
    * @returns "timeout" or "done"
    */
-  async waitForCompletion(timeoutMs: number = 3000): Promise<string> {
+  async waitForCompletion(timeoutMs = 3000): Promise<string> {
     // How often to check for done-ness
     const doneCheckIntervalMs = 100;
-    var doneChecker: number;
+    let doneChecker: number;
 
     // Create the timeout promise
     const timeout = new Promise<string>((resolve) =>
@@ -179,16 +179,16 @@ export class RequestProgress {
 
     // Pull details out of the response
     const responderName = response.getResponder();
-    var nextUpdateTime: Date | undefined = undefined;
+    let nextUpdateTime: Date | undefined = undefined;
 
     // Get the responder or create a new one
-    var responder =
+    const responder =
       this.responders.get(responderName) || new Responder(responderName);
 
     // If there is a next update time the calculate it
-    var nextUpdateIn = response.getNextupdatein();
+    const nextUpdateIn = response.getNextupdatein();
     if (typeof nextUpdateIn != "undefined") {
-      var nextUpdateMilliseconds: number = 0;
+      let nextUpdateMilliseconds = 0;
 
       // Convert nanoseconds to milliseconds
       nextUpdateMilliseconds = nextUpdateIn.getNanos() / 1000000;
@@ -199,7 +199,7 @@ export class RequestProgress {
 
       // Create a new date object representing the date that the update is
       // expected by
-      var now = new Date();
+      const now = new Date();
       nextUpdateTime = new Date(now.getTime() + nextUpdateMilliseconds);
     }
 

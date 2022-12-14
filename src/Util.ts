@@ -89,6 +89,90 @@ function base32EncodeCustom(data: Uint8Array): string {
   return output;
 }
 
+export type EdgeData = {
+  from: ReferenceData;
+  to: ReferenceData;
+};
+
+export type ReferenceData = {
+  type: string;
+  uniqueAttributeValue: string;
+  scope: string;
+};
+
+export type ItemData = {
+  type: string;
+  uniqueAttribute: string;
+  scope: string;
+  attributes: ItemAttributes;
+  metadata: Metadata | undefined;
+  linkedItemRequests: ItemRequest[];
+  linkedItems: Reference[];
+};
+
+export type GatewayRequestStatusData = {
+  responderStates: Map<string, ResponderState>;
+  summary: {
+    working: number;
+    stalled: number;
+    complete: number;
+    error: number;
+    cancelled: number;
+    responders: number;
+  };
+  postProcessingComplete: boolean;
+};
+
+export type ItemRequestErrorData = {
+  scope: string;
+  errorString: string;
+  errorType: ItemRequestError.ErrorType;
+};
+
+function isItemData(x: any): x is ItemData {
+  const hasType = "type" in x;
+  const hasUniqueAttribute = "uniqueAttribute" in x;
+  const hasScope = "scope" in x;
+  const hasAttributes = "attributes" in x;
+  const hasMetadata = "metadata" in x;
+  const hasLinkedItemRequests = "linkedItemRequests" in x;
+  const hasLinkedItems = "linkedItems" in x;
+
+  return (
+    hasType &&
+    hasUniqueAttribute &&
+    hasScope &&
+    hasAttributes &&
+    hasMetadata &&
+    hasLinkedItemRequests &&
+    hasLinkedItems
+  );
+}
+
+function isEdgeData(x: any): x is EdgeData {
+  const hasFrom = "from" in x;
+  const hasTo = "to" in x;
+
+  return hasFrom && hasTo;
+}
+
+function isItemRequestErrorData(x: any): x is ItemRequestErrorData {
+  const hasScope = "scope" in x;
+  const hasErrorString = "errorString" in x;
+  const hasErrorType = "errorType" in x;
+
+  return hasScope && hasErrorString && hasErrorType;
+}
+
+function isGatewayRequestStatusData(x: any): x is GatewayRequestStatusData {
+  const hasResponderStates = "responderStates" in x;
+  const hasSummary = "summary" in x;
+  const hasPostProcessingComplete = "postProcessingComplete" in x;
+
+  return hasResponderStates && hasSummary && hasPostProcessingComplete;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Util {
   /**
    * Generates a new random UUID
@@ -164,11 +248,8 @@ export namespace Util {
    * @param name The name of the attribute you are looking for
    * @returns The value of the attribute
    */
-  export function getAttributeValue(
-    attributes: ItemAttributes,
-    name: string
-  ): any {
-    var object = attributes.getAttrstruct()?.toJavaScript();
+  export function getAttributeValue(attributes: ItemAttributes, name: string) {
+    const object = attributes.getAttrstruct()?.toJavaScript();
 
     if (typeof object === "undefined") {
       return undefined;
@@ -206,7 +287,7 @@ export namespace Util {
    * @param ms The number of milliseconds
    */
   export function toDuration(ms: number): Duration {
-    var d = new Duration();
+    const d = new Duration();
     d.setSeconds(Math.floor(ms / 1000));
     d.setNanos((ms % 1000) * 1000000);
     return d;
@@ -215,16 +296,6 @@ export namespace Util {
   export function toMs(duration: Duration): number {
     return duration.getSeconds() * 1000 + duration.getNanos() / 1_000_000;
   }
-
-  export type ItemData = {
-    type: string;
-    uniqueAttribute: string;
-    scope: string;
-    attributes: ItemAttributes;
-    metadata: Metadata | undefined;
-    linkedItemRequests: ItemRequest[];
-    linkedItems: Reference[];
-  };
 
   /**
    * Create a new `Item` object from a single object
@@ -302,12 +373,6 @@ export namespace Util {
     return m;
   }
 
-  export type ItemRequestErrorData = {
-    scope: string;
-    errorString: string;
-    errorType: ItemRequestError.ErrorType;
-  };
-
   /**
    * Creates a new ItemRequestError from a single object
    * @param details The details of the error to create
@@ -316,7 +381,7 @@ export namespace Util {
   export function newItemRequestError(
     details: ItemRequestErrorData
   ): ItemRequestError {
-    var err = new ItemRequestError();
+    const err = new ItemRequestError();
 
     err.setScope(details.scope);
     err.setErrorstring(details.errorString);
@@ -367,12 +432,6 @@ export namespace Util {
 
     return r;
   }
-
-  export type ReferenceData = {
-    type: string;
-    uniqueAttributeValue: string;
-    scope: string;
-  };
 
   /**
    * Create a new Reference from a single object
@@ -431,7 +490,7 @@ export namespace Util {
     const c = new CancelItemRequest();
 
     if (typeof details.UUID == "string") {
-      var buffer = uuidParse(details.UUID);
+      const buffer = uuidParse(details.UUID);
       c.setUuid(Uint8Array.from(buffer));
     } else {
       c.setUuid(details.UUID);
@@ -440,18 +499,13 @@ export namespace Util {
     return c;
   }
 
-  export type EdgeData = {
-    from: ReferenceData;
-    to: ReferenceData;
-  };
-
   /**
    * Creates a new Edge object
    * @param data Data to be used in the object
    * @returns A new Edge object
    */
   export function newEdge(data: EdgeData): Edge {
-    var e = new Edge();
+    const e = new Edge();
 
     e.setFrom(Util.newReference(data.from));
     e.setTo(Util.newReference(data.to));
@@ -459,27 +513,14 @@ export namespace Util {
     return e;
   }
 
-  export type GatewayRequestStatusData = {
-    responderStates: Map<string, ResponderState>;
-    summary: {
-      working: number;
-      stalled: number;
-      complete: number;
-      error: number;
-      cancelled: number;
-      responders: number;
-    };
-    postProcessingComplete: boolean;
-  };
-
   export function newGatewayRequestStatus(
     data: GatewayRequestStatusData
   ): GatewayRequestStatus {
-    var grs = new GatewayRequestStatus();
-    var responders = grs.getResponderstatesMap();
-    var summary = new GatewayRequestStatus.Summary();
+    const grs = new GatewayRequestStatus();
+    const responders = grs.getResponderstatesMap();
+    const summary = new GatewayRequestStatus.Summary();
 
-    for (let [responder, state] of data.responderStates) {
+    for (const [responder, state] of data.responderStates) {
       responders.set(responder, state);
     }
 
@@ -507,13 +548,13 @@ export namespace Util {
     request: ItemRequestData | CancelItemRequestData,
     minStatusIntervalMs: number
   ): GatewayRequest {
-    var gr = new GatewayRequest();
+    const gr = new GatewayRequest();
 
     if ("method" in request) {
-      var ir = Util.newItemRequest(request);
+      const ir = Util.newItemRequest(request);
       gr.setRequest(ir);
     } else {
-      var cancel = Util.newCancelItemRequest(request);
+      const cancel = Util.newCancelItemRequest(request);
       gr.setCancel(cancel);
     }
 
@@ -531,7 +572,7 @@ export namespace Util {
    * @returns True of the request is done, false otherwise
    */
   export function gatewayRequestStatusDone(g: GatewayRequestStatus): boolean {
-    var summary = g.getSummary();
+    const summary = g.getSummary();
 
     if (typeof summary != "undefined") {
       return g.getPostprocessingcomplete() && summary.getWorking() == 0;
@@ -547,56 +588,10 @@ export namespace Util {
     | GatewayRequestStatusData
     | string;
 
-  function isItemData(x: any): x is ItemData {
-    const hasType = "type" in x;
-    const hasUniqueAttribute = "uniqueAttribute" in x;
-    const hasScope = "scope" in x;
-    const hasAttributes = "attributes" in x;
-    const hasMetadata = "metadata" in x;
-    const hasLinkedItemRequests = "linkedItemRequests" in x;
-    const hasLinkedItems = "linkedItems" in x;
-
-    return (
-      hasType &&
-      hasUniqueAttribute &&
-      hasScope &&
-      hasAttributes &&
-      hasMetadata &&
-      hasLinkedItemRequests &&
-      hasLinkedItems
-    );
-  }
-
-  function isEdgeData(x: any): x is EdgeData {
-    const hasFrom = "from" in x;
-    const hasTo = "to" in x;
-
-    return hasFrom && hasTo;
-  }
-
-  function isItemRequestErrorData(x: any): x is ItemRequestErrorData {
-    const hasScope = "scope" in x;
-    const hasErrorString = "errorString" in x;
-    const hasErrorType = "errorType" in x;
-
-    return hasScope && hasErrorString && hasErrorType;
-  }
-
-  function isGatewayRequestStatusData(x: any): x is GatewayRequestStatusData {
-    const hasResponderStates = "responderStates" in x;
-    ``;
-    const hasSummary = "summary" in x;
-    ``;
-    const hasPostProcessingComplete = "postProcessingComplete" in x;
-    ``;
-
-    return hasResponderStates && hasSummary && hasPostProcessingComplete;
-  }
-
   export function newGatewayResponse(
     data: GatewayResponseData
   ): GatewayResponse {
-    var gr = new GatewayResponse();
+    const gr = new GatewayResponse();
 
     if (typeof data == "string") {
       gr.setError(data);

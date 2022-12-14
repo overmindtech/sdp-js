@@ -26,9 +26,9 @@ export class Autocomplete {
   field: AutocompleteField;
   results: AutocompleteResult[] = [];
 
-  private _prompt: string = "";
+  private _prompt = "";
   private session: GatewaySession;
-  private currentRequestUUID: string = "";
+  private currentRequestUUID = "";
 
   /**
    *
@@ -101,7 +101,7 @@ export class Autocomplete {
     }
 
     // Create a new request
-    let request = Util.newGatewayRequest(
+    const request = Util.newGatewayRequest(
       {
         scope: "global",
         linkDepth: 0,
@@ -127,17 +127,20 @@ export class Autocomplete {
    * @param item The item to process
    */
   processItem(item: Item): void {
-    let itemUUID = item.getMetadata()?.getSourcerequest()?.getUuid_asU8();
+    const itemUUID = item.getMetadata()?.getSourcerequest()?.getUuid_asU8();
 
     if (typeof itemUUID != "undefined") {
-      let itemUUIDString = uuidStringify(itemUUID);
+      const itemUUIDString = uuidStringify(itemUUID);
 
       if (itemUUIDString == this.currentRequestUUID) {
-        let score: number = 0;
-        let attributes = item.getAttributes();
+        let score = 0;
+        const attributes = item.getAttributes();
 
         if (attributes !== undefined) {
-          score = Util.getAttributeValue(attributes, "score");
+          const attributeScore = Util.getAttributeValue(attributes, "score");
+          if (typeof attributeScore === "number") {
+            score = attributeScore;
+          }
         }
 
         // Add the result

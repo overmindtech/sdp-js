@@ -36,8 +36,6 @@ describe("Autocomplete", () => {
       it("executes a request when the prompt changes", async () => {
         ac.prompt = "per";
 
-        let msg = await server.nextMessage;
-
         expect(async () => await server.nextMessage).not.toThrowError();
       });
 
@@ -49,7 +47,7 @@ describe("Autocomplete", () => {
 
         expect(msg).not.toBeUndefined();
         if (msg instanceof Uint8Array) {
-          let req = GatewayRequest.deserializeBinary(msg);
+          const req = GatewayRequest.deserializeBinary(msg);
 
           expect(req.getRequest()?.getType()).toEqual("overmind-type");
           expect(req.getRequest()?.getQuery()).toEqual(ac.prompt);
@@ -65,7 +63,7 @@ describe("Autocomplete", () => {
         expect(msg).not.toBeUndefined();
 
         if (msg instanceof Uint8Array) {
-          let req = GatewayRequest.deserializeBinary(msg);
+          const req = GatewayRequest.deserializeBinary(msg);
 
           expect(req.getCancel()?.getUuid_asB64().length).not.toEqual("");
         } else {
@@ -77,7 +75,7 @@ describe("Autocomplete", () => {
         msg = await server.nextMessage;
         expect(msg).not.toBeUndefined();
         if (msg instanceof Uint8Array) {
-          let req = GatewayRequest.deserializeBinary(msg);
+          const req = GatewayRequest.deserializeBinary(msg);
 
           expect(req.getRequest()?.getType()).toEqual("overmind-type");
           expect(req.getRequest()?.getQuery()).toEqual(ac.prompt);
@@ -94,19 +92,19 @@ describe("Autocomplete", () => {
         ac.prompt = "per";
 
         // Send just the new request
-        let msg = await server.nextMessage;
+        const msg = await server.nextMessage;
 
         expect(msg).not.toBeUndefined();
         if (msg instanceof Uint8Array) {
-          let req = GatewayRequest.deserializeBinary(msg);
+          const req = GatewayRequest.deserializeBinary(msg);
 
           expect(req.getRequest()?.getType()).toEqual("overmind-type");
           expect(req.getRequest()?.getQuery()).toEqual(ac.prompt);
           expect(req.getRequest()?.getScope()).toEqual("global");
 
-          let u = req.getRequest()?.getUuid_asU8();
+          const u = req.getRequest()?.getUuid_asU8();
 
-          let resp = Util.newGatewayResponse({
+          const resp = Util.newGatewayResponse({
             type: "overmind-type",
             uniqueAttribute: "name",
             scope: "global",
@@ -131,7 +129,7 @@ describe("Autocomplete", () => {
             linkedItems: [],
           });
 
-          let respBin = resp.serializeBinary();
+          const respBin = resp.serializeBinary();
 
           server.send(respBin.buffer);
 

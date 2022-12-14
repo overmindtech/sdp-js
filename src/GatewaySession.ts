@@ -28,7 +28,7 @@ export class GatewaySession extends EventTarget {
     this.socket.binaryType = "arraybuffer";
 
     this.ready = new Promise((resolve, reject) => {
-      let rejecter = (event: Event) => {
+      const rejecter = (event: Event) => {
         reject(event);
       };
 
@@ -68,7 +68,7 @@ export class GatewaySession extends EventTarget {
    * Processing inbound messages
    * @param buffer A buffer containing the binary message
    */
-  _processMessage(buffer: ArrayBuffer): any {
+  _processMessage(buffer: ArrayBuffer) {
     const binary = new Uint8Array(buffer);
     const response = GatewayResponse.deserializeBinary(binary);
 
@@ -217,7 +217,7 @@ export class GatewaySession extends EventTarget {
    * @param request The request to send
    */
   sendRequest(request: GatewayRequest) {
-    var binary = request.serializeBinary();
+    const binary = request.serializeBinary();
     this.socket.send(binary);
   }
 
@@ -241,6 +241,7 @@ export class GatewaySession extends EventTarget {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace GatewaySession {
   // Here I'm storing the event types so that they have some central documentation. This means that I can document the event types without having to rewrite it for each `on`, `off` etc.
 

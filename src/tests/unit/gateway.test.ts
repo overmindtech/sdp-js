@@ -7,7 +7,7 @@ const TestServerAddress = "ws://localhost:31274";
 
 describe("GatewaySession", () => {
   describe("with a running server", () => {
-    var server = new WS(TestServerAddress, {
+    const server = new WS(TestServerAddress, {
       jsonProtocol: false,
     });
 
@@ -16,7 +16,7 @@ describe("GatewaySession", () => {
     });
 
     describe("connecting", () => {
-      var gs = new GatewaySession(TestServerAddress);
+      const gs = new GatewaySession(TestServerAddress);
 
       beforeAll(async () => {
         await gs.ready;
@@ -40,7 +40,7 @@ describe("GatewaySession", () => {
     });
 
     describe("Processing inbound messages", () => {
-      var gs = new GatewaySession(TestServerAddress);
+      const gs = new GatewaySession(TestServerAddress);
 
       beforeAll(async () => {
         await gs.ready;
@@ -52,7 +52,7 @@ describe("GatewaySession", () => {
 
       describe("Error", () => {
         it("should call the callback", (done) => {
-          var response = Util.newGatewayResponse("some error");
+          const response = Util.newGatewayResponse("some error");
 
           // Register the callbacks
           gs.addEventListener(
@@ -69,7 +69,7 @@ describe("GatewaySession", () => {
       });
       describe("NewItem", () => {
         it("should call the callback", (done) => {
-          var response = Util.newGatewayResponse(data.itemData.dylan);
+          const response = Util.newGatewayResponse(data.itemData.dylan);
 
           // Register the callbacks
           gs.addEventListener(
@@ -86,7 +86,7 @@ describe("GatewaySession", () => {
       });
       describe("NewEdge", () => {
         it("should call the callback", (done) => {
-          var response = Util.newGatewayResponse(data.edgeData.basic);
+          const response = Util.newGatewayResponse(data.edgeData.basic);
 
           // Register the callbacks
           gs.addEventListener(
@@ -104,7 +104,7 @@ describe("GatewaySession", () => {
       });
       describe("NewItemRequestError", () => {
         it("should call the callback", (done) => {
-          var response = Util.newGatewayResponse(data.errorData.NOSCOPE);
+          const response = Util.newGatewayResponse(data.errorData.NOSCOPE);
 
           // Register the callbacks
           gs.addEventListener(
@@ -126,7 +126,7 @@ describe("GatewaySession", () => {
       });
       describe("Status", () => {
         it("should call the callback", (done) => {
-          var response = Util.newGatewayResponse(
+          const response = Util.newGatewayResponse(
             data.gatewayStatusData.working
           );
 
@@ -149,8 +149,10 @@ describe("GatewaySession", () => {
         });
 
         it("should update the status", (done) => {
-          var working = Util.newGatewayResponse(data.gatewayStatusData.working);
-          var doneResponse = Util.newGatewayResponse(
+          const working = Util.newGatewayResponse(
+            data.gatewayStatusData.working
+          );
+          const doneResponse = Util.newGatewayResponse(
             data.gatewayStatusData.done
           );
 
@@ -192,8 +194,8 @@ describe("GatewaySession", () => {
   });
 
   describe("handling disconnection", () => {
-    var gs: GatewaySession;
-    var server: WS;
+    let gs: GatewaySession;
+    let server: WS;
 
     beforeEach(async () => {
       server = new WS(TestServerAddress, {
@@ -206,21 +208,21 @@ describe("GatewaySession", () => {
     it("should trigger an event", async () => {
       expect(gs.state()).toBe(WebSocket.OPEN);
 
-      var close = new Promise<CloseEvent>((resolve) => {
+      const close = new Promise<CloseEvent>((resolve) => {
         gs.addEventListener(GatewaySession.CloseEvent, (event) => {
           resolve(event.detail);
         });
       });
 
-      var error = new Promise<void>((resolve) => {
-        gs.addEventListener(GatewaySession.SocketErrorEvent, (event) => {
+      const error = new Promise<void>((resolve) => {
+        gs.addEventListener(GatewaySession.SocketErrorEvent, () => {
           resolve();
         });
       });
 
       server.error();
 
-      var ce = await close;
+      const ce = await close;
 
       expect(ce).toHaveProperty("reason");
       expect(ce).toHaveProperty("code");
@@ -232,7 +234,7 @@ describe("GatewaySession", () => {
     it("should pass through error codes on bad close", async () => {
       expect(gs.state()).toBe(WebSocket.OPEN);
 
-      var close = new Promise<CloseEvent>((resolve) => {
+      const close = new Promise<CloseEvent>((resolve) => {
         gs.addEventListener(GatewaySession.CloseEvent, (event) => {
           resolve(event.detail);
         });
@@ -244,7 +246,7 @@ describe("GatewaySession", () => {
         wasClean: false,
       });
 
-      var ce = await close;
+      const ce = await close;
 
       expect(ce).toHaveProperty("reason");
       expect(ce).toHaveProperty("code");
@@ -257,7 +259,7 @@ describe("GatewaySession", () => {
     it("should pass through error codes on clean close", async () => {
       expect(gs.state()).toBe(WebSocket.OPEN);
 
-      var close = new Promise<CloseEvent>((resolve) => {
+      const close = new Promise<CloseEvent>((resolve) => {
         gs.addEventListener(GatewaySession.CloseEvent, (event) => {
           resolve(event.detail);
         });
@@ -265,7 +267,7 @@ describe("GatewaySession", () => {
 
       server.close();
 
-      var ce = await close;
+      const ce = await close;
 
       expect(ce).toHaveProperty("reason");
       expect(ce).toHaveProperty("code");

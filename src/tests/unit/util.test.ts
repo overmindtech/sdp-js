@@ -15,8 +15,8 @@ import * as data from "./sampledata";
 describe("Util namespace", () => {
   describe("#newUUID", () => {
     it("throws no errors", () => {
-      var u1 = Util.newUUID();
-      var u2 = Util.newUUID();
+      const u1 = Util.newUUID();
+      const u2 = Util.newUUID();
 
       expect(u1).not.toEqual(u2);
     });
@@ -25,20 +25,20 @@ describe("Util namespace", () => {
   describe("#getUniqueattributevalue()", function () {
     it("should handle an item with a string UAV", function () {
       data.items.forEach((item: Item) => {
-        var uav = Util.getUniqueattributevalue(item);
+        const uav = Util.getUniqueattributevalue(item);
 
         expect(uav).not.toEqual("");
       });
     });
 
     it("should actually return the unadulterated string", function () {
-      var uav = Util.getUniqueattributevalue(data.item.dylan);
+      const uav = Util.getUniqueattributevalue(data.item.dylan);
 
       expect(uav).toEqual("dylan");
     });
 
     it("should actually return the unadulterated integer (as a string)", function () {
-      var uav = Util.getUniqueattributevalue(data.item.process);
+      const uav = Util.getUniqueattributevalue(data.item.process);
 
       expect(uav).toEqual("12323");
     });
@@ -46,27 +46,27 @@ describe("Util namespace", () => {
 
   describe("#getHash()", function () {
     it("should work for items", function () {
-      var hash = Util.getHash(data.item.dylan);
+      const hash = Util.getHash(data.item.dylan);
       expect(hash).not.toEqual("");
     });
 
     it("should work for references", function () {
-      var ref = Util.getReference(data.item.dylan);
-      var hash = Util.getHash(ref);
+      const ref = Util.getReference(data.item.dylan);
+      const hash = Util.getHash(ref);
       expect(hash).not.toEqual("");
     });
   });
 
   describe("#toDuration()", function () {
     it("should handle nice round numbers", () => {
-      var d = Util.toDuration(1000);
+      const d = Util.toDuration(1000);
 
       expect(d.getSeconds()).toEqual(1);
       expect(d.getNanos()).toEqual(0);
     });
 
     it("should handle less round numbers", () => {
-      var d = Util.toDuration(5432);
+      const d = Util.toDuration(5432);
 
       expect(d.getSeconds()).toEqual(5);
       expect(d.getNanos()).toEqual(432000000);
@@ -74,29 +74,29 @@ describe("Util namespace", () => {
   });
 
   describe("#getAttributeValue()", function () {
-    var equalData = {
+    const equalData = {
       string: "foobar",
       integer: 999,
       boolean: true,
     };
 
-    var equalAttrs = new ItemAttributes();
+    const equalAttrs = new ItemAttributes();
     equalAttrs.setAttrstruct(Struct.fromJavaScript(equalData));
 
     for (const [k, v] of Object.entries(equalData)) {
       it(`should handle ${k}`, function () {
-        var actual = Util.getAttributeValue(equalAttrs, k);
+        const actual = Util.getAttributeValue(equalAttrs, k);
         expect(actual).toEqual(v);
       });
     }
 
-    var deepEqualData = {
+    const deepEqualData = {
       "array of integers": [1, 2, 3],
       "array of strings": ["one", "two", "three"],
       "mixed array": ["one", "two", 3],
     };
 
-    var deepEqualAttrs = new ItemAttributes();
+    const deepEqualAttrs = new ItemAttributes();
     deepEqualAttrs.setAttrstruct(Struct.fromJavaScript(deepEqualData));
 
     for (const [k, v] of Object.entries(deepEqualData)) {
@@ -107,29 +107,29 @@ describe("Util namespace", () => {
   });
 
   describe("#getAttributeValue()", function () {
-    var equalData = {
+    const equalData = {
       string: "foobar",
       integer: 999,
       boolean: true,
     };
 
-    var equalAttrs = new ItemAttributes();
+    const equalAttrs = new ItemAttributes();
     equalAttrs.setAttrstruct(Struct.fromJavaScript(equalData));
 
     for (const [k, v] of Object.entries(equalData)) {
       it(`should handle ${k}`, function () {
-        var actual = Util.getAttributeValue(equalAttrs, k);
+        const actual = Util.getAttributeValue(equalAttrs, k);
         expect(actual).toEqual(v);
       });
     }
 
-    var deepEqualData = {
+    const deepEqualData = {
       "array of integers": [1, 2, 3],
       "array of strings": ["one", "two", "three"],
       "mixed array": ["one", "two", 3],
     };
 
-    var deepEqualAttrs = new ItemAttributes();
+    const deepEqualAttrs = new ItemAttributes();
     deepEqualAttrs.setAttrstruct(Struct.fromJavaScript(deepEqualData));
 
     for (const [k, v] of Object.entries(deepEqualData)) {
@@ -140,7 +140,7 @@ describe("Util namespace", () => {
   });
 
   describe("#newItemRequestError()", () => {
-    var e = Util.newItemRequestError({
+    const e = Util.newItemRequestError({
       scope: "cont",
       errorString: "err",
       errorType: ItemRequestError.ErrorType.NOTFOUND,
@@ -256,7 +256,7 @@ describe("Util namespace", () => {
     });
 
     it("should have the correct Requestmethod", () => {
-      var sr = m.getSourcerequest();
+      const sr = m.getSourcerequest();
 
       expect(sr).not.toBeUndefined;
 
@@ -270,7 +270,7 @@ describe("Util namespace", () => {
         expect(sr.getType()).toEqual("package");
         expect(sr.getUuid()).toEqual(uuid);
 
-        var timeout = sr.getTimeout();
+        const timeout = sr.getTimeout();
 
         if (typeof timeout != "undefined") {
           expect(Util.toMs(timeout)).toEqual(10000);
@@ -384,7 +384,7 @@ describe("Util namespace", () => {
       const c = Util.newCancelItemRequest(data);
 
       it("should have the correct UUID", () => {
-        var expected = Uint8Array.from([
+        const expected = Uint8Array.from([
           188, 238, 150, 44, 202, 96, 71, 155, 138, 150, 171, 151, 13, 135, 131,
           146,
         ]);
@@ -403,7 +403,7 @@ describe("Util namespace", () => {
       const c = Util.newCancelItemRequest(data);
 
       it("should have the correct UUID", () => {
-        var expected = Uint8Array.from([
+        const expected = Uint8Array.from([
           188, 238, 150, 44, 202, 96, 71, 155, 138, 150, 171, 151, 13, 135, 131,
           146,
         ]);
@@ -427,8 +427,8 @@ describe("Util namespace", () => {
       });
 
       it("should be the correct details", () => {
-        var cancel = g.getCancel();
-        var expected = Uint8Array.from([
+        const cancel = g.getCancel();
+        const expected = Uint8Array.from([
           188, 238, 150, 44, 202, 96, 71, 155, 138, 150, 171, 151, 13, 135, 131,
           146,
         ]);
@@ -440,7 +440,7 @@ describe("Util namespace", () => {
     });
 
     describe("with an ItemRequest", function () {
-      var data: Util.ItemRequestData = {
+      const data: Util.ItemRequestData = {
         type: "person",
         method: "GET",
         query: "Sebastian",
@@ -461,7 +461,7 @@ describe("Util namespace", () => {
       });
 
       it("should be the correct details", () => {
-        var req = g.getRequest();
+        const req = g.getRequest();
 
         expect(req).not.toBeUndefined;
 
@@ -479,7 +479,7 @@ describe("Util namespace", () => {
   });
 
   describe("#newEdge()", function () {
-    var e = Util.newEdge({
+    const e = Util.newEdge({
       from: {
         scope: "global",
         type: "person",
@@ -506,13 +506,13 @@ describe("Util namespace", () => {
   });
 
   describe("#newGatewayRequestStatus()", function () {
-    var states = new Map<string, ResponderState>();
+    const states = new Map<string, ResponderState>();
     states.set("responder.cancel", ResponderState.CANCELLED);
     states.set("responder.complete", ResponderState.COMPLETE);
     states.set("responder.error", ResponderState.ERROR);
     states.set("responder.working", ResponderState.WORKING);
 
-    var s = Util.newGatewayRequestStatus({
+    const s = Util.newGatewayRequestStatus({
       summary: {
         cancelled: 1,
         complete: 1,
@@ -551,24 +551,24 @@ describe("Util namespace", () => {
     });
 
     it("should have responders map with enough entries", () => {
-      var finalResponders = s.getResponderstatesMap();
+      const finalResponders = s.getResponderstatesMap();
 
       expect(finalResponders.getLength()).toEqual(4);
 
-      for (let [responder, state] of states) {
+      for (const [responder, state] of states) {
         expect(finalResponders.get(responder)).toEqual(state);
       }
     });
   });
 
   describe("#gatewayRequestStatusDone()", function () {
-    var states = new Map<string, ResponderState>();
+    const states = new Map<string, ResponderState>();
     states.set("responder.cancel", ResponderState.CANCELLED);
     states.set("responder.complete", ResponderState.COMPLETE);
     states.set("responder.error", ResponderState.ERROR);
     states.set("responder.working", ResponderState.WORKING);
 
-    var s = Util.newGatewayRequestStatus({
+    const s = Util.newGatewayRequestStatus({
       summary: {
         cancelled: 1,
         complete: 1,
@@ -653,7 +653,7 @@ describe("Util namespace", () => {
       });
     });
     describe("with GatewayRequestStatusData", () => {
-      var states = new Map<string, ResponderState>();
+      const states = new Map<string, ResponderState>();
       states.set("responder.cancel", ResponderState.CANCELLED);
       states.set("responder.complete", ResponderState.COMPLETE);
       states.set("responder.error", ResponderState.ERROR);

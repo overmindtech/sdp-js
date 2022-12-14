@@ -4,7 +4,7 @@ import { ItemRequestError, ResponderState } from "./__generated__/responses_pb";
  * Represents something that is responding to our query
  */
 export class Responder {
-  name: string = "";
+  name = "";
   lastStateTime: Date = new Date();
   nextStateTime: Date | undefined;
   error?: ItemRequestError;
