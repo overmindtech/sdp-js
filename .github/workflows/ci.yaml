@@ -8,6 +8,7 @@ on:
 
 jobs:
   code-quality:
+    name: 'Code Quality'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -27,7 +28,7 @@ jobs:
         continue-on-error: false
 
       - name: Prettier
-        run: npm run format:check
+        run: npm run prettier:check
         continue-on-error: false
 
       - name: Typecheck
