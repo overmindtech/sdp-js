@@ -2,6 +2,12 @@ import { RequestProgress } from '../../'
 import * as data from './sampledata'
 
 describe('RequestProgress', () => {
+  beforeAll(() => {
+    jest.useFakeTimers({ advanceTimers: true })
+  })
+  afterAll(() => {
+    jest.useRealTimers()
+  })
   describe('#processResponse()', () => {
     it('processes an initial WORKING response', () => {
       // Create the progress object
