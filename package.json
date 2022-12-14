@@ -30,6 +30,9 @@
       }
     }
   },
+  "files": [
+    "lib/**/*"
+  ],
   "keywords": [],
   "author": "Dylan Ratcliffe",
   "license": "ISC",
