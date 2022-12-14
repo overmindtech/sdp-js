@@ -35,7 +35,6 @@
   "license": "ISC",
   "dependencies": {
     "google-protobuf": "^3.21.2",
-    "to-data-view": "^1.1.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

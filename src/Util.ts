@@ -4,8 +4,6 @@ import {
   Struct,
 } from 'google-protobuf/google/protobuf/struct_pb'
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb'
-
-import toDataView from 'to-data-view'
 import { parse as uuidParse, v4 as uuidv4 } from 'uuid'
 import {
   ItemData,
@@ -136,6 +134,26 @@ function isGatewayRequestStatusData(x: any): x is GatewayRequestStatusData {
   const hasPostProcessingComplete = 'postProcessingComplete' in x
 
   return hasResponderStates && hasSummary && hasPostProcessingComplete
+}
+
+function toDataView(
+  data: Int8Array | Uint8Array | Uint8ClampedArray | ArrayBuffer
+) {
+  if (
+    data instanceof Int8Array ||
+    data instanceof Uint8Array ||
+    data instanceof Uint8ClampedArray
+  ) {
+    return new DataView(data.buffer, data.byteOffset, data.byteLength)
+  }
+
+  if (data instanceof ArrayBuffer) {
+    return new DataView(data)
+  }
+
+  throw new TypeError(
+    'Expected `data` to be an ArrayBuffer, Buffer, Int8Array, Uint8Array or Uint8ClampedArray'
+  )
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
