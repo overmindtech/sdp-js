@@ -4,7 +4,6 @@ import {
   Struct,
 } from 'google-protobuf/google/protobuf/struct_pb'
 import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb'
-import sha1 from 'sha1'
 
 import toDataView from 'to-data-view'
 import { parse as uuidParse, v4 as uuidv4 } from 'uuid'
@@ -177,11 +176,11 @@ export namespace Util {
    * @param object The object to calculate the hash for
    * @returns The hash as a string
    */
-  export function getHash(object: Reference | Item): string {
-    const bytes = sha1(getGloballyuniquename(object), {
-      asBytes: true,
-    })
-
+  export async function getHash(object: Reference | Item) {
+    const name = getGloballyuniquename(object)
+    const textAsBuffer = new TextEncoder().encode(name)
+    const hashBuffer = await crypto.subtle.digest('SHA-256', textAsBuffer)
+    const bytes = new Uint8Array(hashBuffer)
     const base32String = base32EncodeCustom(bytes)
 
     return base32String.substring(0, 11)
