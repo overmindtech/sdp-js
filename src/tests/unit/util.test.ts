@@ -46,14 +46,14 @@ describe('Util namespace', () => {
   })
 
   describe('#getHash()', function () {
-    it('should work for items', function () {
-      const hash = Util.getHash(data.item.dylan)
+    it('should work for items', async () => {
+      const hash = await Util.getHash(data.item.dylan)
       expect(hash).not.toEqual('')
     })
 
-    it('should work for references', function () {
+    it('should work for references', async () => {
       const ref = Util.getReference(data.item.dylan)
-      const hash = Util.getHash(ref)
+      const hash = await Util.getHash(ref)
       expect(hash).not.toEqual('')
     })
   })
