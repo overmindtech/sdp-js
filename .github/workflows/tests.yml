@@ -1,21 +1,18 @@
 name: Tests
+
 on: push
+
 jobs:
-  test:
-    name: 'Node.js v${{ matrix.node }}'
+  tests:
+    name: 'Tests'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node:
-          - 16
-          - 18
     steps:
       - uses: actions/checkout@v2
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '${{ matrix.node }}'
+          node-version: 16
           cache: npm
 
       - name: Install dependencies
