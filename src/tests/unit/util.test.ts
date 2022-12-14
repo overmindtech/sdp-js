@@ -1,5 +1,6 @@
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 import { v4 as uuidv4, parse as uuidparse } from "uuid";
+import { ItemData } from "../../types";
 import { Util } from "../../Util";
 import {
   Item,
@@ -312,7 +313,7 @@ describe("Util namespace", () => {
   });
 
   describe("#newItem()", function () {
-    const data: Util.ItemData = {
+    const data: ItemData = {
       type: "person",
       uniqueAttribute: "name",
       scope: "global",
@@ -604,7 +605,7 @@ describe("Util namespace", () => {
 
   describe("#newGatewayResponse()", () => {
     describe("with ItemData", () => {
-      const data: Util.ItemData = {
+      const data: ItemData = {
         type: "person",
         uniqueAttribute: "name",
         scope: "global",

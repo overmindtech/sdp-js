@@ -9,6 +9,13 @@ import sha1 from "sha1";
 import toDataView from "to-data-view";
 import { parse as uuidParse, v4 as uuidv4 } from "uuid";
 import {
+  ItemData,
+  EdgeData,
+  ItemRequestErrorData,
+  GatewayRequestStatusData,
+  ReferenceData,
+} from "./types";
+import {
   GatewayRequest,
   GatewayRequestStatus,
   GatewayResponse,
@@ -88,46 +95,6 @@ function base32EncodeCustom(data: Uint8Array): string {
 
   return output;
 }
-
-export type EdgeData = {
-  from: ReferenceData;
-  to: ReferenceData;
-};
-
-export type ReferenceData = {
-  type: string;
-  uniqueAttributeValue: string;
-  scope: string;
-};
-
-export type ItemData = {
-  type: string;
-  uniqueAttribute: string;
-  scope: string;
-  attributes: ItemAttributes;
-  metadata: Metadata | undefined;
-  linkedItemRequests: ItemRequest[];
-  linkedItems: Reference[];
-};
-
-export type GatewayRequestStatusData = {
-  responderStates: Map<string, ResponderState>;
-  summary: {
-    working: number;
-    stalled: number;
-    complete: number;
-    error: number;
-    cancelled: number;
-    responders: number;
-  };
-  postProcessingComplete: boolean;
-};
-
-export type ItemRequestErrorData = {
-  scope: string;
-  errorString: string;
-  errorType: ItemRequestError.ErrorType;
-};
 
 function isItemData(x: any): x is ItemData {
   const hasType = "type" in x;
