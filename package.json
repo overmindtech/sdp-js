@@ -16,7 +16,8 @@
     "typecheck:esm": "tsc -p ./tsconfig.esm.json --noEmit",
     "typecheck:cjs": "tsc -p ./tsconfig.cjs.json --noEmit",
     "typecheck": "npm run typecheck:esm && npm run typecheck:cjs",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "format:check": "prettier ."
   },
   "exports": {
     ".": {

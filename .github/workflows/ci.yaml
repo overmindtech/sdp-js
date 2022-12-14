@@ -7,17 +7,29 @@ on:
     branches: ['*']
 
 jobs:
-  eslint:
-    name: ESLint
+  code-quality:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: npm
 
       - name: Install dependencies
-        run: |
-          npm install
+        run: npm ci --ignore-scripts
+        continue-on-error: false
 
-      - name: Run ESLint
+      - name: ESLint
         run: npm run lint
+        continue-on-error: false
+
+      - name: Prettier
+        run: npm run format:check
+        continue-on-error: false
+
+      - name: Typecheck
+        run: npm run typecheck
         continue-on-error: false
