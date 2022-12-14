@@ -1,25 +1,25 @@
-import { Duration } from "google-protobuf/google/protobuf/duration_pb";
+import { Duration } from 'google-protobuf/google/protobuf/duration_pb'
 import {
   JavaScriptValue,
   Struct,
-} from "google-protobuf/google/protobuf/struct_pb";
-import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
-import sha1 from "sha1";
+} from 'google-protobuf/google/protobuf/struct_pb'
+import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb'
+import sha1 from 'sha1'
 
-import toDataView from "to-data-view";
-import { parse as uuidParse, v4 as uuidv4 } from "uuid";
+import toDataView from 'to-data-view'
+import { parse as uuidParse, v4 as uuidv4 } from 'uuid'
 import {
   ItemData,
   EdgeData,
   ItemRequestErrorData,
   GatewayRequestStatusData,
   ReferenceData,
-} from "./types";
+} from './types'
 import {
   GatewayRequest,
   GatewayRequestStatus,
   GatewayResponse,
-} from "./__generated__/gateway_pb";
+} from './__generated__/gateway_pb'
 import {
   CancelItemRequest,
   Edge,
@@ -29,28 +29,28 @@ import {
   Metadata,
   Reference,
   RequestMethod,
-} from "./__generated__/items_pb";
+} from './__generated__/items_pb'
 import {
   ItemRequestError,
   ResponderState,
   Response,
-} from "./__generated__/responses_pb";
+} from './__generated__/responses_pb'
 
 //
 // Private helper functions
 //
 function convertRequestMethod(
-  method: "GET" | "LIST" | "SEARCH"
+  method: 'GET' | 'LIST' | 'SEARCH'
 ): RequestMethod {
   switch (method) {
-    case "GET": {
-      return RequestMethod.GET;
+    case 'GET': {
+      return RequestMethod.GET
     }
-    case "LIST": {
-      return RequestMethod.LIST;
+    case 'LIST': {
+      return RequestMethod.LIST
     }
-    case "SEARCH": {
-      return RequestMethod.SEARCH;
+    case 'SEARCH': {
+      return RequestMethod.SEARCH
     }
   }
 }
@@ -58,52 +58,52 @@ function convertRequestMethod(
 // This is a copied and modified version of
 // https://github.com/LinusU/base32-encode made to support my custom encoding
 function base32EncodeCustom(data: Uint8Array): string {
-  const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEF";
-  const padding = false;
+  const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEF'
+  const padding = false
 
   // For reasons that I cannot possibly fathom, it's possible (likely) that we
   // can be passed a Uint8Array that is not an instance of Uint8Array. Sounds
   // dumb right? Yes, yes it does. Someone smarter than me can probably
   // explain how this can be justified but it makes no sense to me, Reference:
   // https://medium.com/@simonwarta/limitations-of-the-instanceof-operator-f4bcdbe7a400
-  const actualData = new Uint8Array(data);
-  const view = toDataView(actualData);
+  const actualData = new Uint8Array(data)
+  const view = toDataView(actualData)
 
-  let bits = 0;
-  let value = 0;
-  let output = "";
+  let bits = 0
+  let value = 0
+  let output = ''
 
   for (let i = 0; i < view.byteLength; i++) {
-    value = (value << 8) | view.getUint8(i);
-    bits += 8;
+    value = (value << 8) | view.getUint8(i)
+    bits += 8
 
     while (bits >= 5) {
-      output += alphabet[(value >>> (bits - 5)) & 31];
-      bits -= 5;
+      output += alphabet[(value >>> (bits - 5)) & 31]
+      bits -= 5
     }
   }
 
   if (bits > 0) {
-    output += alphabet[(value << (5 - bits)) & 31];
+    output += alphabet[(value << (5 - bits)) & 31]
   }
 
   if (padding) {
     while (output.length % 8 !== 0) {
-      output += "=";
+      output += '='
     }
   }
 
-  return output;
+  return output
 }
 
 function isItemData(x: any): x is ItemData {
-  const hasType = "type" in x;
-  const hasUniqueAttribute = "uniqueAttribute" in x;
-  const hasScope = "scope" in x;
-  const hasAttributes = "attributes" in x;
-  const hasMetadata = "metadata" in x;
-  const hasLinkedItemRequests = "linkedItemRequests" in x;
-  const hasLinkedItems = "linkedItems" in x;
+  const hasType = 'type' in x
+  const hasUniqueAttribute = 'uniqueAttribute' in x
+  const hasScope = 'scope' in x
+  const hasAttributes = 'attributes' in x
+  const hasMetadata = 'metadata' in x
+  const hasLinkedItemRequests = 'linkedItemRequests' in x
+  const hasLinkedItems = 'linkedItems' in x
 
   return (
     hasType &&
@@ -113,30 +113,30 @@ function isItemData(x: any): x is ItemData {
     hasMetadata &&
     hasLinkedItemRequests &&
     hasLinkedItems
-  );
+  )
 }
 
 function isEdgeData(x: any): x is EdgeData {
-  const hasFrom = "from" in x;
-  const hasTo = "to" in x;
+  const hasFrom = 'from' in x
+  const hasTo = 'to' in x
 
-  return hasFrom && hasTo;
+  return hasFrom && hasTo
 }
 
 function isItemRequestErrorData(x: any): x is ItemRequestErrorData {
-  const hasScope = "scope" in x;
-  const hasErrorString = "errorString" in x;
-  const hasErrorType = "errorType" in x;
+  const hasScope = 'scope' in x
+  const hasErrorString = 'errorString' in x
+  const hasErrorType = 'errorType' in x
 
-  return hasScope && hasErrorString && hasErrorType;
+  return hasScope && hasErrorString && hasErrorType
 }
 
 function isGatewayRequestStatusData(x: any): x is GatewayRequestStatusData {
-  const hasResponderStates = "responderStates" in x;
-  const hasSummary = "summary" in x;
-  const hasPostProcessingComplete = "postProcessingComplete" in x;
+  const hasResponderStates = 'responderStates' in x
+  const hasSummary = 'summary' in x
+  const hasPostProcessingComplete = 'postProcessingComplete' in x
 
-  return hasResponderStates && hasSummary && hasPostProcessingComplete;
+  return hasResponderStates && hasSummary && hasPostProcessingComplete
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -146,7 +146,7 @@ export namespace Util {
    * @returns A new UUIDv4 as a Uint8Array
    */
   export function newUUID(): Uint8Array {
-    return Uint8Array.from(uuidParse(uuidv4()));
+    return Uint8Array.from(uuidParse(uuidv4()))
   }
 
   /**
@@ -154,7 +154,7 @@ export namespace Util {
    * @returns A new UUID as a string
    */
   export function newUUIDString(): string {
-    return uuidv4();
+    return uuidv4()
   }
 
   /**
@@ -167,9 +167,9 @@ export namespace Util {
       object.getScope(),
       object.getType(),
       getUniqueattributevalue(object),
-    ];
+    ]
 
-    return elements.join(".");
+    return elements.join('.')
   }
 
   /**
@@ -180,11 +180,11 @@ export namespace Util {
   export function getHash(object: Reference | Item): string {
     const bytes = sha1(getGloballyuniquename(object), {
       asBytes: true,
-    });
+    })
 
-    const base32String = base32EncodeCustom(bytes);
+    const base32String = base32EncodeCustom(bytes)
 
-    return base32String.substring(0, 11);
+    return base32String.substring(0, 11)
   }
 
   /**
@@ -193,17 +193,17 @@ export namespace Util {
    * @returns The unique attribute value as a string
    */
   export function getUniqueattributevalue(object: Item | Reference): string {
-    if ("getUniqueattributevalue" in object) {
-      return object.getUniqueattributevalue();
+    if ('getUniqueattributevalue' in object) {
+      return object.getUniqueattributevalue()
     } else {
-      const uniqueAttribute = object.getUniqueattribute();
-      const attributes = object.getAttributes();
+      const uniqueAttribute = object.getUniqueattribute()
+      const attributes = object.getAttributes()
 
-      if (typeof attributes != "undefined") {
-        const value = Util.getAttributeValue(attributes, uniqueAttribute);
-        return String(value);
+      if (typeof attributes != 'undefined') {
+        const value = Util.getAttributeValue(attributes, uniqueAttribute)
+        return String(value)
       } else {
-        return "";
+        return ''
       }
     }
   }
@@ -216,12 +216,12 @@ export namespace Util {
    * @returns The value of the attribute
    */
   export function getAttributeValue(attributes: ItemAttributes, name: string) {
-    const object = attributes.getAttrstruct()?.toJavaScript();
+    const object = attributes.getAttrstruct()?.toJavaScript()
 
-    if (typeof object === "undefined") {
-      return undefined;
+    if (typeof object === 'undefined') {
+      return undefined
     } else {
-      return object[name];
+      return object[name]
     }
   }
 
@@ -231,13 +231,13 @@ export namespace Util {
    * @returns A reference to the supplied item
    */
   export function getReference(item: Item): Reference {
-    const ref = new Reference();
+    const ref = new Reference()
 
-    ref.setScope(item.getScope());
-    ref.setType(item.getType());
-    ref.setUniqueattributevalue(getUniqueattributevalue(item));
+    ref.setScope(item.getScope())
+    ref.setType(item.getType())
+    ref.setUniqueattributevalue(getUniqueattributevalue(item))
 
-    return ref;
+    return ref
   }
 
   /**
@@ -246,7 +246,7 @@ export namespace Util {
    * @returns A javascript `Date` object
    */
   export function toDate(duration: Duration): Date {
-    return new Date(toMs(duration));
+    return new Date(toMs(duration))
   }
 
   /**
@@ -254,14 +254,14 @@ export namespace Util {
    * @param ms The number of milliseconds
    */
   export function toDuration(ms: number): Duration {
-    const d = new Duration();
-    d.setSeconds(Math.floor(ms / 1000));
-    d.setNanos((ms % 1000) * 1000000);
-    return d;
+    const d = new Duration()
+    d.setSeconds(Math.floor(ms / 1000))
+    d.setNanos((ms % 1000) * 1000000)
+    return d
   }
 
   export function toMs(duration: Duration): number {
-    return duration.getSeconds() * 1000 + duration.getNanos() / 1_000_000;
+    return duration.getSeconds() * 1000 + duration.getNanos() / 1_000_000
   }
 
   /**
@@ -270,21 +270,21 @@ export namespace Util {
    * @returns A new Item object
    */
   export function newItem(details: ItemData): Item {
-    const item = new Item();
+    const item = new Item()
 
-    item.setType(details.type);
-    item.setUniqueattribute(details.uniqueAttribute);
-    item.setScope(details.scope);
-    item.setAttributes(details.attributes);
+    item.setType(details.type)
+    item.setUniqueattribute(details.uniqueAttribute)
+    item.setScope(details.scope)
+    item.setAttributes(details.attributes)
 
-    if (typeof details.metadata != "undefined") {
-      item.setMetadata(details.metadata);
+    if (typeof details.metadata != 'undefined') {
+      item.setMetadata(details.metadata)
     }
 
-    item.setLinkeditemrequestsList(details.linkedItemRequests);
-    item.setLinkeditemsList(details.linkedItems);
+    item.setLinkeditemrequestsList(details.linkedItemRequests)
+    item.setLinkeditemsList(details.linkedItems)
 
-    return item;
+    return item
   }
 
   /**
@@ -294,21 +294,21 @@ export namespace Util {
    * @returns A new ItemAttributes object
    */
   export function newItemAttributes(value: {
-    [key: string]: JavaScriptValue;
+    [key: string]: JavaScriptValue
   }): ItemAttributes {
-    const attributes = new ItemAttributes();
-    attributes.setAttrstruct(Struct.fromJavaScript(value));
+    const attributes = new ItemAttributes()
+    attributes.setAttrstruct(Struct.fromJavaScript(value))
 
-    return attributes;
+    return attributes
   }
 
   export type MetadataData = {
-    sourceName: string;
-    sourceRequest: ItemRequestData;
-    timestamp: Date;
-    sourceDuration: number; // milliseconds
-    sourceDurationPerItem: number; // milliseconds
-  };
+    sourceName: string
+    sourceRequest: ItemRequestData
+    timestamp: Date
+    sourceDuration: number // milliseconds
+    sourceDurationPerItem: number // milliseconds
+  }
 
   /**
    * Creates a new `Metadata` object from a object
@@ -316,28 +316,28 @@ export namespace Util {
    * @returns A new Metadata object
    */
   export function newMetadata(data: MetadataData): Metadata {
-    const m = new Metadata();
+    const m = new Metadata()
 
-    m.setSourcename(data.sourceName);
-    m.setSourcerequest(Util.newItemRequest(data.sourceRequest));
+    m.setSourcename(data.sourceName)
+    m.setSourcerequest(Util.newItemRequest(data.sourceRequest))
 
-    const timestamp = new Timestamp();
-    timestamp.fromDate(data.timestamp);
-    m.setTimestamp(timestamp);
+    const timestamp = new Timestamp()
+    timestamp.fromDate(data.timestamp)
+    m.setTimestamp(timestamp)
 
-    const sourceDuration = new Duration();
-    sourceDuration.setSeconds(Math.floor(data.sourceDuration / 1000));
-    sourceDuration.setNanos((data.sourceDuration % 1000) * 1e6);
-    m.setSourceduration(sourceDuration);
+    const sourceDuration = new Duration()
+    sourceDuration.setSeconds(Math.floor(data.sourceDuration / 1000))
+    sourceDuration.setNanos((data.sourceDuration % 1000) * 1e6)
+    m.setSourceduration(sourceDuration)
 
-    const sourceDurationPerItem = new Duration();
+    const sourceDurationPerItem = new Duration()
     sourceDurationPerItem.setSeconds(
       Math.floor(data.sourceDurationPerItem / 1000)
-    );
-    sourceDurationPerItem.setNanos((data.sourceDurationPerItem % 1000) * 1e6);
-    m.setSourcedurationperitem(sourceDurationPerItem);
+    )
+    sourceDurationPerItem.setNanos((data.sourceDurationPerItem % 1000) * 1e6)
+    m.setSourcedurationperitem(sourceDurationPerItem)
 
-    return m;
+    return m
   }
 
   /**
@@ -348,27 +348,27 @@ export namespace Util {
   export function newItemRequestError(
     details: ItemRequestErrorData
   ): ItemRequestError {
-    const err = new ItemRequestError();
+    const err = new ItemRequestError()
 
-    err.setScope(details.scope);
-    err.setErrorstring(details.errorString);
-    err.setErrortype(details.errorType);
+    err.setScope(details.scope)
+    err.setErrorstring(details.errorString)
+    err.setErrortype(details.errorType)
 
-    return err;
+    return err
   }
 
   export type ItemRequestData = {
-    type: string;
-    method: "GET" | "LIST" | "SEARCH";
-    query: string;
-    linkDepth: number;
-    scope: string;
-    UUID: string | Uint8Array;
-    itemSubject?: string;
-    responseSubject?: string;
-    errorSubject?: string;
-    timeoutMs?: number;
-  };
+    type: string
+    method: 'GET' | 'LIST' | 'SEARCH'
+    query: string
+    linkDepth: number
+    scope: string
+    UUID: string | Uint8Array
+    itemSubject?: string
+    responseSubject?: string
+    errorSubject?: string
+    timeoutMs?: number
+  }
 
   /**
    * Creates a new ItemRequest object from a single object
@@ -376,28 +376,28 @@ export namespace Util {
    * @returns A new ItemRequest object
    */
   export function newItemRequest(details: ItemRequestData): ItemRequest {
-    const r = new ItemRequest();
+    const r = new ItemRequest()
 
-    r.setType(details.type);
-    r.setMethod(convertRequestMethod(details.method));
-    r.setQuery(details.query);
-    r.setLinkdepth(details.linkDepth);
-    r.setScope(details.scope);
-    r.setItemsubject(details.itemSubject || "");
-    r.setResponsesubject(details.responseSubject || "");
-    r.setErrorsubject(details.errorSubject || "");
+    r.setType(details.type)
+    r.setMethod(convertRequestMethod(details.method))
+    r.setQuery(details.query)
+    r.setLinkdepth(details.linkDepth)
+    r.setScope(details.scope)
+    r.setItemsubject(details.itemSubject || '')
+    r.setResponsesubject(details.responseSubject || '')
+    r.setErrorsubject(details.errorSubject || '')
 
-    if (typeof details.UUID == "string") {
-      r.setUuid(Uint8Array.from(uuidParse(details.UUID)));
+    if (typeof details.UUID == 'string') {
+      r.setUuid(Uint8Array.from(uuidParse(details.UUID)))
     } else {
-      r.setUuid(details.UUID);
+      r.setUuid(details.UUID)
     }
 
-    if (typeof details.timeoutMs != "undefined") {
-      r.setTimeout(Util.toDuration(details.timeoutMs));
+    if (typeof details.timeoutMs != 'undefined') {
+      r.setTimeout(Util.toDuration(details.timeoutMs))
     }
 
-    return r;
+    return r
   }
 
   /**
@@ -406,20 +406,20 @@ export namespace Util {
    * @returns The new Reference object
    */
   export function newReference(details: ReferenceData): Reference {
-    const r = new Reference();
+    const r = new Reference()
 
-    r.setType(details.type);
-    r.setUniqueattributevalue(details.uniqueAttributeValue);
-    r.setScope(details.scope);
+    r.setType(details.type)
+    r.setUniqueattributevalue(details.uniqueAttributeValue)
+    r.setScope(details.scope)
 
-    return r;
+    return r
   }
 
   export type ResponseData = {
-    responder: string;
-    state: ResponderState;
-    nextUpdateInMs?: number;
-  };
+    responder: string
+    state: ResponderState
+    nextUpdateInMs?: number
+  }
 
   /**
    * Creates a new Response object from a single object
@@ -427,21 +427,21 @@ export namespace Util {
    * @returns The new Response object
    */
   export function newResponse(details: ResponseData): Response {
-    const r = new Response();
+    const r = new Response()
 
-    r.setResponder(details.responder);
-    r.setState(details.state);
+    r.setResponder(details.responder)
+    r.setState(details.state)
 
-    if (typeof details.nextUpdateInMs != "undefined") {
-      r.setNextupdatein(Util.toDuration(details.nextUpdateInMs));
+    if (typeof details.nextUpdateInMs != 'undefined') {
+      r.setNextupdatein(Util.toDuration(details.nextUpdateInMs))
     }
 
-    return r;
+    return r
   }
 
   export type CancelItemRequestData = {
-    UUID: string | Uint8Array;
-  };
+    UUID: string | Uint8Array
+  }
 
   /**
    * Creates a new CancelItemRequest object from given params. Note that the
@@ -454,16 +454,16 @@ export namespace Util {
   export function newCancelItemRequest(
     details: CancelItemRequestData
   ): CancelItemRequest {
-    const c = new CancelItemRequest();
+    const c = new CancelItemRequest()
 
-    if (typeof details.UUID == "string") {
-      const buffer = uuidParse(details.UUID);
-      c.setUuid(Uint8Array.from(buffer));
+    if (typeof details.UUID == 'string') {
+      const buffer = uuidParse(details.UUID)
+      c.setUuid(Uint8Array.from(buffer))
     } else {
-      c.setUuid(details.UUID);
+      c.setUuid(details.UUID)
     }
 
-    return c;
+    return c
   }
 
   /**
@@ -472,36 +472,36 @@ export namespace Util {
    * @returns A new Edge object
    */
   export function newEdge(data: EdgeData): Edge {
-    const e = new Edge();
+    const e = new Edge()
 
-    e.setFrom(Util.newReference(data.from));
-    e.setTo(Util.newReference(data.to));
+    e.setFrom(Util.newReference(data.from))
+    e.setTo(Util.newReference(data.to))
 
-    return e;
+    return e
   }
 
   export function newGatewayRequestStatus(
     data: GatewayRequestStatusData
   ): GatewayRequestStatus {
-    const grs = new GatewayRequestStatus();
-    const responders = grs.getResponderstatesMap();
-    const summary = new GatewayRequestStatus.Summary();
+    const grs = new GatewayRequestStatus()
+    const responders = grs.getResponderstatesMap()
+    const summary = new GatewayRequestStatus.Summary()
 
     for (const [responder, state] of data.responderStates) {
-      responders.set(responder, state);
+      responders.set(responder, state)
     }
 
-    summary.setWorking(data.summary.working);
-    summary.setStalled(data.summary.stalled);
-    summary.setComplete(data.summary.complete);
-    summary.setError(data.summary.error);
-    summary.setCancelled(data.summary.cancelled);
-    summary.setResponders(data.summary.responders);
-    grs.setSummary(summary);
+    summary.setWorking(data.summary.working)
+    summary.setStalled(data.summary.stalled)
+    summary.setComplete(data.summary.complete)
+    summary.setError(data.summary.error)
+    summary.setCancelled(data.summary.cancelled)
+    summary.setResponders(data.summary.responders)
+    grs.setSummary(summary)
 
-    grs.setPostprocessingcomplete(data.postProcessingComplete);
+    grs.setPostprocessingcomplete(data.postProcessingComplete)
 
-    return grs;
+    return grs
   }
 
   /**
@@ -515,21 +515,21 @@ export namespace Util {
     request: ItemRequestData | CancelItemRequestData,
     minStatusIntervalMs: number
   ): GatewayRequest {
-    const gr = new GatewayRequest();
+    const gr = new GatewayRequest()
 
-    if ("method" in request) {
-      const ir = Util.newItemRequest(request);
-      gr.setRequest(ir);
+    if ('method' in request) {
+      const ir = Util.newItemRequest(request)
+      gr.setRequest(ir)
     } else {
-      const cancel = Util.newCancelItemRequest(request);
-      gr.setCancel(cancel);
+      const cancel = Util.newCancelItemRequest(request)
+      gr.setCancel(cancel)
     }
 
     if (minStatusIntervalMs > 0) {
-      gr.setMinstatusinterval(Util.toDuration(minStatusIntervalMs));
+      gr.setMinstatusinterval(Util.toDuration(minStatusIntervalMs))
     }
 
-    return gr;
+    return gr
   }
 
   /**
@@ -539,13 +539,13 @@ export namespace Util {
    * @returns True of the request is done, false otherwise
    */
   export function gatewayRequestStatusDone(g: GatewayRequestStatus): boolean {
-    const summary = g.getSummary();
+    const summary = g.getSummary()
 
-    if (typeof summary != "undefined") {
-      return g.getPostprocessingcomplete() && summary.getWorking() == 0;
+    if (typeof summary != 'undefined') {
+      return g.getPostprocessingcomplete() && summary.getWorking() == 0
     }
 
-    return false;
+    return false
   }
 
   export type GatewayResponseData =
@@ -553,38 +553,38 @@ export namespace Util {
     | EdgeData
     | ItemRequestErrorData
     | GatewayRequestStatusData
-    | string;
+    | string
 
   export function newGatewayResponse(
     data: GatewayResponseData
   ): GatewayResponse {
-    const gr = new GatewayResponse();
+    const gr = new GatewayResponse()
 
-    if (typeof data == "string") {
-      gr.setError(data);
-      return gr;
-    } else if (typeof data == "object") {
+    if (typeof data == 'string') {
+      gr.setError(data)
+      return gr
+    } else if (typeof data == 'object') {
       if (isItemData(data)) {
-        gr.setNewitem(Util.newItem(data));
-        return gr;
+        gr.setNewitem(Util.newItem(data))
+        return gr
       }
 
       if (isEdgeData(data)) {
-        gr.setNewedge(Util.newEdge(data));
-        return gr;
+        gr.setNewedge(Util.newEdge(data))
+        return gr
       }
 
       if (isItemRequestErrorData(data)) {
-        gr.setNewitemrequesterror(Util.newItemRequestError(data));
-        return gr;
+        gr.setNewitemrequesterror(Util.newItemRequestError(data))
+        return gr
       }
 
       if (isGatewayRequestStatusData(data)) {
-        gr.setStatus(Util.newGatewayRequestStatus(data));
-        return gr;
+        gr.setStatus(Util.newGatewayRequestStatus(data))
+        return gr
       }
     }
 
-    return gr;
+    return gr
   }
 }

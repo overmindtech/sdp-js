@@ -1,15 +1,15 @@
-import { GatewaySession } from "./GatewaySession";
-import { Util } from "./Util";
-import { Item } from "./__generated__/items_pb";
-import { stringify as uuidStringify } from "uuid";
+import { GatewaySession } from './GatewaySession'
+import { Util } from './Util'
+import { Item } from './__generated__/items_pb'
+import { stringify as uuidStringify } from 'uuid'
 
 /**
  * Result that combines the actual result with the score
  */
 type AutocompleteResult = {
-  value: string;
-  score: number;
-};
+  value: string
+  score: number
+}
 
 export enum AutocompleteField {
   TYPE = 0,
@@ -23,12 +23,12 @@ export enum AutocompleteField {
  * appropriate
  */
 export class Autocomplete {
-  field: AutocompleteField;
-  results: AutocompleteResult[] = [];
+  field: AutocompleteField
+  results: AutocompleteResult[] = []
 
-  private _prompt = "";
-  private session: GatewaySession;
-  private currentRequestUUID = "";
+  private _prompt = ''
+  private session: GatewaySession
+  private currentRequestUUID = ''
 
   /**
    *
@@ -40,39 +40,39 @@ export class Autocomplete {
       // to put an async method. If we review this later we might want to
       // remove this requirement and just have the object be smart enough
       // to wait until the session is ready before sending anything
-      throw new Error("session must be OPEN for autocomplete");
+      throw new Error('session must be OPEN for autocomplete')
     }
 
-    this.session = session;
-    this.field = field;
+    this.session = session
+    this.field = field
 
     // Listen for results
-    this.session.addEventListener("new-item", (item) =>
+    this.session.addEventListener('new-item', (item) =>
       this.processItem(item.detail)
-    );
+    )
   }
 
   /**
    * The suggested type values for the provided typePrompt
    */
   get suggestions(): string[] {
-    return this.results.map((result) => result.value);
+    return this.results.map((result) => result.value)
   }
 
   /**
    * The prompt to search for
    */
   get prompt(): string {
-    return this._prompt;
+    return this._prompt
   }
 
   /**
    * The prompt to search for
    */
   set prompt(prompt: string) {
-    this._prompt = prompt;
+    this._prompt = prompt
 
-    if (this.currentRequestUUID !== "") {
+    if (this.currentRequestUUID !== '') {
       // Cancel any running requests
       this.session.sendRequest(
         Util.newGatewayRequest(
@@ -81,44 +81,44 @@ export class Autocomplete {
           },
           1000
         )
-      );
+      )
     }
 
     // Delete current autocomplete options
-    this.results = [];
+    this.results = []
 
-    const uuid = Util.newUUIDString();
+    const uuid = Util.newUUIDString()
 
-    let type: string;
+    let type: string
 
     switch (this.field) {
       case AutocompleteField.CONTEXT:
-        type = "overmind-scope";
-        break;
+        type = 'overmind-scope'
+        break
       case AutocompleteField.TYPE:
-        type = "overmind-type";
-        break;
+        type = 'overmind-type'
+        break
     }
 
     // Create a new request
     const request = Util.newGatewayRequest(
       {
-        scope: "global",
+        scope: 'global',
         linkDepth: 0,
         type: type,
-        method: "SEARCH",
+        method: 'SEARCH',
         query: prompt,
         UUID: uuid,
         timeoutMs: 2_000,
       },
       500
-    );
+    )
 
     // Set the UUID so we know which responses to use and which to ignore
-    this.currentRequestUUID = uuid;
+    this.currentRequestUUID = uuid
 
     // Start the request
-    this.session.sendRequest(request);
+    this.session.sendRequest(request)
   }
 
   /**
@@ -127,19 +127,19 @@ export class Autocomplete {
    * @param item The item to process
    */
   processItem(item: Item): void {
-    const itemUUID = item.getMetadata()?.getSourcerequest()?.getUuid_asU8();
+    const itemUUID = item.getMetadata()?.getSourcerequest()?.getUuid_asU8()
 
-    if (typeof itemUUID != "undefined") {
-      const itemUUIDString = uuidStringify(itemUUID);
+    if (typeof itemUUID != 'undefined') {
+      const itemUUIDString = uuidStringify(itemUUID)
 
       if (itemUUIDString == this.currentRequestUUID) {
-        let score = 0;
-        const attributes = item.getAttributes();
+        let score = 0
+        const attributes = item.getAttributes()
 
         if (attributes !== undefined) {
-          const attributeScore = Util.getAttributeValue(attributes, "score");
-          if (typeof attributeScore === "number") {
-            score = attributeScore;
+          const attributeScore = Util.getAttributeValue(attributes, 'score')
+          if (typeof attributeScore === 'number') {
+            score = attributeScore
           }
         }
 
@@ -147,10 +147,10 @@ export class Autocomplete {
         this.results.push({
           value: Util.getUniqueattributevalue(item),
           score: score,
-        });
+        })
 
         // Re-sort
-        this.results.sort((a, b) => a.score - b.score);
+        this.results.sort((a, b) => a.score - b.score)
       }
     }
   }
