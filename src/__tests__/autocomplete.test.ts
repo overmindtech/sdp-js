@@ -1,13 +1,8 @@
 import WS from 'jest-websocket-mock'
-import {
-  Autocomplete,
-  AutocompleteField,
-  GatewaySession,
-  newGatewayResponse,
-  newItemAttributes,
-  newMetadata,
-} from '..'
+import { GatewaySession } from '../GatewaySession'
+import { Autocomplete, AutocompleteField } from '../Autocomplete'
 import { GatewayRequest } from '../__generated__/'
+import { newGatewayResponse, newItemAttributes, newMetadata } from '../Util'
 
 const TestServerAddress = 'ws://localhost:31035'
 

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { RequestProgress } from '../../'
+import { RequestProgress } from '../RequestProgress'
 import * as data from './sampledata.helper'
 
 describe('RequestProgress', () => {

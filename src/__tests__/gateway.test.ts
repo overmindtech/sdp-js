@@ -3,7 +3,6 @@
  */
 
 import WS from 'jest-websocket-mock'
-import { GatewaySession, newGatewayResponse } from '../../'
 import {
   NewItemEvent,
   NewEdgeEvent,
@@ -13,6 +12,8 @@ import {
   ErrorEvent,
   CloseEvent,
 } from '../Events'
+import { newGatewayResponse } from '../Util'
+import { GatewaySession } from '../GatewaySession'
 import * as data from './sampledata.helper'
 
 // create a WS instance
