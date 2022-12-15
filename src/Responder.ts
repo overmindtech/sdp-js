@@ -1,4 +1,4 @@
-import { ItemRequestError, ResponderState } from './__generated__/responses_pb'
+import { ItemRequestError, ResponderState } from './__generated__/'
 
 /**
  * Represents something that is responding to our query

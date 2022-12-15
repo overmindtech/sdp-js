@@ -1,6 +1,19 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import WS from 'jest-websocket-mock'
-import { Util, GatewaySession } from '../../'
-import * as data from './sampledata'
+import { GatewaySession, newGatewayResponse } from '../../'
+import {
+  NewItemEvent,
+  NewEdgeEvent,
+  NewItemRequestErrorEvent,
+  StatusEvent,
+  SocketErrorEvent,
+  ErrorEvent,
+  CloseEvent,
+} from '../Events'
+import * as data from './sampledata.helper'
 
 // create a WS instance
 const TestServerAddress = 'ws://localhost:31274'
@@ -52,11 +65,11 @@ describe('GatewaySession', () => {
 
       describe('Error', () => {
         it('should call the callback', (done) => {
-          const response = Util.newGatewayResponse('some error')
+          const response = newGatewayResponse('some error')
 
           // Register the callbacks
           gs.addEventListener(
-            GatewaySession.ErrorEvent,
+            ErrorEvent,
             (event) => {
               expect(event.detail).toEqual('some error')
               done()
@@ -69,11 +82,11 @@ describe('GatewaySession', () => {
       })
       describe('NewItem', () => {
         it('should call the callback', (done) => {
-          const response = Util.newGatewayResponse(data.itemData.dylan)
+          const response = newGatewayResponse(data.itemData.dylan)
 
           // Register the callbacks
           gs.addEventListener(
-            GatewaySession.NewItemEvent,
+            NewItemEvent,
             (event) => {
               expect(event.detail.getType()).toEqual(data.item.dylan.getType())
               done()
@@ -86,11 +99,11 @@ describe('GatewaySession', () => {
       })
       describe('NewEdge', () => {
         it('should call the callback', (done) => {
-          const response = Util.newGatewayResponse(data.edgeData.basic)
+          const response = newGatewayResponse(data.edgeData.basic)
 
           // Register the callbacks
           gs.addEventListener(
-            GatewaySession.NewEdgeEvent,
+            NewEdgeEvent,
             (event) => {
               expect(event.detail.getFrom()).toEqual(data.edge.basic.getFrom())
               expect(event.detail.getTo()).toEqual(data.edge.basic.getTo())
@@ -104,11 +117,11 @@ describe('GatewaySession', () => {
       })
       describe('NewItemRequestError', () => {
         it('should call the callback', (done) => {
-          const response = Util.newGatewayResponse(data.errorData.NOSCOPE)
+          const response = newGatewayResponse(data.errorData.NOSCOPE)
 
           // Register the callbacks
           gs.addEventListener(
-            GatewaySession.NewItemRequestErrorEvent,
+            NewItemRequestErrorEvent,
             (event) => {
               expect(event.detail.getScope()).toEqual(
                 data.error.NOSCOPE.getScope()
@@ -126,13 +139,11 @@ describe('GatewaySession', () => {
       })
       describe('Status', () => {
         it('should call the callback', (done) => {
-          const response = Util.newGatewayResponse(
-            data.gatewayStatusData.working
-          )
+          const response = newGatewayResponse(data.gatewayStatusData.working)
 
           // Register the callbacks
           gs.addEventListener(
-            GatewaySession.StatusEvent,
+            StatusEvent,
             (event) => {
               expect(event.detail.getPostprocessingcomplete()).toEqual(
                 data.gatewayStatus.working.getPostprocessingcomplete()
@@ -149,16 +160,12 @@ describe('GatewaySession', () => {
         })
 
         it('should update the status', (done) => {
-          const working = Util.newGatewayResponse(
-            data.gatewayStatusData.working
-          )
-          const doneResponse = Util.newGatewayResponse(
-            data.gatewayStatusData.done
-          )
+          const working = newGatewayResponse(data.gatewayStatusData.working)
+          const doneResponse = newGatewayResponse(data.gatewayStatusData.done)
 
           // Register the callbacks
           gs.addEventListener(
-            GatewaySession.StatusEvent,
+            StatusEvent,
             () => {
               expect(gs.status?.postprocessingcomplete).toEqual(
                 data.gatewayStatus.working.getPostprocessingcomplete()
@@ -169,7 +176,7 @@ describe('GatewaySession', () => {
 
               // Add the second test
               gs.addEventListener(
-                GatewaySession.StatusEvent,
+                StatusEvent,
                 () => {
                   expect(gs.status?.postprocessingcomplete).toEqual(
                     data.gatewayStatus.done.getPostprocessingcomplete()
@@ -209,13 +216,13 @@ describe('GatewaySession', () => {
       expect(gs.state()).toBe(WebSocket.OPEN)
 
       const close = new Promise<CloseEvent>((resolve) => {
-        gs.addEventListener(GatewaySession.CloseEvent, (event) => {
+        gs.addEventListener(CloseEvent, (event) => {
           resolve(event.detail)
         })
       })
 
       const error = new Promise<void>((resolve) => {
-        gs.addEventListener(GatewaySession.SocketErrorEvent, () => {
+        gs.addEventListener(SocketErrorEvent, () => {
           resolve()
         })
       })
@@ -235,7 +242,7 @@ describe('GatewaySession', () => {
       expect(gs.state()).toBe(WebSocket.OPEN)
 
       const close = new Promise<CloseEvent>((resolve) => {
-        gs.addEventListener(GatewaySession.CloseEvent, (event) => {
+        gs.addEventListener(CloseEvent, (event) => {
           resolve(event.detail)
         })
       })
@@ -260,7 +267,7 @@ describe('GatewaySession', () => {
       expect(gs.state()).toBe(WebSocket.OPEN)
 
       const close = new Promise<CloseEvent>((resolve) => {
-        gs.addEventListener(GatewaySession.CloseEvent, (event) => {
+        gs.addEventListener(CloseEvent, (event) => {
           resolve(event.detail)
         })
       })

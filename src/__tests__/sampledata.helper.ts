@@ -1,8 +1,16 @@
-import { Util } from '../../index'
 import {
-  ItemRequestError,
-  ResponderState,
-} from '../../__generated__/responses_pb'
+  ItemRequestData,
+  newEdge,
+  newGatewayRequest,
+  newGatewayRequestStatus,
+  newItem,
+  newItemAttributes,
+  newItemRequest,
+  newItemRequestError,
+  newReference,
+  newResponse,
+} from '../Util'
+import { ItemRequestError, ResponderState } from '../__generated__'
 
 export const errorData = {
   NOTFOUND: {
@@ -23,9 +31,9 @@ export const errorData = {
 }
 
 export const error = {
-  NOTFOUND: Util.newItemRequestError(errorData.NOTFOUND),
-  NOSCOPE: Util.newItemRequestError(errorData.NOSCOPE),
-  OTHER: Util.newItemRequestError(errorData.OTHER),
+  NOTFOUND: newItemRequestError(errorData.NOTFOUND),
+  NOSCOPE: newItemRequestError(errorData.NOSCOPE),
+  OTHER: newItemRequestError(errorData.OTHER),
 }
 
 export const responseData = {
@@ -50,13 +58,13 @@ export const responseData = {
 }
 
 export const response = {
-  WORKING: Util.newResponse(responseData.WORKING),
-  COMPLETE: Util.newResponse(responseData.COMPLETE),
-  CANCELLED: Util.newResponse(responseData.CANCELLED),
-  ERROR: Util.newResponse(responseData.ERROR),
+  WORKING: newResponse(responseData.WORKING),
+  COMPLETE: newResponse(responseData.COMPLETE),
+  CANCELLED: newResponse(responseData.CANCELLED),
+  ERROR: newResponse(responseData.ERROR),
 }
 
-const ListData: Util.ItemRequestData = {
+const ListData: ItemRequestData = {
   type: 'package',
   method: 'LIST',
   linkDepth: 90,
@@ -73,7 +81,7 @@ export const requestData = {
 }
 
 export const request = {
-  LIST: Util.newItemRequest(requestData.LIST),
+  LIST: newItemRequest(requestData.LIST),
 }
 
 export const itemData = {
@@ -81,7 +89,7 @@ export const itemData = {
     type: 'process',
     scope: 'myPod',
     uniqueAttribute: 'pid',
-    attributes: Util.newItemAttributes({
+    attributes: newItemAttributes({
       pid: 12323,
       state: 'running',
       cpuPercent: 99.99,
@@ -94,13 +102,13 @@ export const itemData = {
     scope: 'global',
     uniqueAttribute: 'name',
     type: 'person',
-    attributes: Util.newItemAttributes({
+    attributes: newItemAttributes({
       name: 'dylan',
       age: 27,
     }),
     linkedItemRequests: [],
     linkedItems: [
-      Util.newReference({
+      newReference({
         scope: 'global',
         type: 'person',
         uniqueAttributeValue: 'katie',
@@ -112,7 +120,7 @@ export const itemData = {
     scope: 'global',
     uniqueAttribute: 'name',
     type: 'person',
-    attributes: Util.newItemAttributes({
+    attributes: newItemAttributes({
       name: 'katie',
       age: 28,
     }),
@@ -123,9 +131,9 @@ export const itemData = {
 }
 
 export const item = {
-  process: Util.newItem(itemData.process),
-  dylan: Util.newItem(itemData.dylan),
-  katie: Util.newItem(itemData.katie),
+  process: newItem(itemData.process),
+  dylan: newItem(itemData.dylan),
+  katie: newItem(itemData.katie),
 }
 
 export const items = [item.process, item.dylan, item.katie]
@@ -148,8 +156,8 @@ export const gatewayRequestData = {
 }
 
 export const gatewayRequest = {
-  itemRequest: Util.newGatewayRequest(gatewayRequestData.itemRequest, 0),
-  cancel: Util.newGatewayRequest(gatewayRequestData.cancel, 0),
+  itemRequest: newGatewayRequest(gatewayRequestData.itemRequest, 0),
+  cancel: newGatewayRequest(gatewayRequestData.cancel, 0),
 }
 
 export const gatewayStatusData = {
@@ -190,8 +198,8 @@ export const gatewayStatusData = {
 }
 
 export const gatewayStatus = {
-  working: Util.newGatewayRequestStatus(gatewayStatusData.working),
-  done: Util.newGatewayRequestStatus(gatewayStatusData.done),
+  working: newGatewayRequestStatus(gatewayStatusData.working),
+  done: newGatewayRequestStatus(gatewayStatusData.done),
 }
 
 export const edgeData = {
@@ -210,5 +218,5 @@ export const edgeData = {
 }
 
 export const edge = {
-  basic: Util.newEdge(edgeData.basic),
+  basic: newEdge(edgeData.basic),
 }

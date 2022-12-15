@@ -1,7 +1,12 @@
 import { GatewaySession } from './GatewaySession'
-import { Util } from './Util'
-import { Item } from './__generated__/items_pb'
+import {
+  getAttributeValue,
+  getUniqueattributevalue,
+  newGatewayRequest,
+  newUUIDString,
+} from './Util'
 import { stringify as uuidStringify } from 'uuid'
+import { Item } from './__generated__/'
 
 /**
  * Result that combines the actual result with the score
@@ -75,7 +80,7 @@ export class Autocomplete {
     if (this.currentRequestUUID !== '') {
       // Cancel any running requests
       this.session.sendRequest(
-        Util.newGatewayRequest(
+        newGatewayRequest(
           {
             UUID: this.currentRequestUUID,
           },
@@ -87,7 +92,7 @@ export class Autocomplete {
     // Delete current autocomplete options
     this.results = []
 
-    const uuid = Util.newUUIDString()
+    const uuid = newUUIDString()
 
     let type: string
 
@@ -101,7 +106,7 @@ export class Autocomplete {
     }
 
     // Create a new request
-    const request = Util.newGatewayRequest(
+    const request = newGatewayRequest(
       {
         scope: 'global',
         linkDepth: 0,
@@ -137,7 +142,7 @@ export class Autocomplete {
         const attributes = item.getAttributes()
 
         if (attributes !== undefined) {
-          const attributeScore = Util.getAttributeValue(attributes, 'score')
+          const attributeScore = getAttributeValue(attributes, 'score')
           if (typeof attributeScore === 'number') {
             score = attributeScore
           }
@@ -145,7 +150,7 @@ export class Autocomplete {
 
         // Add the result
         this.results.push({
-          value: Util.getUniqueattributevalue(item),
+          value: getUniqueattributevalue(item),
           score: score,
         })
 

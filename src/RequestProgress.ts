@@ -1,6 +1,5 @@
-import { ItemRequest } from './__generated__/items_pb'
-import { ResponderState, Response } from './__generated__/responses_pb'
 import { Responder } from './Responder'
+import { ItemRequest, ResponderState, Response } from './__generated__/'
 
 export class RequestProgress {
   responders: Map<string, Responder> = new Map<string, Responder>()

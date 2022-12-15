@@ -1,5 +1,9 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { RequestProgress } from '../../'
-import * as data from './sampledata'
+import * as data from './sampledata.helper'
 
 describe('RequestProgress', () => {
   beforeAll(() => {

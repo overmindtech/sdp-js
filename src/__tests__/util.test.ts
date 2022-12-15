@@ -1,23 +1,52 @@
+/**
+ * @jest-environment node
+ */
+// setting jest environment to 'node' because crypto.subtle can only be run in a secure context (https) and jsdom is unable to provide that
+
 import { Struct } from 'google-protobuf/google/protobuf/struct_pb'
 import { v4 as uuidv4, parse as uuidparse } from 'uuid'
-import { ItemData } from '../../types'
-import { Util } from '../../Util'
+import { ItemData } from '../Types'
+import {
+  CancelItemRequestData,
+  gatewayRequestStatusDone,
+  getAttributeValue,
+  getHash,
+  getReference,
+  getUniqueattributevalue,
+  ItemRequestData,
+  MetadataData,
+  newCancelItemRequest,
+  newEdge,
+  newGatewayRequest,
+  newGatewayRequestStatus,
+  newGatewayResponse,
+  newItem,
+  newItemAttributes,
+  newItemRequest,
+  newItemRequestError,
+  newMetadata,
+  newReference,
+  newResponse,
+  newUUID,
+  ResponseData,
+  toDate,
+  toDuration,
+  toMs,
+} from '../Util'
 import {
   Item,
   ItemAttributes,
   RequestMethod,
-} from '../../__generated__/items_pb'
-import {
   ItemRequestError,
   ResponderState,
-} from '../../__generated__/responses_pb'
-import * as data from './sampledata'
+} from '../__generated__/'
+import * as data from './sampledata.helper'
 
 describe('Util namespace', () => {
   describe('#newUUID', () => {
     it('throws no errors', () => {
-      const u1 = Util.newUUID()
-      const u2 = Util.newUUID()
+      const u1 = newUUID()
+      const u2 = newUUID()
 
       expect(u1).not.toEqual(u2)
     })
@@ -26,20 +55,20 @@ describe('Util namespace', () => {
   describe('#getUniqueattributevalue()', function () {
     it('should handle an item with a string UAV', function () {
       data.items.forEach((item: Item) => {
-        const uav = Util.getUniqueattributevalue(item)
+        const uav = getUniqueattributevalue(item)
 
         expect(uav).not.toEqual('')
       })
     })
 
     it('should actually return the unadulterated string', function () {
-      const uav = Util.getUniqueattributevalue(data.item.dylan)
+      const uav = getUniqueattributevalue(data.item.dylan)
 
       expect(uav).toEqual('dylan')
     })
 
     it('should actually return the unadulterated integer (as a string)', function () {
-      const uav = Util.getUniqueattributevalue(data.item.process)
+      const uav = getUniqueattributevalue(data.item.process)
 
       expect(uav).toEqual('12323')
     })
@@ -47,27 +76,27 @@ describe('Util namespace', () => {
 
   describe('#getHash()', function () {
     it('should work for items', async () => {
-      const hash = await Util.getHash(data.item.dylan)
+      const hash = await getHash(data.item.dylan)
       expect(hash).not.toEqual('')
     })
 
     it('should work for references', async () => {
-      const ref = Util.getReference(data.item.dylan)
-      const hash = await Util.getHash(ref)
+      const ref = getReference(data.item.dylan)
+      const hash = await getHash(ref)
       expect(hash).not.toEqual('')
     })
   })
 
   describe('#toDuration()', function () {
     it('should handle nice round numbers', () => {
-      const d = Util.toDuration(1000)
+      const d = toDuration(1000)
 
       expect(d.getSeconds()).toEqual(1)
       expect(d.getNanos()).toEqual(0)
     })
 
     it('should handle less round numbers', () => {
-      const d = Util.toDuration(5432)
+      const d = toDuration(5432)
 
       expect(d.getSeconds()).toEqual(5)
       expect(d.getNanos()).toEqual(432000000)
@@ -86,7 +115,7 @@ describe('Util namespace', () => {
 
     for (const [k, v] of Object.entries(equalData)) {
       it(`should handle ${k}`, function () {
-        const actual = Util.getAttributeValue(equalAttrs, k)
+        const actual = getAttributeValue(equalAttrs, k)
         expect(actual).toEqual(v)
       })
     }
@@ -102,7 +131,7 @@ describe('Util namespace', () => {
 
     for (const [k, v] of Object.entries(deepEqualData)) {
       it(`should handle ${k}`, function () {
-        expect(Util.getAttributeValue(deepEqualAttrs, k)).toEqual(v)
+        expect(getAttributeValue(deepEqualAttrs, k)).toEqual(v)
       })
     }
   })
@@ -119,7 +148,7 @@ describe('Util namespace', () => {
 
     for (const [k, v] of Object.entries(equalData)) {
       it(`should handle ${k}`, function () {
-        const actual = Util.getAttributeValue(equalAttrs, k)
+        const actual = getAttributeValue(equalAttrs, k)
         expect(actual).toEqual(v)
       })
     }
@@ -135,13 +164,13 @@ describe('Util namespace', () => {
 
     for (const [k, v] of Object.entries(deepEqualData)) {
       it(`should handle ${k}`, function () {
-        expect(Util.getAttributeValue(deepEqualAttrs, k)).toEqual(v)
+        expect(getAttributeValue(deepEqualAttrs, k)).toEqual(v)
       })
     }
   })
 
   describe('#newItemRequestError()', () => {
-    const e = Util.newItemRequestError({
+    const e = newItemRequestError({
       scope: 'cont',
       errorString: 'err',
       errorType: ItemRequestError.ErrorType.NOTFOUND,
@@ -159,7 +188,7 @@ describe('Util namespace', () => {
       scope: 'global',
     }
 
-    const ref = Util.newReference(data)
+    const ref = newReference(data)
 
     it('should have the correct Type', () => {
       expect(ref.getType()).toEqual(data.type)
@@ -175,7 +204,7 @@ describe('Util namespace', () => {
   })
 
   describe('#newItemRequest()', function () {
-    const data: Util.ItemRequestData = {
+    const data: ItemRequestData = {
       type: 'person',
       method: 'GET',
       query: 'Sebastian',
@@ -188,7 +217,7 @@ describe('Util namespace', () => {
       timeoutMs: 10000,
     }
 
-    const ir = Util.newItemRequest(data)
+    const ir = newItemRequest(data)
 
     it('should have the correct Type', () => {
       expect(ir.getType()).toEqual(data.type)
@@ -221,7 +250,7 @@ describe('Util namespace', () => {
     describe('with a string UUID', () => {
       data.UUID = uuidv4()
 
-      const ir = Util.newItemRequest(data)
+      const ir = newItemRequest(data)
 
       it('should have parsed the UUID', () => {
         expect(ir.getUuid().length).toBeGreaterThan(0)
@@ -231,7 +260,7 @@ describe('Util namespace', () => {
 
   describe('#newMetadata()', function () {
     const uuid = Uint8Array.from(uuidparse(uuidv4()))
-    const data: Util.MetadataData = {
+    const data: MetadataData = {
       sourceName: 'packages',
       sourceRequest: {
         scope: 'sourceScope',
@@ -250,7 +279,7 @@ describe('Util namespace', () => {
       sourceDurationPerItem: 23,
     }
 
-    const m = Util.newMetadata(data)
+    const m = newMetadata(data)
 
     it('should have the correct Backendname', () => {
       expect(m.getSourcename()).toEqual(data.sourceName)
@@ -274,7 +303,7 @@ describe('Util namespace', () => {
         const timeout = sr.getTimeout()
 
         if (typeof timeout != 'undefined') {
-          expect(Util.toMs(timeout)).toEqual(10000)
+          expect(toMs(timeout)).toEqual(10000)
         }
       }
     })
@@ -283,7 +312,7 @@ describe('Util namespace', () => {
       const ts = m.getTimestamp()
 
       if (typeof ts != 'undefined') {
-        expect(Util.toDate(ts)).toEqual(data.timestamp)
+        expect(toDate(ts)).toEqual(data.timestamp)
       }
     })
 
@@ -291,7 +320,7 @@ describe('Util namespace', () => {
       const duration = m.getSourceduration()
 
       if (typeof duration != 'undefined') {
-        const date = Util.toDate(duration)
+        const date = toDate(duration)
 
         expect(date.getSeconds() * 1000 + date.getMilliseconds()).toEqual(
           data.sourceDuration
@@ -303,7 +332,7 @@ describe('Util namespace', () => {
       const duration = m.getSourcedurationperitem()
 
       if (typeof duration != 'undefined') {
-        const date = Util.toDate(duration)
+        const date = toDate(duration)
 
         expect(date.getSeconds() * 1000 + date.getMilliseconds()).toEqual(
           data.sourceDurationPerItem
@@ -317,7 +346,7 @@ describe('Util namespace', () => {
       type: 'person',
       uniqueAttribute: 'name',
       scope: 'global',
-      attributes: Util.newItemAttributes({
+      attributes: newItemAttributes({
         name: 'Dylan',
       }),
       metadata: undefined,
@@ -325,7 +354,7 @@ describe('Util namespace', () => {
       linkedItems: [],
     }
 
-    const i = Util.newItem(data)
+    const i = newItem(data)
 
     it('should have the correct Type', () => {
       expect(i.getType()).toEqual(data.type)
@@ -359,13 +388,13 @@ describe('Util namespace', () => {
   })
 
   describe('#newResponse()', function () {
-    const data: Util.ResponseData = {
+    const data: ResponseData = {
       responder: 'test.scope',
       state: ResponderState.ERROR,
       nextUpdateInMs: 0,
     }
 
-    const r = Util.newResponse(data)
+    const r = newResponse(data)
 
     it('should have the correct Responder', () => {
       expect(r.getResponder()).toEqual('test.scope')
@@ -378,11 +407,11 @@ describe('Util namespace', () => {
 
   describe('#newCancelItemRequest()', function () {
     describe('with a string UUID', function () {
-      const data: Util.CancelItemRequestData = {
+      const data: CancelItemRequestData = {
         UUID: 'bcee962c-ca60-479b-8a96-ab970d878392',
       }
 
-      const c = Util.newCancelItemRequest(data)
+      const c = newCancelItemRequest(data)
 
       it('should have the correct UUID', () => {
         const expected = Uint8Array.from([
@@ -394,14 +423,14 @@ describe('Util namespace', () => {
     })
 
     describe('with a binary UUID', function () {
-      const data: Util.CancelItemRequestData = {
+      const data: CancelItemRequestData = {
         UUID: Uint8Array.from([
           188, 238, 150, 44, 202, 96, 71, 155, 138, 150, 171, 151, 13, 135, 131,
           146,
         ]),
       }
 
-      const c = Util.newCancelItemRequest(data)
+      const c = newCancelItemRequest(data)
 
       it('should have the correct UUID', () => {
         const expected = Uint8Array.from([
@@ -415,7 +444,7 @@ describe('Util namespace', () => {
 
   describe('#newGatewayRequest()', () => {
     describe('with an ItemRequestCancel', function () {
-      const g = Util.newGatewayRequest(
+      const g = newGatewayRequest(
         {
           UUID: 'bcee962c-ca60-479b-8a96-ab970d878392',
         },
@@ -436,12 +465,12 @@ describe('Util namespace', () => {
 
         expect(cancel).not.toBeUndefined
         expect(cancel?.getUuid_asU8()).toEqual(expected)
-        expect(g.getMinstatusinterval()).toEqual(Util.toDuration(100))
+        expect(g.getMinstatusinterval()).toEqual(toDuration(100))
       })
     })
 
     describe('with an ItemRequest', function () {
-      const data: Util.ItemRequestData = {
+      const data: ItemRequestData = {
         type: 'person',
         method: 'GET',
         query: 'Sebastian',
@@ -454,7 +483,7 @@ describe('Util namespace', () => {
         timeoutMs: 10000,
       }
 
-      const g = Util.newGatewayRequest(data, 100)
+      const g = newGatewayRequest(data, 100)
 
       it('should be the correct type', () => {
         expect(g.hasCancel()).toEqual(false)
@@ -480,7 +509,7 @@ describe('Util namespace', () => {
   })
 
   describe('#newEdge()', function () {
-    const e = Util.newEdge({
+    const e = newEdge({
       from: {
         scope: 'global',
         type: 'person',
@@ -513,7 +542,7 @@ describe('Util namespace', () => {
     states.set('responder.error', ResponderState.ERROR)
     states.set('responder.working', ResponderState.WORKING)
 
-    const s = Util.newGatewayRequestStatus({
+    const s = newGatewayRequestStatus({
       summary: {
         cancelled: 1,
         complete: 1,
@@ -569,7 +598,7 @@ describe('Util namespace', () => {
     states.set('responder.error', ResponderState.ERROR)
     states.set('responder.working', ResponderState.WORKING)
 
-    const s = Util.newGatewayRequestStatus({
+    const s = newGatewayRequestStatus({
       summary: {
         cancelled: 1,
         complete: 1,
@@ -583,23 +612,23 @@ describe('Util namespace', () => {
     })
 
     it('handles when people are still responding', () => {
-      expect(Util.gatewayRequestStatusDone(s)).toEqual(false)
+      expect(gatewayRequestStatusDone(s)).toEqual(false)
     })
 
     it('handles when all responders are complete but post-processing isnt', () => {
       s.getSummary()?.setWorking(0)
       s.getSummary()?.setComplete(2)
-      expect(Util.gatewayRequestStatusDone(s)).toEqual(false)
+      expect(gatewayRequestStatusDone(s)).toEqual(false)
     })
 
     it('handles when all responders are complete and so is prost-processing', () => {
       s.setPostprocessingcomplete(true)
-      expect(Util.gatewayRequestStatusDone(s)).toEqual(true)
+      expect(gatewayRequestStatusDone(s)).toEqual(true)
     })
 
     it('handles when post processing is complete and workers arent', () => {
       s.getSummary()?.setWorking(1)
-      expect(Util.gatewayRequestStatusDone(s)).toEqual(false)
+      expect(gatewayRequestStatusDone(s)).toEqual(false)
     })
   })
 
@@ -609,7 +638,7 @@ describe('Util namespace', () => {
         type: 'person',
         uniqueAttribute: 'name',
         scope: 'global',
-        attributes: Util.newItemAttributes({
+        attributes: newItemAttributes({
           name: 'Dylan',
         }),
         metadata: undefined,
@@ -618,7 +647,7 @@ describe('Util namespace', () => {
       }
 
       it('should return the correct type', () => {
-        const resp = Util.newGatewayResponse(data)
+        const resp = newGatewayResponse(data)
         expect(resp.hasNewitem()).toEqual(true)
       })
     })
@@ -637,7 +666,7 @@ describe('Util namespace', () => {
       }
 
       it('should return the correct type', () => {
-        const resp = Util.newGatewayResponse(data)
+        const resp = newGatewayResponse(data)
         expect(resp.hasNewedge()).toEqual(true)
       })
     })
@@ -649,7 +678,7 @@ describe('Util namespace', () => {
       }
 
       it('should return the correct type', () => {
-        const resp = Util.newGatewayResponse(data)
+        const resp = newGatewayResponse(data)
         expect(resp.hasNewitemrequesterror()).toEqual(true)
       })
     })
@@ -674,7 +703,7 @@ describe('Util namespace', () => {
       }
 
       it('should return the correct type', () => {
-        const resp = Util.newGatewayResponse(data)
+        const resp = newGatewayResponse(data)
         expect(resp.hasStatus()).toEqual(true)
       })
     })
@@ -682,7 +711,7 @@ describe('Util namespace', () => {
       const data = 'foo'
 
       it('should return the correct type', () => {
-        const resp = Util.newGatewayResponse(data)
+        const resp = newGatewayResponse(data)
         expect(resp.hasError()).toEqual(true)
       })
     })

@@ -3,8 +3,9 @@ import {
   Metadata,
   ItemRequest,
   Reference,
-} from './__generated__/items_pb'
-import { ItemRequestError, ResponderState } from './__generated__/responses_pb'
+  ResponderState,
+  ItemRequestError,
+} from './__generated__'
 
 export type EdgeData = {
   from: ReferenceData

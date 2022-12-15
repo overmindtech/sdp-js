@@ -1,6 +1,13 @@
 import WS from 'jest-websocket-mock'
-import { Autocomplete, AutocompleteField, GatewaySession, Util } from '../../'
-import { GatewayRequest } from '../../__generated__/gateway_pb'
+import {
+  Autocomplete,
+  AutocompleteField,
+  GatewaySession,
+  newGatewayResponse,
+  newItemAttributes,
+  newMetadata,
+} from '..'
+import { GatewayRequest } from '../__generated__/'
 
 const TestServerAddress = 'ws://localhost:31035'
 
@@ -104,14 +111,14 @@ describe('Autocomplete', () => {
 
           const u = req.getRequest()?.getUuid_asU8()
 
-          const resp = Util.newGatewayResponse({
+          const resp = newGatewayResponse({
             type: 'overmind-type',
             uniqueAttribute: 'name',
             scope: 'global',
-            attributes: Util.newItemAttributes({
+            attributes: newItemAttributes({
               name: 'person',
             }),
-            metadata: Util.newMetadata({
+            metadata: newMetadata({
               sourceDuration: 0,
               sourceDurationPerItem: 0,
               sourceName: 'overmind-type-metasource',
