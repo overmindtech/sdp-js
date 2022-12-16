@@ -5,7 +5,6 @@
 
 import { Struct } from 'google-protobuf/google/protobuf/struct_pb'
 import { v4 as uuidv4, parse as uuidparse } from 'uuid'
-import { ItemData } from '../Types'
 import {
   CancelItemRequestData,
   gatewayRequestStatusDone,
@@ -13,6 +12,7 @@ import {
   getHash,
   getReference,
   getUniqueattributevalue,
+  ItemData,
   ItemRequestData,
   MetadataData,
   newCancelItemRequest,
