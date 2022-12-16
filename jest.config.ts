@@ -1,12 +1,9 @@
-import type { Config } from '@jest/types';
+import type { Config } from 'jest'
 
-const esModules = ["uuid"].join("|");
+const config: Config = {
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom',
+  testPathIgnorePatterns: ['.helper.ts'],
+}
 
-// Sync object
-const config: Config.InitialOptions = {
-    transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
-    verbose: true,
-    testEnvironment: 'jsdom',
-};
-
-export default config;
+export default config
