@@ -11,9 +11,10 @@
 /* eslint-disable */
 // @ts-nocheck
 
+var isBrowser = typeof window !== 'undefined'
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = (function() { return this || window || global || self || Function('return this')(); }).call(null);
+var global = isBrowser ? (function() { return this || window || global || self || Function('return this')(); }).call(null) : {}
 
 var items_pb = require('./items_pb.js');
 goog.object.extend(proto, items_pb);
