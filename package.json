@@ -6,7 +6,7 @@
   "main": "./lib/cjs/index.js",
   "scripts": {
     "clean": "rm -rf ./lib",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build": "npm run clean && npm run build:cjs",
     "build:esm": "tsc -p ./tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
     "build:cjs": "tsc -p ./tsconfig.cjs.json",
     "prepack": "npm run build",
@@ -16,19 +16,9 @@
     "typecheck:esm": "tsc -p ./tsconfig.esm.json --noEmit",
     "typecheck:cjs": "tsc -p ./tsconfig.cjs.json --noEmit",
     "typecheck": "npm run typecheck:esm && npm run typecheck:cjs",
-    "prettier:check": "prettier ./src --check"
-  },
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./lib/esm/types/index.d.ts",
-        "default": "./lib/esm/index.mjs"
-      },
-      "require": {
-        "types": "./lib/cjs/types/index.d.ts",
-        "default": "./lib/cjs/index.js"
-      }
-    }
+    "prettier:check": "prettier ./src --check",
+    "minify-pb-files": "npx uglify-js --compress --in-situ `find lib/cjs/__generated__ -type f -name '*.js'`",
+    "postbuild": "npm run minify-pb-files"
   },
   "files": [
     "lib/**/*"
@@ -54,7 +44,8 @@
     "prettier": "^2.8.1",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "uglify-js": "^3.17.4"
   },
   "repository": {
     "type": "git",
