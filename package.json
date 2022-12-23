@@ -1,9 +1,12 @@
 {
   "name": "@overmindtech/sdp-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Javascript and Typescript libraries for the State Description Protocol",
   "types": "./lib/cjs/types/index.d.ts",
   "main": "./lib/cjs/index.js",
+  "exports": {
+    ".": "./lib/cjs/index.js"
+  },
   "scripts": {
     "clean": "rm -rf ./lib",
     "build": "npm run clean && npm run build:cjs",
@@ -17,8 +20,9 @@
     "typecheck:cjs": "tsc -p ./tsconfig.cjs.json --noEmit",
     "typecheck": "npm run typecheck:esm && npm run typecheck:cjs",
     "prettier:check": "prettier ./src --check",
-    "minify-pb-files": "npx uglify-js --compress --in-situ `find lib/cjs/__generated__ -type f -name '*.js'`",
-    "postbuild": "npm run minify-pb-files",
+    "minify-pb-files": "npx uglify-js --compress --in-situ `find lib/cjs/__generated__/ -type f -name '*.js'`",
+    "copy-declaration-files": "cp ./src/__generated__/*.d.ts ./lib/cjs/types/__generated__/",
+    "postbuild": "npm run minify-pb-files && npm run copy-declaration-files",
     "semantic-release": "semantic-release"
   },
   "files": [

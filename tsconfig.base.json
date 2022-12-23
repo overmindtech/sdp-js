@@ -7,9 +7,9 @@
     "checkJs": true,
     "allowJs": true,
     "declaration": true,
-    "declarationMap": true,
+    "declarationMap": false,
     "allowSyntheticDefaultImports": true
   },
   "files": ["./src/index.ts"],
-  "include": ["./src/__generated__"]
+  "include": ["./src/__generated__/"]
 }
