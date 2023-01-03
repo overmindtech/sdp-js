@@ -9,17 +9,90 @@ import * as items_pb from "./items_pb";
 import * as responses_pb from "./responses_pb";
 import * as google_protobuf_duration_pb from "google-protobuf/google/protobuf/duration_pb";
 
+export class UndoItemRequest extends jspb.Message { 
+    getUuid(): Uint8Array | string;
+    getUuid_asU8(): Uint8Array;
+    getUuid_asB64(): string;
+    setUuid(value: Uint8Array | string): UndoItemRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): UndoItemRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: UndoItemRequest): UndoItemRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: UndoItemRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): UndoItemRequest;
+    static deserializeBinaryFromReader(message: UndoItemRequest, reader: jspb.BinaryReader): UndoItemRequest;
+}
+
+export namespace UndoItemRequest {
+    export type AsObject = {
+        uuid: Uint8Array | string,
+    }
+}
+
+export class ExpandItemRequest extends jspb.Message { 
+
+    hasItem(): boolean;
+    clearItem(): void;
+    getItem(): items_pb.Reference | undefined;
+    setItem(value?: items_pb.Reference): ExpandItemRequest;
+    getLinkdepth(): number;
+    setLinkdepth(value: number): ExpandItemRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ExpandItemRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ExpandItemRequest): ExpandItemRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ExpandItemRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ExpandItemRequest;
+    static deserializeBinaryFromReader(message: ExpandItemRequest, reader: jspb.BinaryReader): ExpandItemRequest;
+}
+
+export namespace ExpandItemRequest {
+    export type AsObject = {
+        item?: items_pb.Reference.AsObject,
+        linkdepth: number,
+    }
+}
+
 export class GatewayRequest extends jspb.Message { 
 
-    hasRequest(): boolean;
-    clearRequest(): void;
-    getRequest(): items_pb.ItemRequest | undefined;
-    setRequest(value?: items_pb.ItemRequest): GatewayRequest;
+    hasNewrequest(): boolean;
+    clearNewrequest(): void;
+    getNewrequest(): items_pb.ItemRequest | undefined;
+    setNewrequest(value?: items_pb.ItemRequest): GatewayRequest;
 
-    hasCancel(): boolean;
-    clearCancel(): void;
-    getCancel(): items_pb.CancelItemRequest | undefined;
-    setCancel(value?: items_pb.CancelItemRequest): GatewayRequest;
+    hasCancelrequest(): boolean;
+    clearCancelrequest(): void;
+    getCancelrequest(): items_pb.CancelItemRequest | undefined;
+    setCancelrequest(value?: items_pb.CancelItemRequest): GatewayRequest;
+
+    hasUndorequest(): boolean;
+    clearUndorequest(): void;
+    getUndorequest(): UndoItemRequest | undefined;
+    setUndorequest(value?: UndoItemRequest): GatewayRequest;
+
+    hasExcludeitem(): boolean;
+    clearExcludeitem(): void;
+    getExcludeitem(): items_pb.Reference | undefined;
+    setExcludeitem(value?: items_pb.Reference): GatewayRequest;
+
+    hasIncludeitem(): boolean;
+    clearIncludeitem(): void;
+    getIncludeitem(): items_pb.Reference | undefined;
+    setIncludeitem(value?: items_pb.Reference): GatewayRequest;
+
+    hasExpanditem(): boolean;
+    clearExpanditem(): void;
+    getExpanditem(): ExpandItemRequest | undefined;
+    setExpanditem(value?: ExpandItemRequest): GatewayRequest;
+
+    hasUnexpanditem(): boolean;
+    clearUnexpanditem(): void;
+    getUnexpanditem(): items_pb.Reference | undefined;
+    setUnexpanditem(value?: items_pb.Reference): GatewayRequest;
 
     hasMinstatusinterval(): boolean;
     clearMinstatusinterval(): void;
@@ -40,15 +113,25 @@ export class GatewayRequest extends jspb.Message {
 
 export namespace GatewayRequest {
     export type AsObject = {
-        request?: items_pb.ItemRequest.AsObject,
-        cancel?: items_pb.CancelItemRequest.AsObject,
+        newrequest?: items_pb.ItemRequest.AsObject,
+        cancelrequest?: items_pb.CancelItemRequest.AsObject,
+        undorequest?: UndoItemRequest.AsObject,
+        excludeitem?: items_pb.Reference.AsObject,
+        includeitem?: items_pb.Reference.AsObject,
+        expanditem?: ExpandItemRequest.AsObject,
+        unexpanditem?: items_pb.Reference.AsObject,
         minstatusinterval?: google_protobuf_duration_pb.Duration.AsObject,
     }
 
     export enum RequestTypeCase {
         REQUEST_TYPE_NOT_SET = 0,
-        REQUEST = 1,
-        CANCEL = 3,
+        NEWREQUEST = 1,
+        CANCELREQUEST = 3,
+        UNDOREQUEST = 4,
+        EXCLUDEITEM = 5,
+        INCLUDEITEM = 6,
+        EXPANDITEM = 7,
+        UNEXPANDITEM = 8,
     }
 
 }
