@@ -11,6 +11,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
+var isBrowser = typeof window !== 'undefined'
 var jspb = require('google-protobuf');
 var goog = jspb;
 var global = isBrowser ? (function() { return this || window || global || self || Function('return this')(); }).call(null) : {}
