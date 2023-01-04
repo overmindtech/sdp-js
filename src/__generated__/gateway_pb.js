@@ -1038,7 +1038,7 @@ proto.GatewayRequest.prototype.hasMinstatusinterval = function() {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.GatewayResponse.oneofGroups_ = [[2,3,6,4,5]];
+proto.GatewayResponse.oneofGroups_ = [[2,3,7,8,9,6,4,5]];
 
 /**
  * @enum {number}
@@ -1047,6 +1047,9 @@ proto.GatewayResponse.ResponseTypeCase = {
   RESPONSE_TYPE_NOT_SET: 0,
   NEWITEM: 2,
   NEWEDGE: 3,
+  DELETEITEM: 7,
+  DELETEEDGE: 8,
+  UPDATEITEM: 9,
   NEWITEMREQUESTERROR: 6,
   STATUS: 4,
   ERROR: 5
@@ -1092,6 +1095,9 @@ proto.GatewayResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     newitem: (f = msg.getNewitem()) && items_pb.Item.toObject(includeInstance, f),
     newedge: (f = msg.getNewedge()) && items_pb.Edge.toObject(includeInstance, f),
+    deleteitem: (f = msg.getDeleteitem()) && items_pb.Reference.toObject(includeInstance, f),
+    deleteedge: (f = msg.getDeleteedge()) && items_pb.Edge.toObject(includeInstance, f),
+    updateitem: (f = msg.getUpdateitem()) && items_pb.Item.toObject(includeInstance, f),
     newitemrequesterror: (f = msg.getNewitemrequesterror()) && responses_pb.ItemRequestError.toObject(includeInstance, f),
     status: (f = msg.getStatus()) && proto.GatewayRequestStatus.toObject(includeInstance, f),
     error: jspb.Message.getFieldWithDefault(msg, 5, "")
@@ -1140,6 +1146,21 @@ proto.GatewayResponse.deserializeBinaryFromReader = function(msg, reader) {
       var value = new items_pb.Edge;
       reader.readMessage(value,items_pb.Edge.deserializeBinaryFromReader);
       msg.setNewedge(value);
+      break;
+    case 7:
+      var value = new items_pb.Reference;
+      reader.readMessage(value,items_pb.Reference.deserializeBinaryFromReader);
+      msg.setDeleteitem(value);
+      break;
+    case 8:
+      var value = new items_pb.Edge;
+      reader.readMessage(value,items_pb.Edge.deserializeBinaryFromReader);
+      msg.setDeleteedge(value);
+      break;
+    case 9:
+      var value = new items_pb.Item;
+      reader.readMessage(value,items_pb.Item.deserializeBinaryFromReader);
+      msg.setUpdateitem(value);
       break;
     case 6:
       var value = new responses_pb.ItemRequestError;
@@ -1198,6 +1219,30 @@ proto.GatewayResponse.serializeBinaryToWriter = function(message, writer) {
       3,
       f,
       items_pb.Edge.serializeBinaryToWriter
+    );
+  }
+  f = message.getDeleteitem();
+  if (f != null) {
+    writer.writeMessage(
+      7,
+      f,
+      items_pb.Reference.serializeBinaryToWriter
+    );
+  }
+  f = message.getDeleteedge();
+  if (f != null) {
+    writer.writeMessage(
+      8,
+      f,
+      items_pb.Edge.serializeBinaryToWriter
+    );
+  }
+  f = message.getUpdateitem();
+  if (f != null) {
+    writer.writeMessage(
+      9,
+      f,
+      items_pb.Item.serializeBinaryToWriter
     );
   }
   f = message.getNewitemrequesterror();
@@ -1297,6 +1342,117 @@ proto.GatewayResponse.prototype.clearNewedge = function() {
  */
 proto.GatewayResponse.prototype.hasNewedge = function() {
   return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional Reference deleteItem = 7;
+ * @return {?proto.Reference}
+ */
+proto.GatewayResponse.prototype.getDeleteitem = function() {
+  return /** @type{?proto.Reference} */ (
+    jspb.Message.getWrapperField(this, items_pb.Reference, 7));
+};
+
+
+/**
+ * @param {?proto.Reference|undefined} value
+ * @return {!proto.GatewayResponse} returns this
+*/
+proto.GatewayResponse.prototype.setDeleteitem = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 7, proto.GatewayResponse.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.GatewayResponse} returns this
+ */
+proto.GatewayResponse.prototype.clearDeleteitem = function() {
+  return this.setDeleteitem(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.GatewayResponse.prototype.hasDeleteitem = function() {
+  return jspb.Message.getField(this, 7) != null;
+};
+
+
+/**
+ * optional Edge deleteEdge = 8;
+ * @return {?proto.Edge}
+ */
+proto.GatewayResponse.prototype.getDeleteedge = function() {
+  return /** @type{?proto.Edge} */ (
+    jspb.Message.getWrapperField(this, items_pb.Edge, 8));
+};
+
+
+/**
+ * @param {?proto.Edge|undefined} value
+ * @return {!proto.GatewayResponse} returns this
+*/
+proto.GatewayResponse.prototype.setDeleteedge = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 8, proto.GatewayResponse.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.GatewayResponse} returns this
+ */
+proto.GatewayResponse.prototype.clearDeleteedge = function() {
+  return this.setDeleteedge(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.GatewayResponse.prototype.hasDeleteedge = function() {
+  return jspb.Message.getField(this, 8) != null;
+};
+
+
+/**
+ * optional Item updateItem = 9;
+ * @return {?proto.Item}
+ */
+proto.GatewayResponse.prototype.getUpdateitem = function() {
+  return /** @type{?proto.Item} */ (
+    jspb.Message.getWrapperField(this, items_pb.Item, 9));
+};
+
+
+/**
+ * @param {?proto.Item|undefined} value
+ * @return {!proto.GatewayResponse} returns this
+*/
+proto.GatewayResponse.prototype.setUpdateitem = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 9, proto.GatewayResponse.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.GatewayResponse} returns this
+ */
+proto.GatewayResponse.prototype.clearUpdateitem = function() {
+  return this.setUpdateitem(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.GatewayResponse.prototype.hasUpdateitem = function() {
+  return jspb.Message.getField(this, 9) != null;
 };
 
 

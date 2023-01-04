@@ -148,6 +148,21 @@ export class GatewayResponse extends jspb.Message {
     getNewedge(): items_pb.Edge | undefined;
     setNewedge(value?: items_pb.Edge): GatewayResponse;
 
+    hasDeleteitem(): boolean;
+    clearDeleteitem(): void;
+    getDeleteitem(): items_pb.Reference | undefined;
+    setDeleteitem(value?: items_pb.Reference): GatewayResponse;
+
+    hasDeleteedge(): boolean;
+    clearDeleteedge(): void;
+    getDeleteedge(): items_pb.Edge | undefined;
+    setDeleteedge(value?: items_pb.Edge): GatewayResponse;
+
+    hasUpdateitem(): boolean;
+    clearUpdateitem(): void;
+    getUpdateitem(): items_pb.Item | undefined;
+    setUpdateitem(value?: items_pb.Item): GatewayResponse;
+
     hasNewitemrequesterror(): boolean;
     clearNewitemrequesterror(): void;
     getNewitemrequesterror(): responses_pb.ItemRequestError | undefined;
@@ -179,6 +194,9 @@ export namespace GatewayResponse {
     export type AsObject = {
         newitem?: items_pb.Item.AsObject,
         newedge?: items_pb.Edge.AsObject,
+        deleteitem?: items_pb.Reference.AsObject,
+        deleteedge?: items_pb.Edge.AsObject,
+        updateitem?: items_pb.Item.AsObject,
         newitemrequesterror?: responses_pb.ItemRequestError.AsObject,
         status?: GatewayRequestStatus.AsObject,
         error: string,
@@ -188,6 +206,9 @@ export namespace GatewayResponse {
         RESPONSE_TYPE_NOT_SET = 0,
         NEWITEM = 2,
         NEWEDGE = 3,
+        DELETEITEM = 7,
+        DELETEEDGE = 8,
+        UPDATEITEM = 9,
         NEWITEMREQUESTERROR = 6,
         STATUS = 4,
         ERROR = 5,

@@ -82,7 +82,9 @@ export class Autocomplete {
       this.session.sendRequest(
         newGatewayRequest(
           {
-            UUID: this.currentRequestUUID,
+            cancelRequest: {
+              UUID: this.currentRequestUUID,
+            }
           },
           1000
         )
@@ -108,13 +110,15 @@ export class Autocomplete {
     // Create a new request
     const request = newGatewayRequest(
       {
-        scope: 'global',
-        linkDepth: 0,
-        type: type,
-        method: 'SEARCH',
-        query: prompt,
-        UUID: uuid,
-        timeoutMs: 2_000,
+        newRequest: {
+          scope: 'global',
+          linkDepth: 0,
+          type: type,
+          method: 'SEARCH',
+          query: prompt,
+          UUID: uuid,
+          timeoutMs: 2_000,
+        }
       },
       500
     )

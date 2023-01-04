@@ -443,67 +443,197 @@ describe('Util namespace', () => {
   })
 
   describe('#newGatewayRequest()', () => {
-    describe('with an ItemRequestCancel', function () {
-      const g = newGatewayRequest(
-        {
-          UUID: 'bcee962c-ca60-479b-8a96-ab970d878392',
-        },
-        100
-      )
-
-      it('should be the correct type', () => {
-        expect(g.hasCancel()).toEqual(true)
-        expect(g.hasRequest()).toEqual(false)
+    describe('with data types', () => {
+      describe('with an ItemRequestCancel', function () {
+        const g = newGatewayRequest(
+          {
+            cancelRequest: {
+              UUID: 'bcee962c-ca60-479b-8a96-ab970d878392'
+            },
+          },
+          100
+        )
+  
+        it('should be the correct type', () => {
+          expect(g.hasCancelrequest()).toEqual(true)
+          expect(g.hasExcludeitem()).toEqual(false)
+          expect(g.hasIncludeitem()).toEqual(false)
+        })
+  
+        it('should be the correct details', () => {
+          const cancel = g.getCancelrequest()
+          const expected = Uint8Array.from([
+            188, 238, 150, 44, 202, 96, 71, 155, 138, 150, 171, 151, 13, 135, 131,
+            146,
+          ])
+  
+          expect(cancel).not.toBeUndefined
+          expect(cancel?.getUuid_asU8()).toEqual(expected)
+          expect(g.getMinstatusinterval()).toEqual(toDuration(100))
+        })
       })
-
-      it('should be the correct details', () => {
-        const cancel = g.getCancel()
-        const expected = Uint8Array.from([
-          188, 238, 150, 44, 202, 96, 71, 155, 138, 150, 171, 151, 13, 135, 131,
-          146,
-        ])
-
-        expect(cancel).not.toBeUndefined
-        expect(cancel?.getUuid_asU8()).toEqual(expected)
-        expect(g.getMinstatusinterval()).toEqual(toDuration(100))
+  
+      describe('with an ItemRequest', function () {
+        const data: ItemRequestData = {
+          type: 'person',
+          method: 'GET',
+          query: 'Sebastian',
+          linkDepth: 10,
+          scope: 'global',
+          itemSubject: 'subject1',
+          errorSubject: 'subject2',
+          responseSubject: 'subject3',
+          UUID: Uint8Array.from(uuidparse(uuidv4())),
+          timeoutMs: 10000,
+        }
+  
+        const g = newGatewayRequest({
+          newRequest: data,
+        }, 100)
+  
+        it('should be the correct type', () => {
+          expect(g.hasCancelrequest()).toEqual(false)
+          expect(g.hasNewrequest()).toEqual(true)
+        })
+  
+        it('should be the correct details', () => {
+          const req = g.getNewrequest()
+  
+          expect(req).not.toBeUndefined
+  
+          if (typeof req != 'undefined') {
+            expect(req.getType()).toEqual(data.type)
+            expect(req.getMethod()).toEqual(RequestMethod.GET)
+            expect(req.getQuery()).toEqual(data.query)
+            expect(req.getLinkdepth()).toEqual(data.linkDepth)
+            expect(req.getScope()).toEqual(data.scope)
+            expect(req.getItemsubject()).toEqual(data.itemSubject)
+            expect(req.getResponsesubject()).toEqual(data.responseSubject)
+          }
+        })
+      })
+  
+      describe("with undoRequest", () => {
+        const g = newGatewayRequest({
+          undoRequest: {
+            UUID: 'bcee962c-ca60-479b-8a96-ab970d878392',
+          },
+        }, 100)
+  
+        it('should be the correct type', () => {
+          expect(g.hasUndorequest()).toBe(true)
+        })
+      })
+  
+      describe("with excludeItem", () => {
+        const g = newGatewayRequest({
+          excludeItem: {
+            scope: 'foo',
+            type: 'person',
+            uniqueAttributeValue: 'dylan',
+          },
+        }, 100)
+  
+        it('should be the correct type', () => {
+          expect(g.hasExcludeitem()).toBe(true)
+        })
+      })
+  
+      describe("with includeItem", () => {
+        const g = newGatewayRequest({
+          includeItem: {
+            scope: 'foo',
+            type: 'person',
+            uniqueAttributeValue: 'dylan',
+          },
+        }, 100)
+  
+        it('should be the correct type', () => {
+          expect(g.hasIncludeitem()).toBe(true)
+        })
+      })
+  
+      describe("with expandItem", () => {
+        const g = newGatewayRequest({
+          expandItem: {
+            item: {
+              scope: 'foo',
+              type: 'person',
+              uniqueAttributeValue: 'dylan',  
+            },
+            linkDepth: 1,
+          },
+        }, 100)
+  
+        it('should be the correct type', () => {
+          expect(g.hasExpanditem()).toBe(true)
+        })
+      })
+  
+      describe("with unexpandItem", () => {
+        const g = newGatewayRequest({
+          unexpandItem: {
+            scope: 'foo',
+            type: 'person',
+            uniqueAttributeValue: 'dylan',
+          },
+        }, 100)
+  
+        it('should be the correct type', () => {
+          expect(g.hasUnexpanditem()).toBe(true)
+        })
       })
     })
 
-    describe('with an ItemRequest', function () {
-      const data: ItemRequestData = {
-        type: 'person',
-        method: 'GET',
-        query: 'Sebastian',
-        linkDepth: 10,
-        scope: 'global',
-        itemSubject: 'subject1',
-        errorSubject: 'subject2',
-        responseSubject: 'subject3',
-        UUID: Uint8Array.from(uuidparse(uuidv4())),
-        timeoutMs: 10000,
-      }
+    describe('with working objects', () => {
+      describe('newRequest', () => {
+        const g = newGatewayRequest({
+          newRequest: data.request.LIST,
+        }, 100)
 
-      const g = newGatewayRequest(data, 100)
-
-      it('should be the correct type', () => {
-        expect(g.hasCancel()).toEqual(false)
-        expect(g.hasRequest()).toEqual(true)
+        expect(g.hasNewrequest()).toBe(true)
       })
+      describe('cancelRequest', () => {
+        const g = newGatewayRequest({
+          cancelRequest: data.cancelRequest,
+        }, 100)
 
-      it('should be the correct details', () => {
-        const req = g.getRequest()
+        expect(g.hasCancelrequest()).toBe(true)
+      })
+      describe('undoRequest', () => {
+        const g = newGatewayRequest({
+          undoRequest: data.undoItemRequest,
+        }, 100)
 
-        expect(req).not.toBeUndefined
+        expect(g.hasUndorequest()).toBe(true)
+      })
+      describe('excludeItem', () => {
+        const g = newGatewayRequest({
+          excludeItem: data.reference,
+        }, 100)
 
-        if (typeof req != 'undefined') {
-          expect(req.getType()).toEqual(data.type)
-          expect(req.getMethod()).toEqual(RequestMethod.GET)
-          expect(req.getQuery()).toEqual(data.query)
-          expect(req.getLinkdepth()).toEqual(data.linkDepth)
-          expect(req.getScope()).toEqual(data.scope)
-          expect(req.getItemsubject()).toEqual(data.itemSubject)
-          expect(req.getResponsesubject()).toEqual(data.responseSubject)
-        }
+        expect(g.hasExcludeitem()).toBe(true)
+      })
+      describe('includeItem', () => {
+        const g = newGatewayRequest({
+          includeItem: data.reference,
+        }, 100)
+
+        expect(g.hasIncludeitem()).toBe(true)
+      })
+      describe('expandItem', () => {
+        const g = newGatewayRequest({
+          expandItem: data.expandItemRequest,
+        }, 100)
+
+        expect(g.hasExpanditem()).toBe(true)
+      })
+      describe('unexpandItem', () => {
+        const g = newGatewayRequest({
+          unexpandItem: data.reference,
+        }, 100)
+
+        expect(g.hasUnexpanditem()).toBe(true)
       })
     })
   })

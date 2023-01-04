@@ -10,20 +10,8 @@
       },
       "problemMatcher": [],
       "label": "npm: test",
-      "detail": "mocha -r ts-node/register tests/**/*.test.ts",
+      "detail": "npm run test",
       "dependsOn": ["tsc"]
     },
-    {
-      "type": "typescript",
-      "tsconfig": "tsconfig.json",
-      "option": "watch",
-      "isBackground": true,
-      "problemMatcher": ["$tsc-watch"],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "label": "tsc"
-    }
   ]
 }
