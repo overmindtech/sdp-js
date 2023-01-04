@@ -777,7 +777,9 @@ describe('Util namespace', () => {
       }
 
       it('should return the correct type', () => {
-        const resp = newGatewayResponse(data)
+        const resp = newGatewayResponse({
+          newItem: data,
+        })
         expect(resp.hasNewitem()).toEqual(true)
       })
     })
@@ -796,7 +798,9 @@ describe('Util namespace', () => {
       }
 
       it('should return the correct type', () => {
-        const resp = newGatewayResponse(data)
+        const resp = newGatewayResponse({
+          newEdge: data,
+        })
         expect(resp.hasNewedge()).toEqual(true)
       })
     })
@@ -808,7 +812,9 @@ describe('Util namespace', () => {
       }
 
       it('should return the correct type', () => {
-        const resp = newGatewayResponse(data)
+        const resp = newGatewayResponse({
+          newItemRequestError: data,
+        })
         expect(resp.hasNewitemrequesterror()).toEqual(true)
       })
     })
@@ -833,7 +839,9 @@ describe('Util namespace', () => {
       }
 
       it('should return the correct type', () => {
-        const resp = newGatewayResponse(data)
+        const resp = newGatewayResponse({
+          status: data,
+        })
         expect(resp.hasStatus()).toEqual(true)
       })
     })
@@ -841,7 +849,9 @@ describe('Util namespace', () => {
       const data = 'foo'
 
       it('should return the correct type', () => {
-        const resp = newGatewayResponse(data)
+        const resp = newGatewayResponse({
+          error: data,
+        })
         expect(resp.hasError()).toEqual(true)
       })
     })

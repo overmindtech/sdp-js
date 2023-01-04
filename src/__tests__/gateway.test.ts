@@ -11,6 +11,9 @@ import {
   SocketErrorEvent,
   ErrorEvent,
   CloseEvent,
+  DeleteItemEvent,
+  DeleteEdgeEvent,
+  UpdateItemEvent,
 } from '../Events'
 import { newGatewayResponse } from '../Util'
 import { GatewaySession } from '../GatewaySession'
@@ -66,7 +69,9 @@ describe('GatewaySession', () => {
 
       describe('Error', () => {
         it('should call the callback', (done) => {
-          const response = newGatewayResponse('some error')
+          const response = newGatewayResponse({
+            error: 'some error',
+          })
 
           // Register the callbacks
           gs.addEventListener(
@@ -83,7 +88,9 @@ describe('GatewaySession', () => {
       })
       describe('NewItem', () => {
         it('should call the callback', (done) => {
-          const response = newGatewayResponse(data.itemData.dylan)
+          const response = newGatewayResponse({
+            newItem: data.itemData.dylan,
+          })
 
           // Register the callbacks
           gs.addEventListener(
@@ -100,7 +107,9 @@ describe('GatewaySession', () => {
       })
       describe('NewEdge', () => {
         it('should call the callback', (done) => {
-          const response = newGatewayResponse(data.edgeData.basic)
+          const response = newGatewayResponse({
+            newEdge: data.edgeData.basic,
+          })
 
           // Register the callbacks
           gs.addEventListener(
@@ -118,7 +127,9 @@ describe('GatewaySession', () => {
       })
       describe('NewItemRequestError', () => {
         it('should call the callback', (done) => {
-          const response = newGatewayResponse(data.errorData.NOSCOPE)
+          const response = newGatewayResponse({
+            newItemRequestError: data.errorData.NOSCOPE,
+          })
 
           // Register the callbacks
           gs.addEventListener(
@@ -138,9 +149,83 @@ describe('GatewaySession', () => {
           server.send(response.serializeBinary().buffer)
         })
       })
+      describe('DeleteItem', () => {
+        it('should call the callback', (done) => {
+          const response = newGatewayResponse({
+            deleteItem: data.reference,
+          })
+
+          // Register the callbacks
+          gs.addEventListener(
+            DeleteItemEvent,
+            (event) => {
+              expect(event.detail.getScope()).toEqual(
+                data.reference.getScope()
+              )
+              expect(event.detail.getUniqueattributevalue()).toEqual(
+                data.reference.getUniqueattributevalue()
+              )
+              done()
+            },
+            { once: true }
+          )
+
+          server.send(response.serializeBinary().buffer)
+        })
+      })
+      describe('DeleteEdge', () => {
+        it('should call the callback', (done) => {
+          const response = newGatewayResponse({
+            deleteEdge: data.edge.basic,
+          })
+
+          // Register the callbacks
+          gs.addEventListener(
+            DeleteEdgeEvent,
+            (event) => {
+              expect(event.detail.getFrom()?.toString()).toEqual(
+                data.edge.basic.getFrom()?.toString()
+              )
+              expect(event.detail.getTo()?.toString()).toEqual(
+                data.edge.basic.getTo()?.toString()
+              )
+              done()
+            },
+            { once: true }
+          )
+
+          server.send(response.serializeBinary().buffer)
+        })
+      })
+      describe('UpdateItem', () => {
+        it('should call the callback', (done) => {
+          const response = newGatewayResponse({
+            updateItem: data.item.dylan,
+          })
+
+          // Register the callbacks
+          gs.addEventListener(
+            UpdateItemEvent,
+            (event) => {
+              expect(event.detail.getScope()).toEqual(
+                data.item.dylan.getScope()
+              )
+              expect(event.detail.getType()).toEqual(
+                data.item.dylan.getType()
+              )
+              done()
+            },
+            { once: true }
+          )
+
+          server.send(response.serializeBinary().buffer)
+        })
+      })
       describe('Status', () => {
         it('should call the callback', (done) => {
-          const response = newGatewayResponse(data.gatewayStatusData.working)
+          const response = newGatewayResponse({
+            status: data.gatewayStatusData.working,
+          })
 
           // Register the callbacks
           gs.addEventListener(
@@ -161,8 +246,12 @@ describe('GatewaySession', () => {
         })
 
         it('should update the status', (done) => {
-          const working = newGatewayResponse(data.gatewayStatusData.working)
-          const doneResponse = newGatewayResponse(data.gatewayStatusData.done)
+          const working = newGatewayResponse({
+            status: data.gatewayStatusData.working,
+          })
+          const doneResponse = newGatewayResponse({
+            status: data.gatewayStatusData.done,
+          })
 
           // Register the callbacks
           gs.addEventListener(

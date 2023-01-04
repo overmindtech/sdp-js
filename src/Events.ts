@@ -5,7 +5,7 @@
 export const ErrorEvent = 'error'
 
 /**
- * Ths event is sent when a new item is discovered as a result of the
+ * This event is sent when a new item is discovered as a result of the
  * queries that have been started during the session
  */
 export const NewItemEvent = 'new-item'
@@ -16,6 +16,25 @@ export const NewItemEvent = 'new-item'
  * should never refer to a non-existent item
  */
 export const NewEdgeEvent = 'new-edge'
+
+/**
+ * This event means that the client should delete an item from its local data
+ * store. This is probably due to an "undo" or "delete" request by the user
+ */
+export const DeleteItemEvent = 'delete-item'
+
+/**
+ * This event structs the client to delete a give edge. It will be sent along
+ * with a `DeleteItemEvent` when an item is delete if it also requires any edges
+ * be deleted
+ */
+export const DeleteEdgeEvent = 'delete-edge'
+
+/**
+ * This event means that a newer version of an item is available and the
+ * existing version should be replaced with this one
+ */
+export const UpdateItemEvent = 'update-item'
 
 /**
  * This event means that an error was encountered by one of the responders

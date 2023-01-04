@@ -815,40 +815,116 @@ export function gatewayRequestStatusDone(g: GatewayRequestStatus): boolean {
   return false
 }
 
-export type GatewayResponseData =
-  | ItemData
-  | EdgeData
-  | ItemRequestErrorData
-  | GatewayRequestStatusData
-  | string
+export type GatewayResponseData = {
+  newItem?: ItemData | Item,
+  newEdge?: EdgeData | Edge
+  deleteItem?: ReferenceData | Reference,
+  deleteEdge?: EdgeData | Edge,
+  updateItem?: ItemData | Item,
+  newItemRequestError?: ItemRequestErrorData | ItemRequestError
+  status?: GatewayRequestStatusData | GatewayRequestStatus,
+  error?: string,
+}
 
 export function newGatewayResponse(data: GatewayResponseData): GatewayResponse {
   const gr = new GatewayResponse()
 
-  if (typeof data == 'string') {
-    gr.setError(data)
-    return gr
-  } else if (typeof data == 'object') {
-    if (isItemData(data)) {
-      gr.setNewitem(newItem(data))
-      return gr
-    }
+  const hasNewItem = (typeof data.newItem != 'undefined')
+  const hasNewEdge = (typeof data.newEdge != 'undefined')
+  const hasDeleteItem = (typeof data.deleteItem != 'undefined')
+  const hasDeleteEdge = (typeof data.deleteEdge != 'undefined')
+  const hasUpdateItem = (typeof data.updateItem != 'undefined')
+  const hasNewItemRequestError = (typeof data.newItemRequestError != 'undefined')
+  const hasStatus = (typeof data.status != 'undefined')
+  const hasError = (typeof data.error != 'undefined')
 
-    if (isEdgeData(data)) {
-      gr.setNewedge(newEdge(data))
-      return gr
-    }
+  const fields = [
+    hasNewItem,
+    hasNewEdge,
+    hasDeleteItem,
+    hasDeleteEdge,
+    hasUpdateItem,
+    hasNewItemRequestError,
+    hasStatus,
+    hasError,
+  ]
 
-    if (isItemRequestErrorData(data)) {
-      gr.setNewitemrequesterror(newItemRequestError(data))
-      return gr
-    }
+  // Count the number of true things in the array
+  const numPopulated = fields.filter(Boolean).length
 
-    if (isGatewayRequestStatusData(data)) {
-      gr.setStatus(newGatewayRequestStatus(data))
-      return gr
-    }
+  if (numPopulated != 1) {
+    throw new Error("invalid data for gateway response, must have exactly 1 field populated")
   }
 
-  return gr
+  if (hasNewItem) {
+    if (isItemData(data.newItem)) {
+      gr.setNewitem(newItem(data.newItem))  
+    } else {
+      gr.setNewitem(data.newItem)
+    }
+    return gr;
+  }
+
+  if (hasNewEdge) {
+    if (isEdgeData(data.newEdge)) {
+      gr.setNewedge(newEdge(data.newEdge))  
+    } else {
+      gr.setNewedge(data.newEdge)
+    }
+    return gr;
+  }
+
+  if (hasDeleteItem) {
+    if (isReferenceData(data.deleteItem)) {
+      gr.setDeleteitem(newReference(data.deleteItem))  
+    } else {
+      gr.setDeleteitem(data.deleteItem)
+    }
+    return gr;
+  }
+
+  if (hasDeleteEdge) {
+    if (isEdgeData(data.deleteEdge)) {
+      gr.setDeleteedge(newEdge(data.deleteEdge))  
+    } else {
+      gr.setDeleteedge(data.deleteEdge)
+    }
+    return gr;
+  }
+
+  if (hasUpdateItem) {
+    if (isItemData(data.updateItem)) {
+      gr.setUpdateitem(newItem(data.updateItem))  
+    } else {
+      gr.setUpdateitem(data.updateItem)
+    }
+    return gr;
+  }
+
+  if (hasNewItemRequestError) {
+    if (isItemRequestErrorData(data.newItemRequestError)) {
+      gr.setNewitemrequesterror(newItemRequestError(data.newItemRequestError))  
+    } else {
+      gr.setNewitemrequesterror(data.newItemRequestError)
+    }
+    return gr;
+  }
+
+  if (hasStatus) {
+    if (isGatewayRequestStatusData(data.status)) {
+      gr.setStatus(newGatewayRequestStatus(data.status))  
+    } else {
+      gr.setStatus(data.status)
+    }
+    return gr;
+  }
+
+  if (hasError) {
+    if (typeof data.error != 'undefined') {
+      gr.setError(data.error)
+    }
+    return gr;
+  }
+
+  return gr;
 }

@@ -107,28 +107,30 @@ describe('Autocomplete', () => {
           const u = req.getNewrequest()?.getUuid_asU8()
 
           const resp = newGatewayResponse({
-            type: 'overmind-type',
-            uniqueAttribute: 'name',
-            scope: 'global',
-            attributes: newItemAttributes({
-              name: 'person',
-            }),
-            metadata: newMetadata({
-              sourceDuration: 0,
-              sourceDurationPerItem: 0,
-              sourceName: 'overmind-type-metasource',
-              sourceRequest: {
-                scope: 'global',
-                linkDepth: 0,
-                method: 'GET',
-                query: ac.prompt,
-                type: 'overmind-type',
-                UUID: u || '',
-              },
-              timestamp: new Date(),
-            }),
-            linkedItemRequests: [],
-            linkedItems: [],
+            newItem: {
+              type: 'overmind-type',
+              uniqueAttribute: 'name',
+              scope: 'global',
+              attributes: newItemAttributes({
+                name: 'person',
+              }),
+              metadata: newMetadata({
+                sourceDuration: 0,
+                sourceDurationPerItem: 0,
+                sourceName: 'overmind-type-metasource',
+                sourceRequest: {
+                  scope: 'global',
+                  linkDepth: 0,
+                  method: 'GET',
+                  query: ac.prompt,
+                  type: 'overmind-type',
+                  UUID: u || '',
+                },
+                timestamp: new Date(),
+              }),
+              linkedItemRequests: [],
+              linkedItems: [],
+            },
           })
 
           const respBin = resp.serializeBinary()
