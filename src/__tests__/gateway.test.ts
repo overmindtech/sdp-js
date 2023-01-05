@@ -159,9 +159,7 @@ describe('GatewaySession', () => {
           gs.addEventListener(
             DeleteItemEvent,
             (event) => {
-              expect(event.detail.getScope()).toEqual(
-                data.reference.getScope()
-              )
+              expect(event.detail.getScope()).toEqual(data.reference.getScope())
               expect(event.detail.getUniqueattributevalue()).toEqual(
                 data.reference.getUniqueattributevalue()
               )
@@ -210,9 +208,7 @@ describe('GatewaySession', () => {
               expect(event.detail.getScope()).toEqual(
                 data.item.dylan.getScope()
               )
-              expect(event.detail.getType()).toEqual(
-                data.item.dylan.getType()
-              )
+              expect(event.detail.getType()).toEqual(data.item.dylan.getType())
               done()
             },
             { once: true }

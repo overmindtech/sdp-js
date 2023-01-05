@@ -11,7 +11,21 @@
       "problemMatcher": [],
       "label": "npm: test",
       "detail": "npm run test",
-      "dependsOn": ["tsc"]
+      "dependsOn": []
     },
+    {
+      "type": "npm",
+      "script": "codequality:check",
+      "problemMatcher": [],
+      "label": "npm: codequality:check",
+      "detail": "npm run lint && npm run prettier:check && npm run typecheck"
+    },
+    {
+      "type": "npm",
+      "script": "codequality:fix",
+      "problemMatcher": [],
+      "label": "npm: codequality:fix",
+      "detail": "npm run lint:fix && npm run prettier:fix",
+    }
   ]
 }

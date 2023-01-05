@@ -84,7 +84,7 @@ export class Autocomplete {
           {
             cancelRequest: {
               UUID: this.currentRequestUUID,
-            }
+            },
           },
           1000
         )
@@ -118,7 +118,7 @@ export class Autocomplete {
           query: prompt,
           UUID: uuid,
           timeoutMs: 2_000,
-        }
+        },
       },
       500
     )

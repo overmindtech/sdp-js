@@ -125,21 +125,14 @@ function base32EncodeCustom(data: Uint8Array): string {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isItemRequestData(x: any): x is ItemRequestData {
-  const hasType = 'type' in x;
-  const hasMethod = 'method' in x;
-  const hasQuery = 'query' in x;
-  const hasLinkDepth = 'linkDepth' in x;
-  const hasScope = 'scope' in x;
-  const hasUUID = 'UUID' in x;
+  const hasType = 'type' in x
+  const hasMethod = 'method' in x
+  const hasQuery = 'query' in x
+  const hasLinkDepth = 'linkDepth' in x
+  const hasScope = 'scope' in x
+  const hasUUID = 'UUID' in x
 
-  return (
-    hasType &&
-    hasMethod &&
-    hasQuery &&
-    hasLinkDepth &&
-    hasScope &&
-    hasUUID
-  )
+  return hasType && hasMethod && hasQuery && hasLinkDepth && hasScope && hasUUID
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -148,12 +141,7 @@ function isReferenceData(x: any): x is ReferenceData {
   const hasUniqueAttributeValue = 'uniqueAttributeValue' in x
   const hasScope = 'scope' in x
 
-
-  return (
-    hasType &&
-    hasUniqueAttributeValue &&
-    hasScope
-  )
+  return hasType && hasUniqueAttributeValue && hasScope
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -602,36 +590,38 @@ function isUndoItemRequestData(x: any): x is UndoItemRequestData {
 
 /**
  * Create a new UndoItemRequest
- * 
+ *
  * @param uuid The UUID of the request to undo
  * @returns A new request
  */
 export function newUndoItemRequest(data: UndoItemRequestData): UndoItemRequest {
-  const r = new UndoItemRequest();
+  const r = new UndoItemRequest()
 
-  r.setUuid(data.UUID);
+  r.setUuid(data.UUID)
 
   return r
 }
 
 export type ExpandItemRequestData = {
-  item: ReferenceData | Reference, // The item to be expanded
-  linkDepth: number, // How deeply to link the results
+  item: ReferenceData | Reference // The item to be expanded
+  linkDepth: number // How deeply to link the results
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isExpandItemRequestData(x: any): x is ExpandItemRequestData {
-  return ('item' in x && 'linkDepth' in x)
+  return 'item' in x && 'linkDepth' in x
 }
 
 /**
  * Creates a new expand item request
- * 
+ *
  * @param data The data that the expand item request should contain
  * @returns A new expand item request
  */
-export function newExpandItemRequest(data: ExpandItemRequestData): ExpandItemRequest {
-  const r = new ExpandItemRequest();
+export function newExpandItemRequest(
+  data: ExpandItemRequestData
+): ExpandItemRequest {
+  const r = new ExpandItemRequest()
 
   if (isReferenceData(data.item)) {
     r.setItem(newReference(data.item))
@@ -639,19 +629,19 @@ export function newExpandItemRequest(data: ExpandItemRequestData): ExpandItemReq
     r.setItem(data.item)
   }
 
-  r.setLinkdepth(data.linkDepth);
+  r.setLinkdepth(data.linkDepth)
 
   return r
 }
 
 export type GatewayRequestData = {
-  newRequest?: ItemRequestData | ItemRequest,
-  cancelRequest?: CancelItemRequestData | CancelItemRequest,
-  undoRequest?: UndoItemRequestData | UndoItemRequest,
-  excludeItem?: ReferenceData | Reference,
-  includeItem?: ReferenceData | Reference,
-  expandItem?: ExpandItemRequestData | ExpandItemRequest,
-  unexpandItem?: ReferenceData | Reference,
+  newRequest?: ItemRequestData | ItemRequest
+  cancelRequest?: CancelItemRequestData | CancelItemRequest
+  undoRequest?: UndoItemRequestData | UndoItemRequest
+  excludeItem?: ReferenceData | Reference
+  includeItem?: ReferenceData | Reference
+  expandItem?: ExpandItemRequestData | ExpandItemRequest
+  unexpandItem?: ReferenceData | Reference
 }
 
 /**
@@ -666,7 +656,7 @@ export function newGatewayRequest(
   data: GatewayRequestData,
   minStatusIntervalMs: number
 ): GatewayRequest {
-  const gr = new GatewayRequest();
+  const gr = new GatewayRequest()
 
   // Validate that we only have one thing set
   const hasNewRequest = !(data.newRequest == undefined)
@@ -676,7 +666,7 @@ export function newGatewayRequest(
   const hasIncludeItem = !(data.includeItem == undefined)
   const hasExpandItem = !(data.expandItem == undefined)
   const hasUnexpandItem = !(data.unexpandItem == undefined)
-  
+
   const fields = [
     hasNewRequest,
     hasCancelRequest,
@@ -684,27 +674,29 @@ export function newGatewayRequest(
     hasExcludeItem,
     hasIncludeItem,
     hasExpandItem,
-    hasUnexpandItem
+    hasUnexpandItem,
   ]
 
   // Count the number of true things in the array
   const numPopulated = fields.filter(Boolean).length
 
   if (numPopulated != 1) {
-    throw new Error("invalid data for gateway request, must have exactly 1 field populated")
+    throw new Error(
+      'invalid data for gateway request, must have exactly 1 field populated'
+    )
   }
 
   if (hasNewRequest) {
     if (data.newRequest != undefined) {
-      let newRequest: ItemRequest;
+      let newRequest: ItemRequest
 
       if (isItemRequestData(data.newRequest)) {
-        newRequest = newItemRequest(data.newRequest);
+        newRequest = newItemRequest(data.newRequest)
       } else {
-        newRequest = data.newRequest;
+        newRequest = data.newRequest
       }
 
-      gr.setNewrequest(newRequest);
+      gr.setNewrequest(newRequest)
     }
   }
 
@@ -713,82 +705,82 @@ export function newGatewayRequest(
       let cancelRequest: CancelItemRequest
 
       if (isCancelItemRequestData(data.cancelRequest)) {
-        cancelRequest = newCancelItemRequest(data.cancelRequest);
+        cancelRequest = newCancelItemRequest(data.cancelRequest)
       } else {
-        cancelRequest = data.cancelRequest;
+        cancelRequest = data.cancelRequest
       }
 
-      gr.setCancelrequest(cancelRequest);
+      gr.setCancelrequest(cancelRequest)
     }
   }
 
   if (hasUndoRequest) {
     if (data.undoRequest != undefined) {
-      let undoRequest: UndoItemRequest;
+      let undoRequest: UndoItemRequest
 
-      if(isUndoItemRequestData(data.undoRequest)) {
+      if (isUndoItemRequestData(data.undoRequest)) {
         undoRequest = newUndoItemRequest(data.undoRequest)
       } else {
         undoRequest = data.undoRequest
       }
 
-      gr.setUndorequest(undoRequest);
+      gr.setUndorequest(undoRequest)
     }
   }
 
   if (hasExcludeItem) {
     if (data.excludeItem != undefined) {
-      let excludeItem: Reference;
+      let excludeItem: Reference
 
-      if(isReferenceData(data.excludeItem)) {
+      if (isReferenceData(data.excludeItem)) {
         excludeItem = newReference(data.excludeItem)
       } else {
         excludeItem = data.excludeItem
       }
 
-      gr.setExcludeitem(excludeItem);
+      gr.setExcludeitem(excludeItem)
     }
   }
 
   if (hasIncludeItem) {
     if (data.includeItem != undefined) {
-      let includeItem: Reference;
+      let includeItem: Reference
 
-      if(isReferenceData(data.includeItem)) {
+      if (isReferenceData(data.includeItem)) {
         includeItem = newReference(data.includeItem)
       } else {
         includeItem = data.includeItem
       }
 
-      gr.setIncludeitem(includeItem);
+      gr.setIncludeitem(includeItem)
     }
   }
 
   if (hasExpandItem) {
     if (data.expandItem != undefined) {
-      let expandItem: ExpandItemRequest;
+      let expandItem: ExpandItemRequest
 
-      if(isExpandItemRequestData(data.expandItem)) {
+      if (isExpandItemRequestData(data.expandItem)) {
         expandItem = newExpandItemRequest(data.expandItem)
       } else {
         expandItem = data.expandItem
       }
 
-      gr.setExpanditem(expandItem);
+      gr.setExpanditem(expandItem)
     }
   }
 
   if (hasUnexpandItem) {
     if (data.unexpandItem != undefined) {
-      let unexpandItem: Reference;
+      let unexpandItem: Reference
 
-      if(isReferenceData(data.unexpandItem)) {
+      if (isReferenceData(data.unexpandItem)) {
         unexpandItem = newReference(data.unexpandItem)
       } else {
         unexpandItem = data.unexpandItem
       }
 
-      gr.setUnexpanditem(unexpandItem);
+      gr.setUnexpanditem(unexpandItem)
     }
   }
 
@@ -816,27 +808,27 @@ export function gatewayRequestStatusDone(g: GatewayRequestStatus): boolean {
 }
 
 export type GatewayResponseData = {
-  newItem?: ItemData | Item,
+  newItem?: ItemData | Item
   newEdge?: EdgeData | Edge
-  deleteItem?: ReferenceData | Reference,
-  deleteEdge?: EdgeData | Edge,
-  updateItem?: ItemData | Item,
+  deleteItem?: ReferenceData | Reference
+  deleteEdge?: EdgeData | Edge
+  updateItem?: ItemData | Item
   newItemRequestError?: ItemRequestErrorData | ItemRequestError
-  status?: GatewayRequestStatusData | GatewayRequestStatus,
-  error?: string,
+  status?: GatewayRequestStatusData | GatewayRequestStatus
+  error?: string
 }
 
 export function newGatewayResponse(data: GatewayResponseData): GatewayResponse {
   const gr = new GatewayResponse()
 
-  const hasNewItem = (typeof data.newItem != 'undefined')
-  const hasNewEdge = (typeof data.newEdge != 'undefined')
-  const hasDeleteItem = (typeof data.deleteItem != 'undefined')
-  const hasDeleteEdge = (typeof data.deleteEdge != 'undefined')
-  const hasUpdateItem = (typeof data.updateItem != 'undefined')
-  const hasNewItemRequestError = (typeof data.newItemRequestError != 'undefined')
-  const hasStatus = (typeof data.status != 'undefined')
-  const hasError = (typeof data.error != 'undefined')
+  const hasNewItem = typeof data.newItem != 'undefined'
+  const hasNewEdge = typeof data.newEdge != 'undefined'
+  const hasDeleteItem = typeof data.deleteItem != 'undefined'
+  const hasDeleteEdge = typeof data.deleteEdge != 'undefined'
+  const hasUpdateItem = typeof data.updateItem != 'undefined'
+  const hasNewItemRequestError = typeof data.newItemRequestError != 'undefined'
+  const hasStatus = typeof data.status != 'undefined'
+  const hasError = typeof data.error != 'undefined'
 
   const fields = [
     hasNewItem,
@@ -853,78 +845,80 @@ export function newGatewayResponse(data: GatewayResponseData): GatewayResponse {
   const numPopulated = fields.filter(Boolean).length
 
   if (numPopulated != 1) {
-    throw new Error("invalid data for gateway response, must have exactly 1 field populated")
+    throw new Error(
+      'invalid data for gateway response, must have exactly 1 field populated'
+    )
   }
 
   if (hasNewItem) {
     if (isItemData(data.newItem)) {
-      gr.setNewitem(newItem(data.newItem))  
+      gr.setNewitem(newItem(data.newItem))
     } else {
       gr.setNewitem(data.newItem)
     }
-    return gr;
+    return gr
   }
 
   if (hasNewEdge) {
     if (isEdgeData(data.newEdge)) {
-      gr.setNewedge(newEdge(data.newEdge))  
+      gr.setNewedge(newEdge(data.newEdge))
     } else {
       gr.setNewedge(data.newEdge)
     }
-    return gr;
+    return gr
   }
 
   if (hasDeleteItem) {
     if (isReferenceData(data.deleteItem)) {
-      gr.setDeleteitem(newReference(data.deleteItem))  
+      gr.setDeleteitem(newReference(data.deleteItem))
     } else {
       gr.setDeleteitem(data.deleteItem)
     }
-    return gr;
+    return gr
   }
 
   if (hasDeleteEdge) {
     if (isEdgeData(data.deleteEdge)) {
-      gr.setDeleteedge(newEdge(data.deleteEdge))  
+      gr.setDeleteedge(newEdge(data.deleteEdge))
     } else {
       gr.setDeleteedge(data.deleteEdge)
     }
-    return gr;
+    return gr
   }
 
   if (hasUpdateItem) {
     if (isItemData(data.updateItem)) {
-      gr.setUpdateitem(newItem(data.updateItem))  
+      gr.setUpdateitem(newItem(data.updateItem))
     } else {
       gr.setUpdateitem(data.updateItem)
     }
-    return gr;
+    return gr
   }
 
   if (hasNewItemRequestError) {
     if (isItemRequestErrorData(data.newItemRequestError)) {
-      gr.setNewitemrequesterror(newItemRequestError(data.newItemRequestError))  
+      gr.setNewitemrequesterror(newItemRequestError(data.newItemRequestError))
     } else {
       gr.setNewitemrequesterror(data.newItemRequestError)
     }
-    return gr;
+    return gr
   }
 
   if (hasStatus) {
     if (isGatewayRequestStatusData(data.status)) {
-      gr.setStatus(newGatewayRequestStatus(data.status))  
+      gr.setStatus(newGatewayRequestStatus(data.status))
     } else {
       gr.setStatus(data.status)
     }
-    return gr;
+    return gr
   }
 
   if (hasError) {
     if (typeof data.error != 'undefined') {
       gr.setError(data.error)
     }
-    return gr;
+    return gr
   }
 
-  return gr;
+  return gr
 }
