@@ -1,6 +1,8 @@
 import {
   ItemRequestData,
+  newCancelItemRequest,
   newEdge,
+  newExpandItemRequest,
   newGatewayRequest,
   newGatewayRequestStatus,
   newItem,
@@ -9,6 +11,7 @@ import {
   newItemRequestError,
   newReference,
   newResponse,
+  newUndoItemRequest,
 } from '../Util'
 import { ItemRequestError, ResponderState } from '../__generated__'
 
@@ -138,26 +141,50 @@ export const item = {
 
 export const items = [item.process, item.dylan, item.katie]
 
-export const gatewayRequestData = {
-  itemRequest: {
-    scope: 'test',
-    linkDepth: 10,
-    method: 'GET',
-    query: 'Dylan',
-    itemSubject: 'return.item.foo',
-    responseSubject: 'return.response.foo',
-    errorSubject: 'return error.foo',
-    type: 'person',
-    UUID: 'a520d67f-0b2a-4852-87d2-d02bbc74ad89',
-  },
-  cancel: {
-    UUID: 'a520d67f-0b2a-4852-87d2-d02bbc74ad89',
-  },
-}
+export const cancelRequest = newCancelItemRequest({
+  UUID: 'a520d67f-0b2a-4852-87d2-d02bbc74ad89',
+})
+
+export const undoItemRequest = newUndoItemRequest({
+  UUID: 'a520d67f-0b2a-4852-87d2-d02bbc74ad89',
+})
+
+export const reference = newReference({
+  scope: 'global',
+  type: 'ip',
+  uniqueAttributeValue: '1.1.1.1',
+})
+
+export const expandItemRequest = newExpandItemRequest({
+  item: reference,
+  linkDepth: 1,
+})
 
 export const gatewayRequest = {
-  itemRequest: newGatewayRequest(gatewayRequestData.itemRequest, 0),
-  cancel: newGatewayRequest(gatewayRequestData.cancel, 0),
+  itemRequest: newGatewayRequest(
+    {
+      newRequest: {
+        scope: 'test',
+        linkDepth: 10,
+        method: 'GET',
+        query: 'Dylan',
+        itemSubject: 'return.item.foo',
+        responseSubject: 'return.response.foo',
+        errorSubject: 'return error.foo',
+        type: 'person',
+        UUID: 'a520d67f-0b2a-4852-87d2-d02bbc74ad89',
+      },
+    },
+    0
+  ),
+  cancel: newGatewayRequest(
+    {
+      cancelRequest: {
+        UUID: 'a520d67f-0b2a-4852-87d2-d02bbc74ad89',
+      },
+    },
+    0
+  ),
 }
 
 export const gatewayStatusData = {

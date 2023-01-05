@@ -10,20 +10,22 @@
       },
       "problemMatcher": [],
       "label": "npm: test",
-      "detail": "mocha -r ts-node/register tests/**/*.test.ts",
-      "dependsOn": ["tsc"]
+      "detail": "npm run test",
+      "dependsOn": []
     },
     {
-      "type": "typescript",
-      "tsconfig": "tsconfig.json",
-      "option": "watch",
-      "isBackground": true,
-      "problemMatcher": ["$tsc-watch"],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "label": "tsc"
+      "type": "npm",
+      "script": "codequality:check",
+      "problemMatcher": [],
+      "label": "npm: codequality:check",
+      "detail": "npm run lint && npm run prettier:check && npm run typecheck"
+    },
+    {
+      "type": "npm",
+      "script": "codequality:fix",
+      "problemMatcher": [],
+      "label": "npm: codequality:fix",
+      "detail": "npm run lint:fix && npm run prettier:fix",
     }
   ]
 }

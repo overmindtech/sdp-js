@@ -6,6 +6,9 @@ import {
   StatusEvent,
   ErrorEvent,
   CloseEvent,
+  DeleteItemEvent,
+  DeleteEdgeEvent,
+  UpdateItemEvent,
 } from './Events'
 import {
   Edge,
@@ -14,6 +17,7 @@ import {
   GatewayResponse,
   Item,
   ItemRequestError,
+  Reference,
 } from './__generated__/'
 
 interface CustomEventListener<T> {
@@ -130,6 +134,36 @@ export class GatewaySession extends EventTarget {
           })
         )
       }
+    } else if (response.hasDeleteitem()) {
+      const ref = response.getDeleteitem()
+
+      if (typeof ref != 'undefined') {
+        this.dispatchEvent(
+          new CustomEvent<Reference>(DeleteItemEvent, {
+            detail: ref,
+          })
+        )
+      }
+    } else if (response.hasDeleteedge()) {
+      const edge = response.getDeleteedge()
+
+      if (typeof edge != 'undefined') {
+        this.dispatchEvent(
+          new CustomEvent<Edge>(DeleteEdgeEvent, {
+            detail: edge,
+          })
+        )
+      }
+    } else if (response.hasUpdateitem()) {
+      const item = response.getUpdateitem()
+
+      if (typeof item != 'undefined') {
+        this.dispatchEvent(
+          new CustomEvent<Item>(UpdateItemEvent, {
+            detail: item,
+          })
+        )
+      }
     }
   }
 
@@ -146,6 +180,21 @@ export class GatewaySession extends EventTarget {
   addEventListener(
     type: typeof NewEdgeEvent,
     callback: CustomEventListenerOrEventListenerObject<Edge> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  addEventListener(
+    type: typeof DeleteItemEvent,
+    callback: CustomEventListenerOrEventListenerObject<Reference> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  addEventListener(
+    type: typeof DeleteEdgeEvent,
+    callback: CustomEventListenerOrEventListenerObject<Edge> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  addEventListener(
+    type: typeof UpdateItemEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   addEventListener(
@@ -189,6 +238,21 @@ export class GatewaySession extends EventTarget {
   removeEventListener(
     type: typeof NewEdgeEvent,
     callback: CustomEventListenerOrEventListenerObject<Edge> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  removeEventListener(
+    type: typeof DeleteItemEvent,
+    callback: CustomEventListenerOrEventListenerObject<Reference> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  removeEventListener(
+    type: typeof DeleteEdgeEvent,
+    callback: CustomEventListenerOrEventListenerObject<Edge> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  removeEventListener(
+    type: typeof UpdateItemEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   removeEventListener(

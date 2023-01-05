@@ -51,9 +51,9 @@ describe('Autocomplete', () => {
         if (msg instanceof Uint8Array) {
           const req = GatewayRequest.deserializeBinary(msg)
 
-          expect(req.getRequest()?.getType()).toEqual('overmind-type')
-          expect(req.getRequest()?.getQuery()).toEqual(ac.prompt)
-          expect(req.getRequest()?.getScope()).toEqual('global')
+          expect(req.getNewrequest()?.getType()).toEqual('overmind-type')
+          expect(req.getNewrequest()?.getQuery()).toEqual(ac.prompt)
+          expect(req.getNewrequest()?.getScope()).toEqual('global')
         } else {
           // Is there a better way to fail here?
           expect(false).toBeTruthy()
@@ -67,7 +67,7 @@ describe('Autocomplete', () => {
         if (msg instanceof Uint8Array) {
           const req = GatewayRequest.deserializeBinary(msg)
 
-          expect(req.getCancel()?.getUuid_asB64().length).not.toEqual('')
+          expect(req.getCancelrequest()?.getUuid_asB64().length).not.toEqual('')
         } else {
           // Is there a better way to fail here?
           expect(false).toBeTruthy()
@@ -79,9 +79,9 @@ describe('Autocomplete', () => {
         if (msg instanceof Uint8Array) {
           const req = GatewayRequest.deserializeBinary(msg)
 
-          expect(req.getRequest()?.getType()).toEqual('overmind-type')
-          expect(req.getRequest()?.getQuery()).toEqual(ac.prompt)
-          expect(req.getRequest()?.getScope()).toEqual('global')
+          expect(req.getNewrequest()?.getType()).toEqual('overmind-type')
+          expect(req.getNewrequest()?.getQuery()).toEqual(ac.prompt)
+          expect(req.getNewrequest()?.getScope()).toEqual('global')
         } else {
           // Is there a better way to fail here?
           expect(false).toBeTruthy()
@@ -100,35 +100,37 @@ describe('Autocomplete', () => {
         if (msg instanceof Uint8Array) {
           const req = GatewayRequest.deserializeBinary(msg)
 
-          expect(req.getRequest()?.getType()).toEqual('overmind-type')
-          expect(req.getRequest()?.getQuery()).toEqual(ac.prompt)
-          expect(req.getRequest()?.getScope()).toEqual('global')
+          expect(req.getNewrequest()?.getType()).toEqual('overmind-type')
+          expect(req.getNewrequest()?.getQuery()).toEqual(ac.prompt)
+          expect(req.getNewrequest()?.getScope()).toEqual('global')
 
-          const u = req.getRequest()?.getUuid_asU8()
+          const u = req.getNewrequest()?.getUuid_asU8()
 
           const resp = newGatewayResponse({
-            type: 'overmind-type',
-            uniqueAttribute: 'name',
-            scope: 'global',
-            attributes: newItemAttributes({
-              name: 'person',
-            }),
-            metadata: newMetadata({
-              sourceDuration: 0,
-              sourceDurationPerItem: 0,
-              sourceName: 'overmind-type-metasource',
-              sourceRequest: {
-                scope: 'global',
-                linkDepth: 0,
-                method: 'GET',
-                query: ac.prompt,
-                type: 'overmind-type',
-                UUID: u || '',
-              },
-              timestamp: new Date(),
-            }),
-            linkedItemRequests: [],
-            linkedItems: [],
+            newItem: {
+              type: 'overmind-type',
+              uniqueAttribute: 'name',
+              scope: 'global',
+              attributes: newItemAttributes({
+                name: 'person',
+              }),
+              metadata: newMetadata({
+                sourceDuration: 0,
+                sourceDurationPerItem: 0,
+                sourceName: 'overmind-type-metasource',
+                sourceRequest: {
+                  scope: 'global',
+                  linkDepth: 0,
+                  method: 'GET',
+                  query: ac.prompt,
+                  type: 'overmind-type',
+                  UUID: u || '',
+                },
+                timestamp: new Date(),
+              }),
+              linkedItemRequests: [],
+              linkedItems: [],
+            },
           })
 
           const respBin = resp.serializeBinary()
