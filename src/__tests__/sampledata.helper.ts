@@ -4,7 +4,6 @@ import {
   newEdge,
   newExpandItemRequest,
   newGatewayRequest,
-  // newGatewayRequest,
   newGatewayRequestStatus,
   newItem,
   newItemAttributes,

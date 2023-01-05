@@ -12,7 +12,7 @@ Tests can be run with `npm run test` or the VSCode Test task
 
 ### Style
 
-Style can be validated using:
+Code formatting/style can be validated using:
 
 ```
 npm run codequality:check
