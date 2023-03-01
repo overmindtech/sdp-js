@@ -11,9 +11,10 @@
 /* eslint-disable */
 // @ts-nocheck
 
+var isBrowser = typeof window !== 'undefined'
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = (function() { return this || window || global || self || Function('return this')(); }).call(null);
+var global = isBrowser ? (function () { return this || window || global || self || Function('return this')(); }).call(null) : {}
 
 var items_pb = require('./items_pb.js');
 goog.object.extend(proto, items_pb);
@@ -50,7 +51,7 @@ goog.exportSymbol('proto.UndoItemRequest', null, global);
  * @extends {jspb.Message}
  * @constructor
  */
-proto.UndoItemRequest = function(opt_data) {
+proto.UndoItemRequest = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.UndoItemRequest, jspb.Message);
@@ -71,7 +72,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.ExpandItemRequest = function(opt_data) {
+proto.ExpandItemRequest = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ExpandItemRequest, jspb.Message);
@@ -92,7 +93,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.SnapshotDescriptor = function(opt_data) {
+proto.SnapshotDescriptor = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.SnapshotDescriptor, jspb.Message);
@@ -113,7 +114,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.ListSnapshots = function(opt_data) {
+proto.ListSnapshots = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ListSnapshots, jspb.Message);
@@ -134,7 +135,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.SnapshotList = function(opt_data) {
+proto.SnapshotList = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, proto.SnapshotList.repeatedFields_, null);
 };
 goog.inherits(proto.SnapshotList, jspb.Message);
@@ -155,7 +156,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.StoreSnapshot = function(opt_data) {
+proto.StoreSnapshot = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.StoreSnapshot, jspb.Message);
@@ -176,7 +177,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.SnapshotStored = function(opt_data) {
+proto.SnapshotStored = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.SnapshotStored, jspb.Message);
@@ -197,7 +198,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.LoadSnapshot = function(opt_data) {
+proto.LoadSnapshot = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.LoadSnapshot, jspb.Message);
@@ -218,7 +219,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.SnapshotLoadResult = function(opt_data) {
+proto.SnapshotLoadResult = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.SnapshotLoadResult, jspb.Message);
@@ -239,7 +240,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.DeleteSnapshot = function(opt_data) {
+proto.DeleteSnapshot = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.DeleteSnapshot, jspb.Message);
@@ -260,7 +261,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.SnapshotDeleteResult = function(opt_data) {
+proto.SnapshotDeleteResult = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.SnapshotDeleteResult, jspb.Message);
@@ -281,7 +282,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.GatewayRequest = function(opt_data) {
+proto.GatewayRequest = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, proto.GatewayRequest.oneofGroups_);
 };
 goog.inherits(proto.GatewayRequest, jspb.Message);
@@ -302,7 +303,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.GatewayResponse = function(opt_data) {
+proto.GatewayResponse = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, proto.GatewayResponse.oneofGroups_);
 };
 goog.inherits(proto.GatewayResponse, jspb.Message);
@@ -323,7 +324,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.GatewayRequestStatus = function(opt_data) {
+proto.GatewayRequestStatus = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.GatewayRequestStatus, jspb.Message);
@@ -344,7 +345,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.GatewayRequestStatus.Summary = function(opt_data) {
+proto.GatewayRequestStatus.Summary = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.GatewayRequestStatus.Summary, jspb.Message);
@@ -359,42 +360,42 @@ if (goog.DEBUG && !COMPILED) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.UndoItemRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.UndoItemRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.UndoItemRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.UndoItemRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    uuid: msg.getUuid_asB64()
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.UndoItemRequest.prototype.toObject = function (opt_includeInstance) {
+    return proto.UndoItemRequest.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.UndoItemRequest} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.UndoItemRequest.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      uuid: msg.getUuid_asB64()
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -403,7 +404,7 @@ proto.UndoItemRequest.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.UndoItemRequest}
  */
-proto.UndoItemRequest.deserializeBinary = function(bytes) {
+proto.UndoItemRequest.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.UndoItemRequest;
   return proto.UndoItemRequest.deserializeBinaryFromReader(msg, reader);
@@ -417,20 +418,20 @@ proto.UndoItemRequest.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.UndoItemRequest}
  */
-proto.UndoItemRequest.deserializeBinaryFromReader = function(msg, reader) {
+proto.UndoItemRequest.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setUuid(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = /** @type {!Uint8Array} */ (reader.readBytes());
+        msg.setUuid(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -441,7 +442,7 @@ proto.UndoItemRequest.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.UndoItemRequest.prototype.serializeBinary = function() {
+proto.UndoItemRequest.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.UndoItemRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -455,7 +456,7 @@ proto.UndoItemRequest.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.UndoItemRequest.serializeBinaryToWriter = function(message, writer) {
+proto.UndoItemRequest.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getUuid_asU8();
   if (f.length > 0) {
@@ -471,7 +472,7 @@ proto.UndoItemRequest.serializeBinaryToWriter = function(message, writer) {
  * optional bytes UUID = 1;
  * @return {!(string|Uint8Array)}
  */
-proto.UndoItemRequest.prototype.getUuid = function() {
+proto.UndoItemRequest.prototype.getUuid = function () {
   return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -481,9 +482,9 @@ proto.UndoItemRequest.prototype.getUuid = function() {
  * This is a type-conversion wrapper around `getUuid()`
  * @return {string}
  */
-proto.UndoItemRequest.prototype.getUuid_asB64 = function() {
+proto.UndoItemRequest.prototype.getUuid_asB64 = function () {
   return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getUuid()));
+    this.getUuid()));
 };
 
 
@@ -494,9 +495,9 @@ proto.UndoItemRequest.prototype.getUuid_asB64 = function() {
  * This is a type-conversion wrapper around `getUuid()`
  * @return {!Uint8Array}
  */
-proto.UndoItemRequest.prototype.getUuid_asU8 = function() {
+proto.UndoItemRequest.prototype.getUuid_asU8 = function () {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getUuid()));
+    this.getUuid()));
 };
 
 
@@ -504,7 +505,7 @@ proto.UndoItemRequest.prototype.getUuid_asU8 = function() {
  * @param {!(string|Uint8Array)} value
  * @return {!proto.UndoItemRequest} returns this
  */
-proto.UndoItemRequest.prototype.setUuid = function(value) {
+proto.UndoItemRequest.prototype.setUuid = function (value) {
   return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
@@ -513,43 +514,43 @@ proto.UndoItemRequest.prototype.setUuid = function(value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.ExpandItemRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.ExpandItemRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.ExpandItemRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.ExpandItemRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    item: (f = msg.getItem()) && items_pb.Reference.toObject(includeInstance, f),
-    linkdepth: jspb.Message.getFieldWithDefault(msg, 2, 0)
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.ExpandItemRequest.prototype.toObject = function (opt_includeInstance) {
+    return proto.ExpandItemRequest.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.ExpandItemRequest} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.ExpandItemRequest.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      item: (f = msg.getItem()) && items_pb.Reference.toObject(includeInstance, f),
+      linkdepth: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -558,7 +559,7 @@ proto.ExpandItemRequest.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.ExpandItemRequest}
  */
-proto.ExpandItemRequest.deserializeBinary = function(bytes) {
+proto.ExpandItemRequest.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.ExpandItemRequest;
   return proto.ExpandItemRequest.deserializeBinaryFromReader(msg, reader);
@@ -572,25 +573,25 @@ proto.ExpandItemRequest.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.ExpandItemRequest}
  */
-proto.ExpandItemRequest.deserializeBinaryFromReader = function(msg, reader) {
+proto.ExpandItemRequest.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = new items_pb.Reference;
-      reader.readMessage(value,items_pb.Reference.deserializeBinaryFromReader);
-      msg.setItem(value);
-      break;
-    case 2:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setLinkdepth(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = new items_pb.Reference;
+        reader.readMessage(value, items_pb.Reference.deserializeBinaryFromReader);
+        msg.setItem(value);
+        break;
+      case 2:
+        var value = /** @type {number} */ (reader.readUint32());
+        msg.setLinkdepth(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -601,7 +602,7 @@ proto.ExpandItemRequest.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.ExpandItemRequest.prototype.serializeBinary = function() {
+proto.ExpandItemRequest.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.ExpandItemRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -615,7 +616,7 @@ proto.ExpandItemRequest.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.ExpandItemRequest.serializeBinaryToWriter = function(message, writer) {
+proto.ExpandItemRequest.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getItem();
   if (f != null) {
@@ -639,7 +640,7 @@ proto.ExpandItemRequest.serializeBinaryToWriter = function(message, writer) {
  * optional Reference item = 1;
  * @return {?proto.Reference}
  */
-proto.ExpandItemRequest.prototype.getItem = function() {
+proto.ExpandItemRequest.prototype.getItem = function () {
   return /** @type{?proto.Reference} */ (
     jspb.Message.getWrapperField(this, items_pb.Reference, 1));
 };
@@ -649,7 +650,7 @@ proto.ExpandItemRequest.prototype.getItem = function() {
  * @param {?proto.Reference|undefined} value
  * @return {!proto.ExpandItemRequest} returns this
 */
-proto.ExpandItemRequest.prototype.setItem = function(value) {
+proto.ExpandItemRequest.prototype.setItem = function (value) {
   return jspb.Message.setWrapperField(this, 1, value);
 };
 
@@ -658,7 +659,7 @@ proto.ExpandItemRequest.prototype.setItem = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.ExpandItemRequest} returns this
  */
-proto.ExpandItemRequest.prototype.clearItem = function() {
+proto.ExpandItemRequest.prototype.clearItem = function () {
   return this.setItem(undefined);
 };
 
@@ -667,7 +668,7 @@ proto.ExpandItemRequest.prototype.clearItem = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.ExpandItemRequest.prototype.hasItem = function() {
+proto.ExpandItemRequest.prototype.hasItem = function () {
   return jspb.Message.getField(this, 1) != null;
 };
 
@@ -676,7 +677,7 @@ proto.ExpandItemRequest.prototype.hasItem = function() {
  * optional uint32 linkDepth = 2;
  * @return {number}
  */
-proto.ExpandItemRequest.prototype.getLinkdepth = function() {
+proto.ExpandItemRequest.prototype.getLinkdepth = function () {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -685,7 +686,7 @@ proto.ExpandItemRequest.prototype.getLinkdepth = function() {
  * @param {number} value
  * @return {!proto.ExpandItemRequest} returns this
  */
-proto.ExpandItemRequest.prototype.setLinkdepth = function(value) {
+proto.ExpandItemRequest.prototype.setLinkdepth = function (value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 
@@ -694,46 +695,46 @@ proto.ExpandItemRequest.prototype.setLinkdepth = function(value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.SnapshotDescriptor.prototype.toObject = function(opt_includeInstance) {
-  return proto.SnapshotDescriptor.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.SnapshotDescriptor} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.SnapshotDescriptor.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    uuid: msg.getUuid_asB64(),
-    created: (f = msg.getCreated()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    name: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    description: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    size: jspb.Message.getFieldWithDefault(msg, 5, 0)
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.SnapshotDescriptor.prototype.toObject = function (opt_includeInstance) {
+    return proto.SnapshotDescriptor.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.SnapshotDescriptor} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.SnapshotDescriptor.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      uuid: msg.getUuid_asB64(),
+      created: (f = msg.getCreated()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+      name: jspb.Message.getFieldWithDefault(msg, 3, ""),
+      description: jspb.Message.getFieldWithDefault(msg, 4, ""),
+      size: jspb.Message.getFieldWithDefault(msg, 5, 0)
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -742,7 +743,7 @@ proto.SnapshotDescriptor.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.SnapshotDescriptor}
  */
-proto.SnapshotDescriptor.deserializeBinary = function(bytes) {
+proto.SnapshotDescriptor.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.SnapshotDescriptor;
   return proto.SnapshotDescriptor.deserializeBinaryFromReader(msg, reader);
@@ -756,37 +757,37 @@ proto.SnapshotDescriptor.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.SnapshotDescriptor}
  */
-proto.SnapshotDescriptor.deserializeBinaryFromReader = function(msg, reader) {
+proto.SnapshotDescriptor.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setUuid(value);
-      break;
-    case 2:
-      var value = new google_protobuf_timestamp_pb.Timestamp;
-      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
-      msg.setCreated(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setName(value);
-      break;
-    case 4:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setDescription(value);
-      break;
-    case 5:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setSize(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = /** @type {!Uint8Array} */ (reader.readBytes());
+        msg.setUuid(value);
+        break;
+      case 2:
+        var value = new google_protobuf_timestamp_pb.Timestamp;
+        reader.readMessage(value, google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
+        msg.setCreated(value);
+        break;
+      case 3:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setName(value);
+        break;
+      case 4:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setDescription(value);
+        break;
+      case 5:
+        var value = /** @type {number} */ (reader.readUint32());
+        msg.setSize(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -797,7 +798,7 @@ proto.SnapshotDescriptor.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.SnapshotDescriptor.prototype.serializeBinary = function() {
+proto.SnapshotDescriptor.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.SnapshotDescriptor.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -811,7 +812,7 @@ proto.SnapshotDescriptor.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.SnapshotDescriptor.serializeBinaryToWriter = function(message, writer) {
+proto.SnapshotDescriptor.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getUuid_asU8();
   if (f.length > 0) {
@@ -856,7 +857,7 @@ proto.SnapshotDescriptor.serializeBinaryToWriter = function(message, writer) {
  * optional bytes UUID = 1;
  * @return {!(string|Uint8Array)}
  */
-proto.SnapshotDescriptor.prototype.getUuid = function() {
+proto.SnapshotDescriptor.prototype.getUuid = function () {
   return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -866,9 +867,9 @@ proto.SnapshotDescriptor.prototype.getUuid = function() {
  * This is a type-conversion wrapper around `getUuid()`
  * @return {string}
  */
-proto.SnapshotDescriptor.prototype.getUuid_asB64 = function() {
+proto.SnapshotDescriptor.prototype.getUuid_asB64 = function () {
   return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getUuid()));
+    this.getUuid()));
 };
 
 
@@ -879,9 +880,9 @@ proto.SnapshotDescriptor.prototype.getUuid_asB64 = function() {
  * This is a type-conversion wrapper around `getUuid()`
  * @return {!Uint8Array}
  */
-proto.SnapshotDescriptor.prototype.getUuid_asU8 = function() {
+proto.SnapshotDescriptor.prototype.getUuid_asU8 = function () {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getUuid()));
+    this.getUuid()));
 };
 
 
@@ -889,7 +890,7 @@ proto.SnapshotDescriptor.prototype.getUuid_asU8 = function() {
  * @param {!(string|Uint8Array)} value
  * @return {!proto.SnapshotDescriptor} returns this
  */
-proto.SnapshotDescriptor.prototype.setUuid = function(value) {
+proto.SnapshotDescriptor.prototype.setUuid = function (value) {
   return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
@@ -898,7 +899,7 @@ proto.SnapshotDescriptor.prototype.setUuid = function(value) {
  * optional google.protobuf.Timestamp created = 2;
  * @return {?proto.google.protobuf.Timestamp}
  */
-proto.SnapshotDescriptor.prototype.getCreated = function() {
+proto.SnapshotDescriptor.prototype.getCreated = function () {
   return /** @type{?proto.google.protobuf.Timestamp} */ (
     jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 2));
 };
@@ -908,7 +909,7 @@ proto.SnapshotDescriptor.prototype.getCreated = function() {
  * @param {?proto.google.protobuf.Timestamp|undefined} value
  * @return {!proto.SnapshotDescriptor} returns this
 */
-proto.SnapshotDescriptor.prototype.setCreated = function(value) {
+proto.SnapshotDescriptor.prototype.setCreated = function (value) {
   return jspb.Message.setWrapperField(this, 2, value);
 };
 
@@ -917,7 +918,7 @@ proto.SnapshotDescriptor.prototype.setCreated = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.SnapshotDescriptor} returns this
  */
-proto.SnapshotDescriptor.prototype.clearCreated = function() {
+proto.SnapshotDescriptor.prototype.clearCreated = function () {
   return this.setCreated(undefined);
 };
 
@@ -926,7 +927,7 @@ proto.SnapshotDescriptor.prototype.clearCreated = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.SnapshotDescriptor.prototype.hasCreated = function() {
+proto.SnapshotDescriptor.prototype.hasCreated = function () {
   return jspb.Message.getField(this, 2) != null;
 };
 
@@ -935,7 +936,7 @@ proto.SnapshotDescriptor.prototype.hasCreated = function() {
  * optional string name = 3;
  * @return {string}
  */
-proto.SnapshotDescriptor.prototype.getName = function() {
+proto.SnapshotDescriptor.prototype.getName = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -944,7 +945,7 @@ proto.SnapshotDescriptor.prototype.getName = function() {
  * @param {string} value
  * @return {!proto.SnapshotDescriptor} returns this
  */
-proto.SnapshotDescriptor.prototype.setName = function(value) {
+proto.SnapshotDescriptor.prototype.setName = function (value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -953,7 +954,7 @@ proto.SnapshotDescriptor.prototype.setName = function(value) {
  * optional string description = 4;
  * @return {string}
  */
-proto.SnapshotDescriptor.prototype.getDescription = function() {
+proto.SnapshotDescriptor.prototype.getDescription = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -962,7 +963,7 @@ proto.SnapshotDescriptor.prototype.getDescription = function() {
  * @param {string} value
  * @return {!proto.SnapshotDescriptor} returns this
  */
-proto.SnapshotDescriptor.prototype.setDescription = function(value) {
+proto.SnapshotDescriptor.prototype.setDescription = function (value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 
@@ -971,7 +972,7 @@ proto.SnapshotDescriptor.prototype.setDescription = function(value) {
  * optional uint32 size = 5;
  * @return {number}
  */
-proto.SnapshotDescriptor.prototype.getSize = function() {
+proto.SnapshotDescriptor.prototype.getSize = function () {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
 };
 
@@ -980,7 +981,7 @@ proto.SnapshotDescriptor.prototype.getSize = function() {
  * @param {number} value
  * @return {!proto.SnapshotDescriptor} returns this
  */
-proto.SnapshotDescriptor.prototype.setSize = function(value) {
+proto.SnapshotDescriptor.prototype.setSize = function (value) {
   return jspb.Message.setProto3IntField(this, 5, value);
 };
 
@@ -989,42 +990,42 @@ proto.SnapshotDescriptor.prototype.setSize = function(value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.ListSnapshots.prototype.toObject = function(opt_includeInstance) {
-  return proto.ListSnapshots.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.ListSnapshots} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.ListSnapshots.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.ListSnapshots.prototype.toObject = function (opt_includeInstance) {
+    return proto.ListSnapshots.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.ListSnapshots} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.ListSnapshots.toObject = function (includeInstance, msg) {
+    var f, obj = {
+
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -1033,7 +1034,7 @@ proto.ListSnapshots.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.ListSnapshots}
  */
-proto.ListSnapshots.deserializeBinary = function(bytes) {
+proto.ListSnapshots.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.ListSnapshots;
   return proto.ListSnapshots.deserializeBinaryFromReader(msg, reader);
@@ -1047,16 +1048,16 @@ proto.ListSnapshots.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.ListSnapshots}
  */
-proto.ListSnapshots.deserializeBinaryFromReader = function(msg, reader) {
+proto.ListSnapshots.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    default:
-      reader.skipField();
-      break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -1067,7 +1068,7 @@ proto.ListSnapshots.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.ListSnapshots.prototype.serializeBinary = function() {
+proto.ListSnapshots.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.ListSnapshots.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -1081,7 +1082,7 @@ proto.ListSnapshots.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.ListSnapshots.serializeBinaryToWriter = function(message, writer) {
+proto.ListSnapshots.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
 };
 
@@ -1097,45 +1098,45 @@ proto.SnapshotList.repeatedFields_ = [3];
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.SnapshotList.prototype.toObject = function(opt_includeInstance) {
-  return proto.SnapshotList.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.SnapshotList} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.SnapshotList.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    success: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
-    errormessage: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    snapshotsList: jspb.Message.toObjectList(msg.getSnapshotsList(),
-    proto.SnapshotDescriptor.toObject, includeInstance)
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.SnapshotList.prototype.toObject = function (opt_includeInstance) {
+    return proto.SnapshotList.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.SnapshotList} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.SnapshotList.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      success: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
+      errormessage: jspb.Message.getFieldWithDefault(msg, 2, ""),
+      snapshotsList: jspb.Message.toObjectList(msg.getSnapshotsList(),
+        proto.SnapshotDescriptor.toObject, includeInstance)
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -1144,7 +1145,7 @@ proto.SnapshotList.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.SnapshotList}
  */
-proto.SnapshotList.deserializeBinary = function(bytes) {
+proto.SnapshotList.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.SnapshotList;
   return proto.SnapshotList.deserializeBinaryFromReader(msg, reader);
@@ -1158,29 +1159,29 @@ proto.SnapshotList.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.SnapshotList}
  */
-proto.SnapshotList.deserializeBinaryFromReader = function(msg, reader) {
+proto.SnapshotList.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setSuccess(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setErrormessage(value);
-      break;
-    case 3:
-      var value = new proto.SnapshotDescriptor;
-      reader.readMessage(value,proto.SnapshotDescriptor.deserializeBinaryFromReader);
-      msg.addSnapshots(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = /** @type {boolean} */ (reader.readBool());
+        msg.setSuccess(value);
+        break;
+      case 2:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setErrormessage(value);
+        break;
+      case 3:
+        var value = new proto.SnapshotDescriptor;
+        reader.readMessage(value, proto.SnapshotDescriptor.deserializeBinaryFromReader);
+        msg.addSnapshots(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -1191,7 +1192,7 @@ proto.SnapshotList.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.SnapshotList.prototype.serializeBinary = function() {
+proto.SnapshotList.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.SnapshotList.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -1205,7 +1206,7 @@ proto.SnapshotList.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.SnapshotList.serializeBinaryToWriter = function(message, writer) {
+proto.SnapshotList.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getSuccess();
   if (f) {
@@ -1236,7 +1237,7 @@ proto.SnapshotList.serializeBinaryToWriter = function(message, writer) {
  * optional bool success = 1;
  * @return {boolean}
  */
-proto.SnapshotList.prototype.getSuccess = function() {
+proto.SnapshotList.prototype.getSuccess = function () {
   return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
@@ -1245,7 +1246,7 @@ proto.SnapshotList.prototype.getSuccess = function() {
  * @param {boolean} value
  * @return {!proto.SnapshotList} returns this
  */
-proto.SnapshotList.prototype.setSuccess = function(value) {
+proto.SnapshotList.prototype.setSuccess = function (value) {
   return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
@@ -1254,7 +1255,7 @@ proto.SnapshotList.prototype.setSuccess = function(value) {
  * optional string errorMessage = 2;
  * @return {string}
  */
-proto.SnapshotList.prototype.getErrormessage = function() {
+proto.SnapshotList.prototype.getErrormessage = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -1263,7 +1264,7 @@ proto.SnapshotList.prototype.getErrormessage = function() {
  * @param {string} value
  * @return {!proto.SnapshotList} returns this
  */
-proto.SnapshotList.prototype.setErrormessage = function(value) {
+proto.SnapshotList.prototype.setErrormessage = function (value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -1272,7 +1273,7 @@ proto.SnapshotList.prototype.setErrormessage = function(value) {
  * repeated SnapshotDescriptor snapshots = 3;
  * @return {!Array<!proto.SnapshotDescriptor>}
  */
-proto.SnapshotList.prototype.getSnapshotsList = function() {
+proto.SnapshotList.prototype.getSnapshotsList = function () {
   return /** @type{!Array<!proto.SnapshotDescriptor>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.SnapshotDescriptor, 3));
 };
@@ -1282,7 +1283,7 @@ proto.SnapshotList.prototype.getSnapshotsList = function() {
  * @param {!Array<!proto.SnapshotDescriptor>} value
  * @return {!proto.SnapshotList} returns this
 */
-proto.SnapshotList.prototype.setSnapshotsList = function(value) {
+proto.SnapshotList.prototype.setSnapshotsList = function (value) {
   return jspb.Message.setRepeatedWrapperField(this, 3, value);
 };
 
@@ -1292,7 +1293,7 @@ proto.SnapshotList.prototype.setSnapshotsList = function(value) {
  * @param {number=} opt_index
  * @return {!proto.SnapshotDescriptor}
  */
-proto.SnapshotList.prototype.addSnapshots = function(opt_value, opt_index) {
+proto.SnapshotList.prototype.addSnapshots = function (opt_value, opt_index) {
   return jspb.Message.addToRepeatedWrapperField(this, 3, opt_value, proto.SnapshotDescriptor, opt_index);
 };
 
@@ -1301,7 +1302,7 @@ proto.SnapshotList.prototype.addSnapshots = function(opt_value, opt_index) {
  * Clears the list making it empty but non-null.
  * @return {!proto.SnapshotList} returns this
  */
-proto.SnapshotList.prototype.clearSnapshotsList = function() {
+proto.SnapshotList.prototype.clearSnapshotsList = function () {
   return this.setSnapshotsList([]);
 };
 
@@ -1310,43 +1311,43 @@ proto.SnapshotList.prototype.clearSnapshotsList = function() {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.StoreSnapshot.prototype.toObject = function(opt_includeInstance) {
-  return proto.StoreSnapshot.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.StoreSnapshot} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.StoreSnapshot.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    description: jspb.Message.getFieldWithDefault(msg, 2, "")
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.StoreSnapshot.prototype.toObject = function (opt_includeInstance) {
+    return proto.StoreSnapshot.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.StoreSnapshot} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.StoreSnapshot.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+      description: jspb.Message.getFieldWithDefault(msg, 2, "")
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -1355,7 +1356,7 @@ proto.StoreSnapshot.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.StoreSnapshot}
  */
-proto.StoreSnapshot.deserializeBinary = function(bytes) {
+proto.StoreSnapshot.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.StoreSnapshot;
   return proto.StoreSnapshot.deserializeBinaryFromReader(msg, reader);
@@ -1369,24 +1370,24 @@ proto.StoreSnapshot.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.StoreSnapshot}
  */
-proto.StoreSnapshot.deserializeBinaryFromReader = function(msg, reader) {
+proto.StoreSnapshot.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setName(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setDescription(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setName(value);
+        break;
+      case 2:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setDescription(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -1397,7 +1398,7 @@ proto.StoreSnapshot.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.StoreSnapshot.prototype.serializeBinary = function() {
+proto.StoreSnapshot.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.StoreSnapshot.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -1411,7 +1412,7 @@ proto.StoreSnapshot.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.StoreSnapshot.serializeBinaryToWriter = function(message, writer) {
+proto.StoreSnapshot.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getName();
   if (f.length > 0) {
@@ -1434,7 +1435,7 @@ proto.StoreSnapshot.serializeBinaryToWriter = function(message, writer) {
  * optional string name = 1;
  * @return {string}
  */
-proto.StoreSnapshot.prototype.getName = function() {
+proto.StoreSnapshot.prototype.getName = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -1443,7 +1444,7 @@ proto.StoreSnapshot.prototype.getName = function() {
  * @param {string} value
  * @return {!proto.StoreSnapshot} returns this
  */
-proto.StoreSnapshot.prototype.setName = function(value) {
+proto.StoreSnapshot.prototype.setName = function (value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -1452,7 +1453,7 @@ proto.StoreSnapshot.prototype.setName = function(value) {
  * optional string description = 2;
  * @return {string}
  */
-proto.StoreSnapshot.prototype.getDescription = function() {
+proto.StoreSnapshot.prototype.getDescription = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -1461,7 +1462,7 @@ proto.StoreSnapshot.prototype.getDescription = function() {
  * @param {string} value
  * @return {!proto.StoreSnapshot} returns this
  */
-proto.StoreSnapshot.prototype.setDescription = function(value) {
+proto.StoreSnapshot.prototype.setDescription = function (value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -1470,44 +1471,44 @@ proto.StoreSnapshot.prototype.setDescription = function(value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.SnapshotStored.prototype.toObject = function(opt_includeInstance) {
-  return proto.SnapshotStored.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.SnapshotStored} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.SnapshotStored.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    success: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
-    errormessage: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    snapshot: (f = msg.getSnapshot()) && proto.SnapshotDescriptor.toObject(includeInstance, f)
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.SnapshotStored.prototype.toObject = function (opt_includeInstance) {
+    return proto.SnapshotStored.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.SnapshotStored} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.SnapshotStored.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      success: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
+      errormessage: jspb.Message.getFieldWithDefault(msg, 2, ""),
+      snapshot: (f = msg.getSnapshot()) && proto.SnapshotDescriptor.toObject(includeInstance, f)
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -1516,7 +1517,7 @@ proto.SnapshotStored.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.SnapshotStored}
  */
-proto.SnapshotStored.deserializeBinary = function(bytes) {
+proto.SnapshotStored.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.SnapshotStored;
   return proto.SnapshotStored.deserializeBinaryFromReader(msg, reader);
@@ -1530,29 +1531,29 @@ proto.SnapshotStored.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.SnapshotStored}
  */
-proto.SnapshotStored.deserializeBinaryFromReader = function(msg, reader) {
+proto.SnapshotStored.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setSuccess(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setErrormessage(value);
-      break;
-    case 3:
-      var value = new proto.SnapshotDescriptor;
-      reader.readMessage(value,proto.SnapshotDescriptor.deserializeBinaryFromReader);
-      msg.setSnapshot(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = /** @type {boolean} */ (reader.readBool());
+        msg.setSuccess(value);
+        break;
+      case 2:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setErrormessage(value);
+        break;
+      case 3:
+        var value = new proto.SnapshotDescriptor;
+        reader.readMessage(value, proto.SnapshotDescriptor.deserializeBinaryFromReader);
+        msg.setSnapshot(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -1563,7 +1564,7 @@ proto.SnapshotStored.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.SnapshotStored.prototype.serializeBinary = function() {
+proto.SnapshotStored.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.SnapshotStored.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -1577,7 +1578,7 @@ proto.SnapshotStored.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.SnapshotStored.serializeBinaryToWriter = function(message, writer) {
+proto.SnapshotStored.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getSuccess();
   if (f) {
@@ -1608,7 +1609,7 @@ proto.SnapshotStored.serializeBinaryToWriter = function(message, writer) {
  * optional bool success = 1;
  * @return {boolean}
  */
-proto.SnapshotStored.prototype.getSuccess = function() {
+proto.SnapshotStored.prototype.getSuccess = function () {
   return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
@@ -1617,7 +1618,7 @@ proto.SnapshotStored.prototype.getSuccess = function() {
  * @param {boolean} value
  * @return {!proto.SnapshotStored} returns this
  */
-proto.SnapshotStored.prototype.setSuccess = function(value) {
+proto.SnapshotStored.prototype.setSuccess = function (value) {
   return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
@@ -1626,7 +1627,7 @@ proto.SnapshotStored.prototype.setSuccess = function(value) {
  * optional string errorMessage = 2;
  * @return {string}
  */
-proto.SnapshotStored.prototype.getErrormessage = function() {
+proto.SnapshotStored.prototype.getErrormessage = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -1635,7 +1636,7 @@ proto.SnapshotStored.prototype.getErrormessage = function() {
  * @param {string} value
  * @return {!proto.SnapshotStored} returns this
  */
-proto.SnapshotStored.prototype.setErrormessage = function(value) {
+proto.SnapshotStored.prototype.setErrormessage = function (value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -1644,7 +1645,7 @@ proto.SnapshotStored.prototype.setErrormessage = function(value) {
  * optional SnapshotDescriptor snapshot = 3;
  * @return {?proto.SnapshotDescriptor}
  */
-proto.SnapshotStored.prototype.getSnapshot = function() {
+proto.SnapshotStored.prototype.getSnapshot = function () {
   return /** @type{?proto.SnapshotDescriptor} */ (
     jspb.Message.getWrapperField(this, proto.SnapshotDescriptor, 3));
 };
@@ -1654,7 +1655,7 @@ proto.SnapshotStored.prototype.getSnapshot = function() {
  * @param {?proto.SnapshotDescriptor|undefined} value
  * @return {!proto.SnapshotStored} returns this
 */
-proto.SnapshotStored.prototype.setSnapshot = function(value) {
+proto.SnapshotStored.prototype.setSnapshot = function (value) {
   return jspb.Message.setWrapperField(this, 3, value);
 };
 
@@ -1663,7 +1664,7 @@ proto.SnapshotStored.prototype.setSnapshot = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.SnapshotStored} returns this
  */
-proto.SnapshotStored.prototype.clearSnapshot = function() {
+proto.SnapshotStored.prototype.clearSnapshot = function () {
   return this.setSnapshot(undefined);
 };
 
@@ -1672,7 +1673,7 @@ proto.SnapshotStored.prototype.clearSnapshot = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.SnapshotStored.prototype.hasSnapshot = function() {
+proto.SnapshotStored.prototype.hasSnapshot = function () {
   return jspb.Message.getField(this, 3) != null;
 };
 
@@ -1681,42 +1682,42 @@ proto.SnapshotStored.prototype.hasSnapshot = function() {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.LoadSnapshot.prototype.toObject = function(opt_includeInstance) {
-  return proto.LoadSnapshot.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.LoadSnapshot} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.LoadSnapshot.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    uuid: msg.getUuid_asB64()
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.LoadSnapshot.prototype.toObject = function (opt_includeInstance) {
+    return proto.LoadSnapshot.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.LoadSnapshot} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.LoadSnapshot.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      uuid: msg.getUuid_asB64()
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -1725,7 +1726,7 @@ proto.LoadSnapshot.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.LoadSnapshot}
  */
-proto.LoadSnapshot.deserializeBinary = function(bytes) {
+proto.LoadSnapshot.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.LoadSnapshot;
   return proto.LoadSnapshot.deserializeBinaryFromReader(msg, reader);
@@ -1739,20 +1740,20 @@ proto.LoadSnapshot.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.LoadSnapshot}
  */
-proto.LoadSnapshot.deserializeBinaryFromReader = function(msg, reader) {
+proto.LoadSnapshot.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setUuid(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = /** @type {!Uint8Array} */ (reader.readBytes());
+        msg.setUuid(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -1763,7 +1764,7 @@ proto.LoadSnapshot.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.LoadSnapshot.prototype.serializeBinary = function() {
+proto.LoadSnapshot.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.LoadSnapshot.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -1777,7 +1778,7 @@ proto.LoadSnapshot.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.LoadSnapshot.serializeBinaryToWriter = function(message, writer) {
+proto.LoadSnapshot.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getUuid_asU8();
   if (f.length > 0) {
@@ -1793,7 +1794,7 @@ proto.LoadSnapshot.serializeBinaryToWriter = function(message, writer) {
  * optional bytes UUID = 1;
  * @return {!(string|Uint8Array)}
  */
-proto.LoadSnapshot.prototype.getUuid = function() {
+proto.LoadSnapshot.prototype.getUuid = function () {
   return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -1803,9 +1804,9 @@ proto.LoadSnapshot.prototype.getUuid = function() {
  * This is a type-conversion wrapper around `getUuid()`
  * @return {string}
  */
-proto.LoadSnapshot.prototype.getUuid_asB64 = function() {
+proto.LoadSnapshot.prototype.getUuid_asB64 = function () {
   return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getUuid()));
+    this.getUuid()));
 };
 
 
@@ -1816,9 +1817,9 @@ proto.LoadSnapshot.prototype.getUuid_asB64 = function() {
  * This is a type-conversion wrapper around `getUuid()`
  * @return {!Uint8Array}
  */
-proto.LoadSnapshot.prototype.getUuid_asU8 = function() {
+proto.LoadSnapshot.prototype.getUuid_asU8 = function () {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getUuid()));
+    this.getUuid()));
 };
 
 
@@ -1826,7 +1827,7 @@ proto.LoadSnapshot.prototype.getUuid_asU8 = function() {
  * @param {!(string|Uint8Array)} value
  * @return {!proto.LoadSnapshot} returns this
  */
-proto.LoadSnapshot.prototype.setUuid = function(value) {
+proto.LoadSnapshot.prototype.setUuid = function (value) {
   return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
@@ -1835,43 +1836,43 @@ proto.LoadSnapshot.prototype.setUuid = function(value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.SnapshotLoadResult.prototype.toObject = function(opt_includeInstance) {
-  return proto.SnapshotLoadResult.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.SnapshotLoadResult} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.SnapshotLoadResult.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    success: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
-    errormessage: jspb.Message.getFieldWithDefault(msg, 2, "")
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.SnapshotLoadResult.prototype.toObject = function (opt_includeInstance) {
+    return proto.SnapshotLoadResult.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.SnapshotLoadResult} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.SnapshotLoadResult.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      success: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
+      errormessage: jspb.Message.getFieldWithDefault(msg, 2, "")
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -1880,7 +1881,7 @@ proto.SnapshotLoadResult.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.SnapshotLoadResult}
  */
-proto.SnapshotLoadResult.deserializeBinary = function(bytes) {
+proto.SnapshotLoadResult.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.SnapshotLoadResult;
   return proto.SnapshotLoadResult.deserializeBinaryFromReader(msg, reader);
@@ -1894,24 +1895,24 @@ proto.SnapshotLoadResult.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.SnapshotLoadResult}
  */
-proto.SnapshotLoadResult.deserializeBinaryFromReader = function(msg, reader) {
+proto.SnapshotLoadResult.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setSuccess(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setErrormessage(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = /** @type {boolean} */ (reader.readBool());
+        msg.setSuccess(value);
+        break;
+      case 2:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setErrormessage(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -1922,7 +1923,7 @@ proto.SnapshotLoadResult.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.SnapshotLoadResult.prototype.serializeBinary = function() {
+proto.SnapshotLoadResult.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.SnapshotLoadResult.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -1936,7 +1937,7 @@ proto.SnapshotLoadResult.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.SnapshotLoadResult.serializeBinaryToWriter = function(message, writer) {
+proto.SnapshotLoadResult.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getSuccess();
   if (f) {
@@ -1959,7 +1960,7 @@ proto.SnapshotLoadResult.serializeBinaryToWriter = function(message, writer) {
  * optional bool success = 1;
  * @return {boolean}
  */
-proto.SnapshotLoadResult.prototype.getSuccess = function() {
+proto.SnapshotLoadResult.prototype.getSuccess = function () {
   return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
@@ -1968,7 +1969,7 @@ proto.SnapshotLoadResult.prototype.getSuccess = function() {
  * @param {boolean} value
  * @return {!proto.SnapshotLoadResult} returns this
  */
-proto.SnapshotLoadResult.prototype.setSuccess = function(value) {
+proto.SnapshotLoadResult.prototype.setSuccess = function (value) {
   return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
@@ -1977,7 +1978,7 @@ proto.SnapshotLoadResult.prototype.setSuccess = function(value) {
  * optional string errorMessage = 2;
  * @return {string}
  */
-proto.SnapshotLoadResult.prototype.getErrormessage = function() {
+proto.SnapshotLoadResult.prototype.getErrormessage = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -1986,7 +1987,7 @@ proto.SnapshotLoadResult.prototype.getErrormessage = function() {
  * @param {string} value
  * @return {!proto.SnapshotLoadResult} returns this
  */
-proto.SnapshotLoadResult.prototype.setErrormessage = function(value) {
+proto.SnapshotLoadResult.prototype.setErrormessage = function (value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -1995,42 +1996,42 @@ proto.SnapshotLoadResult.prototype.setErrormessage = function(value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.DeleteSnapshot.prototype.toObject = function(opt_includeInstance) {
-  return proto.DeleteSnapshot.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.DeleteSnapshot} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.DeleteSnapshot.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    uuid: msg.getUuid_asB64()
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.DeleteSnapshot.prototype.toObject = function (opt_includeInstance) {
+    return proto.DeleteSnapshot.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.DeleteSnapshot} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.DeleteSnapshot.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      uuid: msg.getUuid_asB64()
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -2039,7 +2040,7 @@ proto.DeleteSnapshot.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.DeleteSnapshot}
  */
-proto.DeleteSnapshot.deserializeBinary = function(bytes) {
+proto.DeleteSnapshot.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.DeleteSnapshot;
   return proto.DeleteSnapshot.deserializeBinaryFromReader(msg, reader);
@@ -2053,20 +2054,20 @@ proto.DeleteSnapshot.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.DeleteSnapshot}
  */
-proto.DeleteSnapshot.deserializeBinaryFromReader = function(msg, reader) {
+proto.DeleteSnapshot.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setUuid(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = /** @type {!Uint8Array} */ (reader.readBytes());
+        msg.setUuid(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -2077,7 +2078,7 @@ proto.DeleteSnapshot.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.DeleteSnapshot.prototype.serializeBinary = function() {
+proto.DeleteSnapshot.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.DeleteSnapshot.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -2091,7 +2092,7 @@ proto.DeleteSnapshot.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.DeleteSnapshot.serializeBinaryToWriter = function(message, writer) {
+proto.DeleteSnapshot.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getUuid_asU8();
   if (f.length > 0) {
@@ -2107,7 +2108,7 @@ proto.DeleteSnapshot.serializeBinaryToWriter = function(message, writer) {
  * optional bytes UUID = 1;
  * @return {!(string|Uint8Array)}
  */
-proto.DeleteSnapshot.prototype.getUuid = function() {
+proto.DeleteSnapshot.prototype.getUuid = function () {
   return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -2117,9 +2118,9 @@ proto.DeleteSnapshot.prototype.getUuid = function() {
  * This is a type-conversion wrapper around `getUuid()`
  * @return {string}
  */
-proto.DeleteSnapshot.prototype.getUuid_asB64 = function() {
+proto.DeleteSnapshot.prototype.getUuid_asB64 = function () {
   return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getUuid()));
+    this.getUuid()));
 };
 
 
@@ -2130,9 +2131,9 @@ proto.DeleteSnapshot.prototype.getUuid_asB64 = function() {
  * This is a type-conversion wrapper around `getUuid()`
  * @return {!Uint8Array}
  */
-proto.DeleteSnapshot.prototype.getUuid_asU8 = function() {
+proto.DeleteSnapshot.prototype.getUuid_asU8 = function () {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getUuid()));
+    this.getUuid()));
 };
 
 
@@ -2140,7 +2141,7 @@ proto.DeleteSnapshot.prototype.getUuid_asU8 = function() {
  * @param {!(string|Uint8Array)} value
  * @return {!proto.DeleteSnapshot} returns this
  */
-proto.DeleteSnapshot.prototype.setUuid = function(value) {
+proto.DeleteSnapshot.prototype.setUuid = function (value) {
   return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
@@ -2149,43 +2150,43 @@ proto.DeleteSnapshot.prototype.setUuid = function(value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.SnapshotDeleteResult.prototype.toObject = function(opt_includeInstance) {
-  return proto.SnapshotDeleteResult.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.SnapshotDeleteResult} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.SnapshotDeleteResult.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    success: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
-    errormessage: jspb.Message.getFieldWithDefault(msg, 2, "")
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.SnapshotDeleteResult.prototype.toObject = function (opt_includeInstance) {
+    return proto.SnapshotDeleteResult.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.SnapshotDeleteResult} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.SnapshotDeleteResult.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      success: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
+      errormessage: jspb.Message.getFieldWithDefault(msg, 2, "")
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -2194,7 +2195,7 @@ proto.SnapshotDeleteResult.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.SnapshotDeleteResult}
  */
-proto.SnapshotDeleteResult.deserializeBinary = function(bytes) {
+proto.SnapshotDeleteResult.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.SnapshotDeleteResult;
   return proto.SnapshotDeleteResult.deserializeBinaryFromReader(msg, reader);
@@ -2208,24 +2209,24 @@ proto.SnapshotDeleteResult.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.SnapshotDeleteResult}
  */
-proto.SnapshotDeleteResult.deserializeBinaryFromReader = function(msg, reader) {
+proto.SnapshotDeleteResult.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setSuccess(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setErrormessage(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = /** @type {boolean} */ (reader.readBool());
+        msg.setSuccess(value);
+        break;
+      case 2:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setErrormessage(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -2236,7 +2237,7 @@ proto.SnapshotDeleteResult.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.SnapshotDeleteResult.prototype.serializeBinary = function() {
+proto.SnapshotDeleteResult.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.SnapshotDeleteResult.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -2250,7 +2251,7 @@ proto.SnapshotDeleteResult.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.SnapshotDeleteResult.serializeBinaryToWriter = function(message, writer) {
+proto.SnapshotDeleteResult.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getSuccess();
   if (f) {
@@ -2273,7 +2274,7 @@ proto.SnapshotDeleteResult.serializeBinaryToWriter = function(message, writer) {
  * optional bool success = 1;
  * @return {boolean}
  */
-proto.SnapshotDeleteResult.prototype.getSuccess = function() {
+proto.SnapshotDeleteResult.prototype.getSuccess = function () {
   return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
@@ -2282,7 +2283,7 @@ proto.SnapshotDeleteResult.prototype.getSuccess = function() {
  * @param {boolean} value
  * @return {!proto.SnapshotDeleteResult} returns this
  */
-proto.SnapshotDeleteResult.prototype.setSuccess = function(value) {
+proto.SnapshotDeleteResult.prototype.setSuccess = function (value) {
   return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
@@ -2291,7 +2292,7 @@ proto.SnapshotDeleteResult.prototype.setSuccess = function(value) {
  * optional string errorMessage = 2;
  * @return {string}
  */
-proto.SnapshotDeleteResult.prototype.getErrormessage = function() {
+proto.SnapshotDeleteResult.prototype.getErrormessage = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -2300,7 +2301,7 @@ proto.SnapshotDeleteResult.prototype.getErrormessage = function() {
  * @param {string} value
  * @return {!proto.SnapshotDeleteResult} returns this
  */
-proto.SnapshotDeleteResult.prototype.setErrormessage = function(value) {
+proto.SnapshotDeleteResult.prototype.setErrormessage = function (value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -2314,7 +2315,7 @@ proto.SnapshotDeleteResult.prototype.setErrormessage = function(value) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.GatewayRequest.oneofGroups_ = [[1,3,4,5,6,7,8,9,10,11,12]];
+proto.GatewayRequest.oneofGroups_ = [[1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]];
 
 /**
  * @enum {number}
@@ -2337,60 +2338,60 @@ proto.GatewayRequest.RequestTypeCase = {
 /**
  * @return {proto.GatewayRequest.RequestTypeCase}
  */
-proto.GatewayRequest.prototype.getRequestTypeCase = function() {
+proto.GatewayRequest.prototype.getRequestTypeCase = function () {
   return /** @type {proto.GatewayRequest.RequestTypeCase} */(jspb.Message.computeOneofCase(this, proto.GatewayRequest.oneofGroups_[0]));
 };
 
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.GatewayRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.GatewayRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.GatewayRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.GatewayRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    newrequest: (f = msg.getNewrequest()) && items_pb.ItemRequest.toObject(includeInstance, f),
-    cancelrequest: (f = msg.getCancelrequest()) && items_pb.CancelItemRequest.toObject(includeInstance, f),
-    undorequest: (f = msg.getUndorequest()) && proto.UndoItemRequest.toObject(includeInstance, f),
-    excludeitem: (f = msg.getExcludeitem()) && items_pb.Reference.toObject(includeInstance, f),
-    includeitem: (f = msg.getIncludeitem()) && items_pb.Reference.toObject(includeInstance, f),
-    expanditem: (f = msg.getExpanditem()) && proto.ExpandItemRequest.toObject(includeInstance, f),
-    unexpanditem: (f = msg.getUnexpanditem()) && items_pb.Reference.toObject(includeInstance, f),
-    listsnapshots: (f = msg.getListsnapshots()) && proto.ListSnapshots.toObject(includeInstance, f),
-    storesnapshot: (f = msg.getStoresnapshot()) && proto.StoreSnapshot.toObject(includeInstance, f),
-    loadsnapshot: (f = msg.getLoadsnapshot()) && proto.LoadSnapshot.toObject(includeInstance, f),
-    deletesnapshot: (f = msg.getDeletesnapshot()) && proto.DeleteSnapshot.toObject(includeInstance, f),
-    minstatusinterval: (f = msg.getMinstatusinterval()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f)
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.GatewayRequest.prototype.toObject = function (opt_includeInstance) {
+    return proto.GatewayRequest.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.GatewayRequest} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.GatewayRequest.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      newrequest: (f = msg.getNewrequest()) && items_pb.ItemRequest.toObject(includeInstance, f),
+      cancelrequest: (f = msg.getCancelrequest()) && items_pb.CancelItemRequest.toObject(includeInstance, f),
+      undorequest: (f = msg.getUndorequest()) && proto.UndoItemRequest.toObject(includeInstance, f),
+      excludeitem: (f = msg.getExcludeitem()) && items_pb.Reference.toObject(includeInstance, f),
+      includeitem: (f = msg.getIncludeitem()) && items_pb.Reference.toObject(includeInstance, f),
+      expanditem: (f = msg.getExpanditem()) && proto.ExpandItemRequest.toObject(includeInstance, f),
+      unexpanditem: (f = msg.getUnexpanditem()) && items_pb.Reference.toObject(includeInstance, f),
+      listsnapshots: (f = msg.getListsnapshots()) && proto.ListSnapshots.toObject(includeInstance, f),
+      storesnapshot: (f = msg.getStoresnapshot()) && proto.StoreSnapshot.toObject(includeInstance, f),
+      loadsnapshot: (f = msg.getLoadsnapshot()) && proto.LoadSnapshot.toObject(includeInstance, f),
+      deletesnapshot: (f = msg.getDeletesnapshot()) && proto.DeleteSnapshot.toObject(includeInstance, f),
+      minstatusinterval: (f = msg.getMinstatusinterval()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f)
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -2399,7 +2400,7 @@ proto.GatewayRequest.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GatewayRequest}
  */
-proto.GatewayRequest.deserializeBinary = function(bytes) {
+proto.GatewayRequest.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.GatewayRequest;
   return proto.GatewayRequest.deserializeBinaryFromReader(msg, reader);
@@ -2413,76 +2414,76 @@ proto.GatewayRequest.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.GatewayRequest}
  */
-proto.GatewayRequest.deserializeBinaryFromReader = function(msg, reader) {
+proto.GatewayRequest.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = new items_pb.ItemRequest;
-      reader.readMessage(value,items_pb.ItemRequest.deserializeBinaryFromReader);
-      msg.setNewrequest(value);
-      break;
-    case 3:
-      var value = new items_pb.CancelItemRequest;
-      reader.readMessage(value,items_pb.CancelItemRequest.deserializeBinaryFromReader);
-      msg.setCancelrequest(value);
-      break;
-    case 4:
-      var value = new proto.UndoItemRequest;
-      reader.readMessage(value,proto.UndoItemRequest.deserializeBinaryFromReader);
-      msg.setUndorequest(value);
-      break;
-    case 5:
-      var value = new items_pb.Reference;
-      reader.readMessage(value,items_pb.Reference.deserializeBinaryFromReader);
-      msg.setExcludeitem(value);
-      break;
-    case 6:
-      var value = new items_pb.Reference;
-      reader.readMessage(value,items_pb.Reference.deserializeBinaryFromReader);
-      msg.setIncludeitem(value);
-      break;
-    case 7:
-      var value = new proto.ExpandItemRequest;
-      reader.readMessage(value,proto.ExpandItemRequest.deserializeBinaryFromReader);
-      msg.setExpanditem(value);
-      break;
-    case 8:
-      var value = new items_pb.Reference;
-      reader.readMessage(value,items_pb.Reference.deserializeBinaryFromReader);
-      msg.setUnexpanditem(value);
-      break;
-    case 9:
-      var value = new proto.ListSnapshots;
-      reader.readMessage(value,proto.ListSnapshots.deserializeBinaryFromReader);
-      msg.setListsnapshots(value);
-      break;
-    case 10:
-      var value = new proto.StoreSnapshot;
-      reader.readMessage(value,proto.StoreSnapshot.deserializeBinaryFromReader);
-      msg.setStoresnapshot(value);
-      break;
-    case 11:
-      var value = new proto.LoadSnapshot;
-      reader.readMessage(value,proto.LoadSnapshot.deserializeBinaryFromReader);
-      msg.setLoadsnapshot(value);
-      break;
-    case 12:
-      var value = new proto.DeleteSnapshot;
-      reader.readMessage(value,proto.DeleteSnapshot.deserializeBinaryFromReader);
-      msg.setDeletesnapshot(value);
-      break;
-    case 2:
-      var value = new google_protobuf_duration_pb.Duration;
-      reader.readMessage(value,google_protobuf_duration_pb.Duration.deserializeBinaryFromReader);
-      msg.setMinstatusinterval(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = new items_pb.ItemRequest;
+        reader.readMessage(value, items_pb.ItemRequest.deserializeBinaryFromReader);
+        msg.setNewrequest(value);
+        break;
+      case 3:
+        var value = new items_pb.CancelItemRequest;
+        reader.readMessage(value, items_pb.CancelItemRequest.deserializeBinaryFromReader);
+        msg.setCancelrequest(value);
+        break;
+      case 4:
+        var value = new proto.UndoItemRequest;
+        reader.readMessage(value, proto.UndoItemRequest.deserializeBinaryFromReader);
+        msg.setUndorequest(value);
+        break;
+      case 5:
+        var value = new items_pb.Reference;
+        reader.readMessage(value, items_pb.Reference.deserializeBinaryFromReader);
+        msg.setExcludeitem(value);
+        break;
+      case 6:
+        var value = new items_pb.Reference;
+        reader.readMessage(value, items_pb.Reference.deserializeBinaryFromReader);
+        msg.setIncludeitem(value);
+        break;
+      case 7:
+        var value = new proto.ExpandItemRequest;
+        reader.readMessage(value, proto.ExpandItemRequest.deserializeBinaryFromReader);
+        msg.setExpanditem(value);
+        break;
+      case 8:
+        var value = new items_pb.Reference;
+        reader.readMessage(value, items_pb.Reference.deserializeBinaryFromReader);
+        msg.setUnexpanditem(value);
+        break;
+      case 9:
+        var value = new proto.ListSnapshots;
+        reader.readMessage(value, proto.ListSnapshots.deserializeBinaryFromReader);
+        msg.setListsnapshots(value);
+        break;
+      case 10:
+        var value = new proto.StoreSnapshot;
+        reader.readMessage(value, proto.StoreSnapshot.deserializeBinaryFromReader);
+        msg.setStoresnapshot(value);
+        break;
+      case 11:
+        var value = new proto.LoadSnapshot;
+        reader.readMessage(value, proto.LoadSnapshot.deserializeBinaryFromReader);
+        msg.setLoadsnapshot(value);
+        break;
+      case 12:
+        var value = new proto.DeleteSnapshot;
+        reader.readMessage(value, proto.DeleteSnapshot.deserializeBinaryFromReader);
+        msg.setDeletesnapshot(value);
+        break;
+      case 2:
+        var value = new google_protobuf_duration_pb.Duration;
+        reader.readMessage(value, google_protobuf_duration_pb.Duration.deserializeBinaryFromReader);
+        msg.setMinstatusinterval(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -2493,7 +2494,7 @@ proto.GatewayRequest.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.GatewayRequest.prototype.serializeBinary = function() {
+proto.GatewayRequest.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.GatewayRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -2507,7 +2508,7 @@ proto.GatewayRequest.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.GatewayRequest.serializeBinaryToWriter = function(message, writer) {
+proto.GatewayRequest.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getNewrequest();
   if (f != null) {
@@ -2612,7 +2613,7 @@ proto.GatewayRequest.serializeBinaryToWriter = function(message, writer) {
  * optional ItemRequest newRequest = 1;
  * @return {?proto.ItemRequest}
  */
-proto.GatewayRequest.prototype.getNewrequest = function() {
+proto.GatewayRequest.prototype.getNewrequest = function () {
   return /** @type{?proto.ItemRequest} */ (
     jspb.Message.getWrapperField(this, items_pb.ItemRequest, 1));
 };
@@ -2622,7 +2623,7 @@ proto.GatewayRequest.prototype.getNewrequest = function() {
  * @param {?proto.ItemRequest|undefined} value
  * @return {!proto.GatewayRequest} returns this
 */
-proto.GatewayRequest.prototype.setNewrequest = function(value) {
+proto.GatewayRequest.prototype.setNewrequest = function (value) {
   return jspb.Message.setOneofWrapperField(this, 1, proto.GatewayRequest.oneofGroups_[0], value);
 };
 
@@ -2631,7 +2632,7 @@ proto.GatewayRequest.prototype.setNewrequest = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayRequest} returns this
  */
-proto.GatewayRequest.prototype.clearNewrequest = function() {
+proto.GatewayRequest.prototype.clearNewrequest = function () {
   return this.setNewrequest(undefined);
 };
 
@@ -2640,7 +2641,7 @@ proto.GatewayRequest.prototype.clearNewrequest = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayRequest.prototype.hasNewrequest = function() {
+proto.GatewayRequest.prototype.hasNewrequest = function () {
   return jspb.Message.getField(this, 1) != null;
 };
 
@@ -2649,7 +2650,7 @@ proto.GatewayRequest.prototype.hasNewrequest = function() {
  * optional CancelItemRequest cancelRequest = 3;
  * @return {?proto.CancelItemRequest}
  */
-proto.GatewayRequest.prototype.getCancelrequest = function() {
+proto.GatewayRequest.prototype.getCancelrequest = function () {
   return /** @type{?proto.CancelItemRequest} */ (
     jspb.Message.getWrapperField(this, items_pb.CancelItemRequest, 3));
 };
@@ -2659,7 +2660,7 @@ proto.GatewayRequest.prototype.getCancelrequest = function() {
  * @param {?proto.CancelItemRequest|undefined} value
  * @return {!proto.GatewayRequest} returns this
 */
-proto.GatewayRequest.prototype.setCancelrequest = function(value) {
+proto.GatewayRequest.prototype.setCancelrequest = function (value) {
   return jspb.Message.setOneofWrapperField(this, 3, proto.GatewayRequest.oneofGroups_[0], value);
 };
 
@@ -2668,7 +2669,7 @@ proto.GatewayRequest.prototype.setCancelrequest = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayRequest} returns this
  */
-proto.GatewayRequest.prototype.clearCancelrequest = function() {
+proto.GatewayRequest.prototype.clearCancelrequest = function () {
   return this.setCancelrequest(undefined);
 };
 
@@ -2677,7 +2678,7 @@ proto.GatewayRequest.prototype.clearCancelrequest = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayRequest.prototype.hasCancelrequest = function() {
+proto.GatewayRequest.prototype.hasCancelrequest = function () {
   return jspb.Message.getField(this, 3) != null;
 };
 
@@ -2686,7 +2687,7 @@ proto.GatewayRequest.prototype.hasCancelrequest = function() {
  * optional UndoItemRequest undoRequest = 4;
  * @return {?proto.UndoItemRequest}
  */
-proto.GatewayRequest.prototype.getUndorequest = function() {
+proto.GatewayRequest.prototype.getUndorequest = function () {
   return /** @type{?proto.UndoItemRequest} */ (
     jspb.Message.getWrapperField(this, proto.UndoItemRequest, 4));
 };
@@ -2696,7 +2697,7 @@ proto.GatewayRequest.prototype.getUndorequest = function() {
  * @param {?proto.UndoItemRequest|undefined} value
  * @return {!proto.GatewayRequest} returns this
 */
-proto.GatewayRequest.prototype.setUndorequest = function(value) {
+proto.GatewayRequest.prototype.setUndorequest = function (value) {
   return jspb.Message.setOneofWrapperField(this, 4, proto.GatewayRequest.oneofGroups_[0], value);
 };
 
@@ -2705,7 +2706,7 @@ proto.GatewayRequest.prototype.setUndorequest = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayRequest} returns this
  */
-proto.GatewayRequest.prototype.clearUndorequest = function() {
+proto.GatewayRequest.prototype.clearUndorequest = function () {
   return this.setUndorequest(undefined);
 };
 
@@ -2714,7 +2715,7 @@ proto.GatewayRequest.prototype.clearUndorequest = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayRequest.prototype.hasUndorequest = function() {
+proto.GatewayRequest.prototype.hasUndorequest = function () {
   return jspb.Message.getField(this, 4) != null;
 };
 
@@ -2723,7 +2724,7 @@ proto.GatewayRequest.prototype.hasUndorequest = function() {
  * optional Reference excludeItem = 5;
  * @return {?proto.Reference}
  */
-proto.GatewayRequest.prototype.getExcludeitem = function() {
+proto.GatewayRequest.prototype.getExcludeitem = function () {
   return /** @type{?proto.Reference} */ (
     jspb.Message.getWrapperField(this, items_pb.Reference, 5));
 };
@@ -2733,7 +2734,7 @@ proto.GatewayRequest.prototype.getExcludeitem = function() {
  * @param {?proto.Reference|undefined} value
  * @return {!proto.GatewayRequest} returns this
 */
-proto.GatewayRequest.prototype.setExcludeitem = function(value) {
+proto.GatewayRequest.prototype.setExcludeitem = function (value) {
   return jspb.Message.setOneofWrapperField(this, 5, proto.GatewayRequest.oneofGroups_[0], value);
 };
 
@@ -2742,7 +2743,7 @@ proto.GatewayRequest.prototype.setExcludeitem = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayRequest} returns this
  */
-proto.GatewayRequest.prototype.clearExcludeitem = function() {
+proto.GatewayRequest.prototype.clearExcludeitem = function () {
   return this.setExcludeitem(undefined);
 };
 
@@ -2751,7 +2752,7 @@ proto.GatewayRequest.prototype.clearExcludeitem = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayRequest.prototype.hasExcludeitem = function() {
+proto.GatewayRequest.prototype.hasExcludeitem = function () {
   return jspb.Message.getField(this, 5) != null;
 };
 
@@ -2760,7 +2761,7 @@ proto.GatewayRequest.prototype.hasExcludeitem = function() {
  * optional Reference includeItem = 6;
  * @return {?proto.Reference}
  */
-proto.GatewayRequest.prototype.getIncludeitem = function() {
+proto.GatewayRequest.prototype.getIncludeitem = function () {
   return /** @type{?proto.Reference} */ (
     jspb.Message.getWrapperField(this, items_pb.Reference, 6));
 };
@@ -2770,7 +2771,7 @@ proto.GatewayRequest.prototype.getIncludeitem = function() {
  * @param {?proto.Reference|undefined} value
  * @return {!proto.GatewayRequest} returns this
 */
-proto.GatewayRequest.prototype.setIncludeitem = function(value) {
+proto.GatewayRequest.prototype.setIncludeitem = function (value) {
   return jspb.Message.setOneofWrapperField(this, 6, proto.GatewayRequest.oneofGroups_[0], value);
 };
 
@@ -2779,7 +2780,7 @@ proto.GatewayRequest.prototype.setIncludeitem = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayRequest} returns this
  */
-proto.GatewayRequest.prototype.clearIncludeitem = function() {
+proto.GatewayRequest.prototype.clearIncludeitem = function () {
   return this.setIncludeitem(undefined);
 };
 
@@ -2788,7 +2789,7 @@ proto.GatewayRequest.prototype.clearIncludeitem = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayRequest.prototype.hasIncludeitem = function() {
+proto.GatewayRequest.prototype.hasIncludeitem = function () {
   return jspb.Message.getField(this, 6) != null;
 };
 
@@ -2797,7 +2798,7 @@ proto.GatewayRequest.prototype.hasIncludeitem = function() {
  * optional ExpandItemRequest expandItem = 7;
  * @return {?proto.ExpandItemRequest}
  */
-proto.GatewayRequest.prototype.getExpanditem = function() {
+proto.GatewayRequest.prototype.getExpanditem = function () {
   return /** @type{?proto.ExpandItemRequest} */ (
     jspb.Message.getWrapperField(this, proto.ExpandItemRequest, 7));
 };
@@ -2807,7 +2808,7 @@ proto.GatewayRequest.prototype.getExpanditem = function() {
  * @param {?proto.ExpandItemRequest|undefined} value
  * @return {!proto.GatewayRequest} returns this
 */
-proto.GatewayRequest.prototype.setExpanditem = function(value) {
+proto.GatewayRequest.prototype.setExpanditem = function (value) {
   return jspb.Message.setOneofWrapperField(this, 7, proto.GatewayRequest.oneofGroups_[0], value);
 };
 
@@ -2816,7 +2817,7 @@ proto.GatewayRequest.prototype.setExpanditem = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayRequest} returns this
  */
-proto.GatewayRequest.prototype.clearExpanditem = function() {
+proto.GatewayRequest.prototype.clearExpanditem = function () {
   return this.setExpanditem(undefined);
 };
 
@@ -2825,7 +2826,7 @@ proto.GatewayRequest.prototype.clearExpanditem = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayRequest.prototype.hasExpanditem = function() {
+proto.GatewayRequest.prototype.hasExpanditem = function () {
   return jspb.Message.getField(this, 7) != null;
 };
 
@@ -2834,7 +2835,7 @@ proto.GatewayRequest.prototype.hasExpanditem = function() {
  * optional Reference unexpandItem = 8;
  * @return {?proto.Reference}
  */
-proto.GatewayRequest.prototype.getUnexpanditem = function() {
+proto.GatewayRequest.prototype.getUnexpanditem = function () {
   return /** @type{?proto.Reference} */ (
     jspb.Message.getWrapperField(this, items_pb.Reference, 8));
 };
@@ -2844,7 +2845,7 @@ proto.GatewayRequest.prototype.getUnexpanditem = function() {
  * @param {?proto.Reference|undefined} value
  * @return {!proto.GatewayRequest} returns this
 */
-proto.GatewayRequest.prototype.setUnexpanditem = function(value) {
+proto.GatewayRequest.prototype.setUnexpanditem = function (value) {
   return jspb.Message.setOneofWrapperField(this, 8, proto.GatewayRequest.oneofGroups_[0], value);
 };
 
@@ -2853,7 +2854,7 @@ proto.GatewayRequest.prototype.setUnexpanditem = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayRequest} returns this
  */
-proto.GatewayRequest.prototype.clearUnexpanditem = function() {
+proto.GatewayRequest.prototype.clearUnexpanditem = function () {
   return this.setUnexpanditem(undefined);
 };
 
@@ -2862,7 +2863,7 @@ proto.GatewayRequest.prototype.clearUnexpanditem = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayRequest.prototype.hasUnexpanditem = function() {
+proto.GatewayRequest.prototype.hasUnexpanditem = function () {
   return jspb.Message.getField(this, 8) != null;
 };
 
@@ -2871,7 +2872,7 @@ proto.GatewayRequest.prototype.hasUnexpanditem = function() {
  * optional ListSnapshots listSnapshots = 9;
  * @return {?proto.ListSnapshots}
  */
-proto.GatewayRequest.prototype.getListsnapshots = function() {
+proto.GatewayRequest.prototype.getListsnapshots = function () {
   return /** @type{?proto.ListSnapshots} */ (
     jspb.Message.getWrapperField(this, proto.ListSnapshots, 9));
 };
@@ -2881,7 +2882,7 @@ proto.GatewayRequest.prototype.getListsnapshots = function() {
  * @param {?proto.ListSnapshots|undefined} value
  * @return {!proto.GatewayRequest} returns this
 */
-proto.GatewayRequest.prototype.setListsnapshots = function(value) {
+proto.GatewayRequest.prototype.setListsnapshots = function (value) {
   return jspb.Message.setOneofWrapperField(this, 9, proto.GatewayRequest.oneofGroups_[0], value);
 };
 
@@ -2890,7 +2891,7 @@ proto.GatewayRequest.prototype.setListsnapshots = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayRequest} returns this
  */
-proto.GatewayRequest.prototype.clearListsnapshots = function() {
+proto.GatewayRequest.prototype.clearListsnapshots = function () {
   return this.setListsnapshots(undefined);
 };
 
@@ -2899,7 +2900,7 @@ proto.GatewayRequest.prototype.clearListsnapshots = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayRequest.prototype.hasListsnapshots = function() {
+proto.GatewayRequest.prototype.hasListsnapshots = function () {
   return jspb.Message.getField(this, 9) != null;
 };
 
@@ -2908,7 +2909,7 @@ proto.GatewayRequest.prototype.hasListsnapshots = function() {
  * optional StoreSnapshot storeSnapshot = 10;
  * @return {?proto.StoreSnapshot}
  */
-proto.GatewayRequest.prototype.getStoresnapshot = function() {
+proto.GatewayRequest.prototype.getStoresnapshot = function () {
   return /** @type{?proto.StoreSnapshot} */ (
     jspb.Message.getWrapperField(this, proto.StoreSnapshot, 10));
 };
@@ -2918,7 +2919,7 @@ proto.GatewayRequest.prototype.getStoresnapshot = function() {
  * @param {?proto.StoreSnapshot|undefined} value
  * @return {!proto.GatewayRequest} returns this
 */
-proto.GatewayRequest.prototype.setStoresnapshot = function(value) {
+proto.GatewayRequest.prototype.setStoresnapshot = function (value) {
   return jspb.Message.setOneofWrapperField(this, 10, proto.GatewayRequest.oneofGroups_[0], value);
 };
 
@@ -2927,7 +2928,7 @@ proto.GatewayRequest.prototype.setStoresnapshot = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayRequest} returns this
  */
-proto.GatewayRequest.prototype.clearStoresnapshot = function() {
+proto.GatewayRequest.prototype.clearStoresnapshot = function () {
   return this.setStoresnapshot(undefined);
 };
 
@@ -2936,7 +2937,7 @@ proto.GatewayRequest.prototype.clearStoresnapshot = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayRequest.prototype.hasStoresnapshot = function() {
+proto.GatewayRequest.prototype.hasStoresnapshot = function () {
   return jspb.Message.getField(this, 10) != null;
 };
 
@@ -2945,7 +2946,7 @@ proto.GatewayRequest.prototype.hasStoresnapshot = function() {
  * optional LoadSnapshot loadSnapshot = 11;
  * @return {?proto.LoadSnapshot}
  */
-proto.GatewayRequest.prototype.getLoadsnapshot = function() {
+proto.GatewayRequest.prototype.getLoadsnapshot = function () {
   return /** @type{?proto.LoadSnapshot} */ (
     jspb.Message.getWrapperField(this, proto.LoadSnapshot, 11));
 };
@@ -2955,7 +2956,7 @@ proto.GatewayRequest.prototype.getLoadsnapshot = function() {
  * @param {?proto.LoadSnapshot|undefined} value
  * @return {!proto.GatewayRequest} returns this
 */
-proto.GatewayRequest.prototype.setLoadsnapshot = function(value) {
+proto.GatewayRequest.prototype.setLoadsnapshot = function (value) {
   return jspb.Message.setOneofWrapperField(this, 11, proto.GatewayRequest.oneofGroups_[0], value);
 };
 
@@ -2964,7 +2965,7 @@ proto.GatewayRequest.prototype.setLoadsnapshot = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayRequest} returns this
  */
-proto.GatewayRequest.prototype.clearLoadsnapshot = function() {
+proto.GatewayRequest.prototype.clearLoadsnapshot = function () {
   return this.setLoadsnapshot(undefined);
 };
 
@@ -2973,7 +2974,7 @@ proto.GatewayRequest.prototype.clearLoadsnapshot = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayRequest.prototype.hasLoadsnapshot = function() {
+proto.GatewayRequest.prototype.hasLoadsnapshot = function () {
   return jspb.Message.getField(this, 11) != null;
 };
 
@@ -2982,7 +2983,7 @@ proto.GatewayRequest.prototype.hasLoadsnapshot = function() {
  * optional DeleteSnapshot deleteSnapshot = 12;
  * @return {?proto.DeleteSnapshot}
  */
-proto.GatewayRequest.prototype.getDeletesnapshot = function() {
+proto.GatewayRequest.prototype.getDeletesnapshot = function () {
   return /** @type{?proto.DeleteSnapshot} */ (
     jspb.Message.getWrapperField(this, proto.DeleteSnapshot, 12));
 };
@@ -2992,7 +2993,7 @@ proto.GatewayRequest.prototype.getDeletesnapshot = function() {
  * @param {?proto.DeleteSnapshot|undefined} value
  * @return {!proto.GatewayRequest} returns this
 */
-proto.GatewayRequest.prototype.setDeletesnapshot = function(value) {
+proto.GatewayRequest.prototype.setDeletesnapshot = function (value) {
   return jspb.Message.setOneofWrapperField(this, 12, proto.GatewayRequest.oneofGroups_[0], value);
 };
 
@@ -3001,7 +3002,7 @@ proto.GatewayRequest.prototype.setDeletesnapshot = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayRequest} returns this
  */
-proto.GatewayRequest.prototype.clearDeletesnapshot = function() {
+proto.GatewayRequest.prototype.clearDeletesnapshot = function () {
   return this.setDeletesnapshot(undefined);
 };
 
@@ -3010,7 +3011,7 @@ proto.GatewayRequest.prototype.clearDeletesnapshot = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayRequest.prototype.hasDeletesnapshot = function() {
+proto.GatewayRequest.prototype.hasDeletesnapshot = function () {
   return jspb.Message.getField(this, 12) != null;
 };
 
@@ -3019,7 +3020,7 @@ proto.GatewayRequest.prototype.hasDeletesnapshot = function() {
  * optional google.protobuf.Duration minStatusInterval = 2;
  * @return {?proto.google.protobuf.Duration}
  */
-proto.GatewayRequest.prototype.getMinstatusinterval = function() {
+proto.GatewayRequest.prototype.getMinstatusinterval = function () {
   return /** @type{?proto.google.protobuf.Duration} */ (
     jspb.Message.getWrapperField(this, google_protobuf_duration_pb.Duration, 2));
 };
@@ -3029,7 +3030,7 @@ proto.GatewayRequest.prototype.getMinstatusinterval = function() {
  * @param {?proto.google.protobuf.Duration|undefined} value
  * @return {!proto.GatewayRequest} returns this
 */
-proto.GatewayRequest.prototype.setMinstatusinterval = function(value) {
+proto.GatewayRequest.prototype.setMinstatusinterval = function (value) {
   return jspb.Message.setWrapperField(this, 2, value);
 };
 
@@ -3038,7 +3039,7 @@ proto.GatewayRequest.prototype.setMinstatusinterval = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayRequest} returns this
  */
-proto.GatewayRequest.prototype.clearMinstatusinterval = function() {
+proto.GatewayRequest.prototype.clearMinstatusinterval = function () {
   return this.setMinstatusinterval(undefined);
 };
 
@@ -3047,7 +3048,7 @@ proto.GatewayRequest.prototype.clearMinstatusinterval = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayRequest.prototype.hasMinstatusinterval = function() {
+proto.GatewayRequest.prototype.hasMinstatusinterval = function () {
   return jspb.Message.getField(this, 2) != null;
 };
 
@@ -3061,7 +3062,7 @@ proto.GatewayRequest.prototype.hasMinstatusinterval = function() {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.GatewayResponse.oneofGroups_ = [[2,3,4,5,6,7,8,9,10,11,12,13]];
+proto.GatewayResponse.oneofGroups_ = [[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]];
 
 /**
  * @enum {number}
@@ -3085,60 +3086,60 @@ proto.GatewayResponse.ResponseTypeCase = {
 /**
  * @return {proto.GatewayResponse.ResponseTypeCase}
  */
-proto.GatewayResponse.prototype.getResponseTypeCase = function() {
+proto.GatewayResponse.prototype.getResponseTypeCase = function () {
   return /** @type {proto.GatewayResponse.ResponseTypeCase} */(jspb.Message.computeOneofCase(this, proto.GatewayResponse.oneofGroups_[0]));
 };
 
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.GatewayResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.GatewayResponse.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.GatewayResponse} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.GatewayResponse.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    newitem: (f = msg.getNewitem()) && items_pb.Item.toObject(includeInstance, f),
-    newedge: (f = msg.getNewedge()) && items_pb.Edge.toObject(includeInstance, f),
-    status: (f = msg.getStatus()) && proto.GatewayRequestStatus.toObject(includeInstance, f),
-    error: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    newitemrequesterror: (f = msg.getNewitemrequesterror()) && responses_pb.ItemRequestError.toObject(includeInstance, f),
-    deleteitem: (f = msg.getDeleteitem()) && items_pb.Reference.toObject(includeInstance, f),
-    deleteedge: (f = msg.getDeleteedge()) && items_pb.Edge.toObject(includeInstance, f),
-    updateitem: (f = msg.getUpdateitem()) && items_pb.Item.toObject(includeInstance, f),
-    snapshotlist: (f = msg.getSnapshotlist()) && proto.SnapshotList.toObject(includeInstance, f),
-    snapshotstored: (f = msg.getSnapshotstored()) && proto.SnapshotStored.toObject(includeInstance, f),
-    snapshotloadresult: (f = msg.getSnapshotloadresult()) && proto.SnapshotLoadResult.toObject(includeInstance, f),
-    snapshotdeleteresult: (f = msg.getSnapshotdeleteresult()) && proto.SnapshotDeleteResult.toObject(includeInstance, f)
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.GatewayResponse.prototype.toObject = function (opt_includeInstance) {
+    return proto.GatewayResponse.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.GatewayResponse} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.GatewayResponse.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      newitem: (f = msg.getNewitem()) && items_pb.Item.toObject(includeInstance, f),
+      newedge: (f = msg.getNewedge()) && items_pb.Edge.toObject(includeInstance, f),
+      status: (f = msg.getStatus()) && proto.GatewayRequestStatus.toObject(includeInstance, f),
+      error: jspb.Message.getFieldWithDefault(msg, 5, ""),
+      newitemrequesterror: (f = msg.getNewitemrequesterror()) && responses_pb.ItemRequestError.toObject(includeInstance, f),
+      deleteitem: (f = msg.getDeleteitem()) && items_pb.Reference.toObject(includeInstance, f),
+      deleteedge: (f = msg.getDeleteedge()) && items_pb.Edge.toObject(includeInstance, f),
+      updateitem: (f = msg.getUpdateitem()) && items_pb.Item.toObject(includeInstance, f),
+      snapshotlist: (f = msg.getSnapshotlist()) && proto.SnapshotList.toObject(includeInstance, f),
+      snapshotstored: (f = msg.getSnapshotstored()) && proto.SnapshotStored.toObject(includeInstance, f),
+      snapshotloadresult: (f = msg.getSnapshotloadresult()) && proto.SnapshotLoadResult.toObject(includeInstance, f),
+      snapshotdeleteresult: (f = msg.getSnapshotdeleteresult()) && proto.SnapshotDeleteResult.toObject(includeInstance, f)
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -3147,7 +3148,7 @@ proto.GatewayResponse.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GatewayResponse}
  */
-proto.GatewayResponse.deserializeBinary = function(bytes) {
+proto.GatewayResponse.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.GatewayResponse;
   return proto.GatewayResponse.deserializeBinaryFromReader(msg, reader);
@@ -3161,75 +3162,75 @@ proto.GatewayResponse.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.GatewayResponse}
  */
-proto.GatewayResponse.deserializeBinaryFromReader = function(msg, reader) {
+proto.GatewayResponse.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 2:
-      var value = new items_pb.Item;
-      reader.readMessage(value,items_pb.Item.deserializeBinaryFromReader);
-      msg.setNewitem(value);
-      break;
-    case 3:
-      var value = new items_pb.Edge;
-      reader.readMessage(value,items_pb.Edge.deserializeBinaryFromReader);
-      msg.setNewedge(value);
-      break;
-    case 4:
-      var value = new proto.GatewayRequestStatus;
-      reader.readMessage(value,proto.GatewayRequestStatus.deserializeBinaryFromReader);
-      msg.setStatus(value);
-      break;
-    case 5:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setError(value);
-      break;
-    case 6:
-      var value = new responses_pb.ItemRequestError;
-      reader.readMessage(value,responses_pb.ItemRequestError.deserializeBinaryFromReader);
-      msg.setNewitemrequesterror(value);
-      break;
-    case 7:
-      var value = new items_pb.Reference;
-      reader.readMessage(value,items_pb.Reference.deserializeBinaryFromReader);
-      msg.setDeleteitem(value);
-      break;
-    case 8:
-      var value = new items_pb.Edge;
-      reader.readMessage(value,items_pb.Edge.deserializeBinaryFromReader);
-      msg.setDeleteedge(value);
-      break;
-    case 9:
-      var value = new items_pb.Item;
-      reader.readMessage(value,items_pb.Item.deserializeBinaryFromReader);
-      msg.setUpdateitem(value);
-      break;
-    case 10:
-      var value = new proto.SnapshotList;
-      reader.readMessage(value,proto.SnapshotList.deserializeBinaryFromReader);
-      msg.setSnapshotlist(value);
-      break;
-    case 11:
-      var value = new proto.SnapshotStored;
-      reader.readMessage(value,proto.SnapshotStored.deserializeBinaryFromReader);
-      msg.setSnapshotstored(value);
-      break;
-    case 12:
-      var value = new proto.SnapshotLoadResult;
-      reader.readMessage(value,proto.SnapshotLoadResult.deserializeBinaryFromReader);
-      msg.setSnapshotloadresult(value);
-      break;
-    case 13:
-      var value = new proto.SnapshotDeleteResult;
-      reader.readMessage(value,proto.SnapshotDeleteResult.deserializeBinaryFromReader);
-      msg.setSnapshotdeleteresult(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 2:
+        var value = new items_pb.Item;
+        reader.readMessage(value, items_pb.Item.deserializeBinaryFromReader);
+        msg.setNewitem(value);
+        break;
+      case 3:
+        var value = new items_pb.Edge;
+        reader.readMessage(value, items_pb.Edge.deserializeBinaryFromReader);
+        msg.setNewedge(value);
+        break;
+      case 4:
+        var value = new proto.GatewayRequestStatus;
+        reader.readMessage(value, proto.GatewayRequestStatus.deserializeBinaryFromReader);
+        msg.setStatus(value);
+        break;
+      case 5:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setError(value);
+        break;
+      case 6:
+        var value = new responses_pb.ItemRequestError;
+        reader.readMessage(value, responses_pb.ItemRequestError.deserializeBinaryFromReader);
+        msg.setNewitemrequesterror(value);
+        break;
+      case 7:
+        var value = new items_pb.Reference;
+        reader.readMessage(value, items_pb.Reference.deserializeBinaryFromReader);
+        msg.setDeleteitem(value);
+        break;
+      case 8:
+        var value = new items_pb.Edge;
+        reader.readMessage(value, items_pb.Edge.deserializeBinaryFromReader);
+        msg.setDeleteedge(value);
+        break;
+      case 9:
+        var value = new items_pb.Item;
+        reader.readMessage(value, items_pb.Item.deserializeBinaryFromReader);
+        msg.setUpdateitem(value);
+        break;
+      case 10:
+        var value = new proto.SnapshotList;
+        reader.readMessage(value, proto.SnapshotList.deserializeBinaryFromReader);
+        msg.setSnapshotlist(value);
+        break;
+      case 11:
+        var value = new proto.SnapshotStored;
+        reader.readMessage(value, proto.SnapshotStored.deserializeBinaryFromReader);
+        msg.setSnapshotstored(value);
+        break;
+      case 12:
+        var value = new proto.SnapshotLoadResult;
+        reader.readMessage(value, proto.SnapshotLoadResult.deserializeBinaryFromReader);
+        msg.setSnapshotloadresult(value);
+        break;
+      case 13:
+        var value = new proto.SnapshotDeleteResult;
+        reader.readMessage(value, proto.SnapshotDeleteResult.deserializeBinaryFromReader);
+        msg.setSnapshotdeleteresult(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -3240,7 +3241,7 @@ proto.GatewayResponse.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.GatewayResponse.prototype.serializeBinary = function() {
+proto.GatewayResponse.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.GatewayResponse.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -3254,7 +3255,7 @@ proto.GatewayResponse.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.GatewayResponse.serializeBinaryToWriter = function(message, writer) {
+proto.GatewayResponse.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getNewitem();
   if (f != null) {
@@ -3358,7 +3359,7 @@ proto.GatewayResponse.serializeBinaryToWriter = function(message, writer) {
  * optional Item newItem = 2;
  * @return {?proto.Item}
  */
-proto.GatewayResponse.prototype.getNewitem = function() {
+proto.GatewayResponse.prototype.getNewitem = function () {
   return /** @type{?proto.Item} */ (
     jspb.Message.getWrapperField(this, items_pb.Item, 2));
 };
@@ -3368,7 +3369,7 @@ proto.GatewayResponse.prototype.getNewitem = function() {
  * @param {?proto.Item|undefined} value
  * @return {!proto.GatewayResponse} returns this
 */
-proto.GatewayResponse.prototype.setNewitem = function(value) {
+proto.GatewayResponse.prototype.setNewitem = function (value) {
   return jspb.Message.setOneofWrapperField(this, 2, proto.GatewayResponse.oneofGroups_[0], value);
 };
 
@@ -3377,7 +3378,7 @@ proto.GatewayResponse.prototype.setNewitem = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayResponse} returns this
  */
-proto.GatewayResponse.prototype.clearNewitem = function() {
+proto.GatewayResponse.prototype.clearNewitem = function () {
   return this.setNewitem(undefined);
 };
 
@@ -3386,7 +3387,7 @@ proto.GatewayResponse.prototype.clearNewitem = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayResponse.prototype.hasNewitem = function() {
+proto.GatewayResponse.prototype.hasNewitem = function () {
   return jspb.Message.getField(this, 2) != null;
 };
 
@@ -3395,7 +3396,7 @@ proto.GatewayResponse.prototype.hasNewitem = function() {
  * optional Edge newEdge = 3;
  * @return {?proto.Edge}
  */
-proto.GatewayResponse.prototype.getNewedge = function() {
+proto.GatewayResponse.prototype.getNewedge = function () {
   return /** @type{?proto.Edge} */ (
     jspb.Message.getWrapperField(this, items_pb.Edge, 3));
 };
@@ -3405,7 +3406,7 @@ proto.GatewayResponse.prototype.getNewedge = function() {
  * @param {?proto.Edge|undefined} value
  * @return {!proto.GatewayResponse} returns this
 */
-proto.GatewayResponse.prototype.setNewedge = function(value) {
+proto.GatewayResponse.prototype.setNewedge = function (value) {
   return jspb.Message.setOneofWrapperField(this, 3, proto.GatewayResponse.oneofGroups_[0], value);
 };
 
@@ -3414,7 +3415,7 @@ proto.GatewayResponse.prototype.setNewedge = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayResponse} returns this
  */
-proto.GatewayResponse.prototype.clearNewedge = function() {
+proto.GatewayResponse.prototype.clearNewedge = function () {
   return this.setNewedge(undefined);
 };
 
@@ -3423,7 +3424,7 @@ proto.GatewayResponse.prototype.clearNewedge = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayResponse.prototype.hasNewedge = function() {
+proto.GatewayResponse.prototype.hasNewedge = function () {
   return jspb.Message.getField(this, 3) != null;
 };
 
@@ -3432,7 +3433,7 @@ proto.GatewayResponse.prototype.hasNewedge = function() {
  * optional GatewayRequestStatus status = 4;
  * @return {?proto.GatewayRequestStatus}
  */
-proto.GatewayResponse.prototype.getStatus = function() {
+proto.GatewayResponse.prototype.getStatus = function () {
   return /** @type{?proto.GatewayRequestStatus} */ (
     jspb.Message.getWrapperField(this, proto.GatewayRequestStatus, 4));
 };
@@ -3442,7 +3443,7 @@ proto.GatewayResponse.prototype.getStatus = function() {
  * @param {?proto.GatewayRequestStatus|undefined} value
  * @return {!proto.GatewayResponse} returns this
 */
-proto.GatewayResponse.prototype.setStatus = function(value) {
+proto.GatewayResponse.prototype.setStatus = function (value) {
   return jspb.Message.setOneofWrapperField(this, 4, proto.GatewayResponse.oneofGroups_[0], value);
 };
 
@@ -3451,7 +3452,7 @@ proto.GatewayResponse.prototype.setStatus = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayResponse} returns this
  */
-proto.GatewayResponse.prototype.clearStatus = function() {
+proto.GatewayResponse.prototype.clearStatus = function () {
   return this.setStatus(undefined);
 };
 
@@ -3460,7 +3461,7 @@ proto.GatewayResponse.prototype.clearStatus = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayResponse.prototype.hasStatus = function() {
+proto.GatewayResponse.prototype.hasStatus = function () {
   return jspb.Message.getField(this, 4) != null;
 };
 
@@ -3469,7 +3470,7 @@ proto.GatewayResponse.prototype.hasStatus = function() {
  * optional string error = 5;
  * @return {string}
  */
-proto.GatewayResponse.prototype.getError = function() {
+proto.GatewayResponse.prototype.getError = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -3478,7 +3479,7 @@ proto.GatewayResponse.prototype.getError = function() {
  * @param {string} value
  * @return {!proto.GatewayResponse} returns this
  */
-proto.GatewayResponse.prototype.setError = function(value) {
+proto.GatewayResponse.prototype.setError = function (value) {
   return jspb.Message.setOneofField(this, 5, proto.GatewayResponse.oneofGroups_[0], value);
 };
 
@@ -3487,7 +3488,7 @@ proto.GatewayResponse.prototype.setError = function(value) {
  * Clears the field making it undefined.
  * @return {!proto.GatewayResponse} returns this
  */
-proto.GatewayResponse.prototype.clearError = function() {
+proto.GatewayResponse.prototype.clearError = function () {
   return jspb.Message.setOneofField(this, 5, proto.GatewayResponse.oneofGroups_[0], undefined);
 };
 
@@ -3496,7 +3497,7 @@ proto.GatewayResponse.prototype.clearError = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayResponse.prototype.hasError = function() {
+proto.GatewayResponse.prototype.hasError = function () {
   return jspb.Message.getField(this, 5) != null;
 };
 
@@ -3505,7 +3506,7 @@ proto.GatewayResponse.prototype.hasError = function() {
  * optional ItemRequestError newItemRequestError = 6;
  * @return {?proto.ItemRequestError}
  */
-proto.GatewayResponse.prototype.getNewitemrequesterror = function() {
+proto.GatewayResponse.prototype.getNewitemrequesterror = function () {
   return /** @type{?proto.ItemRequestError} */ (
     jspb.Message.getWrapperField(this, responses_pb.ItemRequestError, 6));
 };
@@ -3515,7 +3516,7 @@ proto.GatewayResponse.prototype.getNewitemrequesterror = function() {
  * @param {?proto.ItemRequestError|undefined} value
  * @return {!proto.GatewayResponse} returns this
 */
-proto.GatewayResponse.prototype.setNewitemrequesterror = function(value) {
+proto.GatewayResponse.prototype.setNewitemrequesterror = function (value) {
   return jspb.Message.setOneofWrapperField(this, 6, proto.GatewayResponse.oneofGroups_[0], value);
 };
 
@@ -3524,7 +3525,7 @@ proto.GatewayResponse.prototype.setNewitemrequesterror = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayResponse} returns this
  */
-proto.GatewayResponse.prototype.clearNewitemrequesterror = function() {
+proto.GatewayResponse.prototype.clearNewitemrequesterror = function () {
   return this.setNewitemrequesterror(undefined);
 };
 
@@ -3533,7 +3534,7 @@ proto.GatewayResponse.prototype.clearNewitemrequesterror = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayResponse.prototype.hasNewitemrequesterror = function() {
+proto.GatewayResponse.prototype.hasNewitemrequesterror = function () {
   return jspb.Message.getField(this, 6) != null;
 };
 
@@ -3542,7 +3543,7 @@ proto.GatewayResponse.prototype.hasNewitemrequesterror = function() {
  * optional Reference deleteItem = 7;
  * @return {?proto.Reference}
  */
-proto.GatewayResponse.prototype.getDeleteitem = function() {
+proto.GatewayResponse.prototype.getDeleteitem = function () {
   return /** @type{?proto.Reference} */ (
     jspb.Message.getWrapperField(this, items_pb.Reference, 7));
 };
@@ -3552,7 +3553,7 @@ proto.GatewayResponse.prototype.getDeleteitem = function() {
  * @param {?proto.Reference|undefined} value
  * @return {!proto.GatewayResponse} returns this
 */
-proto.GatewayResponse.prototype.setDeleteitem = function(value) {
+proto.GatewayResponse.prototype.setDeleteitem = function (value) {
   return jspb.Message.setOneofWrapperField(this, 7, proto.GatewayResponse.oneofGroups_[0], value);
 };
 
@@ -3561,7 +3562,7 @@ proto.GatewayResponse.prototype.setDeleteitem = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayResponse} returns this
  */
-proto.GatewayResponse.prototype.clearDeleteitem = function() {
+proto.GatewayResponse.prototype.clearDeleteitem = function () {
   return this.setDeleteitem(undefined);
 };
 
@@ -3570,7 +3571,7 @@ proto.GatewayResponse.prototype.clearDeleteitem = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayResponse.prototype.hasDeleteitem = function() {
+proto.GatewayResponse.prototype.hasDeleteitem = function () {
   return jspb.Message.getField(this, 7) != null;
 };
 
@@ -3579,7 +3580,7 @@ proto.GatewayResponse.prototype.hasDeleteitem = function() {
  * optional Edge deleteEdge = 8;
  * @return {?proto.Edge}
  */
-proto.GatewayResponse.prototype.getDeleteedge = function() {
+proto.GatewayResponse.prototype.getDeleteedge = function () {
   return /** @type{?proto.Edge} */ (
     jspb.Message.getWrapperField(this, items_pb.Edge, 8));
 };
@@ -3589,7 +3590,7 @@ proto.GatewayResponse.prototype.getDeleteedge = function() {
  * @param {?proto.Edge|undefined} value
  * @return {!proto.GatewayResponse} returns this
 */
-proto.GatewayResponse.prototype.setDeleteedge = function(value) {
+proto.GatewayResponse.prototype.setDeleteedge = function (value) {
   return jspb.Message.setOneofWrapperField(this, 8, proto.GatewayResponse.oneofGroups_[0], value);
 };
 
@@ -3598,7 +3599,7 @@ proto.GatewayResponse.prototype.setDeleteedge = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayResponse} returns this
  */
-proto.GatewayResponse.prototype.clearDeleteedge = function() {
+proto.GatewayResponse.prototype.clearDeleteedge = function () {
   return this.setDeleteedge(undefined);
 };
 
@@ -3607,7 +3608,7 @@ proto.GatewayResponse.prototype.clearDeleteedge = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayResponse.prototype.hasDeleteedge = function() {
+proto.GatewayResponse.prototype.hasDeleteedge = function () {
   return jspb.Message.getField(this, 8) != null;
 };
 
@@ -3616,7 +3617,7 @@ proto.GatewayResponse.prototype.hasDeleteedge = function() {
  * optional Item updateItem = 9;
  * @return {?proto.Item}
  */
-proto.GatewayResponse.prototype.getUpdateitem = function() {
+proto.GatewayResponse.prototype.getUpdateitem = function () {
   return /** @type{?proto.Item} */ (
     jspb.Message.getWrapperField(this, items_pb.Item, 9));
 };
@@ -3626,7 +3627,7 @@ proto.GatewayResponse.prototype.getUpdateitem = function() {
  * @param {?proto.Item|undefined} value
  * @return {!proto.GatewayResponse} returns this
 */
-proto.GatewayResponse.prototype.setUpdateitem = function(value) {
+proto.GatewayResponse.prototype.setUpdateitem = function (value) {
   return jspb.Message.setOneofWrapperField(this, 9, proto.GatewayResponse.oneofGroups_[0], value);
 };
 
@@ -3635,7 +3636,7 @@ proto.GatewayResponse.prototype.setUpdateitem = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayResponse} returns this
  */
-proto.GatewayResponse.prototype.clearUpdateitem = function() {
+proto.GatewayResponse.prototype.clearUpdateitem = function () {
   return this.setUpdateitem(undefined);
 };
 
@@ -3644,7 +3645,7 @@ proto.GatewayResponse.prototype.clearUpdateitem = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayResponse.prototype.hasUpdateitem = function() {
+proto.GatewayResponse.prototype.hasUpdateitem = function () {
   return jspb.Message.getField(this, 9) != null;
 };
 
@@ -3653,7 +3654,7 @@ proto.GatewayResponse.prototype.hasUpdateitem = function() {
  * optional SnapshotList snapshotList = 10;
  * @return {?proto.SnapshotList}
  */
-proto.GatewayResponse.prototype.getSnapshotlist = function() {
+proto.GatewayResponse.prototype.getSnapshotlist = function () {
   return /** @type{?proto.SnapshotList} */ (
     jspb.Message.getWrapperField(this, proto.SnapshotList, 10));
 };
@@ -3663,7 +3664,7 @@ proto.GatewayResponse.prototype.getSnapshotlist = function() {
  * @param {?proto.SnapshotList|undefined} value
  * @return {!proto.GatewayResponse} returns this
 */
-proto.GatewayResponse.prototype.setSnapshotlist = function(value) {
+proto.GatewayResponse.prototype.setSnapshotlist = function (value) {
   return jspb.Message.setOneofWrapperField(this, 10, proto.GatewayResponse.oneofGroups_[0], value);
 };
 
@@ -3672,7 +3673,7 @@ proto.GatewayResponse.prototype.setSnapshotlist = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayResponse} returns this
  */
-proto.GatewayResponse.prototype.clearSnapshotlist = function() {
+proto.GatewayResponse.prototype.clearSnapshotlist = function () {
   return this.setSnapshotlist(undefined);
 };
 
@@ -3681,7 +3682,7 @@ proto.GatewayResponse.prototype.clearSnapshotlist = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayResponse.prototype.hasSnapshotlist = function() {
+proto.GatewayResponse.prototype.hasSnapshotlist = function () {
   return jspb.Message.getField(this, 10) != null;
 };
 
@@ -3690,7 +3691,7 @@ proto.GatewayResponse.prototype.hasSnapshotlist = function() {
  * optional SnapshotStored snapshotStored = 11;
  * @return {?proto.SnapshotStored}
  */
-proto.GatewayResponse.prototype.getSnapshotstored = function() {
+proto.GatewayResponse.prototype.getSnapshotstored = function () {
   return /** @type{?proto.SnapshotStored} */ (
     jspb.Message.getWrapperField(this, proto.SnapshotStored, 11));
 };
@@ -3700,7 +3701,7 @@ proto.GatewayResponse.prototype.getSnapshotstored = function() {
  * @param {?proto.SnapshotStored|undefined} value
  * @return {!proto.GatewayResponse} returns this
 */
-proto.GatewayResponse.prototype.setSnapshotstored = function(value) {
+proto.GatewayResponse.prototype.setSnapshotstored = function (value) {
   return jspb.Message.setOneofWrapperField(this, 11, proto.GatewayResponse.oneofGroups_[0], value);
 };
 
@@ -3709,7 +3710,7 @@ proto.GatewayResponse.prototype.setSnapshotstored = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayResponse} returns this
  */
-proto.GatewayResponse.prototype.clearSnapshotstored = function() {
+proto.GatewayResponse.prototype.clearSnapshotstored = function () {
   return this.setSnapshotstored(undefined);
 };
 
@@ -3718,7 +3719,7 @@ proto.GatewayResponse.prototype.clearSnapshotstored = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayResponse.prototype.hasSnapshotstored = function() {
+proto.GatewayResponse.prototype.hasSnapshotstored = function () {
   return jspb.Message.getField(this, 11) != null;
 };
 
@@ -3727,7 +3728,7 @@ proto.GatewayResponse.prototype.hasSnapshotstored = function() {
  * optional SnapshotLoadResult snapshotLoadResult = 12;
  * @return {?proto.SnapshotLoadResult}
  */
-proto.GatewayResponse.prototype.getSnapshotloadresult = function() {
+proto.GatewayResponse.prototype.getSnapshotloadresult = function () {
   return /** @type{?proto.SnapshotLoadResult} */ (
     jspb.Message.getWrapperField(this, proto.SnapshotLoadResult, 12));
 };
@@ -3737,7 +3738,7 @@ proto.GatewayResponse.prototype.getSnapshotloadresult = function() {
  * @param {?proto.SnapshotLoadResult|undefined} value
  * @return {!proto.GatewayResponse} returns this
 */
-proto.GatewayResponse.prototype.setSnapshotloadresult = function(value) {
+proto.GatewayResponse.prototype.setSnapshotloadresult = function (value) {
   return jspb.Message.setOneofWrapperField(this, 12, proto.GatewayResponse.oneofGroups_[0], value);
 };
 
@@ -3746,7 +3747,7 @@ proto.GatewayResponse.prototype.setSnapshotloadresult = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayResponse} returns this
  */
-proto.GatewayResponse.prototype.clearSnapshotloadresult = function() {
+proto.GatewayResponse.prototype.clearSnapshotloadresult = function () {
   return this.setSnapshotloadresult(undefined);
 };
 
@@ -3755,7 +3756,7 @@ proto.GatewayResponse.prototype.clearSnapshotloadresult = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayResponse.prototype.hasSnapshotloadresult = function() {
+proto.GatewayResponse.prototype.hasSnapshotloadresult = function () {
   return jspb.Message.getField(this, 12) != null;
 };
 
@@ -3764,7 +3765,7 @@ proto.GatewayResponse.prototype.hasSnapshotloadresult = function() {
  * optional SnapshotDeleteResult snapshotDeleteResult = 13;
  * @return {?proto.SnapshotDeleteResult}
  */
-proto.GatewayResponse.prototype.getSnapshotdeleteresult = function() {
+proto.GatewayResponse.prototype.getSnapshotdeleteresult = function () {
   return /** @type{?proto.SnapshotDeleteResult} */ (
     jspb.Message.getWrapperField(this, proto.SnapshotDeleteResult, 13));
 };
@@ -3774,7 +3775,7 @@ proto.GatewayResponse.prototype.getSnapshotdeleteresult = function() {
  * @param {?proto.SnapshotDeleteResult|undefined} value
  * @return {!proto.GatewayResponse} returns this
 */
-proto.GatewayResponse.prototype.setSnapshotdeleteresult = function(value) {
+proto.GatewayResponse.prototype.setSnapshotdeleteresult = function (value) {
   return jspb.Message.setOneofWrapperField(this, 13, proto.GatewayResponse.oneofGroups_[0], value);
 };
 
@@ -3783,7 +3784,7 @@ proto.GatewayResponse.prototype.setSnapshotdeleteresult = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayResponse} returns this
  */
-proto.GatewayResponse.prototype.clearSnapshotdeleteresult = function() {
+proto.GatewayResponse.prototype.clearSnapshotdeleteresult = function () {
   return this.setSnapshotdeleteresult(undefined);
 };
 
@@ -3792,7 +3793,7 @@ proto.GatewayResponse.prototype.clearSnapshotdeleteresult = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayResponse.prototype.hasSnapshotdeleteresult = function() {
+proto.GatewayResponse.prototype.hasSnapshotdeleteresult = function () {
   return jspb.Message.getField(this, 13) != null;
 };
 
@@ -3801,44 +3802,44 @@ proto.GatewayResponse.prototype.hasSnapshotdeleteresult = function() {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.GatewayRequestStatus.prototype.toObject = function(opt_includeInstance) {
-  return proto.GatewayRequestStatus.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.GatewayRequestStatus} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.GatewayRequestStatus.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    responderstatesMap: (f = msg.getResponderstatesMap()) ? f.toObject(includeInstance, undefined) : [],
-    summary: (f = msg.getSummary()) && proto.GatewayRequestStatus.Summary.toObject(includeInstance, f),
-    postprocessingcomplete: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.GatewayRequestStatus.prototype.toObject = function (opt_includeInstance) {
+    return proto.GatewayRequestStatus.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.GatewayRequestStatus} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.GatewayRequestStatus.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      responderstatesMap: (f = msg.getResponderstatesMap()) ? f.toObject(includeInstance, undefined) : [],
+      summary: (f = msg.getSummary()) && proto.GatewayRequestStatus.Summary.toObject(includeInstance, f),
+      postprocessingcomplete: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -3847,7 +3848,7 @@ proto.GatewayRequestStatus.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GatewayRequestStatus}
  */
-proto.GatewayRequestStatus.deserializeBinary = function(bytes) {
+proto.GatewayRequestStatus.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.GatewayRequestStatus;
   return proto.GatewayRequestStatus.deserializeBinaryFromReader(msg, reader);
@@ -3861,31 +3862,31 @@ proto.GatewayRequestStatus.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.GatewayRequestStatus}
  */
-proto.GatewayRequestStatus.deserializeBinaryFromReader = function(msg, reader) {
+proto.GatewayRequestStatus.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = msg.getResponderstatesMap();
-      reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readEnum, null, "", 0);
-         });
-      break;
-    case 3:
-      var value = new proto.GatewayRequestStatus.Summary;
-      reader.readMessage(value,proto.GatewayRequestStatus.Summary.deserializeBinaryFromReader);
-      msg.setSummary(value);
-      break;
-    case 4:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setPostprocessingcomplete(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = msg.getResponderstatesMap();
+        reader.readMessage(value, function (message, reader) {
+          jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readEnum, null, "", 0);
+        });
+        break;
+      case 3:
+        var value = new proto.GatewayRequestStatus.Summary;
+        reader.readMessage(value, proto.GatewayRequestStatus.Summary.deserializeBinaryFromReader);
+        msg.setSummary(value);
+        break;
+      case 4:
+        var value = /** @type {boolean} */ (reader.readBool());
+        msg.setPostprocessingcomplete(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -3896,7 +3897,7 @@ proto.GatewayRequestStatus.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.GatewayRequestStatus.prototype.serializeBinary = function() {
+proto.GatewayRequestStatus.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.GatewayRequestStatus.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -3910,7 +3911,7 @@ proto.GatewayRequestStatus.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.GatewayRequestStatus.serializeBinaryToWriter = function(message, writer) {
+proto.GatewayRequestStatus.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getResponderstatesMap(true);
   if (f && f.getLength() > 0) {
@@ -3938,47 +3939,47 @@ proto.GatewayRequestStatus.serializeBinaryToWriter = function(message, writer) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.GatewayRequestStatus.Summary.prototype.toObject = function(opt_includeInstance) {
-  return proto.GatewayRequestStatus.Summary.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.GatewayRequestStatus.Summary} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.GatewayRequestStatus.Summary.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    working: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    stalled: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    complete: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    error: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    cancelled: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    responders: jspb.Message.getFieldWithDefault(msg, 6, 0)
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.GatewayRequestStatus.Summary.prototype.toObject = function (opt_includeInstance) {
+    return proto.GatewayRequestStatus.Summary.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.GatewayRequestStatus.Summary} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.GatewayRequestStatus.Summary.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      working: jspb.Message.getFieldWithDefault(msg, 1, 0),
+      stalled: jspb.Message.getFieldWithDefault(msg, 2, 0),
+      complete: jspb.Message.getFieldWithDefault(msg, 3, 0),
+      error: jspb.Message.getFieldWithDefault(msg, 4, 0),
+      cancelled: jspb.Message.getFieldWithDefault(msg, 5, 0),
+      responders: jspb.Message.getFieldWithDefault(msg, 6, 0)
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -3987,7 +3988,7 @@ proto.GatewayRequestStatus.Summary.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GatewayRequestStatus.Summary}
  */
-proto.GatewayRequestStatus.Summary.deserializeBinary = function(bytes) {
+proto.GatewayRequestStatus.Summary.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.GatewayRequestStatus.Summary;
   return proto.GatewayRequestStatus.Summary.deserializeBinaryFromReader(msg, reader);
@@ -4001,40 +4002,40 @@ proto.GatewayRequestStatus.Summary.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.GatewayRequestStatus.Summary}
  */
-proto.GatewayRequestStatus.Summary.deserializeBinaryFromReader = function(msg, reader) {
+proto.GatewayRequestStatus.Summary.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setWorking(value);
-      break;
-    case 2:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setStalled(value);
-      break;
-    case 3:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setComplete(value);
-      break;
-    case 4:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setError(value);
-      break;
-    case 5:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setCancelled(value);
-      break;
-    case 6:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setResponders(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = /** @type {number} */ (reader.readInt32());
+        msg.setWorking(value);
+        break;
+      case 2:
+        var value = /** @type {number} */ (reader.readInt32());
+        msg.setStalled(value);
+        break;
+      case 3:
+        var value = /** @type {number} */ (reader.readInt32());
+        msg.setComplete(value);
+        break;
+      case 4:
+        var value = /** @type {number} */ (reader.readInt32());
+        msg.setError(value);
+        break;
+      case 5:
+        var value = /** @type {number} */ (reader.readInt32());
+        msg.setCancelled(value);
+        break;
+      case 6:
+        var value = /** @type {number} */ (reader.readInt32());
+        msg.setResponders(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -4045,7 +4046,7 @@ proto.GatewayRequestStatus.Summary.deserializeBinaryFromReader = function(msg, r
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.GatewayRequestStatus.Summary.prototype.serializeBinary = function() {
+proto.GatewayRequestStatus.Summary.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.GatewayRequestStatus.Summary.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -4059,7 +4060,7 @@ proto.GatewayRequestStatus.Summary.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.GatewayRequestStatus.Summary.serializeBinaryToWriter = function(message, writer) {
+proto.GatewayRequestStatus.Summary.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getWorking();
   if (f !== 0) {
@@ -4110,7 +4111,7 @@ proto.GatewayRequestStatus.Summary.serializeBinaryToWriter = function(message, w
  * optional int32 working = 1;
  * @return {number}
  */
-proto.GatewayRequestStatus.Summary.prototype.getWorking = function() {
+proto.GatewayRequestStatus.Summary.prototype.getWorking = function () {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
@@ -4119,7 +4120,7 @@ proto.GatewayRequestStatus.Summary.prototype.getWorking = function() {
  * @param {number} value
  * @return {!proto.GatewayRequestStatus.Summary} returns this
  */
-proto.GatewayRequestStatus.Summary.prototype.setWorking = function(value) {
+proto.GatewayRequestStatus.Summary.prototype.setWorking = function (value) {
   return jspb.Message.setProto3IntField(this, 1, value);
 };
 
@@ -4128,7 +4129,7 @@ proto.GatewayRequestStatus.Summary.prototype.setWorking = function(value) {
  * optional int32 stalled = 2;
  * @return {number}
  */
-proto.GatewayRequestStatus.Summary.prototype.getStalled = function() {
+proto.GatewayRequestStatus.Summary.prototype.getStalled = function () {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -4137,7 +4138,7 @@ proto.GatewayRequestStatus.Summary.prototype.getStalled = function() {
  * @param {number} value
  * @return {!proto.GatewayRequestStatus.Summary} returns this
  */
-proto.GatewayRequestStatus.Summary.prototype.setStalled = function(value) {
+proto.GatewayRequestStatus.Summary.prototype.setStalled = function (value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 
@@ -4146,7 +4147,7 @@ proto.GatewayRequestStatus.Summary.prototype.setStalled = function(value) {
  * optional int32 complete = 3;
  * @return {number}
  */
-proto.GatewayRequestStatus.Summary.prototype.getComplete = function() {
+proto.GatewayRequestStatus.Summary.prototype.getComplete = function () {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
@@ -4155,7 +4156,7 @@ proto.GatewayRequestStatus.Summary.prototype.getComplete = function() {
  * @param {number} value
  * @return {!proto.GatewayRequestStatus.Summary} returns this
  */
-proto.GatewayRequestStatus.Summary.prototype.setComplete = function(value) {
+proto.GatewayRequestStatus.Summary.prototype.setComplete = function (value) {
   return jspb.Message.setProto3IntField(this, 3, value);
 };
 
@@ -4164,7 +4165,7 @@ proto.GatewayRequestStatus.Summary.prototype.setComplete = function(value) {
  * optional int32 error = 4;
  * @return {number}
  */
-proto.GatewayRequestStatus.Summary.prototype.getError = function() {
+proto.GatewayRequestStatus.Summary.prototype.getError = function () {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
@@ -4173,7 +4174,7 @@ proto.GatewayRequestStatus.Summary.prototype.getError = function() {
  * @param {number} value
  * @return {!proto.GatewayRequestStatus.Summary} returns this
  */
-proto.GatewayRequestStatus.Summary.prototype.setError = function(value) {
+proto.GatewayRequestStatus.Summary.prototype.setError = function (value) {
   return jspb.Message.setProto3IntField(this, 4, value);
 };
 
@@ -4182,7 +4183,7 @@ proto.GatewayRequestStatus.Summary.prototype.setError = function(value) {
  * optional int32 cancelled = 5;
  * @return {number}
  */
-proto.GatewayRequestStatus.Summary.prototype.getCancelled = function() {
+proto.GatewayRequestStatus.Summary.prototype.getCancelled = function () {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
 };
 
@@ -4191,7 +4192,7 @@ proto.GatewayRequestStatus.Summary.prototype.getCancelled = function() {
  * @param {number} value
  * @return {!proto.GatewayRequestStatus.Summary} returns this
  */
-proto.GatewayRequestStatus.Summary.prototype.setCancelled = function(value) {
+proto.GatewayRequestStatus.Summary.prototype.setCancelled = function (value) {
   return jspb.Message.setProto3IntField(this, 5, value);
 };
 
@@ -4200,7 +4201,7 @@ proto.GatewayRequestStatus.Summary.prototype.setCancelled = function(value) {
  * optional int32 responders = 6;
  * @return {number}
  */
-proto.GatewayRequestStatus.Summary.prototype.getResponders = function() {
+proto.GatewayRequestStatus.Summary.prototype.getResponders = function () {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
 };
 
@@ -4209,7 +4210,7 @@ proto.GatewayRequestStatus.Summary.prototype.getResponders = function() {
  * @param {number} value
  * @return {!proto.GatewayRequestStatus.Summary} returns this
  */
-proto.GatewayRequestStatus.Summary.prototype.setResponders = function(value) {
+proto.GatewayRequestStatus.Summary.prototype.setResponders = function (value) {
   return jspb.Message.setProto3IntField(this, 6, value);
 };
 
@@ -4220,9 +4221,9 @@ proto.GatewayRequestStatus.Summary.prototype.setResponders = function(value) {
  * empty, instead returning `undefined`
  * @return {!jspb.Map<string,!proto.ResponderState>}
  */
-proto.GatewayRequestStatus.prototype.getResponderstatesMap = function(opt_noLazyCreate) {
+proto.GatewayRequestStatus.prototype.getResponderstatesMap = function (opt_noLazyCreate) {
   return /** @type {!jspb.Map<string,!proto.ResponderState>} */ (
-      jspb.Message.getMapField(this, 1, opt_noLazyCreate,
+    jspb.Message.getMapField(this, 1, opt_noLazyCreate,
       null));
 };
 
@@ -4231,16 +4232,17 @@ proto.GatewayRequestStatus.prototype.getResponderstatesMap = function(opt_noLazy
  * Clears values from the map. The map will be non-null.
  * @return {!proto.GatewayRequestStatus} returns this
  */
-proto.GatewayRequestStatus.prototype.clearResponderstatesMap = function() {
+proto.GatewayRequestStatus.prototype.clearResponderstatesMap = function () {
   this.getResponderstatesMap().clear();
-  return this;};
+  return this;
+};
 
 
 /**
  * optional Summary summary = 3;
  * @return {?proto.GatewayRequestStatus.Summary}
  */
-proto.GatewayRequestStatus.prototype.getSummary = function() {
+proto.GatewayRequestStatus.prototype.getSummary = function () {
   return /** @type{?proto.GatewayRequestStatus.Summary} */ (
     jspb.Message.getWrapperField(this, proto.GatewayRequestStatus.Summary, 3));
 };
@@ -4250,7 +4252,7 @@ proto.GatewayRequestStatus.prototype.getSummary = function() {
  * @param {?proto.GatewayRequestStatus.Summary|undefined} value
  * @return {!proto.GatewayRequestStatus} returns this
 */
-proto.GatewayRequestStatus.prototype.setSummary = function(value) {
+proto.GatewayRequestStatus.prototype.setSummary = function (value) {
   return jspb.Message.setWrapperField(this, 3, value);
 };
 
@@ -4259,7 +4261,7 @@ proto.GatewayRequestStatus.prototype.setSummary = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.GatewayRequestStatus} returns this
  */
-proto.GatewayRequestStatus.prototype.clearSummary = function() {
+proto.GatewayRequestStatus.prototype.clearSummary = function () {
   return this.setSummary(undefined);
 };
 
@@ -4268,7 +4270,7 @@ proto.GatewayRequestStatus.prototype.clearSummary = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.GatewayRequestStatus.prototype.hasSummary = function() {
+proto.GatewayRequestStatus.prototype.hasSummary = function () {
   return jspb.Message.getField(this, 3) != null;
 };
 
@@ -4277,7 +4279,7 @@ proto.GatewayRequestStatus.prototype.hasSummary = function() {
  * optional bool postProcessingComplete = 4;
  * @return {boolean}
  */
-proto.GatewayRequestStatus.prototype.getPostprocessingcomplete = function() {
+proto.GatewayRequestStatus.prototype.getPostprocessingcomplete = function () {
   return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
 };
 
@@ -4286,7 +4288,7 @@ proto.GatewayRequestStatus.prototype.getPostprocessingcomplete = function() {
  * @param {boolean} value
  * @return {!proto.GatewayRequestStatus} returns this
  */
-proto.GatewayRequestStatus.prototype.setPostprocessingcomplete = function(value) {
+proto.GatewayRequestStatus.prototype.setPostprocessingcomplete = function (value) {
   return jspb.Message.setProto3BooleanField(this, 4, value);
 };
 

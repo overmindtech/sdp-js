@@ -11,9 +11,10 @@
 /* eslint-disable */
 // @ts-nocheck
 
+var isBrowser = typeof window !== 'undefined'
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = (function() { return this || window || global || self || Function('return this')(); }).call(null);
+var global = isBrowser ? (function () { return this || window || global || self || Function('return this')(); }).call(null) : {}
 
 var google_protobuf_duration_pb = require('google-protobuf/google/protobuf/duration_pb.js');
 goog.object.extend(proto, google_protobuf_duration_pb);
@@ -31,7 +32,7 @@ goog.exportSymbol('proto.Response', null, global);
  * @extends {jspb.Message}
  * @constructor
  */
-proto.Response = function(opt_data) {
+proto.Response = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.Response, jspb.Message);
@@ -52,7 +53,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.ItemRequestError = function(opt_data) {
+proto.ItemRequestError = function (opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ItemRequestError, jspb.Message);
@@ -67,45 +68,45 @@ if (goog.DEBUG && !COMPILED) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.Response.prototype.toObject = function(opt_includeInstance) {
-  return proto.Response.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.Response} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.Response.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    responder: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    state: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    nextupdatein: (f = msg.getNextupdatein()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
-    itemrequestuuid: msg.getItemrequestuuid_asB64()
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.Response.prototype.toObject = function (opt_includeInstance) {
+    return proto.Response.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.Response} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.Response.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      responder: jspb.Message.getFieldWithDefault(msg, 1, ""),
+      state: jspb.Message.getFieldWithDefault(msg, 2, 0),
+      nextupdatein: (f = msg.getNextupdatein()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
+      itemrequestuuid: msg.getItemrequestuuid_asB64()
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -114,7 +115,7 @@ proto.Response.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.Response}
  */
-proto.Response.deserializeBinary = function(bytes) {
+proto.Response.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.Response;
   return proto.Response.deserializeBinaryFromReader(msg, reader);
@@ -128,33 +129,33 @@ proto.Response.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.Response}
  */
-proto.Response.deserializeBinaryFromReader = function(msg, reader) {
+proto.Response.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setResponder(value);
-      break;
-    case 2:
-      var value = /** @type {!proto.ResponderState} */ (reader.readEnum());
-      msg.setState(value);
-      break;
-    case 3:
-      var value = new google_protobuf_duration_pb.Duration;
-      reader.readMessage(value,google_protobuf_duration_pb.Duration.deserializeBinaryFromReader);
-      msg.setNextupdatein(value);
-      break;
-    case 4:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setItemrequestuuid(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setResponder(value);
+        break;
+      case 2:
+        var value = /** @type {!proto.ResponderState} */ (reader.readEnum());
+        msg.setState(value);
+        break;
+      case 3:
+        var value = new google_protobuf_duration_pb.Duration;
+        reader.readMessage(value, google_protobuf_duration_pb.Duration.deserializeBinaryFromReader);
+        msg.setNextupdatein(value);
+        break;
+      case 4:
+        var value = /** @type {!Uint8Array} */ (reader.readBytes());
+        msg.setItemrequestuuid(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -165,7 +166,7 @@ proto.Response.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.Response.prototype.serializeBinary = function() {
+proto.Response.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.Response.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -179,7 +180,7 @@ proto.Response.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.Response.serializeBinaryToWriter = function(message, writer) {
+proto.Response.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getResponder();
   if (f.length > 0) {
@@ -217,7 +218,7 @@ proto.Response.serializeBinaryToWriter = function(message, writer) {
  * optional string responder = 1;
  * @return {string}
  */
-proto.Response.prototype.getResponder = function() {
+proto.Response.prototype.getResponder = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -226,7 +227,7 @@ proto.Response.prototype.getResponder = function() {
  * @param {string} value
  * @return {!proto.Response} returns this
  */
-proto.Response.prototype.setResponder = function(value) {
+proto.Response.prototype.setResponder = function (value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -235,7 +236,7 @@ proto.Response.prototype.setResponder = function(value) {
  * optional ResponderState state = 2;
  * @return {!proto.ResponderState}
  */
-proto.Response.prototype.getState = function() {
+proto.Response.prototype.getState = function () {
   return /** @type {!proto.ResponderState} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -244,7 +245,7 @@ proto.Response.prototype.getState = function() {
  * @param {!proto.ResponderState} value
  * @return {!proto.Response} returns this
  */
-proto.Response.prototype.setState = function(value) {
+proto.Response.prototype.setState = function (value) {
   return jspb.Message.setProto3EnumField(this, 2, value);
 };
 
@@ -253,7 +254,7 @@ proto.Response.prototype.setState = function(value) {
  * optional google.protobuf.Duration nextUpdateIn = 3;
  * @return {?proto.google.protobuf.Duration}
  */
-proto.Response.prototype.getNextupdatein = function() {
+proto.Response.prototype.getNextupdatein = function () {
   return /** @type{?proto.google.protobuf.Duration} */ (
     jspb.Message.getWrapperField(this, google_protobuf_duration_pb.Duration, 3));
 };
@@ -263,7 +264,7 @@ proto.Response.prototype.getNextupdatein = function() {
  * @param {?proto.google.protobuf.Duration|undefined} value
  * @return {!proto.Response} returns this
 */
-proto.Response.prototype.setNextupdatein = function(value) {
+proto.Response.prototype.setNextupdatein = function (value) {
   return jspb.Message.setWrapperField(this, 3, value);
 };
 
@@ -272,7 +273,7 @@ proto.Response.prototype.setNextupdatein = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.Response} returns this
  */
-proto.Response.prototype.clearNextupdatein = function() {
+proto.Response.prototype.clearNextupdatein = function () {
   return this.setNextupdatein(undefined);
 };
 
@@ -281,7 +282,7 @@ proto.Response.prototype.clearNextupdatein = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.Response.prototype.hasNextupdatein = function() {
+proto.Response.prototype.hasNextupdatein = function () {
   return jspb.Message.getField(this, 3) != null;
 };
 
@@ -290,7 +291,7 @@ proto.Response.prototype.hasNextupdatein = function() {
  * optional bytes itemRequestUUID = 4;
  * @return {!(string|Uint8Array)}
  */
-proto.Response.prototype.getItemrequestuuid = function() {
+proto.Response.prototype.getItemrequestuuid = function () {
   return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -300,9 +301,9 @@ proto.Response.prototype.getItemrequestuuid = function() {
  * This is a type-conversion wrapper around `getItemrequestuuid()`
  * @return {string}
  */
-proto.Response.prototype.getItemrequestuuid_asB64 = function() {
+proto.Response.prototype.getItemrequestuuid_asB64 = function () {
   return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getItemrequestuuid()));
+    this.getItemrequestuuid()));
 };
 
 
@@ -313,9 +314,9 @@ proto.Response.prototype.getItemrequestuuid_asB64 = function() {
  * This is a type-conversion wrapper around `getItemrequestuuid()`
  * @return {!Uint8Array}
  */
-proto.Response.prototype.getItemrequestuuid_asU8 = function() {
+proto.Response.prototype.getItemrequestuuid_asU8 = function () {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getItemrequestuuid()));
+    this.getItemrequestuuid()));
 };
 
 
@@ -323,7 +324,7 @@ proto.Response.prototype.getItemrequestuuid_asU8 = function() {
  * @param {!(string|Uint8Array)} value
  * @return {!proto.Response} returns this
  */
-proto.Response.prototype.setItemrequestuuid = function(value) {
+proto.Response.prototype.setItemrequestuuid = function (value) {
   return jspb.Message.setProto3BytesField(this, 4, value);
 };
 
@@ -332,48 +333,48 @@ proto.Response.prototype.setItemrequestuuid = function(value) {
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.ItemRequestError.prototype.toObject = function(opt_includeInstance) {
-  return proto.ItemRequestError.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.ItemRequestError} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.ItemRequestError.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    itemrequestuuid: msg.getItemrequestuuid_asB64(),
-    errortype: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    errorstring: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    scope: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    sourcename: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    itemtype: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    respondername: jspb.Message.getFieldWithDefault(msg, 7, "")
+  /**
+   * Creates an object representation of this proto.
+   * Field names that are reserved in JavaScript and will be renamed to pb_name.
+   * Optional fields that are not set will be set to undefined.
+   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+   * For the list of reserved names please see:
+   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+   *     JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @return {!Object}
+   */
+  proto.ItemRequestError.prototype.toObject = function (opt_includeInstance) {
+    return proto.ItemRequestError.toObject(opt_includeInstance, this);
   };
 
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
+
+  /**
+   * Static version of the {@see toObject} method.
+   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+   *     the JSPB instance for transitional soy proto support:
+   *     http://goto/soy-param-migration
+   * @param {!proto.ItemRequestError} msg The msg instance to transform.
+   * @return {!Object}
+   * @suppress {unusedLocalVariables} f is only used for nested messages
+   */
+  proto.ItemRequestError.toObject = function (includeInstance, msg) {
+    var f, obj = {
+      itemrequestuuid: msg.getItemrequestuuid_asB64(),
+      errortype: jspb.Message.getFieldWithDefault(msg, 2, 0),
+      errorstring: jspb.Message.getFieldWithDefault(msg, 3, ""),
+      scope: jspb.Message.getFieldWithDefault(msg, 4, ""),
+      sourcename: jspb.Message.getFieldWithDefault(msg, 5, ""),
+      itemtype: jspb.Message.getFieldWithDefault(msg, 6, ""),
+      respondername: jspb.Message.getFieldWithDefault(msg, 7, "")
+    };
+
+    if (includeInstance) {
+      obj.$jspbMessageInstance = msg;
+    }
+    return obj;
+  };
 }
 
 
@@ -382,7 +383,7 @@ proto.ItemRequestError.toObject = function(includeInstance, msg) {
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.ItemRequestError}
  */
-proto.ItemRequestError.deserializeBinary = function(bytes) {
+proto.ItemRequestError.deserializeBinary = function (bytes) {
   var reader = new jspb.BinaryReader(bytes);
   var msg = new proto.ItemRequestError;
   return proto.ItemRequestError.deserializeBinaryFromReader(msg, reader);
@@ -396,44 +397,44 @@ proto.ItemRequestError.deserializeBinary = function(bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.ItemRequestError}
  */
-proto.ItemRequestError.deserializeBinaryFromReader = function(msg, reader) {
+proto.ItemRequestError.deserializeBinaryFromReader = function (msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setItemrequestuuid(value);
-      break;
-    case 2:
-      var value = /** @type {!proto.ItemRequestError.ErrorType} */ (reader.readEnum());
-      msg.setErrortype(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setErrorstring(value);
-      break;
-    case 4:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setScope(value);
-      break;
-    case 5:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setSourcename(value);
-      break;
-    case 6:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setItemtype(value);
-      break;
-    case 7:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setRespondername(value);
-      break;
-    default:
-      reader.skipField();
-      break;
+      case 1:
+        var value = /** @type {!Uint8Array} */ (reader.readBytes());
+        msg.setItemrequestuuid(value);
+        break;
+      case 2:
+        var value = /** @type {!proto.ItemRequestError.ErrorType} */ (reader.readEnum());
+        msg.setErrortype(value);
+        break;
+      case 3:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setErrorstring(value);
+        break;
+      case 4:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setScope(value);
+        break;
+      case 5:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setSourcename(value);
+        break;
+      case 6:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setItemtype(value);
+        break;
+      case 7:
+        var value = /** @type {string} */ (reader.readString());
+        msg.setRespondername(value);
+        break;
+      default:
+        reader.skipField();
+        break;
     }
   }
   return msg;
@@ -444,7 +445,7 @@ proto.ItemRequestError.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.ItemRequestError.prototype.serializeBinary = function() {
+proto.ItemRequestError.prototype.serializeBinary = function () {
   var writer = new jspb.BinaryWriter();
   proto.ItemRequestError.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
@@ -458,7 +459,7 @@ proto.ItemRequestError.prototype.serializeBinary = function() {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.ItemRequestError.serializeBinaryToWriter = function(message, writer) {
+proto.ItemRequestError.serializeBinaryToWriter = function (message, writer) {
   var f = undefined;
   f = message.getItemrequestuuid_asU8();
   if (f.length > 0) {
@@ -526,7 +527,7 @@ proto.ItemRequestError.ErrorType = {
  * optional bytes itemRequestUUID = 1;
  * @return {!(string|Uint8Array)}
  */
-proto.ItemRequestError.prototype.getItemrequestuuid = function() {
+proto.ItemRequestError.prototype.getItemrequestuuid = function () {
   return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -536,9 +537,9 @@ proto.ItemRequestError.prototype.getItemrequestuuid = function() {
  * This is a type-conversion wrapper around `getItemrequestuuid()`
  * @return {string}
  */
-proto.ItemRequestError.prototype.getItemrequestuuid_asB64 = function() {
+proto.ItemRequestError.prototype.getItemrequestuuid_asB64 = function () {
   return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getItemrequestuuid()));
+    this.getItemrequestuuid()));
 };
 
 
@@ -549,9 +550,9 @@ proto.ItemRequestError.prototype.getItemrequestuuid_asB64 = function() {
  * This is a type-conversion wrapper around `getItemrequestuuid()`
  * @return {!Uint8Array}
  */
-proto.ItemRequestError.prototype.getItemrequestuuid_asU8 = function() {
+proto.ItemRequestError.prototype.getItemrequestuuid_asU8 = function () {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getItemrequestuuid()));
+    this.getItemrequestuuid()));
 };
 
 
@@ -559,7 +560,7 @@ proto.ItemRequestError.prototype.getItemrequestuuid_asU8 = function() {
  * @param {!(string|Uint8Array)} value
  * @return {!proto.ItemRequestError} returns this
  */
-proto.ItemRequestError.prototype.setItemrequestuuid = function(value) {
+proto.ItemRequestError.prototype.setItemrequestuuid = function (value) {
   return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
@@ -568,7 +569,7 @@ proto.ItemRequestError.prototype.setItemrequestuuid = function(value) {
  * optional ErrorType errorType = 2;
  * @return {!proto.ItemRequestError.ErrorType}
  */
-proto.ItemRequestError.prototype.getErrortype = function() {
+proto.ItemRequestError.prototype.getErrortype = function () {
   return /** @type {!proto.ItemRequestError.ErrorType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -577,7 +578,7 @@ proto.ItemRequestError.prototype.getErrortype = function() {
  * @param {!proto.ItemRequestError.ErrorType} value
  * @return {!proto.ItemRequestError} returns this
  */
-proto.ItemRequestError.prototype.setErrortype = function(value) {
+proto.ItemRequestError.prototype.setErrortype = function (value) {
   return jspb.Message.setProto3EnumField(this, 2, value);
 };
 
@@ -586,7 +587,7 @@ proto.ItemRequestError.prototype.setErrortype = function(value) {
  * optional string errorString = 3;
  * @return {string}
  */
-proto.ItemRequestError.prototype.getErrorstring = function() {
+proto.ItemRequestError.prototype.getErrorstring = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -595,7 +596,7 @@ proto.ItemRequestError.prototype.getErrorstring = function() {
  * @param {string} value
  * @return {!proto.ItemRequestError} returns this
  */
-proto.ItemRequestError.prototype.setErrorstring = function(value) {
+proto.ItemRequestError.prototype.setErrorstring = function (value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
@@ -604,7 +605,7 @@ proto.ItemRequestError.prototype.setErrorstring = function(value) {
  * optional string scope = 4;
  * @return {string}
  */
-proto.ItemRequestError.prototype.getScope = function() {
+proto.ItemRequestError.prototype.getScope = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -613,7 +614,7 @@ proto.ItemRequestError.prototype.getScope = function() {
  * @param {string} value
  * @return {!proto.ItemRequestError} returns this
  */
-proto.ItemRequestError.prototype.setScope = function(value) {
+proto.ItemRequestError.prototype.setScope = function (value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 
@@ -622,7 +623,7 @@ proto.ItemRequestError.prototype.setScope = function(value) {
  * optional string sourceName = 5;
  * @return {string}
  */
-proto.ItemRequestError.prototype.getSourcename = function() {
+proto.ItemRequestError.prototype.getSourcename = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -631,7 +632,7 @@ proto.ItemRequestError.prototype.getSourcename = function() {
  * @param {string} value
  * @return {!proto.ItemRequestError} returns this
  */
-proto.ItemRequestError.prototype.setSourcename = function(value) {
+proto.ItemRequestError.prototype.setSourcename = function (value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 
@@ -640,7 +641,7 @@ proto.ItemRequestError.prototype.setSourcename = function(value) {
  * optional string itemType = 6;
  * @return {string}
  */
-proto.ItemRequestError.prototype.getItemtype = function() {
+proto.ItemRequestError.prototype.getItemtype = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
@@ -649,7 +650,7 @@ proto.ItemRequestError.prototype.getItemtype = function() {
  * @param {string} value
  * @return {!proto.ItemRequestError} returns this
  */
-proto.ItemRequestError.prototype.setItemtype = function(value) {
+proto.ItemRequestError.prototype.setItemtype = function (value) {
   return jspb.Message.setProto3StringField(this, 6, value);
 };
 
@@ -658,7 +659,7 @@ proto.ItemRequestError.prototype.setItemtype = function(value) {
  * optional string responderName = 7;
  * @return {string}
  */
-proto.ItemRequestError.prototype.getRespondername = function() {
+proto.ItemRequestError.prototype.getRespondername = function () {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
@@ -667,7 +668,7 @@ proto.ItemRequestError.prototype.getRespondername = function() {
  * @param {string} value
  * @return {!proto.ItemRequestError} returns this
  */
-proto.ItemRequestError.prototype.setRespondername = function(value) {
+proto.ItemRequestError.prototype.setRespondername = function (value) {
   return jspb.Message.setProto3StringField(this, 7, value);
 };
 
