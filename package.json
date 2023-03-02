@@ -23,8 +23,8 @@
     "typecheck": "tsc -p ./tsconfig.json --noEmit",
     "prettier:check": "prettier ./src --check",
     "prettier:fix": "prettier ./src --write",
-    "codequality:check": "npm run lint && npm run prettier:check && npm run typecheck",
-    "codequality:fix": "npm run lint:fix && npm run prettier:fix"
+    "codequality:check": "pnpm lint && pnpm prettier:check && pnpm typecheck",
+    "codequality:fix": "pnpm lint:fix && pnpm prettier:fix"
   },
   "keywords": [],
   "author": "Dylan Ratcliffe",
