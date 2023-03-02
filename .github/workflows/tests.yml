@@ -17,12 +17,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 19
-          cache: npm
+          cache: pnpm
 
       - uses: pnpm/action-setup@v2
 
       - name: Install dependencies
-        run: pnpm i
+        run: pnpm install --frozen-lockfile
 
       - name: Run tests
         run: pnpm test
