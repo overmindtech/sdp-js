@@ -4,6 +4,7 @@ import {
   newTimestamp,
   getAttributeValue,
   getUniqueAttributeValue,
+  getGloballyUniqueName,
 } from '../Util'
 import { Item } from '../__generated__'
 
@@ -51,6 +52,23 @@ describe('Util namespace', () => {
       const uav = getUniqueAttributeValue(item)
 
       expect(uav).toEqual('dylan')
+    })
+  })
+
+    describe('#getGloballyUniqueName', () => {
+    it('returns the correct value', () => {
+      const item = new Item({
+        type: 'person',
+        uniqueAttribute: 'name',
+        scope: 'scope',
+        attributes: newItemAttributes({
+          name: 'dylan',
+        }),
+      })
+
+      const name = getGloballyUniqueName(item)
+
+      expect(name).toEqual('scope.person.dylan')
     })
   })
 })

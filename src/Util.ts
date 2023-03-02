@@ -75,3 +75,18 @@ export function getUniqueAttributeValue(object: Item | Reference): string {
 
   return ''
 }
+
+/**
+ * Gets the globally unique name of an object
+ * @param object The object to get the globally unique name from
+ * @returns The globally unique name
+ */
+export function getGloballyUniqueName(object: Reference | Item): string {
+  const elements: string[] = [
+    object.scope,
+    object.type,
+    getUniqueAttributeValue(object),
+  ]
+
+  return elements.join('.')
+}
