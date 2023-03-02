@@ -1,12 +1,13 @@
 import { GatewaySession } from './GatewaySession'
+import { parse, stringify as uuidStringify, v4 as uuidv4 } from 'uuid'
 import {
-  getAttributeValue,
-  getUniqueattributevalue,
-  newGatewayRequest,
-  newUUIDString,
-} from './Util'
-import { stringify as uuidStringify } from 'uuid'
-import { Item } from './__generated__/'
+  CancelItemRequest,
+  GatewayRequest,
+  Item,
+  ItemRequest,
+  RequestMethod,
+} from './__generated__/'
+import { newDuration, getAttributeValue, getUniqueAttributeValue } from './Util'
 
 /**
  * Result that combines the actual result with the score
@@ -33,14 +34,14 @@ export class Autocomplete {
 
   private _prompt = ''
   private session: GatewaySession
-  private currentRequestUUID = ''
+  private currentRequestUUID: Uint8Array = new Uint8Array()
 
   /**
    *
    * @param session The gateway session that requests should be sent on
    */
   constructor(session: GatewaySession, field: AutocompleteField) {
-    if (session.state() != WebSocket.OPEN) {
+    if (session.state() !== WebSocket.OPEN) {
       // We are failing here because I can't find a good spot in this API
       // to put an async method. If we review this later we might want to
       // remove this requirement and just have the object be smart enough
@@ -77,24 +78,25 @@ export class Autocomplete {
   set prompt(prompt: string) {
     this._prompt = prompt
 
-    if (this.currentRequestUUID !== '') {
+    if (this.currentRequestUUID.length !== 0) {
       // Cancel any running requests
       this.session.sendRequest(
-        newGatewayRequest(
-          {
-            cancelRequest: {
+        new GatewayRequest({
+          minStatusInterval: newDuration(1000),
+          requestType: {
+            case: 'cancelRequest',
+            value: new CancelItemRequest({
               UUID: this.currentRequestUUID,
-            },
+            }),
           },
-          1000
-        )
+        })
       )
     }
 
     // Delete current autocomplete options
     this.results = []
 
-    const uuid = newUUIDString()
+    const uuid = parse(uuidv4())
 
     let type: string
 
@@ -108,20 +110,21 @@ export class Autocomplete {
     }
 
     // Create a new request
-    const request = newGatewayRequest(
-      {
-        newRequest: {
+    const request = new GatewayRequest({
+      minStatusInterval: newDuration(500),
+      requestType: {
+        case: 'newRequest',
+        value: new ItemRequest({
           scope: 'global',
           linkDepth: 0,
           type: type,
-          method: 'SEARCH',
+          method: RequestMethod.SEARCH,
           query: prompt,
           UUID: uuid,
-          timeoutMs: 2_000,
-        },
+          timeout: newDuration(2000),
+        }),
       },
-      500
-    )
+    })
 
     // Set the UUID so we know which responses to use and which to ignore
     this.currentRequestUUID = uuid
@@ -136,17 +139,14 @@ export class Autocomplete {
    * @param item The item to process
    */
   processItem(item: Item): void {
-    const itemUUID = item.getMetadata()?.getSourcerequest()?.getUuid_asU8()
+    const itemUUID = item.metadata?.sourceRequest?.UUID
 
-    if (typeof itemUUID != 'undefined') {
-      const itemUUIDString = uuidStringify(itemUUID)
-
-      if (itemUUIDString == this.currentRequestUUID) {
+    if (typeof itemUUID !== 'undefined') {
+      if (uuidStringify(itemUUID) == uuidStringify(this.currentRequestUUID)) {
         let score = 0
-        const attributes = item.getAttributes()
 
-        if (attributes !== undefined) {
-          const attributeScore = getAttributeValue(attributes, 'score')
+        if (item.attributes !== undefined) {
+          const attributeScore = getAttributeValue(item.attributes, 'score')
           if (typeof attributeScore === 'number') {
             score = attributeScore
           }
@@ -154,7 +154,7 @@ export class Autocomplete {
 
         // Add the result
         this.results.push({
-          value: getUniqueattributevalue(item),
+          value: getUniqueAttributeValue(item),
           score: score,
         })
 

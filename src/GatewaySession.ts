@@ -33,7 +33,7 @@ type CustomEventListenerOrEventListenerObject<T> =
 export class GatewaySession extends EventTarget {
   private socket: WebSocket
   ready: Promise<void>
-  status?: GatewayRequestStatus.AsObject
+  status?: GatewayRequestStatus
 
   constructor(url: string) {
     super()
@@ -84,86 +84,71 @@ export class GatewaySession extends EventTarget {
    */
   _processMessage(buffer: ArrayBuffer) {
     const binary = new Uint8Array(buffer)
-    const response = GatewayResponse.deserializeBinary(binary)
+    const response = GatewayResponse.fromBinary(binary)
 
-    if (response.hasError()) {
-      this.dispatchEvent(
-        new CustomEvent<string>(ErrorEvent, {
-          detail: response.getError(),
-        })
-      )
-    } else if (response.hasNewitem()) {
-      const item = response.getNewitem()
+    switch (response.responseType.case) {
+      case 'error':
+        this.dispatchEvent(
+          new CustomEvent<string>(ErrorEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
 
-      if (typeof item != 'undefined') {
+      case 'newItem':
         this.dispatchEvent(
           new CustomEvent<Item>(NewItemEvent, {
-            detail: item,
+            detail: response.responseType.value,
           })
         )
-      }
-    } else if (response.hasNewedge()) {
-      const edge = response.getNewedge()
-
-      if (typeof edge != 'undefined') {
+        break
+      case 'newEdge':
         this.dispatchEvent(
           new CustomEvent<Edge>(NewEdgeEvent, {
-            detail: edge,
+            detail: response.responseType.value,
           })
         )
-      }
-    } else if (response.hasNewitemrequesterror()) {
-      const e = response.getNewitemrequesterror()
-
-      if (typeof e != 'undefined') {
-        this.dispatchEvent(
-          new CustomEvent<ItemRequestError>(NewItemRequestErrorEvent, {
-            detail: e,
-          })
-        )
-      }
-    } else if (response.hasStatus()) {
-      const status = response.getStatus()
-
-      if (typeof status != 'undefined') {
-        this.status = status.toObject()
+        break
+      case 'status':
+        // Update the local status
+        this.status = response.responseType.value
 
         this.dispatchEvent(
           new CustomEvent<GatewayRequestStatus>(StatusEvent, {
-            detail: status,
+            detail: response.responseType.value,
           })
         )
-      }
-    } else if (response.hasDeleteitem()) {
-      const ref = response.getDeleteitem()
-
-      if (typeof ref != 'undefined') {
+        break
+      case 'newItemRequestError':
+        this.dispatchEvent(
+          new CustomEvent<ItemRequestError>(NewItemRequestErrorEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
+      case 'deleteItem':
         this.dispatchEvent(
           new CustomEvent<Reference>(DeleteItemEvent, {
-            detail: ref,
+            detail: response.responseType.value,
           })
         )
-      }
-    } else if (response.hasDeleteedge()) {
-      const edge = response.getDeleteedge()
-
-      if (typeof edge != 'undefined') {
+        break
+      case 'deleteEdge':
         this.dispatchEvent(
           new CustomEvent<Edge>(DeleteEdgeEvent, {
-            detail: edge,
+            detail: response.responseType.value,
           })
         )
-      }
-    } else if (response.hasUpdateitem()) {
-      const item = response.getUpdateitem()
-
-      if (typeof item != 'undefined') {
+        break
+      case 'updateItem':
         this.dispatchEvent(
           new CustomEvent<Item>(UpdateItemEvent, {
-            detail: item,
+            detail: response.responseType.value,
           })
         )
-      }
+        break
+      default:
+        break
     }
   }
 
@@ -288,7 +273,7 @@ export class GatewaySession extends EventTarget {
    * @param request The request to send
    */
   sendRequest(request: GatewayRequest) {
-    const binary = request.serializeBinary()
+    const binary = request.toBinary()
     this.socket.send(binary)
   }
 

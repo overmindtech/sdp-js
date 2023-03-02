@@ -1,46 +1,42 @@
 {
   "name": "@overmindtech/sdp-js",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Javascript and Typescript libraries for the State Description Protocol",
-  "types": "./lib/cjs/types/index.d.ts",
-  "main": "./lib/cjs/index.js",
+  "type": "module",
   "exports": {
-    ".": "./lib/cjs/index.js"
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
   },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "clean": "rm -rf ./lib",
-    "build": "npm run clean && npm run build:cjs",
-    "build:esm": "tsc -p ./tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
-    "build:cjs": "tsc -p ./tsconfig.cjs.json",
-    "prepack": "npm run build",
+    "build": "unbuild",
+    "prepack": "pnpm build",
     "test": "jest",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "typecheck:esm": "tsc -p ./tsconfig.esm.json --noEmit",
-    "typecheck:cjs": "tsc -p ./tsconfig.cjs.json --noEmit",
-    "typecheck": "npm run typecheck:esm && npm run typecheck:cjs",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit",
     "prettier:check": "prettier ./src --check",
     "prettier:fix": "prettier ./src --write",
-    "codequality:check": "npm run lint && npm run prettier:check && npm run typecheck",
-    "codequality:fix": "npm run lint:fix && npm run prettier:fix",
-    "minify-pb-files": "npx uglify-js --compress --in-situ `find lib/cjs/__generated__/ -type f -name '*.js'`",
-    "copy-declaration-files": "cp ./src/__generated__/*.d.ts ./lib/cjs/types/__generated__/",
-    "postbuild": "npm run minify-pb-files && npm run copy-declaration-files",
-    "semantic-release": "semantic-release"
+    "codequality:check": "pnpm lint && pnpm prettier:check && pnpm typecheck",
+    "codequality:fix": "pnpm lint:fix && pnpm prettier:fix"
   },
-  "files": [
-    "lib/**/*"
-  ],
   "keywords": [],
   "author": "Dylan Ratcliffe",
   "license": "ISC",
   "dependencies": {
-    "google-protobuf": "^3.21.2",
+    "@bufbuild/protobuf": "^1.0.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@types/google-protobuf": "^3.15.6",
+    "@babel/core": "^7.21.0",
     "@types/jest": "^29.2.4",
+    "@types/node": "^18.14.4",
     "@types/uuid": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",
@@ -50,11 +46,10 @@
     "jest-environment-jsdom": "^29.3.1",
     "jest-websocket-mock": "^2.4.0",
     "prettier": "^2.8.1",
-    "semantic-release": "^20.1.0",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.4",
-    "uglify-js": "^3.17.4"
+    "unbuild": "^1.1.2"
   },
   "repository": {
     "type": "git",
@@ -63,5 +58,8 @@
   "bugs": {
     "url": "https://github.com/overmindtech/sdp-js/issues"
   },
-  "homepage": "https://github.com/overmindtech/sdp-js#readme"
+  "homepage": "https://github.com/overmindtech/sdp-js#readme",
+  "peerDependencies": {
+    "@babel/core": "^7.21.0"
+  }
 }
