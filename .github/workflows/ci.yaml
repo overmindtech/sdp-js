@@ -25,10 +25,10 @@ jobs:
         run: pnpm i
 
       - name: ESLint
-        run: pnpm run lint
+        run: pnpm lint
 
       - name: Prettier
-        run: pnpm run prettier:check
+        run: pnpm prettier:check
 
       - name: Typecheck
-        run: pnpm run typecheck
+        run: pnpm typecheck
