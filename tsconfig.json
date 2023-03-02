@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "moduleResolution": "node",
-    "isolatedModules": true,
-    "esModuleInterop": true
-  }
+    "isolatedModules": true
+  },
+  "exclude": ["dist", "package"]
 }
