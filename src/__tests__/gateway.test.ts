@@ -1,11 +1,11 @@
 /**
  * Mocks
  */
-import { TextEncoder, TextDecoder } from "util";
+import { TextEncoder, TextDecoder } from 'util'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(global as any).TextEncoder = TextEncoder;
+;(global as any).TextEncoder = TextEncoder
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(global as any).TextDecoder = TextDecoder;
+;(global as any).TextDecoder = TextDecoder
 
 import WS from 'jest-websocket-mock'
 
@@ -81,8 +81,8 @@ describe('GatewaySession', () => {
           const response = new GatewayResponse({
             responseType: {
               case: 'error',
-              value: 'some error'
-            }
+              value: 'some error',
+            },
           })
 
           // Register the callbacks
@@ -104,7 +104,7 @@ describe('GatewaySession', () => {
             responseType: {
               case: 'newItem',
               value: data.item.dylan,
-            }
+            },
           })
 
           // Register the callbacks
@@ -126,7 +126,7 @@ describe('GatewaySession', () => {
             responseType: {
               case: 'newEdge',
               value: data.edge.basic,
-            }
+            },
           })
 
           // Register the callbacks
@@ -149,16 +149,14 @@ describe('GatewaySession', () => {
             responseType: {
               case: 'newItemRequestError',
               value: data.error.NOSCOPE,
-            }
+            },
           })
 
           // Register the callbacks
           gs.addEventListener(
             NewItemRequestErrorEvent,
             (event) => {
-              expect(event.detail.scope).toEqual(
-                data.error.NOSCOPE.scope
-              )
+              expect(event.detail.scope).toEqual(data.error.NOSCOPE.scope)
               expect(event.detail.errorType).toEqual(
                 data.error.NOSCOPE.errorType
               )
@@ -176,7 +174,7 @@ describe('GatewaySession', () => {
             responseType: {
               case: 'deleteItem',
               value: data.reference,
-            }
+            },
           })
 
           // Register the callbacks
@@ -200,8 +198,8 @@ describe('GatewaySession', () => {
           const response = new GatewayResponse({
             responseType: {
               case: 'deleteEdge',
-              value: data.edge.basic
-            }
+              value: data.edge.basic,
+            },
           })
 
           // Register the callbacks
@@ -228,16 +226,14 @@ describe('GatewaySession', () => {
             responseType: {
               case: 'updateItem',
               value: data.item.dylan,
-            }
+            },
           })
 
           // Register the callbacks
           gs.addEventListener(
             UpdateItemEvent,
             (event) => {
-              expect(event.detail.scope).toEqual(
-                data.item.dylan.scope
-              )
+              expect(event.detail.scope).toEqual(data.item.dylan.scope)
               expect(event.detail.getType()).toEqual(data.item.dylan.getType())
               done()
             },
@@ -253,7 +249,7 @@ describe('GatewaySession', () => {
             responseType: {
               case: 'status',
               value: data.gatewayStatus.working,
-            }
+            },
           })
 
           // Register the callbacks
@@ -279,13 +275,13 @@ describe('GatewaySession', () => {
             responseType: {
               case: 'status',
               value: data.gatewayStatus.working,
-            }
+            },
           })
           const doneResponse = new GatewayResponse({
             responseType: {
               case: 'status',
               value: data.gatewayStatus.done,
-            }
+            },
           })
 
           // Register the callbacks

@@ -1,8 +1,26 @@
 import { newDuration, newItemAttributes } from '../Util'
-import { CancelItemRequest, Edge, GatewayRequest, Item, ItemRequest, ItemRequestError, Reference, RequestMethod, ResponderState } from '../__generated__'
+import {
+  CancelItemRequest,
+  Edge,
+  GatewayRequest,
+  Item,
+  ItemRequest,
+  ItemRequestError,
+  Reference,
+  RequestMethod,
+  ResponderState,
+} from '../__generated__'
 import { parse } from 'uuid'
-import { ItemRequestError_ErrorType, Response } from '../__generated__/responses_pb'
-import { ExpandItemRequest, GatewayRequestStatus, GatewayRequestStatus_Summary, UndoItemRequest } from '../__generated__/gateway_pb'
+import {
+  ItemRequestError_ErrorType,
+  Response,
+} from '../__generated__/responses_pb'
+import {
+  ExpandItemRequest,
+  GatewayRequestStatus,
+  GatewayRequestStatus_Summary,
+  UndoItemRequest,
+} from '../__generated__/gateway_pb'
 
 export const error = {
   NOTFOUND: new ItemRequestError({
@@ -54,7 +72,7 @@ export const request = {
     errorSubject: 'errorSubject',
     UUID: new Uint8Array(),
     query: '',
-  })
+  }),
 }
 
 export const item = {
@@ -92,7 +110,7 @@ export const item = {
       name: 'katie',
       age: 28,
     }),
-  })
+  }),
 }
 
 export const items = [item.process, item.dylan, item.katie]
@@ -130,8 +148,8 @@ export const gatewayRequest = {
         errorSubject: 'return error.foo',
         type: 'person',
         UUID: parse('a520d67f-0b2a-4852-87d2-d02bbc74ad89'),
-      })
-    }
+      }),
+    },
   }),
   cancel: new GatewayRequest({
     requestType: {
@@ -177,7 +195,7 @@ export const gatewayStatus = {
       working: 0,
     }),
     postProcessingComplete: true,
-  })
+  }),
 }
 
 export const edge = {
@@ -192,5 +210,5 @@ export const edge = {
       type: 'dog',
       uniqueAttributeValue: 'Manny',
     }),
-  })
+  }),
 }

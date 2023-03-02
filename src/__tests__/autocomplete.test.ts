@@ -2,18 +2,25 @@
  * Mocks
  */
 import WS from 'jest-websocket-mock'
-import { TextEncoder, TextDecoder } from "util";
+import { TextEncoder, TextDecoder } from 'util'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(global as any).TextEncoder = TextEncoder;
+;(global as any).TextEncoder = TextEncoder
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(global as any).TextDecoder = TextDecoder;
+;(global as any).TextDecoder = TextDecoder
 
 /**
  * Real imports
  */
 import { GatewaySession } from '../GatewaySession'
 import { Autocomplete, AutocompleteField } from '../Autocomplete'
-import { GatewayRequest, GatewayResponse, Item, ItemRequest, Metadata, RequestMethod } from '../__generated__/'
+import {
+  GatewayRequest,
+  GatewayResponse,
+  Item,
+  ItemRequest,
+  Metadata,
+  RequestMethod,
+} from '../__generated__/'
 import { newItemAttributes, newTimestamp } from '../Util'
 import { Struct } from '@bufbuild/protobuf'
 
@@ -70,7 +77,6 @@ describe('Autocomplete', () => {
             expect(req.requestType.value.query).toEqual(ac.prompt)
             expect(req.requestType.value.scope).toEqual('global')
           }
-          
         } else {
           // Is there a better way to fail here?
           expect(false).toBeTruthy()
@@ -123,8 +129,8 @@ describe('Autocomplete', () => {
         if (msg instanceof Uint8Array) {
           const req = GatewayRequest.fromBinary(msg)
 
-          let u: Uint8Array = new Uint8Array();
-        
+          let u: Uint8Array = new Uint8Array()
+
           expect(req.requestType.case).toBe('newRequest')
           if (req.requestType.case == 'newRequest') {
             expect(req.requestType.value.type).toEqual('overmind-type')
@@ -133,10 +139,10 @@ describe('Autocomplete', () => {
             u = req.requestType.value.UUID
           }
 
-          const s = new Struct();
+          const s = new Struct()
 
           s.fromJson({
-            foo: 'bar'
+            foo: 'bar',
           })
 
           const resp: GatewayResponse = new GatewayResponse({
@@ -159,10 +165,10 @@ describe('Autocomplete', () => {
                     query: ac.prompt,
                     type: 'overmind-type',
                     UUID: u,
-                  })
-                })                
-              })
-            }
+                  }),
+                }),
+              }),
+            },
           })
 
           const respBin = resp.toBinary()

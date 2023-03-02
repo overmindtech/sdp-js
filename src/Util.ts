@@ -1,5 +1,5 @@
-import { Duration, JsonValue, Struct, Timestamp } from "@bufbuild/protobuf"
-import { Item, ItemAttributes, Reference } from "./__generated__"
+import { Duration, JsonValue, Struct, Timestamp } from '@bufbuild/protobuf'
+import { Item, ItemAttributes, Reference } from './__generated__'
 
 /**
  * Creates a new ItemAttributes object from any javascript object that has
@@ -8,13 +8,13 @@ import { Item, ItemAttributes, Reference } from "./__generated__"
  * @returns A new ItemAttributes object
  */
 export function newItemAttributes(value: {
-    [key: string]: JsonValue,
-  }): ItemAttributes {
-    const attributes = new ItemAttributes()
-    attributes.attrStruct = new Struct();
-    attributes.attrStruct.fromJson(value);
-  
-    return attributes
+  [key: string]: JsonValue
+}): ItemAttributes {
+  const attributes = new ItemAttributes()
+  attributes.attrStruct = new Struct()
+  attributes.attrStruct.fromJson(value)
+
+  return attributes
 }
 
 /**
@@ -23,10 +23,10 @@ export function newItemAttributes(value: {
  * @returns A timestamp in protobuf format
  */
 export function newTimestamp(date: Date): Timestamp {
-    const t = new Timestamp();
-    t.seconds = BigInt(Math.floor(date.getTime() / 1000));
-    t.nanos = (date.getMilliseconds() * 1000000);
-    return t
+  const t = new Timestamp()
+  t.seconds = BigInt(Math.floor(date.getTime() / 1000))
+  t.nanos = date.getMilliseconds() * 1000000
+  return t
 }
 
 /**
@@ -37,7 +37,7 @@ export function newTimestamp(date: Date): Timestamp {
 export function newDuration(ms: number): Duration {
   const d = new Duration({
     nanos: (ms % 1000) * 1e6,
-    seconds: BigInt(Math.floor(ms / 1000))
+    seconds: BigInt(Math.floor(ms / 1000)),
   })
 
   return d

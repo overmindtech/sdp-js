@@ -1,6 +1,12 @@
 import { GatewaySession } from './GatewaySession'
 import { parse, stringify as uuidStringify, v4 as uuidv4 } from 'uuid'
-import { CancelItemRequest, GatewayRequest, Item, ItemRequest, RequestMethod } from './__generated__/'
+import {
+  CancelItemRequest,
+  GatewayRequest,
+  Item,
+  ItemRequest,
+  RequestMethod,
+} from './__generated__/'
 import { newDuration, getAttributeValue, getUniqueAttributeValue } from './Util'
 
 /**
@@ -28,7 +34,7 @@ export class Autocomplete {
 
   private _prompt = ''
   private session: GatewaySession
-  private currentRequestUUID: Uint8Array = new Uint8Array();
+  private currentRequestUUID: Uint8Array = new Uint8Array()
 
   /**
    *
@@ -74,15 +80,17 @@ export class Autocomplete {
 
     if (this.currentRequestUUID.length !== 0) {
       // Cancel any running requests
-      this.session.sendRequest(new GatewayRequest({
-        minStatusInterval: newDuration(1000),
-        requestType: {
-          case: 'cancelRequest',
-          value: new CancelItemRequest({
-            UUID: this.currentRequestUUID,
-          }),
-        },
-      }))
+      this.session.sendRequest(
+        new GatewayRequest({
+          minStatusInterval: newDuration(1000),
+          requestType: {
+            case: 'cancelRequest',
+            value: new CancelItemRequest({
+              UUID: this.currentRequestUUID,
+            }),
+          },
+        })
+      )
     }
 
     // Delete current autocomplete options
@@ -114,8 +122,8 @@ export class Autocomplete {
           query: prompt,
           UUID: uuid,
           timeout: newDuration(2000),
-        })
-      }
+        }),
+      },
     })
 
     // Set the UUID so we know which responses to use and which to ignore

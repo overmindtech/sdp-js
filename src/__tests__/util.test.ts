@@ -1,11 +1,17 @@
-import { newDuration, newItemAttributes, newTimestamp, getAttributeValue, getUniqueAttributeValue } from "../Util";
-import { Item } from "../__generated__";
+import {
+  newDuration,
+  newItemAttributes,
+  newTimestamp,
+  getAttributeValue,
+  getUniqueAttributeValue,
+} from '../Util'
+import { Item } from '../__generated__'
 
 describe('Util namespace', () => {
   describe('#newTimestamp', () => {
     it('returns the correct date', () => {
-      const now = new Date();
-      const ts = newTimestamp(now);
+      const now = new Date()
+      const ts = newTimestamp(now)
 
       expect(now.toISOString()).toEqual(ts.toDate().toISOString())
     })
@@ -38,8 +44,8 @@ describe('Util namespace', () => {
         type: 'person',
         uniqueAttribute: 'name',
         attributes: newItemAttributes({
-          name: 'dylan'
-        })
+          name: 'dylan',
+        }),
       })
 
       const uav = getUniqueAttributeValue(item)

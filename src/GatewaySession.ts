@@ -88,51 +88,67 @@ export class GatewaySession extends EventTarget {
 
     switch (response.responseType.case) {
       case 'error':
-        this.dispatchEvent(new CustomEvent<string>(ErrorEvent, {
-          detail: response.responseType.value,
-        }))
-        break;
-    
+        this.dispatchEvent(
+          new CustomEvent<string>(ErrorEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
+
       case 'newItem':
-        this.dispatchEvent(new CustomEvent<Item>(NewItemEvent, {
-          detail: response.responseType.value,
-        }))
-        break;
+        this.dispatchEvent(
+          new CustomEvent<Item>(NewItemEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
       case 'newEdge':
-        this.dispatchEvent(new CustomEvent<Edge>(NewEdgeEvent, {
-          detail: response.responseType.value,
-        }))
-        break;
+        this.dispatchEvent(
+          new CustomEvent<Edge>(NewEdgeEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
       case 'status':
         // Update the local status
         this.status = response.responseType.value
-      
-        this.dispatchEvent(new CustomEvent<GatewayRequestStatus>(StatusEvent, {
-          detail: response.responseType.value,
-        }))
-        break;
+
+        this.dispatchEvent(
+          new CustomEvent<GatewayRequestStatus>(StatusEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
       case 'newItemRequestError':
-        this.dispatchEvent(new CustomEvent<ItemRequestError>(NewItemRequestErrorEvent, {
-          detail: response.responseType.value,
-        }))
-        break;
+        this.dispatchEvent(
+          new CustomEvent<ItemRequestError>(NewItemRequestErrorEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
       case 'deleteItem':
-        this.dispatchEvent(new CustomEvent<Reference>(DeleteItemEvent, {
-          detail: response.responseType.value,
-        }))
-        break;
+        this.dispatchEvent(
+          new CustomEvent<Reference>(DeleteItemEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
       case 'deleteEdge':
-        this.dispatchEvent(new CustomEvent<Edge>(DeleteEdgeEvent, {
-          detail: response.responseType.value,
-        }))
-        break;
+        this.dispatchEvent(
+          new CustomEvent<Edge>(DeleteEdgeEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
       case 'updateItem':
-        this.dispatchEvent(new CustomEvent<Item>(UpdateItemEvent, {
-          detail: response.responseType.value,
-        }))
-        break;
+        this.dispatchEvent(
+          new CustomEvent<Item>(UpdateItemEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
       default:
-        break;
+        break
     }
   }
 
