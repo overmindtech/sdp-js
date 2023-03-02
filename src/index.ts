@@ -1,8 +1,8 @@
-export * from './Autocomplete'
-export * from './GatewaySession'
-export * from './RequestProgress'
-export * from './Responder'
-export * from './Util'
+export * from './Autocomplete.js'
+export * from './GatewaySession.js'
+export * from './RequestProgress.js'
+export * from './Responder.js'
+export * from './Util.js'
 export {
   CancelItemRequest,
   Edge,
@@ -18,4 +18,4 @@ export {
   RequestMethod,
   ResponderState,
   Response,
-} from './__generated__/'
+} from './__generated__/index.js'

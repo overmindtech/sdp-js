@@ -41,7 +41,7 @@ export class Autocomplete {
    * @param session The gateway session that requests should be sent on
    */
   constructor(session: GatewaySession, field: AutocompleteField) {
-    if (session.state() != WebSocket.OPEN) {
+    if (session.state() !== WebSocket.OPEN) {
       // We are failing here because I can't find a good spot in this API
       // to put an async method. If we review this later we might want to
       // remove this requirement and just have the object be smart enough
@@ -141,7 +141,7 @@ export class Autocomplete {
   processItem(item: Item): void {
     const itemUUID = item.metadata?.sourceRequest?.UUID
 
-    if (typeof itemUUID != 'undefined') {
+    if (typeof itemUUID !== 'undefined') {
       if (uuidStringify(itemUUID) == uuidStringify(this.currentRequestUUID)) {
         let score = 0
 

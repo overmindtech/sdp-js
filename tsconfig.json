@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "esModuleInterop": true
+  },
+  "files": ["./src/index.ts"],
+  "include": ["./src/__generated__/"]
+}
