@@ -55,7 +55,7 @@ describe('Util namespace', () => {
     })
   })
 
-    describe('#getGloballyUniqueName', () => {
+  describe('#getGloballyUniqueName', () => {
     it('returns the correct value', () => {
       const item = new Item({
         type: 'person',
