@@ -1,8 +1,17 @@
 /**
- * @jest-environment jsdom
+ * Mocks
  */
+import { TextEncoder, TextDecoder } from "util";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(global as any).TextEncoder = TextEncoder;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(global as any).TextDecoder = TextDecoder;
 
 import WS from 'jest-websocket-mock'
+
+/**
+ * Real imports
+ */
 import {
   NewItemEvent,
   NewEdgeEvent,
@@ -15,8 +24,8 @@ import {
   DeleteEdgeEvent,
   UpdateItemEvent,
 } from '../Events'
-import { newGatewayResponse } from '../Util'
 import { GatewaySession } from '../GatewaySession'
+import { GatewayResponse } from '../__generated__'
 import * as data from './sampledata.helper'
 
 // create a WS instance
@@ -51,7 +60,7 @@ describe('GatewaySession', () => {
         gs.sendRequest(data.gatewayRequest.itemRequest)
 
         expect(await server.nextMessage).toEqual(
-          data.gatewayRequest.itemRequest.serializeBinary()
+          data.gatewayRequest.itemRequest.toBinary()
         )
       })
     })
@@ -69,8 +78,11 @@ describe('GatewaySession', () => {
 
       describe('Error', () => {
         it('should call the callback', (done) => {
-          const response = newGatewayResponse({
-            error: 'some error',
+          const response = new GatewayResponse({
+            responseType: {
+              case: 'error',
+              value: 'some error'
+            }
           })
 
           // Register the callbacks
@@ -83,130 +95,148 @@ describe('GatewaySession', () => {
             { once: true }
           )
 
-          server.send(response.serializeBinary().buffer)
+          server.send(response.toBinary().buffer)
         })
       })
       describe('NewItem', () => {
         it('should call the callback', (done) => {
-          const response = newGatewayResponse({
-            newItem: data.itemData.dylan,
+          const response = new GatewayResponse({
+            responseType: {
+              case: 'newItem',
+              value: data.item.dylan,
+            }
           })
 
           // Register the callbacks
           gs.addEventListener(
             NewItemEvent,
             (event) => {
-              expect(event.detail.getType()).toEqual(data.item.dylan.getType())
+              expect(event.detail.type).toEqual(data.item.dylan.type)
               done()
             },
             { once: true }
           )
 
-          server.send(response.serializeBinary().buffer)
+          server.send(response.toBinary().buffer)
         })
       })
       describe('NewEdge', () => {
         it('should call the callback', (done) => {
-          const response = newGatewayResponse({
-            newEdge: data.edgeData.basic,
+          const response = new GatewayResponse({
+            responseType: {
+              case: 'newEdge',
+              value: data.edge.basic,
+            }
           })
 
           // Register the callbacks
           gs.addEventListener(
             NewEdgeEvent,
             (event) => {
-              expect(event.detail.getFrom()).toEqual(data.edge.basic.getFrom())
-              expect(event.detail.getTo()).toEqual(data.edge.basic.getTo())
+              expect(event.detail.from).toEqual(data.edge.basic.from)
+              expect(event.detail.to).toEqual(data.edge.basic.to)
               done()
             },
             { once: true }
           )
 
-          server.send(response.serializeBinary().buffer)
+          server.send(response.toBinary().buffer)
         })
       })
       describe('NewItemRequestError', () => {
         it('should call the callback', (done) => {
-          const response = newGatewayResponse({
-            newItemRequestError: data.errorData.NOSCOPE,
+          const response = new GatewayResponse({
+            responseType: {
+              case: 'newItemRequestError',
+              value: data.error.NOSCOPE,
+            }
           })
 
           // Register the callbacks
           gs.addEventListener(
             NewItemRequestErrorEvent,
             (event) => {
-              expect(event.detail.getScope()).toEqual(
-                data.error.NOSCOPE.getScope()
+              expect(event.detail.scope).toEqual(
+                data.error.NOSCOPE.scope
               )
-              expect(event.detail.getErrortype()).toEqual(
-                data.error.NOSCOPE.getErrortype()
+              expect(event.detail.errorType).toEqual(
+                data.error.NOSCOPE.errorType
               )
               done()
             },
             { once: true }
           )
 
-          server.send(response.serializeBinary().buffer)
+          server.send(response.toBinary().buffer)
         })
       })
       describe('DeleteItem', () => {
         it('should call the callback', (done) => {
-          const response = newGatewayResponse({
-            deleteItem: data.reference,
+          const response = new GatewayResponse({
+            responseType: {
+              case: 'deleteItem',
+              value: data.reference,
+            }
           })
 
           // Register the callbacks
           gs.addEventListener(
             DeleteItemEvent,
             (event) => {
-              expect(event.detail.getScope()).toEqual(data.reference.getScope())
-              expect(event.detail.getUniqueattributevalue()).toEqual(
-                data.reference.getUniqueattributevalue()
+              expect(event.detail.scope).toEqual(data.reference.scope)
+              expect(event.detail.uniqueAttributeValue).toEqual(
+                data.reference.uniqueAttributeValue
               )
               done()
             },
             { once: true }
           )
 
-          server.send(response.serializeBinary().buffer)
+          server.send(response.toBinary().buffer)
         })
       })
       describe('DeleteEdge', () => {
         it('should call the callback', (done) => {
-          const response = newGatewayResponse({
-            deleteEdge: data.edge.basic,
+          const response = new GatewayResponse({
+            responseType: {
+              case: 'deleteEdge',
+              value: data.edge.basic
+            }
           })
 
           // Register the callbacks
           gs.addEventListener(
             DeleteEdgeEvent,
             (event) => {
-              expect(event.detail.getFrom()?.toString()).toEqual(
-                data.edge.basic.getFrom()?.toString()
+              expect(event.detail.from?.toString()).toEqual(
+                data.edge.basic.from?.toString()
               )
-              expect(event.detail.getTo()?.toString()).toEqual(
-                data.edge.basic.getTo()?.toString()
+              expect(event.detail.to?.toString()).toEqual(
+                data.edge.basic.to?.toString()
               )
               done()
             },
             { once: true }
           )
 
-          server.send(response.serializeBinary().buffer)
+          server.send(response.toBinary().buffer)
         })
       })
       describe('UpdateItem', () => {
         it('should call the callback', (done) => {
-          const response = newGatewayResponse({
-            updateItem: data.item.dylan,
+          const response = new GatewayResponse({
+            responseType: {
+              case: 'updateItem',
+              value: data.item.dylan,
+            }
           })
 
           // Register the callbacks
           gs.addEventListener(
             UpdateItemEvent,
             (event) => {
-              expect(event.detail.getScope()).toEqual(
-                data.item.dylan.getScope()
+              expect(event.detail.scope).toEqual(
+                data.item.dylan.scope
               )
               expect(event.detail.getType()).toEqual(data.item.dylan.getType())
               done()
@@ -214,73 +244,82 @@ describe('GatewaySession', () => {
             { once: true }
           )
 
-          server.send(response.serializeBinary().buffer)
+          server.send(response.toBinary().buffer)
         })
       })
       describe('Status', () => {
         it('should call the callback', (done) => {
-          const response = newGatewayResponse({
-            status: data.gatewayStatusData.working,
+          const response = new GatewayResponse({
+            responseType: {
+              case: 'status',
+              value: data.gatewayStatus.working,
+            }
           })
 
           // Register the callbacks
           gs.addEventListener(
             StatusEvent,
             (event) => {
-              expect(event.detail.getPostprocessingcomplete()).toEqual(
-                data.gatewayStatus.working.getPostprocessingcomplete()
+              expect(event.detail.postProcessingComplete).toEqual(
+                data.gatewayStatus.working.postProcessingComplete
               )
-              expect(event.detail.getSummary()?.toObject()).toEqual(
-                data.gatewayStatus.working.getSummary()?.toObject()
+              expect(event.detail.summary?.toJsonString()).toEqual(
+                data.gatewayStatus.working.summary?.toJsonString()
               )
               done()
             },
             { once: true }
           )
 
-          server.send(response.serializeBinary().buffer)
+          server.send(response.toBinary().buffer)
         })
 
         it('should update the status', (done) => {
-          const working = newGatewayResponse({
-            status: data.gatewayStatusData.working,
+          const working = new GatewayResponse({
+            responseType: {
+              case: 'status',
+              value: data.gatewayStatus.working,
+            }
           })
-          const doneResponse = newGatewayResponse({
-            status: data.gatewayStatusData.done,
+          const doneResponse = new GatewayResponse({
+            responseType: {
+              case: 'status',
+              value: data.gatewayStatus.done,
+            }
           })
 
           // Register the callbacks
           gs.addEventListener(
             StatusEvent,
             () => {
-              expect(gs.status?.postprocessingcomplete).toEqual(
-                data.gatewayStatus.working.getPostprocessingcomplete()
+              expect(gs.status?.postProcessingComplete).toEqual(
+                data.gatewayStatus.working.postProcessingComplete
               )
-              expect(gs.status?.summary).toEqual(
-                data.gatewayStatus.working.getSummary()?.toObject()
+              expect(gs.status?.summary?.toJsonString()).toEqual(
+                data.gatewayStatus.working.summary?.toJsonString()
               )
 
               // Add the second test
               gs.addEventListener(
                 StatusEvent,
                 () => {
-                  expect(gs.status?.postprocessingcomplete).toEqual(
-                    data.gatewayStatus.done.getPostprocessingcomplete()
+                  expect(gs.status?.postProcessingComplete).toEqual(
+                    data.gatewayStatus.done.postProcessingComplete
                   )
-                  expect(gs.status?.summary).toEqual(
-                    data.gatewayStatus.done.getSummary()?.toObject()
+                  expect(gs.status?.summary?.toJsonString()).toEqual(
+                    data.gatewayStatus.done.summary?.toJsonString()
                   )
                   done()
                 },
                 { once: true }
               )
 
-              server.send(doneResponse.serializeBinary().buffer)
+              server.send(doneResponse.toBinary().buffer)
             },
             { once: true }
           )
 
-          server.send(working.serializeBinary().buffer)
+          server.send(working.toBinary().buffer)
         })
       })
     })

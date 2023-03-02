@@ -177,7 +177,7 @@ export class RequestProgress {
     this.inFlight++
 
     // Pull details out of the response
-    const responderName = response.getResponder()
+    const responderName = response.responder
     let nextUpdateTime: Date | undefined = undefined
 
     // Get the responder or create a new one
@@ -185,16 +185,16 @@ export class RequestProgress {
       this.responders.get(responderName) || new Responder(responderName)
 
     // If there is a next update time the calculate it
-    const nextUpdateIn = response.getNextupdatein()
+    const nextUpdateIn = response.nextUpdateIn
     if (typeof nextUpdateIn != 'undefined') {
       let nextUpdateMilliseconds = 0
 
       // Convert nanoseconds to milliseconds
-      nextUpdateMilliseconds = nextUpdateIn.getNanos() / 1000000
+      nextUpdateMilliseconds = nextUpdateIn.nanos / 1000000
 
       // Convert seconds to milliseconds and add
       nextUpdateMilliseconds =
-        nextUpdateMilliseconds + nextUpdateIn.getSeconds() * 1000
+        nextUpdateMilliseconds + Number(nextUpdateIn.seconds) * 1000
 
       // Create a new date object representing the date that the update is
       // expected by
@@ -203,7 +203,7 @@ export class RequestProgress {
     }
 
     // Set properties from the response
-    responder.state = response.getState()
+    responder.state = response.state
     responder.nextStateTime = nextUpdateTime
 
     // Save the value
