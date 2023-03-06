@@ -92,9 +92,9 @@ export class Response extends Message<Response> {
    * UUID if the item request that this response is in relation to (in binary
    * format)
    *
-   * @generated from field: bytes itemRequestUUID = 4;
+   * @generated from field: bytes UUID = 4;
    */
-  itemRequestUUID = new Uint8Array(0);
+  UUID = new Uint8Array(0);
 
   constructor(data?: PartialMessage<Response>) {
     super();
@@ -107,7 +107,7 @@ export class Response extends Message<Response> {
     { no: 1, name: "responder", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "state", kind: "enum", T: proto3.getEnumType(ResponderState) },
     { no: 3, name: "nextUpdateIn", kind: "message", T: Duration },
-    { no: 4, name: "itemRequestUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 4, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Response {
@@ -126,143 +126,4 @@ export class Response extends Message<Response> {
     return proto3.util.equals(Response, a, b);
   }
 }
-
-/**
- * ItemRequestError is sent back when an item request fails
- *
- * @generated from message ItemRequestError
- */
-export class ItemRequestError extends Message<ItemRequestError> {
-  /**
-   * UUID if the item request that this response is in relation to (in binary
-   * format)
-   *
-   * @generated from field: bytes itemRequestUUID = 1;
-   */
-  itemRequestUUID = new Uint8Array(0);
-
-  /**
-   * @generated from field: ItemRequestError.ErrorType errorType = 2;
-   */
-  errorType = ItemRequestError_ErrorType.OTHER;
-
-  /**
-   * The string contents of the error
-   *
-   * @generated from field: string errorString = 3;
-   */
-  errorString = "";
-
-  /**
-   * The scope from which the error was raised
-   *
-   * @generated from field: string scope = 4;
-   */
-  scope = "";
-
-  /**
-   * The name of the source which raised the error (if relevant)
-   *
-   * @generated from field: string sourceName = 5;
-   */
-  sourceName = "";
-
-  /**
-   * The type of item that we were looking for at the time of the error
-   *
-   * @generated from field: string itemType = 6;
-   */
-  itemType = "";
-
-  /**
-   * The name of the responder that this error was raised from
-   *
-   * @generated from field: string responderName = 7;
-   */
-  responderName = "";
-
-  constructor(data?: PartialMessage<ItemRequestError>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime = proto3;
-  static readonly typeName = "ItemRequestError";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "itemRequestUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-    { no: 2, name: "errorType", kind: "enum", T: proto3.getEnumType(ItemRequestError_ErrorType) },
-    { no: 3, name: "errorString", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "scope", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 5, name: "sourceName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 6, name: "itemType", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 7, name: "responderName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ItemRequestError {
-    return new ItemRequestError().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ItemRequestError {
-    return new ItemRequestError().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ItemRequestError {
-    return new ItemRequestError().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: ItemRequestError | PlainMessage<ItemRequestError> | undefined, b: ItemRequestError | PlainMessage<ItemRequestError> | undefined): boolean {
-    return proto3.util.equals(ItemRequestError, a, b);
-  }
-}
-
-/**
- * The error type. Any types in here will be gracefully handled unless the
- * type os "OTHER"
- *
- * @generated from enum ItemRequestError.ErrorType
- */
-export enum ItemRequestError_ErrorType {
-  /**
-   * This should be used of all other failure modes, such as timeouts,
-   * unexpected failures when querying state, permissions errors etc. Errors
-   * that return this type should not be cached as the error may be transient.
-   *
-   * @generated from enum value: OTHER = 0;
-   */
-  OTHER = 0,
-
-  /**
-   * NOTFOUND means that the item was not found. This is only returned as the
-   * result of a GET request since all other requests would return an empty
-   * list instead
-   *
-   * @generated from enum value: NOTFOUND = 1;
-   */
-  NOTFOUND = 1,
-
-  /**
-   * NOSCOPE means that the item was not found because we don't have
-   * access to the requested scope. This should not be interpreted as "The
-   * item doesn't exist" (as with a NOTFOUND error) but rather as "We can't
-   * tell you whether or not the item exists"
-   *
-   * @generated from enum value: NOSCOPE = 2;
-   */
-  NOSCOPE = 2,
-
-  /**
-   * TIMEOUT means that the source times out when trying to query the item.
-   * The timeout is provided in the original request
-   *
-   * @generated from enum value: TIMEOUT = 3;
-   */
-  TIMEOUT = 3,
-}
-// Retrieve enum metadata with: proto3.getEnumType(ItemRequestError_ErrorType)
-proto3.util.setEnumType(ItemRequestError_ErrorType, "ItemRequestError.ErrorType", [
-  { no: 0, name: "OTHER" },
-  { no: 1, name: "NOTFOUND" },
-  { no: 2, name: "NOSCOPE" },
-  { no: 3, name: "TIMEOUT" },
-]);
 
