@@ -15,7 +15,7 @@ import WS from 'jest-websocket-mock'
 import {
   NewItemEvent,
   NewEdgeEvent,
-  NewItemRequestErrorEvent,
+  QueryErrorEvent,
   StatusEvent,
   SocketErrorEvent,
   ErrorEvent,
@@ -143,18 +143,18 @@ describe('GatewaySession', () => {
           server.send(response.toBinary().buffer)
         })
       })
-      describe('NewItemRequestError', () => {
+      describe('QueryError', () => {
         it('should call the callback', (done) => {
           const response = new GatewayResponse({
             responseType: {
-              case: 'newItemRequestError',
+              case: 'queryError',
               value: data.error.NOSCOPE,
             },
           })
 
           // Register the callbacks
           gs.addEventListener(
-            NewItemRequestErrorEvent,
+            QueryErrorEvent,
             (event) => {
               expect(event.detail.scope).toEqual(data.error.NOSCOPE.scope)
               expect(event.detail.errorType).toEqual(

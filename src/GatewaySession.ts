@@ -2,7 +2,7 @@ import {
   SocketErrorEvent,
   NewItemEvent,
   NewEdgeEvent,
-  NewItemRequestErrorEvent,
+  QueryErrorEvent,
   StatusEvent,
   ErrorEvent,
   CloseEvent,
@@ -16,7 +16,7 @@ import {
   GatewayRequestStatus,
   GatewayResponse,
   Item,
-  ItemRequestError,
+  QueryError,
   Reference,
 } from './__generated__/'
 
@@ -119,9 +119,9 @@ export class GatewaySession extends EventTarget {
           })
         )
         break
-      case 'newItemRequestError':
+      case 'queryError':
         this.dispatchEvent(
-          new CustomEvent<ItemRequestError>(NewItemRequestErrorEvent, {
+          new CustomEvent<QueryError>(QueryErrorEvent, {
             detail: response.responseType.value,
           })
         )
@@ -183,8 +183,8 @@ export class GatewaySession extends EventTarget {
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   addEventListener(
-    type: typeof NewItemRequestErrorEvent,
-    callback: CustomEventListenerOrEventListenerObject<ItemRequestError> | null,
+    type: typeof QueryErrorEvent,
+    callback: CustomEventListenerOrEventListenerObject<QueryError> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   addEventListener(
@@ -241,8 +241,8 @@ export class GatewaySession extends EventTarget {
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   removeEventListener(
-    type: typeof NewItemRequestErrorEvent,
-    callback: CustomEventListenerOrEventListenerObject<ItemRequestError> | null,
+    type: typeof QueryErrorEvent,
+    callback: CustomEventListenerOrEventListenerObject<QueryError> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   removeEventListener(

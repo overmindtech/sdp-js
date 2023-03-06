@@ -1,4 +1,4 @@
-import { ItemRequestError, ResponderState } from './__generated__/'
+import { QueryError, ResponderState } from './__generated__/'
 
 /**
  * Represents something that is responding to our query
@@ -7,7 +7,7 @@ export class Responder {
   name = ''
   lastStateTime: Date = new Date()
   nextStateTime: Date | undefined
-  error?: ItemRequestError
+  error?: QueryError
   private _lastState: ResponderState = ResponderState.WORKING
 
   /**

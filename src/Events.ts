@@ -42,7 +42,7 @@ export const UpdateItemEvent = 'update-item'
  * be expected. It s up to the user to determine how these errors should be
  * surfaced and handled
  */
-export const NewItemRequestErrorEvent = 'item-request-error'
+export const QueryErrorEvent = 'query-error'
 
 /**
  * Status events are sent at an interval determined in the `GatewayRequest`,

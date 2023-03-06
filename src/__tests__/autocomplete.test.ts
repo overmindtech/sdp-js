@@ -17,7 +17,7 @@ import {
   GatewayRequest,
   GatewayResponse,
   Item,
-  ItemRequest,
+  Query,
   Metadata,
   RequestMethod,
 } from '../__generated__/'
@@ -71,8 +71,8 @@ describe('Autocomplete', () => {
         if (msg instanceof Uint8Array) {
           const req = GatewayRequest.fromBinary(msg)
 
-          expect(req.requestType.case).toBe('newRequest')
-          if (req.requestType.case == 'newRequest') {
+          expect(req.requestType.case).toBe('query')
+          if (req.requestType.case == 'query') {
             expect(req.requestType.value.type).toEqual('overmind-type')
             expect(req.requestType.value.query).toEqual(ac.prompt)
             expect(req.requestType.value.scope).toEqual('global')
@@ -90,8 +90,8 @@ describe('Autocomplete', () => {
         if (msg instanceof Uint8Array) {
           const req = GatewayRequest.fromBinary(msg)
 
-          expect(req.requestType.case).toBe('cancelRequest')
-          if (req.requestType.case == 'cancelRequest') {
+          expect(req.requestType.case).toBe('cancelQuery')
+          if (req.requestType.case == 'cancelQuery') {
             expect(req.requestType.value.UUID.length).not.toEqual(0)
           }
         } else {
@@ -105,8 +105,8 @@ describe('Autocomplete', () => {
         if (msg instanceof Uint8Array) {
           const req = GatewayRequest.fromBinary(msg)
 
-          expect(req.requestType.case).toBe('newRequest')
-          if (req.requestType.case == 'newRequest') {
+          expect(req.requestType.case).toBe('query')
+          if (req.requestType.case == 'query') {
             expect(req.requestType.value.type).toEqual('overmind-type')
             expect(req.requestType.value.query).toEqual(ac.prompt)
             expect(req.requestType.value.scope).toEqual('global')
@@ -131,8 +131,8 @@ describe('Autocomplete', () => {
 
           let u: Uint8Array = new Uint8Array()
 
-          expect(req.requestType.case).toBe('newRequest')
-          if (req.requestType.case == 'newRequest') {
+          expect(req.requestType.case).toBe('query')
+          if (req.requestType.case == 'query') {
             expect(req.requestType.value.type).toEqual('overmind-type')
             expect(req.requestType.value.query).toEqual(ac.prompt)
             expect(req.requestType.value.scope).toEqual('global')
@@ -158,7 +158,7 @@ describe('Autocomplete', () => {
                 metadata: new Metadata({
                   sourceName: 'overmind-type-metasource',
                   timestamp: newTimestamp(new Date()),
-                  sourceRequest: new ItemRequest({
+                  sourceQuery: new Query({
                     scope: 'global',
                     linkDepth: 0,
                     method: RequestMethod.GET,
