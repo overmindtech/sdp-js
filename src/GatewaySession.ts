@@ -2,7 +2,7 @@ import {
   SocketErrorEvent,
   NewItemEvent,
   NewEdgeEvent,
-  NewItemRequestErrorEvent,
+  QueryErrorEvent,
   StatusEvent,
   ErrorEvent,
   CloseEvent,
@@ -16,8 +16,10 @@ import {
   GatewayRequestStatus,
   GatewayResponse,
   Item,
-  ItemRequestError,
+  QueryError,
   Reference,
+  UndoQuery,
+  UndoExpand,
 } from './__generated__/'
 
 interface CustomEventListener<T> {
@@ -119,9 +121,9 @@ export class GatewaySession extends EventTarget {
           })
         )
         break
-      case 'newItemRequestError':
+      case 'queryError':
         this.dispatchEvent(
-          new CustomEvent<ItemRequestError>(NewItemRequestErrorEvent, {
+          new CustomEvent<QueryError>(QueryErrorEvent, {
             detail: response.responseType.value,
           })
         )
@@ -183,8 +185,8 @@ export class GatewaySession extends EventTarget {
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   addEventListener(
-    type: typeof NewItemRequestErrorEvent,
-    callback: CustomEventListenerOrEventListenerObject<ItemRequestError> | null,
+    type: typeof QueryErrorEvent,
+    callback: CustomEventListenerOrEventListenerObject<QueryError> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   addEventListener(
@@ -241,8 +243,8 @@ export class GatewaySession extends EventTarget {
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   removeEventListener(
-    type: typeof NewItemRequestErrorEvent,
-    callback: CustomEventListenerOrEventListenerObject<ItemRequestError> | null,
+    type: typeof QueryErrorEvent,
+    callback: CustomEventListenerOrEventListenerObject<QueryError> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   removeEventListener(
@@ -275,6 +277,45 @@ export class GatewaySession extends EventTarget {
   sendRequest(request: GatewayRequest) {
     const binary = request.toBinary()
     this.socket.send(binary)
+  }
+
+  /**
+   * Undoes a request at the gateway
+   * @param request The request to undo
+   */
+  undoRequest(request: GatewayRequest) {
+    switch (request.requestType.case) {
+      case 'query':
+        {
+          const undoReq = new GatewayRequest({
+            requestType: {
+              case: 'undoQuery',
+              value: new UndoQuery({
+                UUID: request.requestType.value.UUID,
+              }),
+            },
+          })
+
+          const binary = undoReq.toBinary()
+          this.socket.send(binary)
+        }
+        break
+      case 'expand':
+        {
+          const undoReq = new GatewayRequest({
+            requestType: {
+              case: 'undoExpand',
+              value: new UndoExpand({
+                UUID: request.requestType.value.UUID,
+              }),
+            },
+          })
+
+          const binary = undoReq.toBinary()
+          this.socket.send(binary)
+        }
+        break
+    }
   }
 
   /**

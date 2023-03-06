@@ -1,9 +1,9 @@
 import { Responder } from './Responder'
-import { ItemRequest, ResponderState, Response } from './__generated__/'
+import { Query, ResponderState, Response } from './__generated__/'
 
 export class RequestProgress {
   responders: Map<string, Responder> = new Map<string, Responder>()
-  request: ItemRequest
+  request: Query
 
   // This is the result of a setInterval which watches for timeouts and sets
   // nodes as stalled
@@ -19,7 +19,7 @@ export class RequestProgress {
    * @param stallCheckIntervalMs How often to check to see if responders have
    * stalled, in milliseconds
    */
-  constructor(request: ItemRequest, stallCheckIntervalMs = 500) {
+  constructor(request: Query, stallCheckIntervalMs = 500) {
     this.request = request
 
     // Start watching for stalls

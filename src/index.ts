@@ -4,15 +4,15 @@ export * from './RequestProgress.js'
 export * from './Responder.js'
 export * from './Util.js'
 export {
-  CancelItemRequest,
+  CancelQuery,
   Edge,
   GatewayRequest,
   GatewayRequestStatus,
   GatewayResponse,
   Item,
   ItemAttributes,
-  ItemRequest,
-  ItemRequestError,
+  Query,
+  QueryError,
   Metadata,
   Reference,
   RequestMethod,

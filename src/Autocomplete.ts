@@ -1,10 +1,10 @@
 import { GatewaySession } from './GatewaySession'
 import { parse, stringify as uuidStringify, v4 as uuidv4 } from 'uuid'
 import {
-  CancelItemRequest,
+  CancelQuery,
   GatewayRequest,
   Item,
-  ItemRequest,
+  Query,
   RequestMethod,
 } from './__generated__/'
 import { newDuration, getAttributeValue, getUniqueAttributeValue } from './Util'
@@ -84,8 +84,8 @@ export class Autocomplete {
         new GatewayRequest({
           minStatusInterval: newDuration(1000),
           requestType: {
-            case: 'cancelRequest',
-            value: new CancelItemRequest({
+            case: 'cancelQuery',
+            value: new CancelQuery({
               UUID: this.currentRequestUUID,
             }),
           },
@@ -113,8 +113,8 @@ export class Autocomplete {
     const request = new GatewayRequest({
       minStatusInterval: newDuration(500),
       requestType: {
-        case: 'newRequest',
-        value: new ItemRequest({
+        case: 'query',
+        value: new Query({
           scope: 'global',
           linkDepth: 0,
           type: type,
@@ -139,7 +139,7 @@ export class Autocomplete {
    * @param item The item to process
    */
   processItem(item: Item): void {
-    const itemUUID = item.metadata?.sourceRequest?.UUID
+    const itemUUID = item.metadata?.sourceQuery?.UUID
 
     if (typeof itemUUID !== 'undefined') {
       if (uuidStringify(itemUUID) == uuidStringify(this.currentRequestUUID)) {

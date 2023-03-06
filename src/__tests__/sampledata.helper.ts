@@ -1,41 +1,40 @@
 import { newDuration, newItemAttributes } from '../Util'
 import {
-  CancelItemRequest,
+  CancelQuery,
   Edge,
   GatewayRequest,
   Item,
-  ItemRequest,
-  ItemRequestError,
+  Query,
+  QueryError,
   Reference,
   RequestMethod,
   ResponderState,
+  Expand,
+  UndoQuery,
+  QueryError_ErrorType,
 } from '../__generated__'
 import { parse } from 'uuid'
+import { Response } from '../__generated__/responses_pb'
 import {
-  ItemRequestError_ErrorType,
-  Response,
-} from '../__generated__/responses_pb'
-import {
-  ExpandItemRequest,
   GatewayRequestStatus,
   GatewayRequestStatus_Summary,
-  UndoItemRequest,
 } from '../__generated__/gateway_pb'
+import {} from '../__generated__/items_pb'
 
 export const error = {
-  NOTFOUND: new ItemRequestError({
+  NOTFOUND: new QueryError({
     errorString: 'Could not be found',
-    errorType: ItemRequestError_ErrorType.NOTFOUND,
+    errorType: QueryError_ErrorType.NOTFOUND,
     scope: 'test.scope',
   }),
-  NOSCOPE: new ItemRequestError({
+  NOSCOPE: new QueryError({
     errorString: 'Scope does not exist',
-    errorType: ItemRequestError_ErrorType.NOSCOPE,
+    errorType: QueryError_ErrorType.NOSCOPE,
     scope: 'test.scope',
   }),
-  OTHER: new ItemRequestError({
+  OTHER: new QueryError({
     errorString: 'Unknown error',
-    errorType: ItemRequestError_ErrorType.OTHER,
+    errorType: QueryError_ErrorType.OTHER,
     scope: 'test.scope',
   }),
 }
@@ -62,7 +61,7 @@ export const response = {
 }
 
 export const request = {
-  LIST: new ItemRequest({
+  LIST: new Query({
     type: 'package',
     method: RequestMethod.LIST,
     linkDepth: 90,
@@ -115,11 +114,11 @@ export const item = {
 
 export const items = [item.process, item.dylan, item.katie]
 
-export const cancelRequest = new CancelItemRequest({
+export const cancelQuery = new CancelQuery({
   UUID: parse('a520d67f-0b2a-4852-87d2-d02bbc74ad89'),
 })
 
-export const undoItemRequest = new UndoItemRequest({
+export const undoQuery = new UndoQuery({
   UUID: parse('a520d67f-0b2a-4852-87d2-d02bbc74ad89'),
 })
 
@@ -129,7 +128,7 @@ export const reference = new Reference({
   uniqueAttributeValue: '1.1.1.1',
 })
 
-export const expandItemRequest = new ExpandItemRequest({
+export const expand = new Expand({
   item: reference,
   linkDepth: 1,
 })
@@ -137,8 +136,8 @@ export const expandItemRequest = new ExpandItemRequest({
 export const gatewayRequest = {
   itemRequest: new GatewayRequest({
     requestType: {
-      case: 'newRequest',
-      value: new ItemRequest({
+      case: 'query',
+      value: new Query({
         scope: 'test',
         linkDepth: 10,
         method: RequestMethod.GET,
@@ -153,8 +152,8 @@ export const gatewayRequest = {
   }),
   cancel: new GatewayRequest({
     requestType: {
-      case: 'cancelRequest',
-      value: new CancelItemRequest({
+      case: 'cancelQuery',
+      value: new CancelQuery({
         UUID: parse('a520d67f-0b2a-4852-87d2-d02bbc74ad89'),
       }),
     },

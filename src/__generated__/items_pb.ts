@@ -47,11 +47,278 @@ proto3.util.setEnumType(RequestMethod, "RequestMethod", [
 ]);
 
 /**
- * ItemRequest represents a request for an item.
+ * This is the same as Item within the package with a couple of exceptions, no
+ * real reason why this whole thing couldn't be modelled in protobuf though if
+ * required. Just need to decide what if anything should remain private
  *
- * @generated from message ItemRequest
+ * @generated from message Item
  */
-export class ItemRequest extends Message<ItemRequest> {
+export class Item extends Message<Item> {
+  /**
+   * @generated from field: string type = 1;
+   */
+  type = "";
+
+  /**
+   * @generated from field: string uniqueAttribute = 2;
+   */
+  uniqueAttribute = "";
+
+  /**
+   * @generated from field: ItemAttributes attributes = 3;
+   */
+  attributes?: ItemAttributes;
+
+  /**
+   * @generated from field: Metadata metadata = 4;
+   */
+  metadata?: Metadata;
+
+  /**
+   * The scope within which the item is unique. Item uniqueness is determined
+   * by the combination of type and uniqueAttribute value. However it is
+   * possible for the same item to exist in many scopes. There is not formal
+   * definition for what a scope should be other than the fact that it should
+   * be somewhat descriptive and should ensure item uniqueness
+   *
+   * @generated from field: string scope = 5;
+   */
+  scope = "";
+
+  /**
+   * Not all items will have relatedItems we are are using a two byte
+   * integer to save one byte integers for more common things
+   *
+   * @generated from field: repeated Query linkedItemQueries = 16;
+   */
+  linkedItemQueries: Query[] = [];
+
+  /**
+   * Linked items
+   *
+   * @generated from field: repeated Reference linkedItems = 17;
+   */
+  linkedItems: Reference[] = [];
+
+  constructor(data?: PartialMessage<Item>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime = proto3;
+  static readonly typeName = "Item";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "uniqueAttribute", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "attributes", kind: "message", T: ItemAttributes },
+    { no: 4, name: "metadata", kind: "message", T: Metadata },
+    { no: 5, name: "scope", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 16, name: "linkedItemQueries", kind: "message", T: Query, repeated: true },
+    { no: 17, name: "linkedItems", kind: "message", T: Reference, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Item {
+    return new Item().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Item {
+    return new Item().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Item {
+    return new Item().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: Item | PlainMessage<Item> | undefined, b: Item | PlainMessage<Item> | undefined): boolean {
+    return proto3.util.equals(Item, a, b);
+  }
+}
+
+/**
+ * ItemAttributes represents the known attributes for an item. These are likely
+ * to be common to a given type, but even this is not guaranteed. All items must
+ * have at least one attribute however as it needs something to uniquely
+ * identify it
+ *
+ * @generated from message ItemAttributes
+ */
+export class ItemAttributes extends Message<ItemAttributes> {
+  /**
+   * @generated from field: google.protobuf.Struct attrStruct = 1;
+   */
+  attrStruct?: Struct;
+
+  constructor(data?: PartialMessage<ItemAttributes>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime = proto3;
+  static readonly typeName = "ItemAttributes";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "attrStruct", kind: "message", T: Struct },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ItemAttributes {
+    return new ItemAttributes().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ItemAttributes {
+    return new ItemAttributes().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ItemAttributes {
+    return new ItemAttributes().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ItemAttributes | PlainMessage<ItemAttributes> | undefined, b: ItemAttributes | PlainMessage<ItemAttributes> | undefined): boolean {
+    return proto3.util.equals(ItemAttributes, a, b);
+  }
+}
+
+/**
+ * Metadata about the item. Where it came from, how long it took, etc.
+ *
+ * @generated from message Metadata
+ */
+export class Metadata extends Message<Metadata> {
+  /**
+   * This is the name of the source that was used to find the item.
+   *
+   * @generated from field: string sourceName = 2;
+   */
+  sourceName = "";
+
+  /**
+   * The query that caused this item to be found. This is for gateway-internal use and will not be exposed to the frontend.
+   *
+   * @generated from field: Query sourceQuery = 3;
+   */
+  sourceQuery?: Query;
+
+  /**
+   * The time that the item was found
+   *
+   * @generated from field: google.protobuf.Timestamp timestamp = 4;
+   */
+  timestamp?: Timestamp;
+
+  /**
+   * How long the source took to execute in total when processing the
+   * Query
+   *
+   * @generated from field: google.protobuf.Duration sourceDuration = 5;
+   */
+  sourceDuration?: Duration;
+
+  /**
+   * How long the source took to execute per item when processing the
+   * Query
+   *
+   * @generated from field: google.protobuf.Duration sourceDurationPerItem = 6;
+   */
+  sourceDurationPerItem?: Duration;
+
+  /**
+   * Whether the item should be hidden/ignored by user-facing things such as
+   * GUIs and databases.
+   *
+   * Some types of items are only relevant in calculating higher-layer
+   * abstractions and are therefore always hidden. A good example of this would
+   * be the output of a command. This could be used by a remote source to gather
+   * information, but we don't actually want to show the user all the commands
+   * that were run, just the final item returned by the source
+   *
+   * @generated from field: bool hidden = 7;
+   */
+  hidden = false;
+
+  /**
+   * The UUID of the QUERY that caused this item to be found
+   *
+   * @generated from field: bytes sourceQueryUUID = 8;
+   */
+  sourceQueryUUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<Metadata>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime = proto3;
+  static readonly typeName = "Metadata";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 2, name: "sourceName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "sourceQuery", kind: "message", T: Query },
+    { no: 4, name: "timestamp", kind: "message", T: Timestamp },
+    { no: 5, name: "sourceDuration", kind: "message", T: Duration },
+    { no: 6, name: "sourceDurationPerItem", kind: "message", T: Duration },
+    { no: 7, name: "hidden", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 8, name: "sourceQueryUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Metadata {
+    return new Metadata().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Metadata {
+    return new Metadata().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Metadata {
+    return new Metadata().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: Metadata | PlainMessage<Metadata> | undefined, b: Metadata | PlainMessage<Metadata> | undefined): boolean {
+    return proto3.util.equals(Metadata, a, b);
+  }
+}
+
+/**
+ * This is a list of items, like a List() would return
+ *
+ * @generated from message Items
+ */
+export class Items extends Message<Items> {
+  /**
+   * @generated from field: repeated Item items = 1;
+   */
+  items: Item[] = [];
+
+  constructor(data?: PartialMessage<Items>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime = proto3;
+  static readonly typeName = "Items";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "items", kind: "message", T: Item, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Items {
+    return new Items().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Items {
+    return new Items().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Items {
+    return new Items().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: Items | PlainMessage<Items> | undefined, b: Items | PlainMessage<Items> | undefined): boolean {
+    return proto3.util.equals(Items, a, b);
+  }
+}
+
+/**
+ * Query represents a request for an item or a list of items.
+ *
+ * @generated from message Query
+ */
+export class Query extends Message<Query> {
   /**
    * The type of item to search for. "*" means all types
    *
@@ -147,13 +414,13 @@ export class ItemRequest extends Message<ItemRequest> {
    */
   errorSubject = "";
 
-  constructor(data?: PartialMessage<ItemRequest>) {
+  constructor(data?: PartialMessage<Query>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime = proto3;
-  static readonly typeName = "ItemRequest";
+  static readonly typeName = "Query";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "method", kind: "enum", T: proto3.getEnumType(RequestMethod) },
@@ -168,234 +435,359 @@ export class ItemRequest extends Message<ItemRequest> {
     { no: 18, name: "errorSubject", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ItemRequest {
-    return new ItemRequest().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Query {
+    return new Query().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ItemRequest {
-    return new ItemRequest().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Query {
+    return new Query().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ItemRequest {
-    return new ItemRequest().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Query {
+    return new Query().fromJsonString(jsonString, options);
   }
 
-  static equals(a: ItemRequest | PlainMessage<ItemRequest> | undefined, b: ItemRequest | PlainMessage<ItemRequest> | undefined): boolean {
-    return proto3.util.equals(ItemRequest, a, b);
+  static equals(a: Query | PlainMessage<Query> | undefined, b: Query | PlainMessage<Query> | undefined): boolean {
+    return proto3.util.equals(Query, a, b);
   }
 }
 
 /**
- * The message signals that the item request with the corresponding UUID should
- * be cancelled. Work should stop immediately, and a final response should be
- * sent with a state of CANCELLED to acknowledge that the request has ended due
- * to a cancellation
+ * QueryError is sent back when an item request fails
  *
- * @generated from message CancelItemRequest
+ * @generated from message QueryError
  */
-export class CancelItemRequest extends Message<CancelItemRequest> {
+export class QueryError extends Message<QueryError> {
   /**
-   * UUID of the item request that this response is in relation to (in binary
+   * UUID if the item request that this response is in relation to (in binary
    * format)
    *
    * @generated from field: bytes UUID = 1;
    */
   UUID = new Uint8Array(0);
 
-  constructor(data?: PartialMessage<CancelItemRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime = proto3;
-  static readonly typeName = "CancelItemRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CancelItemRequest {
-    return new CancelItemRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CancelItemRequest {
-    return new CancelItemRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CancelItemRequest {
-    return new CancelItemRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: CancelItemRequest | PlainMessage<CancelItemRequest> | undefined, b: CancelItemRequest | PlainMessage<CancelItemRequest> | undefined): boolean {
-    return proto3.util.equals(CancelItemRequest, a, b);
-  }
-}
-
-/**
- * ItemAttributes represents the known attributes for an item. These are likely
- * to be common to a given type, but even this is not guaranteed. All items must
- * have at least one attribute however as it needs something to uniquely
- * identify it
- *
- * @generated from message ItemAttributes
- */
-export class ItemAttributes extends Message<ItemAttributes> {
   /**
-   * @generated from field: google.protobuf.Struct attrStruct = 1;
+   * @generated from field: QueryError.ErrorType errorType = 2;
    */
-  attrStruct?: Struct;
-
-  constructor(data?: PartialMessage<ItemAttributes>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime = proto3;
-  static readonly typeName = "ItemAttributes";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "attrStruct", kind: "message", T: Struct },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ItemAttributes {
-    return new ItemAttributes().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ItemAttributes {
-    return new ItemAttributes().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ItemAttributes {
-    return new ItemAttributes().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: ItemAttributes | PlainMessage<ItemAttributes> | undefined, b: ItemAttributes | PlainMessage<ItemAttributes> | undefined): boolean {
-    return proto3.util.equals(ItemAttributes, a, b);
-  }
-}
-
-/**
- * This is the same as Item within the package with a couple of exceptions, no
- * real reason why this whole thing couldn't be modelled in protobuf though if
- * required. Just need to decide what if anything should remain private
- *
- * @generated from message Item
- */
-export class Item extends Message<Item> {
-  /**
-   * @generated from field: string type = 1;
-   */
-  type = "";
+  errorType = QueryError_ErrorType.OTHER;
 
   /**
-   * @generated from field: string uniqueAttribute = 2;
-   */
-  uniqueAttribute = "";
-
-  /**
-   * @generated from field: ItemAttributes attributes = 3;
-   */
-  attributes?: ItemAttributes;
-
-  /**
-   * @generated from field: Metadata metadata = 4;
-   */
-  metadata?: Metadata;
-
-  /**
-   * The scope within which the item is unique. Item uniqueness is determined
-   * by the combination of type and uniqueAttribute value. However it is
-   * possible for the same item to exist in many scopes. There is not formal
-   * definition for what a scope should be other than the fact that it should
-   * be somewhat descriptive and should ensure item uniqueness
+   * The string contents of the error
    *
-   * @generated from field: string scope = 5;
+   * @generated from field: string errorString = 3;
+   */
+  errorString = "";
+
+  /**
+   * The scope from which the error was raised
+   *
+   * @generated from field: string scope = 4;
    */
   scope = "";
 
   /**
-   * Not all items will have relatedItems we are are using a two byte
-   * integer to save one byte integers for more common things
+   * The name of the source which raised the error (if relevant)
    *
-   * @generated from field: repeated ItemRequest linkedItemRequests = 16;
+   * @generated from field: string sourceName = 5;
    */
-  linkedItemRequests: ItemRequest[] = [];
+  sourceName = "";
 
   /**
-   * Linked items
+   * The type of item that we were looking for at the time of the error
    *
-   * @generated from field: repeated Reference linkedItems = 17;
+   * @generated from field: string itemType = 6;
    */
-  linkedItems: Reference[] = [];
+  itemType = "";
 
-  constructor(data?: PartialMessage<Item>) {
+  /**
+   * The name of the responder that this error was raised from
+   *
+   * @generated from field: string responderName = 7;
+   */
+  responderName = "";
+
+  constructor(data?: PartialMessage<QueryError>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime = proto3;
-  static readonly typeName = "Item";
+  static readonly typeName = "QueryError";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "uniqueAttribute", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "attributes", kind: "message", T: ItemAttributes },
-    { no: 4, name: "metadata", kind: "message", T: Metadata },
-    { no: 5, name: "scope", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 16, name: "linkedItemRequests", kind: "message", T: ItemRequest, repeated: true },
-    { no: 17, name: "linkedItems", kind: "message", T: Reference, repeated: true },
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "errorType", kind: "enum", T: proto3.getEnumType(QueryError_ErrorType) },
+    { no: 3, name: "errorString", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "scope", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "sourceName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "itemType", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "responderName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Item {
-    return new Item().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): QueryError {
+    return new QueryError().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Item {
-    return new Item().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): QueryError {
+    return new QueryError().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Item {
-    return new Item().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): QueryError {
+    return new QueryError().fromJsonString(jsonString, options);
   }
 
-  static equals(a: Item | PlainMessage<Item> | undefined, b: Item | PlainMessage<Item> | undefined): boolean {
-    return proto3.util.equals(Item, a, b);
+  static equals(a: QueryError | PlainMessage<QueryError> | undefined, b: QueryError | PlainMessage<QueryError> | undefined): boolean {
+    return proto3.util.equals(QueryError, a, b);
   }
 }
 
 /**
- * This is a list of items, like a List() would return
+ * The error type. Any types in here will be gracefully handled unless the
+ * type os "OTHER"
  *
- * @generated from message Items
+ * @generated from enum QueryError.ErrorType
  */
-export class Items extends Message<Items> {
+export enum QueryError_ErrorType {
   /**
-   * @generated from field: repeated Item items = 1;
+   * This should be used of all other failure modes, such as timeouts,
+   * unexpected failures when querying state, permissions errors etc. Errors
+   * that return this type should not be cached as the error may be transient.
+   *
+   * @generated from enum value: OTHER = 0;
    */
-  items: Item[] = [];
+  OTHER = 0,
 
-  constructor(data?: PartialMessage<Items>) {
+  /**
+   * NOTFOUND means that the item was not found. This is only returned as the
+   * result of a GET request since all other requests would return an empty
+   * list instead
+   *
+   * @generated from enum value: NOTFOUND = 1;
+   */
+  NOTFOUND = 1,
+
+  /**
+   * NOSCOPE means that the item was not found because we don't have
+   * access to the requested scope. This should not be interpreted as "The
+   * item doesn't exist" (as with a NOTFOUND error) but rather as "We can't
+   * tell you whether or not the item exists"
+   *
+   * @generated from enum value: NOSCOPE = 2;
+   */
+  NOSCOPE = 2,
+
+  /**
+   * TIMEOUT means that the source times out when trying to query the item.
+   * The timeout is provided in the original request
+   *
+   * @generated from enum value: TIMEOUT = 3;
+   */
+  TIMEOUT = 3,
+}
+// Retrieve enum metadata with: proto3.getEnumType(QueryError_ErrorType)
+proto3.util.setEnumType(QueryError_ErrorType, "QueryError.ErrorType", [
+  { no: 0, name: "OTHER" },
+  { no: 1, name: "NOTFOUND" },
+  { no: 2, name: "NOSCOPE" },
+  { no: 3, name: "TIMEOUT" },
+]);
+
+/**
+ * The message signals that the Query with the corresponding UUID should
+ * be cancelled. Work should stop immediately, and a final response should be
+ * sent with a state of CANCELLED to acknowledge that the request has ended due
+ * to a cancellation
+ *
+ * @generated from message CancelQuery
+ */
+export class CancelQuery extends Message<CancelQuery> {
+  /**
+   * UUID of the Query to cancel
+   *
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<CancelQuery>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime = proto3;
-  static readonly typeName = "Items";
+  static readonly typeName = "CancelQuery";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "items", kind: "message", T: Item, repeated: true },
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Items {
-    return new Items().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CancelQuery {
+    return new CancelQuery().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Items {
-    return new Items().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CancelQuery {
+    return new CancelQuery().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Items {
-    return new Items().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CancelQuery {
+    return new CancelQuery().fromJsonString(jsonString, options);
   }
 
-  static equals(a: Items | PlainMessage<Items> | undefined, b: Items | PlainMessage<Items> | undefined): boolean {
-    return proto3.util.equals(Items, a, b);
+  static equals(a: CancelQuery | PlainMessage<CancelQuery> | undefined, b: CancelQuery | PlainMessage<CancelQuery> | undefined): boolean {
+    return proto3.util.equals(CancelQuery, a, b);
+  }
+}
+
+/**
+ * This message is sent to the gateway to instruct it to "undo" a query. This
+ * means that the query will be removed from the session, along with all items
+ * and edges that were a result of that request. If these items have already
+ * been sent to the client, the gateway will send `deleteItem` messages instructing
+ * the client to delete them
+ *
+ * @generated from message UndoQuery
+ */
+export class UndoQuery extends Message<UndoQuery> {
+  /**
+   * UUID of the Query to cancel
+   *
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<UndoQuery>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime = proto3;
+  static readonly typeName = "UndoQuery";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UndoQuery {
+    return new UndoQuery().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UndoQuery {
+    return new UndoQuery().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UndoQuery {
+    return new UndoQuery().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UndoQuery | PlainMessage<UndoQuery> | undefined, b: UndoQuery | PlainMessage<UndoQuery> | undefined): boolean {
+    return proto3.util.equals(UndoQuery, a, b);
+  }
+}
+
+/**
+ * This requests that the gateway "expands" an item. This involves executing all
+ * linked item requests within the session and sending the results to the
+ * client. It is recommended that this be used rather than simply sending each
+ * linked item request. Using this request type allows the Gateway to save the
+ * session more intelligently so that it can be bookmarked and used later.
+ * "Expanding" an item will mean an item always acts the same, even if its
+ * linked item requests have changed
+ *
+ * @generated from message Expand
+ */
+export class Expand extends Message<Expand> {
+  /**
+   * The item that should be expanded
+   *
+   * @generated from field: Reference item = 1;
+   */
+  item?: Reference;
+
+  /**
+   * How many levels of expansion should be run
+   *
+   * @generated from field: uint32 linkDepth = 2;
+   */
+  linkDepth = 0;
+
+  /**
+   * A UUID to uniquely identify the request. This should be stored by the
+   * requester as it will be needed later if the requester wants to cancel a
+   * request. It should be stored as 128 bytes, as opposed to the textual
+   * representation
+   *
+   * @generated from field: bytes UUID = 3;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<Expand>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime = proto3;
+  static readonly typeName = "Expand";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "item", kind: "message", T: Reference },
+    { no: 2, name: "linkDepth", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+    { no: 3, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Expand {
+    return new Expand().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Expand {
+    return new Expand().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Expand {
+    return new Expand().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: Expand | PlainMessage<Expand> | undefined, b: Expand | PlainMessage<Expand> | undefined): boolean {
+    return proto3.util.equals(Expand, a, b);
+  }
+}
+
+/**
+ * This message is sent to the gateway to instruct it to "undo" an Expand. This
+ * means that the expansion will be removed from the session, along with all items
+ * and edges that were a result of that request. If these items have already
+ * been sent to the client, the gateway will send `deleteItem` messages instructing
+ * the client to delete them
+ *
+ * @generated from message UndoExpand
+ */
+export class UndoExpand extends Message<UndoExpand> {
+  /**
+   * UUID of the Expand to cancel
+   *
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<UndoExpand>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime = proto3;
+  static readonly typeName = "UndoExpand";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UndoExpand {
+    return new UndoExpand().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UndoExpand {
+    return new UndoExpand().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UndoExpand {
+    return new UndoExpand().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UndoExpand | PlainMessage<UndoExpand> | undefined, b: UndoExpand | PlainMessage<UndoExpand> | undefined): boolean {
+    return proto3.util.equals(UndoExpand, a, b);
   }
 }
 
@@ -506,96 +898,6 @@ export class Edge extends Message<Edge> {
 }
 
 /**
- * Metadata about the item. Where it came from, how long it took, etc.
- *
- * @generated from message Metadata
- */
-export class Metadata extends Message<Metadata> {
-  /**
-   * This is the name of the source that was used to find the item.
-   *
-   * @generated from field: string sourceName = 2;
-   */
-  sourceName = "";
-
-  /**
-   * The request that caused this item to be found
-   *
-   * @generated from field: ItemRequest sourceRequest = 3;
-   */
-  sourceRequest?: ItemRequest;
-
-  /**
-   * The time that the item was found
-   *
-   * @generated from field: google.protobuf.Timestamp timestamp = 4;
-   */
-  timestamp?: Timestamp;
-
-  /**
-   * How long the source took to execute in total when processing the
-   * ItemRequest
-   *
-   * @generated from field: google.protobuf.Duration sourceDuration = 5;
-   */
-  sourceDuration?: Duration;
-
-  /**
-   * How long the source took to execute per item when processing the
-   * ItemRequest
-   *
-   * @generated from field: google.protobuf.Duration sourceDurationPerItem = 6;
-   */
-  sourceDurationPerItem?: Duration;
-
-  /**
-   * Whether the item should be hidden/ignored by user-facing things such as
-   * GUIs and databases.
-   *
-   * Some types of items are only relevant in calculating higher-layer
-   * abstractions and are therefore always hidden. A good example of this would
-   * be the output of a command. This could be used by a remote source to gather
-   * information, but we don't actually want to show the user all the commands
-   * that were run, just the final item returned by the source
-   *
-   * @generated from field: bool hidden = 7;
-   */
-  hidden = false;
-
-  constructor(data?: PartialMessage<Metadata>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime = proto3;
-  static readonly typeName = "Metadata";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 2, name: "sourceName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "sourceRequest", kind: "message", T: ItemRequest },
-    { no: 4, name: "timestamp", kind: "message", T: Timestamp },
-    { no: 5, name: "sourceDuration", kind: "message", T: Duration },
-    { no: 6, name: "sourceDurationPerItem", kind: "message", T: Duration },
-    { no: 7, name: "hidden", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Metadata {
-    return new Metadata().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Metadata {
-    return new Metadata().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Metadata {
-    return new Metadata().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: Metadata | PlainMessage<Metadata> | undefined, b: Metadata | PlainMessage<Metadata> | undefined): boolean {
-    return proto3.util.equals(Metadata, a, b);
-  }
-}
-
-/**
  * ReverseLinksRequest Is used to find linked item requests for item with
  * *inbound* rather than outbound links. This allows linking in reverse e.g.
  *
@@ -664,9 +966,9 @@ export class ReverseLinksResponse extends Message<ReverseLinksResponse> {
    * The item requests that should be executed in order to find items that link
    * to the requested item
    *
-   * @generated from field: repeated ItemRequest linkedItemRequests = 1;
+   * @generated from field: repeated Query linkedItemQueries = 1;
    */
-  linkedItemRequests: ItemRequest[] = [];
+  linkedItemQueries: Query[] = [];
 
   /**
    * An error, if present. If not this will be an empty string
@@ -683,7 +985,7 @@ export class ReverseLinksResponse extends Message<ReverseLinksResponse> {
   static readonly runtime = proto3;
   static readonly typeName = "ReverseLinksResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "linkedItemRequests", kind: "message", T: ItemRequest, repeated: true },
+    { no: 1, name: "linkedItemQueries", kind: "message", T: Query, repeated: true },
     { no: 2, name: "error", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
