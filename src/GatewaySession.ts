@@ -18,6 +18,8 @@ import {
   Item,
   QueryError,
   Reference,
+  UndoQuery,
+  UndoExpand,
 } from './__generated__/'
 
 interface CustomEventListener<T> {
@@ -275,6 +277,45 @@ export class GatewaySession extends EventTarget {
   sendRequest(request: GatewayRequest) {
     const binary = request.toBinary()
     this.socket.send(binary)
+  }
+
+  /**
+   * Undoes a request at the gateway
+   * @param request The request to undo
+   */
+  undoRequest(request: GatewayRequest) {
+    switch (request.requestType.case) {
+      case 'query':
+        {
+          const undoReq = new GatewayRequest({
+            requestType: {
+              case: 'undoQuery',
+              value: new UndoQuery({
+                UUID: request.requestType.value.UUID,
+              }),
+            },
+          })
+
+          const binary = undoReq.toBinary()
+          this.socket.send(binary)
+        }
+        break
+      case 'expand':
+        {
+          const undoReq = new GatewayRequest({
+            requestType: {
+              case: 'undoExpand',
+              value: new UndoExpand({
+                UUID: request.requestType.value.UUID,
+              }),
+            },
+          })
+
+          const binary = undoReq.toBinary()
+          this.socket.send(binary)
+        }
+        break
+    }
   }
 
   /**
