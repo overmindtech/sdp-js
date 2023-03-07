@@ -11,6 +11,17 @@ export enum DiscoveryField {
   SCOPE = 1,
 }
 
+function toString(field: DiscoveryField): string {
+  switch (field) {
+    case DiscoveryField.TYPE:
+      return 'overmind-type'
+    case DiscoveryField.SCOPE:
+      return 'overmind-scope'
+    default:
+      return ''
+  }
+}
+
 export const NewTypeSuggestionsEvent = 'new-type-suggestions'
 export const NewScopeSuggestionsEvent = 'new-scope-suggestions'
 
@@ -80,6 +91,10 @@ export class SourceDiscovery extends EventTarget {
    */
   discoverScopes() {
     this.discover('overmind-scope')
+  }
+
+  discoverField(field: DiscoveryField) {
+    this.discover(toString(field))
   }
 
   private discover(type: string) {
