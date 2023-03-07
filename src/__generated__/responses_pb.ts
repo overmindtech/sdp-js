@@ -9,7 +9,7 @@ import { Duration, Message, proto3 } from "@bufbuild/protobuf";
 /**
  * ResponderState represents the state of the responder, note that both
  * COMPLETE and ERROR are completion states i.e. do not expect any more items
- * to be returned from the request
+ * to be returned from the query
  *
  * @generated from enum ResponderState
  */
@@ -22,7 +22,7 @@ export enum ResponderState {
   WORKING = 0,
 
   /**
-   * The request is complete
+   * The query is complete
    *
    * @generated from enum value: COMPLETE = 1;
    */
@@ -89,7 +89,7 @@ export class Response extends Message<Response> {
   nextUpdateIn?: Duration;
 
   /**
-   * UUID if the item request that this response is in relation to (in binary
+   * UUID of the item query that this response is in relation to (in binary
    * format)
    *
    * @generated from field: bytes UUID = 4;
