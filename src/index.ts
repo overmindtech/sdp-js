@@ -1,4 +1,4 @@
-export * from './Autocomplete.js'
+export * from './SourceDiscovery.js'
 export * from './GatewaySession.js'
 export * from './RequestProgress.js'
 export * from './Responder.js'
