@@ -17,11 +17,21 @@ type AutocompleteResult = {
   score: number
 }
 
-export enum AutocompleteField {
-  TYPE = 0,
-  CONTEXT = 1,
+/**
+ * Stores the history of prompts and related results
+ */
+type PromptHistory = {
+  [key: string]: AutocompleteResult[]
 }
 
+export enum AutocompleteField {
+  TYPE = 0,
+  SCOPE = 1,
+}
+
+/**
+ * This event is fired when new suggestions are found
+ */
 export const NewSuggestionsEvent = 'new-suggestions'
 
 /**
@@ -32,12 +42,11 @@ export const NewSuggestionsEvent = 'new-suggestions'
  */
 export class Autocomplete extends EventTarget {
   field: AutocompleteField
-  results: AutocompleteResult[] = []
 
   private _prompt = ''
   private session: GatewaySession
   private currentRequestUUID: Uint8Array = new Uint8Array()
-  private resetNextItem = false
+  private history: PromptHistory = {}
 
   /**
    *
@@ -86,6 +95,10 @@ export class Autocomplete extends EventTarget {
   setPrompt(prompt: string) {
     this._prompt = prompt
 
+    if (!this.history[this._prompt]) {
+      this.history[this._prompt] = []
+    }
+
     if (this.currentRequestUUID.length !== 0) {
       // Cancel any running requests
       this.session.sendRequest(
@@ -101,15 +114,12 @@ export class Autocomplete extends EventTarget {
       )
     }
 
-    // Mark the results for deletion next time an item comes through
-    this.resetNextItem = true
-
     const uuid = parse(uuidv4())
 
     let type: string
 
     switch (this.field) {
-      case AutocompleteField.CONTEXT:
+      case AutocompleteField.SCOPE:
         type = 'overmind-scope'
         break
       case AutocompleteField.TYPE:
@@ -139,6 +149,11 @@ export class Autocomplete extends EventTarget {
 
     // Start the request
     this.session.sendRequest(request)
+
+    // If we have any cached results, return them
+    if (this.history[prompt].length > 0) {
+      this.sendUpdate()
+    }
   }
 
   /**
@@ -151,11 +166,6 @@ export class Autocomplete extends EventTarget {
 
     if (typeof itemUUID !== 'undefined') {
       if (uuidStringify(itemUUID) == uuidStringify(this.currentRequestUUID)) {
-        if (this.resetNextItem) {
-          this.results = []
-          this.resetNextItem = false
-        }
-
         let score = 0
 
         if (item.attributes !== undefined) {
@@ -166,21 +176,29 @@ export class Autocomplete extends EventTarget {
         }
 
         // Add the result
-        this.results.push({
+        this.history[this._prompt].push({
           value: getUniqueAttributeValue(item),
           score: score,
         })
 
         // Re-sort
-        this.results.sort((a, b) => a.score - b.score)
+        this.history[this._prompt].sort((a, b) => a.score - b.score)
 
         // Dispatch an event
-        this.dispatchEvent(
-          new CustomEvent<string[]>(NewSuggestionsEvent, {
-            detail: this.results.map((res) => res.value),
-          })
-        )
+        this.sendUpdate()
       }
     }
+  }
+
+  /**
+   * Sends an updated list of suggestions based on the current prompt and
+   * history
+   */
+  private sendUpdate() {
+    this.dispatchEvent(
+      new CustomEvent<string[]>(NewSuggestionsEvent, {
+        detail: this.history[this._prompt].map((res) => res.value),
+      })
+    )
   }
 }

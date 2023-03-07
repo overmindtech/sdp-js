@@ -48,10 +48,6 @@ describe('Autocomplete', () => {
       server.close()
     })
 
-    it('should initially be empty', () => {
-      expect(ac.results.length).toEqual(0)
-    })
-
     describe('#prompt()', () => {
       it('executes a request when the prompt changes', async () => {
         ac.setPrompt('per')
@@ -182,6 +178,83 @@ describe('Autocomplete', () => {
           const numSuggestions = await waitForSuggestions
 
           expect(numSuggestions).toBe(1)
+
+          // Set the prompt to something else
+          ac.setPrompt('do')
+
+          // Wait for the cancel
+          await server.nextMessage
+        
+          // Wait for the request to be started
+          const msgTwo = await server.nextMessage
+
+          expect(msgTwo).not.toBeUndefined()
+          if (msgTwo instanceof Uint8Array) {
+            const reqTwo = GatewayRequest.fromBinary(msgTwo)
+
+            expect(reqTwo.requestType.case).toEqual('query')
+
+            if (reqTwo.requestType.case === 'query') {
+              // Send another response
+              const respTwo: GatewayResponse = new GatewayResponse({
+                responseType: {
+                  case: 'newItem',
+                  value: new Item({
+                    type: 'overmind-type',
+                    uniqueAttribute: 'name',
+                    scope: 'global',
+                    attributes: newItemAttributes({
+                      name: 'dog',
+                    }),
+                    metadata: new Metadata({
+                      sourceName: 'overmind-type-metasource',
+                      timestamp: newTimestamp(new Date()),
+                      sourceQuery: new Query({
+                        scope: 'global',
+                        linkDepth: 0,
+                        method: RequestMethod.GET,
+                        query: 'do',
+                        type: 'overmind-type',
+                        UUID: reqTwo.requestType.value.UUID,
+                      }),
+                    }),
+                  }),
+                },
+              })
+
+              const newSuggestions = new Promise<string[]>((resolve) => {
+                ac.addEventListener('new-suggestions', (event) => {
+                  resolve(event.detail)
+                })
+              })
+
+              const respBinTwo = respTwo.toBinary()
+
+              server.send(respBinTwo.buffer)
+    
+              const newS = await newSuggestions
+
+              expect(newS).toEqual(['dog'])
+
+              // At this point if we set the query back, the gateway won't give
+              // us any new items because we already have them. This is where
+              // the history comes in, it should look up the previous set of
+              // suggestions and add them
+              const finalSuggestions = new Promise<string[]>((resolve) => {
+                ac.addEventListener('new-suggestions', (event) => {
+                  resolve(event.detail)
+                })
+              })
+
+              ac.setPrompt('per')
+
+              expect(await finalSuggestions).toEqual(['person'])
+            }
+            
+          } else {
+            expect('message was not uint8').toBe(false)
+          }
+          
         } else {
           // Is there a better way to fail here?
           expect(false).toBeTruthy()
