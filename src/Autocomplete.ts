@@ -1,4 +1,4 @@
-import { GatewaySession } from './GatewaySession'
+import { CustomEventListenerOrEventListenerObject, GatewaySession } from './GatewaySession'
 import { parse, stringify as uuidStringify, v4 as uuidv4 } from 'uuid'
 import {
   CancelQuery,
@@ -22,25 +22,30 @@ export enum AutocompleteField {
   CONTEXT = 1,
 }
 
+export const NewSuggestionsEvent = 'new-suggestions'
+
 /**
  * I'm not really sure what the API should look like for autocomplete, as in how
  * the data should come in and out. I'm going to take a stab but once we know
  * how it'll be consumed by the front end we should change it to be more
  * appropriate
  */
-export class Autocomplete {
+export class Autocomplete extends EventTarget {
   field: AutocompleteField
   results: AutocompleteResult[] = []
 
   private _prompt = ''
   private session: GatewaySession
   private currentRequestUUID: Uint8Array = new Uint8Array()
+  private resetNextItem = false
 
   /**
    *
    * @param session The gateway session that requests should be sent on
    */
   constructor(session: GatewaySession, field: AutocompleteField) {
+    super()
+  
     if (session.state() !== WebSocket.OPEN) {
       // We are failing here because I can't find a good spot in this API
       // to put an async method. If we review this later we might want to
@@ -58,24 +63,27 @@ export class Autocomplete {
     )
   }
 
-  /**
-   * The suggested type values for the provided typePrompt
-   */
-  get suggestions(): string[] {
-    return this.results.map((result) => result.value)
+  addEventListener(
+    type: typeof NewSuggestionsEvent,
+    callback: CustomEventListenerOrEventListenerObject<string[]> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void {
+    super.addEventListener(type, callback, options)
   }
 
-  /**
-   * The prompt to search for
-   */
-  get prompt(): string {
-    return this._prompt
+  removeEventListener(
+    type: typeof NewSuggestionsEvent,
+    callback: CustomEventListenerOrEventListenerObject<string[]> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void {
+    super.removeEventListener(type, callback, options)
   }
 
+
   /**
-   * The prompt to search for
+   * Searches for results for a given prompt
    */
-  set prompt(prompt: string) {
+  setPrompt(prompt: string) {
     this._prompt = prompt
 
     if (this.currentRequestUUID.length !== 0) {
@@ -93,8 +101,8 @@ export class Autocomplete {
       )
     }
 
-    // Delete current autocomplete options
-    this.results = []
+    // Mark the results for deletion next time an item comes through
+    this.resetNextItem = true
 
     const uuid = parse(uuidv4())
 
@@ -143,6 +151,11 @@ export class Autocomplete {
 
     if (typeof itemUUID !== 'undefined') {
       if (uuidStringify(itemUUID) == uuidStringify(this.currentRequestUUID)) {
+        if (this.resetNextItem) {
+          this.results = []
+          this.resetNextItem = false
+        }
+
         let score = 0
 
         if (item.attributes !== undefined) {
@@ -160,6 +173,13 @@ export class Autocomplete {
 
         // Re-sort
         this.results.sort((a, b) => a.score - b.score)
+
+        // Dispatch an event
+        this.dispatchEvent(
+          new CustomEvent<string[]>(NewSuggestionsEvent, {
+            detail: this.results.map((res) => res.value),
+          })
+        )
       }
     }
   }

@@ -22,13 +22,13 @@ import {
   UndoExpand,
 } from './__generated__/'
 
-interface CustomEventListener<T> {
+export interface CustomEventListener<T> {
   (evt: CustomEvent<T>): void
 }
-interface CustomEventListenerObject<T> {
+export interface CustomEventListenerObject<T> {
   handleEvent(object: CustomEvent<T>): void
 }
-type CustomEventListenerOrEventListenerObject<T> =
+export type CustomEventListenerOrEventListenerObject<T> =
   | CustomEventListener<T>
   | CustomEventListenerObject<T>
 

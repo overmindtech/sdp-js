@@ -50,19 +50,17 @@ describe('Autocomplete', () => {
 
     it('should initially be empty', () => {
       expect(ac.results.length).toEqual(0)
-      expect(ac.prompt).toEqual('')
-      expect(ac.suggestions.length).toEqual(0)
     })
 
     describe('#prompt()', () => {
       it('executes a request when the prompt changes', async () => {
-        ac.prompt = 'per'
+        ac.setPrompt('per')
 
         expect(async () => await server.nextMessage).not.toThrowError()
       })
 
       it('handles prompt changes', async () => {
-        ac.prompt = 'per'
+        ac.setPrompt('per')
 
         // Send just the new request
         let msg = await server.nextMessage
@@ -74,14 +72,14 @@ describe('Autocomplete', () => {
           expect(req.requestType.case).toBe('query')
           if (req.requestType.case == 'query') {
             expect(req.requestType.value.type).toEqual('overmind-type')
-            expect(req.requestType.value.query).toEqual(ac.prompt)
+            expect(req.requestType.value.query).toEqual('per')
             expect(req.requestType.value.scope).toEqual('global')
           }
         } else {
           // Is there a better way to fail here?
           expect(false).toBeTruthy()
         }
-        ac.prompt = 'pers'
+        ac.setPrompt('pers')
 
         // The cancellation
         msg = await server.nextMessage
@@ -108,7 +106,7 @@ describe('Autocomplete', () => {
           expect(req.requestType.case).toBe('query')
           if (req.requestType.case == 'query') {
             expect(req.requestType.value.type).toEqual('overmind-type')
-            expect(req.requestType.value.query).toEqual(ac.prompt)
+            expect(req.requestType.value.query).toEqual('pers')
             expect(req.requestType.value.scope).toEqual('global')
           }
         } else {
@@ -120,7 +118,13 @@ describe('Autocomplete', () => {
 
     describe('#prompt()', () => {
       it('should populate suggestions', async () => {
-        ac.prompt = 'per'
+        ac.setPrompt('per')
+
+        const waitForSuggestions = new Promise<number>((resolve) => {
+          ac.addEventListener('new-suggestions', (event) => {
+            resolve(event.detail.length)
+          })
+        })
 
         // Send just the new request
         const msg = await server.nextMessage
@@ -134,7 +138,7 @@ describe('Autocomplete', () => {
           expect(req.requestType.case).toBe('query')
           if (req.requestType.case == 'query') {
             expect(req.requestType.value.type).toEqual('overmind-type')
-            expect(req.requestType.value.query).toEqual(ac.prompt)
+            expect(req.requestType.value.query).toEqual('per')
             expect(req.requestType.value.scope).toEqual('global')
             u = req.requestType.value.UUID
           }
@@ -162,7 +166,7 @@ describe('Autocomplete', () => {
                     scope: 'global',
                     linkDepth: 0,
                     method: RequestMethod.GET,
-                    query: ac.prompt,
+                    query: 'per',
                     type: 'overmind-type',
                     UUID: u,
                   }),
@@ -175,10 +179,9 @@ describe('Autocomplete', () => {
 
           server.send(respBin.buffer)
 
-          // Wait 200ms
-          await new Promise((r) => setTimeout(r, 100))
+          const numSuggestions = await waitForSuggestions
 
-          expect(ac.suggestions.length).toBe(1)
+          expect(numSuggestions).toBe(1)
         } else {
           // Is there a better way to fail here?
           expect(false).toBeTruthy()
