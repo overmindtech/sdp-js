@@ -1,13 +1,15 @@
-import { CustomEventListenerOrEventListenerObject, GatewaySession } from './GatewaySession'
-import { GatewayRequest, Item, Query, RequestMethod } from "./__generated__";
+import {
+  CustomEventListenerOrEventListenerObject,
+  GatewaySession,
+} from './GatewaySession'
+import { GatewayRequest, Item, Query, RequestMethod } from './__generated__'
 import { v4, parse } from 'uuid'
-import { getUniqueAttributeValue, newDuration } from "./Util";
+import { getUniqueAttributeValue, newDuration } from './Util'
 
 export enum DiscoveryField {
   TYPE = 0,
   SCOPE = 1,
 }
-
 
 export const NewTypeSuggestionsEvent = 'new-type-suggestions'
 export const NewScopeSuggestionsEvent = 'new-scope-suggestions'
@@ -60,7 +62,7 @@ export class SourceDiscovery extends EventTarget {
     type: string,
     callback: EventListenerOrEventListenerObject | null,
     options?: boolean | EventListenerOptions | undefined
-  ): void  {
+  ): void {
     super.removeEventListener(type, callback, options)
   }
 
@@ -90,43 +92,46 @@ export class SourceDiscovery extends EventTarget {
           timeout: newDuration(5000),
           UUID: parse(v4()),
           type: type,
-        })
-      }
+        }),
+      },
     })
 
     this.session.sendRequest(request)
   }
-
 
   /**
    * Processes incoming items and extracts autocomplete responses
    *
    * @param item The item to process
    */
-    processItem(item: Item): void {
-      switch (item.type) {
-        case 'overmind-scope':
-          // Add the suggestion to the list
-          this.scopes.push(getUniqueAttributeValue(item))
-          this.scopes.sort()
+  processItem(item: Item): void {
+    switch (item.type) {
+      case 'overmind-scope':
+        // Add the suggestion to the list
+        this.scopes.push(getUniqueAttributeValue(item))
+        this.scopes.sort()
 
-          // Dispatch an event
-          this.dispatchEvent(new CustomEvent<string[]>(NewScopeSuggestionsEvent, {
-            detail: this.scopes
-          }))
-          break;
-        case 'overmind-type':
-          // Add the suggestion to the list
-          this.types.push(getUniqueAttributeValue(item))
-          this.types.sort()
+        // Dispatch an event
+        this.dispatchEvent(
+          new CustomEvent<string[]>(NewScopeSuggestionsEvent, {
+            detail: this.scopes,
+          })
+        )
+        break
+      case 'overmind-type':
+        // Add the suggestion to the list
+        this.types.push(getUniqueAttributeValue(item))
+        this.types.sort()
 
-          // Dispatch an event
-          this.dispatchEvent(new CustomEvent<string[]>(NewTypeSuggestionsEvent, {
-            detail: this.types
-          }))
-          break;
-        default:
-          break;
-      }
+        // Dispatch an event
+        this.dispatchEvent(
+          new CustomEvent<string[]>(NewTypeSuggestionsEvent, {
+            detail: this.types,
+          })
+        )
+        break
+      default:
+        break
     }
+  }
 }

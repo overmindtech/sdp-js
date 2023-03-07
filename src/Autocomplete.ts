@@ -1,4 +1,7 @@
-import { CustomEventListenerOrEventListenerObject, GatewaySession } from './GatewaySession'
+import {
+  CustomEventListenerOrEventListenerObject,
+  GatewaySession,
+} from './GatewaySession'
 import { parse, stringify as uuidStringify, v4 as uuidv4 } from 'uuid'
 import {
   CancelQuery,
@@ -54,7 +57,7 @@ export class Autocomplete extends EventTarget {
    */
   constructor(session: GatewaySession, field: AutocompleteField) {
     super()
-  
+
     if (session.state() !== WebSocket.OPEN) {
       // We are failing here because I can't find a good spot in this API
       // to put an async method. If we review this later we might want to
@@ -87,7 +90,6 @@ export class Autocomplete extends EventTarget {
   ): void {
     super.removeEventListener(type, callback, options)
   }
-
 
   /**
    * Searches for results for a given prompt

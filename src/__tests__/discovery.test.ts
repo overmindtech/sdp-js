@@ -21,7 +21,7 @@ import {
   RequestMethod,
 } from '../__generated__/'
 import { newItemAttributes, newTimestamp } from '../Util'
-import { SourceDiscovery } from '../SourceDiscovery';
+import { SourceDiscovery } from '../SourceDiscovery'
 
 const TestServerAddress = 'ws://localhost:31035'
 
@@ -53,18 +53,18 @@ describe('SourceDiscovery', () => {
 
         // Send just the new request
         const msg = await server.nextMessage
-  
+
         expect(msg).not.toBeUndefined()
         expect(msg).toBeInstanceOf(Uint8Array)
         if (msg instanceof Uint8Array) {
           const req = GatewayRequest.fromBinary(msg)
-  
+
           expect(req.requestType.case).toBe('query')
           if (req.requestType.case === 'query') {
             expect(req.requestType.value.type).toEqual('overmind-type')
             expect(req.requestType.value.scope).toEqual('global')
             expect(req.requestType.value.method).toEqual(RequestMethod.LIST)
-  
+
             // Send a response
             const resp: GatewayResponse = new GatewayResponse({
               responseType: {
@@ -91,20 +91,20 @@ describe('SourceDiscovery', () => {
                 }),
               },
             })
-  
+
             const respBin = resp.toBinary()
-  
+
             // Create a promise to wait for the new suggestions
             const newSuggestions = new Promise((resolve) => {
               disco.addEventListener('new-type-suggestions', (event) => {
                 resolve(event.detail)
               })
             })
-  
+
             server.send(respBin.buffer)
-  
+
             const suggestions = await newSuggestions
-  
+
             expect(suggestions).toEqual(['person'])
           }
         }
@@ -117,18 +117,18 @@ describe('SourceDiscovery', () => {
 
         // Send just the new request
         const msg = await server.nextMessage
-  
+
         expect(msg).not.toBeUndefined()
         expect(msg).toBeInstanceOf(Uint8Array)
         if (msg instanceof Uint8Array) {
           const req = GatewayRequest.fromBinary(msg)
-  
+
           expect(req.requestType.case).toBe('query')
           if (req.requestType.case === 'query') {
             expect(req.requestType.value.type).toEqual('overmind-scope')
             expect(req.requestType.value.scope).toEqual('global')
             expect(req.requestType.value.method).toEqual(RequestMethod.LIST)
-  
+
             // Send a response
             const resp: GatewayResponse = new GatewayResponse({
               responseType: {
@@ -155,20 +155,20 @@ describe('SourceDiscovery', () => {
                 }),
               },
             })
-  
+
             const respBin = resp.toBinary()
-  
+
             // Create a promise to wait for the new suggestions
             const newSuggestions = new Promise((resolve) => {
               disco.addEventListener('new-scope-suggestions', (event) => {
                 resolve(event.detail)
               })
             })
-  
+
             server.send(respBin.buffer)
-  
+
             const suggestions = await newSuggestions
-  
+
             expect(suggestions).toEqual(['person'])
           }
         }
