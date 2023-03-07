@@ -36,7 +36,7 @@ export class GatewayRequest extends Message<GatewayRequest> {
     case: "cancelQuery";
   } | {
     /**
-     * Undo the specified query, if it was the last request received by the gateway. This removes it and all of its effects from the session
+     * Undo the specified query, if it was the last query received by the gateway. This removes it and all of its effects from the session
      *
      * @generated from field: UndoQuery undoQuery = 4;
      */

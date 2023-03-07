@@ -2,7 +2,7 @@ import {
   CustomEventListenerOrEventListenerObject,
   GatewaySession,
 } from './GatewaySession'
-import { GatewayRequest, Item, Query, RequestMethod } from './__generated__'
+import { GatewayRequest, Item, Query, QueryMethod } from './__generated__'
 import { v4, parse } from 'uuid'
 import { getUniqueAttributeValue, newDuration } from './Util'
 
@@ -88,7 +88,7 @@ export class SourceDiscovery extends EventTarget {
         case: 'query',
         value: new Query({
           scope: 'global',
-          method: RequestMethod.LIST,
+          method: QueryMethod.LIST,
           timeout: newDuration(5000),
           UUID: parse(v4()),
           type: type,

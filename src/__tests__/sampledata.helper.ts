@@ -7,7 +7,7 @@ import {
   Query,
   QueryError,
   Reference,
-  RequestMethod,
+  QueryMethod,
   ResponderState,
   Expand,
   UndoQuery,
@@ -63,7 +63,7 @@ export const response = {
 export const request = {
   LIST: new Query({
     type: 'package',
-    method: RequestMethod.LIST,
+    method: QueryMethod.LIST,
     linkDepth: 90,
     scope: 'test.scope',
     itemSubject: 'itemSubject',
@@ -140,7 +140,7 @@ export const gatewayRequest = {
       value: new Query({
         scope: 'test',
         linkDepth: 10,
-        method: RequestMethod.GET,
+        method: QueryMethod.GET,
         query: 'Dylan',
         itemSubject: 'return.item.foo',
         responseSubject: 'return.response.foo',

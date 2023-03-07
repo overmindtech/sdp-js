@@ -7,7 +7,7 @@ import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialM
 import { Duration, Message, proto3, Struct, Timestamp } from "@bufbuild/protobuf";
 
 /**
- * RequestMethod represents the available request methods. The details of these
+ * QueryMethod represents the available query methods. The details of these
  * methods are:
  *
  * GET: This takes a single unique query and should only return a single item.
@@ -21,9 +21,9 @@ import { Duration, Message, proto3, Struct, Timestamp } from "@bufbuild/protobuf
  *         search term. It should return some number of items (or zero) which
  *         match the query
  *
- * @generated from enum RequestMethod
+ * @generated from enum QueryMethod
  */
-export enum RequestMethod {
+export enum QueryMethod {
   /**
    * @generated from enum value: GET = 0;
    */
@@ -39,8 +39,8 @@ export enum RequestMethod {
    */
   SEARCH = 2,
 }
-// Retrieve enum metadata with: proto3.getEnumType(RequestMethod)
-proto3.util.setEnumType(RequestMethod, "RequestMethod", [
+// Retrieve enum metadata with: proto3.getEnumType(QueryMethod)
+proto3.util.setEnumType(QueryMethod, "QueryMethod", [
   { no: 0, name: "GET" },
   { no: 1, name: "LIST" },
   { no: 2, name: "SEARCH" },
@@ -314,7 +314,7 @@ export class Items extends Message<Items> {
 }
 
 /**
- * Query represents a request for an item or a list of items.
+ * Query represents a query for an item or a list of items.
  *
  * @generated from message Query
  */
@@ -329,9 +329,9 @@ export class Query extends Message<Query> {
   /**
    * Which method to use when looking for it
    *
-   * @generated from field: RequestMethod method = 2;
+   * @generated from field: QueryMethod method = 2;
    */
-  method = RequestMethod.GET;
+  method = QueryMethod.GET;
 
   /**
    * What query should be passed to that method
@@ -359,22 +359,22 @@ export class Query extends Message<Query> {
   scope = "";
 
   /**
-   * Whether to ignore the cache and execute the request regardless.
+   * Whether to ignore the cache and execute the query regardless.
    *
    * By default sources will implement some level of caching, this is
-   * particularly important for linked items as a single request with a large
-   * link depth may result in the same item being requested many times as links
-   * are resolved and more and more items link to each other. However if
-   * required this caching can be turned off using this parameter
+   * particularly important for linked items as a single query with a large link
+   * depth may result in the same item being queried many times as links are
+   * resolved and more and more items link to each other. However if required
+   * this caching can be turned off using this parameter
    *
    * @generated from field: bool ignoreCache = 6;
    */
   ignoreCache = false;
 
   /**
-   * A UUID to uniquely identify the request. This should be stored by the
+   * A UUID to uniquely identify the query. This should be stored by the
    * requester as it will be needed later if the requester wants to cancel a
-   * request. It should be stored as 128 bytes, as opposed to the textual
+   * query. It should be stored as 128 bytes, as opposed to the textual
    * representation
    *
    * @generated from field: bytes UUID = 7;
@@ -382,19 +382,19 @@ export class Query extends Message<Query> {
   UUID = new Uint8Array(0);
 
   /**
-   * The timeout for this request. This will affect both the initial request,
-   * and also any linked item requests that are executed as part of it. This
-   * means that if a request has a timeout of 10s, and takes 2s to complete, the
-   * linked item requests should have a remaining timeout of 8s meaning that the
-   * entire request including all linking needs to be done in 10s, not 10s for
-   * *each* request
+   * The timeout for this query. This will affect both the initial query, and
+   * also any linked item queries that are executed as part of it. This means
+   * that if a query has a timeout of 10s, and takes 2s to complete, the linked
+   * item queries should have a remaining timeout of 8s meaning that the entire
+   * query including all linking needs to be done in 10s, not 10s for *each*
+   * query
    *
    * @generated from field: google.protobuf.Duration timeout = 8;
    */
   timeout?: Duration;
 
   /**
-   * Subject that items resulting from the request should be sent to
+   * Subject that items resulting from the query should be sent to
    *
    * @generated from field: string itemSubject = 16;
    */
@@ -423,7 +423,7 @@ export class Query extends Message<Query> {
   static readonly typeName = "Query";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "method", kind: "enum", T: proto3.getEnumType(RequestMethod) },
+    { no: 2, name: "method", kind: "enum", T: proto3.getEnumType(QueryMethod) },
     { no: 3, name: "query", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "linkDepth", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
     { no: 5, name: "scope", kind: "scalar", T: 9 /* ScalarType.STRING */ },
@@ -453,13 +453,13 @@ export class Query extends Message<Query> {
 }
 
 /**
- * QueryError is sent back when an item request fails
+ * QueryError is sent back when an item query fails
  *
  * @generated from message QueryError
  */
 export class QueryError extends Message<QueryError> {
   /**
-   * UUID if the item request that this response is in relation to (in binary
+   * UUID if the item query that this response is in relation to (in binary
    * format)
    *
    * @generated from field: bytes UUID = 1;
@@ -558,7 +558,7 @@ export enum QueryError_ErrorType {
 
   /**
    * NOTFOUND means that the item was not found. This is only returned as the
-   * result of a GET request since all other requests would return an empty
+   * result of a GET query since all other queries would return an empty
    * list instead
    *
    * @generated from enum value: NOTFOUND = 1;
@@ -577,7 +577,7 @@ export enum QueryError_ErrorType {
 
   /**
    * TIMEOUT means that the source times out when trying to query the item.
-   * The timeout is provided in the original request
+   * The timeout is provided in the original query
    *
    * @generated from enum value: TIMEOUT = 3;
    */
@@ -594,7 +594,7 @@ proto3.util.setEnumType(QueryError_ErrorType, "QueryError.ErrorType", [
 /**
  * The message signals that the Query with the corresponding UUID should
  * be cancelled. Work should stop immediately, and a final response should be
- * sent with a state of CANCELLED to acknowledge that the request has ended due
+ * sent with a state of CANCELLED to acknowledge that the query has ended due
  * to a cancellation
  *
  * @generated from message CancelQuery
@@ -638,7 +638,7 @@ export class CancelQuery extends Message<CancelQuery> {
 /**
  * This message is sent to the gateway to instruct it to "undo" a query. This
  * means that the query will be removed from the session, along with all items
- * and edges that were a result of that request. If these items have already
+ * and edges that were a result of that query. If these items have already
  * been sent to the client, the gateway will send `deleteItem` messages instructing
  * the client to delete them
  *
@@ -682,12 +682,12 @@ export class UndoQuery extends Message<UndoQuery> {
 
 /**
  * This requests that the gateway "expands" an item. This involves executing all
- * linked item requests within the session and sending the results to the
+ * linked item queries within the session and sending the results to the
  * client. It is recommended that this be used rather than simply sending each
  * linked item request. Using this request type allows the Gateway to save the
  * session more intelligently so that it can be bookmarked and used later.
  * "Expanding" an item will mean an item always acts the same, even if its
- * linked item requests have changed
+ * linked item queries have changed
  *
  * @generated from message Expand
  */
@@ -898,7 +898,7 @@ export class Edge extends Message<Edge> {
 }
 
 /**
- * ReverseLinksRequest Is used to find linked item requests for item with
+ * ReverseLinksRequest Is used to find linked item queries for item with
  * *inbound* rather than outbound links. This allows linking in reverse e.g.
  *
  *   ip -> load balancer
@@ -956,14 +956,14 @@ export class ReverseLinksRequest extends Message<ReverseLinksRequest> {
 }
 
 /**
- * ReverseLinks Represents linked item requests that can be run and will result
+ * ReverseLinks Represents linked item queries that can be run and will result
  * in objects with *inbound* links to a given item
  *
  * @generated from message ReverseLinksResponse
  */
 export class ReverseLinksResponse extends Message<ReverseLinksResponse> {
   /**
-   * The item requests that should be executed in order to find items that link
+   * The item queries that should be executed in order to find items that link
    * to the requested item
    *
    * @generated from field: repeated Query linkedItemQueries = 1;

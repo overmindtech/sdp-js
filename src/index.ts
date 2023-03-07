@@ -15,7 +15,7 @@ export {
   QueryError,
   Metadata,
   Reference,
-  RequestMethod,
+  QueryMethod,
   ResponderState,
   Response,
 } from './__generated__/index.js'

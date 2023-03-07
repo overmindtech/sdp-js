@@ -18,7 +18,7 @@ import {
   Item,
   Query,
   Metadata,
-  RequestMethod,
+  QueryMethod,
 } from '../__generated__/'
 import { newItemAttributes, newTimestamp } from '../Util'
 import { SourceDiscovery } from '../SourceDiscovery'
@@ -63,7 +63,7 @@ describe('SourceDiscovery', () => {
           if (req.requestType.case === 'query') {
             expect(req.requestType.value.type).toEqual('overmind-type')
             expect(req.requestType.value.scope).toEqual('global')
-            expect(req.requestType.value.method).toEqual(RequestMethod.LIST)
+            expect(req.requestType.value.method).toEqual(QueryMethod.LIST)
 
             // Send a response
             const resp: GatewayResponse = new GatewayResponse({
@@ -82,7 +82,7 @@ describe('SourceDiscovery', () => {
                     sourceQuery: new Query({
                       scope: 'global',
                       linkDepth: 0,
-                      method: RequestMethod.GET,
+                      method: QueryMethod.GET,
                       query: 'per',
                       type: 'overmind-type',
                       UUID: req.requestType.value,
@@ -127,7 +127,7 @@ describe('SourceDiscovery', () => {
           if (req.requestType.case === 'query') {
             expect(req.requestType.value.type).toEqual('overmind-scope')
             expect(req.requestType.value.scope).toEqual('global')
-            expect(req.requestType.value.method).toEqual(RequestMethod.LIST)
+            expect(req.requestType.value.method).toEqual(QueryMethod.LIST)
 
             // Send a response
             const resp: GatewayResponse = new GatewayResponse({
@@ -146,7 +146,7 @@ describe('SourceDiscovery', () => {
                     sourceQuery: new Query({
                       scope: 'global',
                       linkDepth: 0,
-                      method: RequestMethod.GET,
+                      method: QueryMethod.GET,
                       query: 'per',
                       type: 'overmind-type',
                       UUID: req.requestType.value,
