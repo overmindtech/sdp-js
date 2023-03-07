@@ -22,8 +22,8 @@ function toString(field: DiscoveryField): string {
   }
 }
 
-export const NewTypeSuggestionsEvent = 'new-type-suggestions'
-export const NewScopeSuggestionsEvent = 'new-scope-suggestions'
+export const NewTypeEvent = 'new-type'
+export const NewScopeEvent = 'new-scope'
 
 export class SourceDiscovery extends EventTarget {
   private session: GatewaySession
@@ -42,12 +42,12 @@ export class SourceDiscovery extends EventTarget {
   }
 
   addEventListener(
-    type: typeof NewTypeSuggestionsEvent,
+    type: typeof NewTypeEvent,
     callback: CustomEventListenerOrEventListenerObject<string[]> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   addEventListener(
-    type: typeof NewScopeSuggestionsEvent,
+    type: typeof NewScopeEvent,
     callback: CustomEventListenerOrEventListenerObject<string[]> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
@@ -60,12 +60,12 @@ export class SourceDiscovery extends EventTarget {
   }
 
   removeEventListener(
-    type: typeof NewTypeSuggestionsEvent,
+    type: typeof NewTypeEvent,
     callback: CustomEventListenerOrEventListenerObject<string[]> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   removeEventListener(
-    type: typeof NewScopeSuggestionsEvent,
+    type: typeof NewScopeEvent,
     callback: CustomEventListenerOrEventListenerObject<string[]> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
@@ -79,7 +79,7 @@ export class SourceDiscovery extends EventTarget {
 
   /**
    * Starts discovering available types. Results will be dispatched as a
-   * NewTypeSuggestionsEvent
+   * NewTypeEvent
    */
   discoverTypes() {
     this.discover('overmind-type')
@@ -87,7 +87,7 @@ export class SourceDiscovery extends EventTarget {
 
   /**
    * Starts discovering available scopes. Results will be dispatched as a
-   * NewTypeSuggestionsEvent
+   * NewTypeEvent
    */
   discoverScopes() {
     this.discover('overmind-scope')
@@ -128,7 +128,7 @@ export class SourceDiscovery extends EventTarget {
 
         // Dispatch an event
         this.dispatchEvent(
-          new CustomEvent<string[]>(NewScopeSuggestionsEvent, {
+          new CustomEvent<string[]>(NewScopeEvent, {
             detail: this.scopes,
           })
         )
@@ -140,7 +140,7 @@ export class SourceDiscovery extends EventTarget {
 
         // Dispatch an event
         this.dispatchEvent(
-          new CustomEvent<string[]>(NewTypeSuggestionsEvent, {
+          new CustomEvent<string[]>(NewTypeEvent, {
             detail: this.types,
           })
         )

@@ -96,7 +96,7 @@ describe('SourceDiscovery', () => {
 
             // Create a promise to wait for the new suggestions
             const newSuggestions = new Promise((resolve) => {
-              disco.addEventListener('new-type-suggestions', (event) => {
+              disco.addEventListener('new-type', (event) => {
                 resolve(event.detail)
               })
             })
@@ -160,7 +160,7 @@ describe('SourceDiscovery', () => {
 
             // Create a promise to wait for the new suggestions
             const newSuggestions = new Promise((resolve) => {
-              disco.addEventListener('new-scope-suggestions', (event) => {
+              disco.addEventListener('new-scope', (event) => {
                 resolve(event.detail)
               })
             })
