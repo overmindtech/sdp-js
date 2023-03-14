@@ -236,7 +236,8 @@ export class Metadata extends Message<Metadata> {
   /**
    * The UUID of the QUERY that caused this item to be found
    *
-   * @generated from field: bytes sourceQueryUUID = 8;
+   * @generated from field: bytes sourceQueryUUID = 8 [deprecated = true];
+   * @deprecated
    */
   sourceQueryUUID = new Uint8Array(0);
 
