@@ -7,6 +7,7 @@ import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialM
 import { Duration, Message, proto3 } from "@bufbuild/protobuf";
 import { CancelQuery, Edge, Expand, Item, Query, QueryError, Reference, UndoExpand, UndoQuery } from "./items_pb.ts";
 import { DeleteSnapshot, ListSnapshots, LoadSnapshot, SnapshotDeleteResult, SnapshotListResult, SnapshotLoadResult, SnapshotStoreResult, StoreSnapshot } from "./snapshots_pb.ts";
+import { BookmarkDeleteResult, BookmarkListResult, BookmarkLoadResult, BookmarkStoreResult, DeleteBookmark, ListBookmarks, LoadBookmark, StoreBookmark } from "./bookmarks_pb.ts";
 import { ResponderState } from "./responses_pb.ts";
 
 /**
@@ -98,6 +99,44 @@ export class GatewayRequest extends Message<GatewayRequest> {
      */
     value: DeleteSnapshot;
     case: "deleteSnapshot";
+  } | {
+    /**
+     * return the list of bookmarks for this account
+     *
+     * @generated from field: ListBookmarks listBookmarks = 13;
+     */
+    value: ListBookmarks;
+    case: "listBookmarks";
+  } | {
+    /**
+     * store the current set of queries as bookmarks
+     *
+     * @generated from field: StoreBookmark storeBookmark = 14;
+     */
+    value: StoreBookmark;
+    case: "storeBookmark";
+  } | {
+    /**
+     * load and execute a bookmark into the current state
+     *
+     * @generated from field: LoadBookmark loadBookmark = 15;
+     */
+    value: LoadBookmark;
+    case: "loadBookmark";
+  } | {
+    /**
+     * delete a bookmark from the underlying storage
+     *
+     * TODO: implement?
+     * // cancel the loading of a Bookmark
+     * CancelLoadBookmark cancelLoadBookmark = ??;
+     * // undo the loading of a Bookmark
+     * UndoLoadBookmark undoLoadBookmark = ??;
+     *
+     * @generated from field: DeleteBookmark deleteBookmark = 16;
+     */
+    value: DeleteBookmark;
+    case: "deleteBookmark";
   } | { case: undefined; value?: undefined } = { case: undefined };
 
   /**
@@ -124,6 +163,10 @@ export class GatewayRequest extends Message<GatewayRequest> {
     { no: 10, name: "storeSnapshot", kind: "message", T: StoreSnapshot, oneof: "request_type" },
     { no: 11, name: "loadSnapshot", kind: "message", T: LoadSnapshot, oneof: "request_type" },
     { no: 12, name: "deleteSnapshot", kind: "message", T: DeleteSnapshot, oneof: "request_type" },
+    { no: 13, name: "listBookmarks", kind: "message", T: ListBookmarks, oneof: "request_type" },
+    { no: 14, name: "storeBookmark", kind: "message", T: StoreBookmark, oneof: "request_type" },
+    { no: 15, name: "loadBookmark", kind: "message", T: LoadBookmark, oneof: "request_type" },
+    { no: 16, name: "deleteBookmark", kind: "message", T: DeleteBookmark, oneof: "request_type" },
     { no: 2, name: "minStatusInterval", kind: "message", T: Duration, opt: true },
   ]);
 
@@ -227,10 +270,10 @@ export class GatewayResponse extends Message<GatewayResponse> {
     case: "snapshotListResult";
   } | {
     /**
-     * @generated from field: SnapshotStoreResult snapshotStoredResult = 11;
+     * @generated from field: SnapshotStoreResult snapshotStoreResult = 11;
      */
     value: SnapshotStoreResult;
-    case: "snapshotStoredResult";
+    case: "snapshotStoreResult";
   } | {
     /**
      * @generated from field: SnapshotLoadResult snapshotLoadResult = 12;
@@ -243,6 +286,30 @@ export class GatewayResponse extends Message<GatewayResponse> {
      */
     value: SnapshotDeleteResult;
     case: "snapshotDeleteResult";
+  } | {
+    /**
+     * @generated from field: BookmarkListResult bookmarkListResult = 14;
+     */
+    value: BookmarkListResult;
+    case: "bookmarkListResult";
+  } | {
+    /**
+     * @generated from field: BookmarkStoreResult bookmarkStoreResult = 15;
+     */
+    value: BookmarkStoreResult;
+    case: "bookmarkStoreResult";
+  } | {
+    /**
+     * @generated from field: BookmarkLoadResult bookmarkLoadResult = 16;
+     */
+    value: BookmarkLoadResult;
+    case: "bookmarkLoadResult";
+  } | {
+    /**
+     * @generated from field: BookmarkDeleteResult bookmarkDeleteResult = 17;
+     */
+    value: BookmarkDeleteResult;
+    case: "bookmarkDeleteResult";
   } | { case: undefined; value?: undefined } = { case: undefined };
 
   constructor(data?: PartialMessage<GatewayResponse>) {
@@ -262,9 +329,13 @@ export class GatewayResponse extends Message<GatewayResponse> {
     { no: 8, name: "deleteEdge", kind: "message", T: Edge, oneof: "response_type" },
     { no: 9, name: "updateItem", kind: "message", T: Item, oneof: "response_type" },
     { no: 10, name: "snapshotListResult", kind: "message", T: SnapshotListResult, oneof: "response_type" },
-    { no: 11, name: "snapshotStoredResult", kind: "message", T: SnapshotStoreResult, oneof: "response_type" },
+    { no: 11, name: "snapshotStoreResult", kind: "message", T: SnapshotStoreResult, oneof: "response_type" },
     { no: 12, name: "snapshotLoadResult", kind: "message", T: SnapshotLoadResult, oneof: "response_type" },
     { no: 13, name: "snapshotDeleteResult", kind: "message", T: SnapshotDeleteResult, oneof: "response_type" },
+    { no: 14, name: "bookmarkListResult", kind: "message", T: BookmarkListResult, oneof: "response_type" },
+    { no: 15, name: "bookmarkStoreResult", kind: "message", T: BookmarkStoreResult, oneof: "response_type" },
+    { no: 16, name: "bookmarkLoadResult", kind: "message", T: BookmarkLoadResult, oneof: "response_type" },
+    { no: 17, name: "bookmarkDeleteResult", kind: "message", T: BookmarkDeleteResult, oneof: "response_type" },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GatewayResponse {
