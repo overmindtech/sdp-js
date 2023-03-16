@@ -16,7 +16,6 @@
   ],
   "scripts": {
     "build": "unbuild",
-    "prepack": "pnpm build",
     "test": "jest",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
