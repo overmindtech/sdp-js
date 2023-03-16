@@ -1,24 +1,29 @@
 name: Release
+
 on:
-  push:
+  release:
+    types: [created]
 
 jobs:
   publish:
-    name: "Release"
+    name: 'Release'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
 
       - uses: actions/setup-node@v3
         with:
           node-version: 19
-          registry-url: "https://registry.npmjs.org"
+          cache: pnpm
+          registry-url: 'https://registry.npmjs.org'
 
-      # should use `npm ci`, but we currently don't have a package-lock.json
-      - run: npm install
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - run: npm run build
-
-      - run: npm publish
+      - name: Publish package
+        run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
