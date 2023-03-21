@@ -8,7 +8,7 @@ export {
   ListBookmarks,
   LoadBookmark,
   StoreBookmark,
-} from './__generated__/bookmarks_pb'
+} from './__generated__/bookmarks_pb.js'
 export {
   GatewayRequest,
   GatewayRequestStatus,
@@ -43,4 +43,4 @@ export {
   SnapshotLoadResult,
   SnapshotStoreResult,
   StoreSnapshot,
-} from './__generated__/snapshots_pb'
+} from './__generated__/snapshots_pb.js'
