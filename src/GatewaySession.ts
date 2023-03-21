@@ -9,6 +9,14 @@ import {
   DeleteItemEvent,
   DeleteEdgeEvent,
   UpdateItemEvent,
+  BookmarkListResultEvent,
+  BookmarkLoadResultEvent,
+  BookmarkStoreResultEvent,
+  BookmarkDeleteResultEvent,
+  SnapshotListResultEvent,
+  SnapshotLoadResultEvent,
+  SnapshotStoreResultEvent,
+  SnapshotDeleteResultEvent,
 } from './Events'
 import {
   Edge,
@@ -149,6 +157,62 @@ export class GatewaySession extends EventTarget {
           })
         )
         break
+      case 'bookmarkListResult':
+        this.dispatchEvent(
+          new CustomEvent<Item>(BookmarkListResultEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
+      case 'bookmarkLoadResult':
+        this.dispatchEvent(
+          new CustomEvent<Item>(BookmarkLoadResultEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
+      case 'bookmarkStoreResult':
+        this.dispatchEvent(
+          new CustomEvent<Item>(BookmarkStoreResultEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
+      case 'bookmarkDeleteResult':
+        this.dispatchEvent(
+          new CustomEvent<Item>(BookmarkDeleteResultEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
+      case 'snapshotListResult':
+        this.dispatchEvent(
+          new CustomEvent<Item>(SnapshotListResultEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
+      case 'snapshotLoadResult':
+        this.dispatchEvent(
+          new CustomEvent<Item>(SnapshotLoadResultEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
+      case 'snapshotStoreResult':
+        this.dispatchEvent(
+          new CustomEvent<Item>(SnapshotStoreResultEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
+      case 'snapshotDeleteResult':
+        this.dispatchEvent(
+          new CustomEvent<Item>(SnapshotDeleteResultEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
       default:
         break
     }
@@ -181,6 +245,46 @@ export class GatewaySession extends EventTarget {
   ): void
   addEventListener(
     type: typeof UpdateItemEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  addEventListener(
+    type: typeof BookmarkListResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  addEventListener(
+    type: typeof BookmarkStoreResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  addEventListener(
+    type: typeof BookmarkLoadResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  addEventListener(
+    type: typeof BookmarkDeleteResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  addEventListener(
+    type: typeof SnapshotListResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  addEventListener(
+    type: typeof SnapshotStoreResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  addEventListener(
+    type: typeof SnapshotLoadResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  addEventListener(
+    type: typeof SnapshotDeleteResultEvent,
     callback: CustomEventListenerOrEventListenerObject<Item> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
@@ -239,6 +343,46 @@ export class GatewaySession extends EventTarget {
   ): void
   removeEventListener(
     type: typeof UpdateItemEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  removeEventListener(
+    type: typeof BookmarkListResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  removeEventListener(
+    type: typeof BookmarkStoreResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  removeEventListener(
+    type: typeof BookmarkLoadResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  removeEventListener(
+    type: typeof BookmarkDeleteResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  removeEventListener(
+    type: typeof SnapshotListResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  removeEventListener(
+    type: typeof SnapshotStoreResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  removeEventListener(
+    type: typeof SnapshotLoadResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+  removeEventListener(
+    type: typeof SnapshotDeleteResultEvent,
     callback: CustomEventListenerOrEventListenerObject<Item> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
