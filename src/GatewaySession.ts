@@ -36,7 +36,7 @@ import {
   SnapshotStoreResult,
   SnapshotLoadResult,
   SnapshotDeleteResult,
-} from './generated'
+} from './Protobuf'
 
 export interface CustomEventListener<T> {
   (evt: CustomEvent<T>): void

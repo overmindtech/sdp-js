@@ -1,4 +1,4 @@
-import { QueryError, ResponderState } from './generated'
+import { QueryError, ResponderState } from './Protobuf'
 
 /**
  * Represents something that is responding to our query

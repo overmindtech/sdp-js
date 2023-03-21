@@ -12,7 +12,7 @@ import {
   Expand,
   UndoQuery,
   QueryError_ErrorType,
-} from '../generated'
+} from '../Protobuf'
 import { parse } from 'uuid'
 import { Response } from '../__generated__/responses_pb'
 import {

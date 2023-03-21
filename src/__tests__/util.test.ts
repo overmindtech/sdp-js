@@ -6,7 +6,7 @@ import {
   getUniqueAttributeValue,
   getGloballyUniqueName,
 } from '../Util'
-import { Item } from '../generated'
+import { Item } from '../Protobuf'
 
 describe('Util namespace', () => {
   describe('#newTimestamp', () => {

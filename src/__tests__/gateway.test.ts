@@ -25,7 +25,7 @@ import {
   UpdateItemEvent,
 } from '../Events'
 import { GatewaySession } from '../GatewaySession'
-import { GatewayResponse } from '../generated'
+import { GatewayResponse } from '../Protobuf'
 import * as data from './sampledata.helper'
 
 // create a WS instance

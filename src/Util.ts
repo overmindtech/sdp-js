@@ -1,5 +1,5 @@
 import { Duration, JsonValue, Struct, Timestamp } from '@bufbuild/protobuf'
-import { Item, ItemAttributes, Reference } from './generated'
+import { Item, ItemAttributes, Reference } from './Protobuf'
 
 /**
  * Creates a new ItemAttributes object from any javascript object that has
