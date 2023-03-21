@@ -1,6 +1,6 @@
 {
   "name": "@overmindtech/sdp-js",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "Javascript and Typescript libraries for the State Description Protocol",
   "type": "module",
   "exports": {
