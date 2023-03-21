@@ -37,6 +37,46 @@ export const DeleteEdgeEvent = 'delete-edge'
 export const UpdateItemEvent = 'update-item'
 
 /**
+ * This event is fired when receiving a BookmarkListResult
+ */
+export const BookmarkListResultEvent = 'bookmark-list-result'
+
+/**
+ * This event is fired when receiving a BookmarkStoreResult
+ */
+export const BookmarkStoreResultEvent = 'bookmark-store-result'
+
+/**
+ * This event is fired when receiving a BookmarkLoadResult
+ */
+export const BookmarkLoadResultEvent = 'bookmark-load-result'
+
+/**
+ * This event is fired when receiving a BookmarkDeleteResult
+ */
+export const BookmarkDeleteResultEvent = 'bookmark-delete-result'
+
+/**
+ * This event is fired when receiving a SnapshotListResult
+ */
+export const SnapshotListResultEvent = 'snapshot-list-result'
+
+/**
+ * This event is fired when receiving a SnapshotStoreResult
+ */
+export const SnapshotStoreResultEvent = 'snapshot-store-result'
+
+/**
+ * This event is fired when receiving a SnapshotLoadResult
+ */
+export const SnapshotLoadResultEvent = 'snapshot-load-result'
+
+/**
+ * This event is fired when receiving a SnapshotDeleteResult
+ */
+export const SnapshotDeleteResultEvent = 'snapshot-delete-result'
+
+/**
  * This event means that an error was encountered by one of the responders
  * when responding to the request. This could indicate a failure, or might
  * be expected. It s up to the user to determine how these errors should be
