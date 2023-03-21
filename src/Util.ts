@@ -1,5 +1,5 @@
 import { Duration, JsonValue, Struct, Timestamp } from '@bufbuild/protobuf'
-import { Item, ItemAttributes, Reference } from './__generated__'
+import { Item, ItemAttributes, Reference } from './generated'
 
 /**
  * Creates a new ItemAttributes object from any javascript object that has
@@ -50,7 +50,10 @@ export function newDuration(ms: number): Duration {
  * @param name The name of the attribute you are looking for
  * @returns The value of the attribute
  */
-export function getAttributeValue(attributes: ItemAttributes, name: string) {
+export function getAttributeValue<T>(
+  attributes: ItemAttributes,
+  name: string
+): T {
   const j = attributes.attrStruct?.toJson()
   if (!j) return undefined
 

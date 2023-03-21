@@ -18,4 +18,4 @@ export {
   QueryMethod,
   ResponderState,
   Response,
-} from './__generated__/index.js'
+} from './generated.js'

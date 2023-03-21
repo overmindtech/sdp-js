@@ -12,7 +12,7 @@ import {
   Expand,
   UndoQuery,
   QueryError_ErrorType,
-} from '../__generated__'
+} from '../generated'
 import { parse } from 'uuid'
 import { Response } from '../__generated__/responses_pb'
 import {
