@@ -2,7 +2,7 @@ import {
   CustomEventListenerOrEventListenerObject,
   GatewaySession,
 } from './GatewaySession'
-import { GatewayRequest, Item, Query, QueryMethod } from './__generated__'
+import { GatewayRequest, Item, Query, QueryMethod } from './Protobuf'
 import { v4, parse } from 'uuid'
 import { getUniqueAttributeValue, newDuration } from './Util'
 

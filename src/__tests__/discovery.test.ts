@@ -19,7 +19,7 @@ import {
   Query,
   Metadata,
   QueryMethod,
-} from '../__generated__/'
+} from '../Protobuf'
 import { newItemAttributes, newTimestamp } from '../Util'
 import { SourceDiscovery } from '../SourceDiscovery'
 

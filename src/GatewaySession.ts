@@ -28,7 +28,15 @@ import {
   Reference,
   UndoQuery,
   UndoExpand,
-} from './__generated__/'
+  BookmarkListResult,
+  BookmarkStoreResult,
+  BookmarkLoadResult,
+  BookmarkDeleteResult,
+  SnapshotListResult,
+  SnapshotStoreResult,
+  SnapshotLoadResult,
+  SnapshotDeleteResult,
+} from './Protobuf'
 
 export interface CustomEventListener<T> {
   (evt: CustomEvent<T>): void
@@ -250,42 +258,42 @@ export class GatewaySession extends EventTarget {
   ): void
   addEventListener(
     type: typeof BookmarkListResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<BookmarkListResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   addEventListener(
     type: typeof BookmarkStoreResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<BookmarkStoreResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   addEventListener(
     type: typeof BookmarkLoadResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<BookmarkLoadResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   addEventListener(
     type: typeof BookmarkDeleteResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<BookmarkDeleteResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   addEventListener(
     type: typeof SnapshotListResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<SnapshotListResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   addEventListener(
     type: typeof SnapshotStoreResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<SnapshotStoreResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   addEventListener(
     type: typeof SnapshotLoadResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<SnapshotLoadResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   addEventListener(
     type: typeof SnapshotDeleteResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<SnapshotDeleteResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   addEventListener(
@@ -348,42 +356,42 @@ export class GatewaySession extends EventTarget {
   ): void
   removeEventListener(
     type: typeof BookmarkListResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<BookmarkListResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   removeEventListener(
     type: typeof BookmarkStoreResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<BookmarkStoreResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   removeEventListener(
     type: typeof BookmarkLoadResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<BookmarkLoadResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   removeEventListener(
     type: typeof BookmarkDeleteResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<BookmarkDeleteResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   removeEventListener(
     type: typeof SnapshotListResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<SnapshotListResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   removeEventListener(
     type: typeof SnapshotStoreResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<SnapshotStoreResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   removeEventListener(
     type: typeof SnapshotLoadResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<SnapshotLoadResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   removeEventListener(
     type: typeof SnapshotDeleteResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<Item> | null,
+    callback: CustomEventListenerOrEventListenerObject<SnapshotDeleteResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
   removeEventListener(

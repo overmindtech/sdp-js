@@ -1,5 +1,5 @@
 import { Responder } from './Responder'
-import { Query, ResponderState, Response } from './__generated__/'
+import { Query, ResponderState, Response } from './Protobuf'
 
 export class RequestProgress {
   responders: Map<string, Responder> = new Map<string, Responder>()
