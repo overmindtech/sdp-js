@@ -7,6 +7,49 @@ import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialM
 import { Duration, Message, proto3, Struct, Timestamp } from "@bufbuild/protobuf";
 
 /**
+ * Represents the health of something, the meaning of each state may depend on
+ * the context in which it is used but should be reasonably obvious
+ *
+ * @generated from enum Health
+ */
+export enum Health {
+  /**
+   * The health could not be determined
+   *
+   * @generated from enum value: HEALTH_UNKNOWN = 0;
+   */
+  UNKNOWN = 0,
+
+  /**
+   * Functioning normally
+   *
+   * @generated from enum value: HEALTH_OK = 1;
+   */
+  OK = 1,
+
+  /**
+   * Functioning, but degraded
+   *
+   * @generated from enum value: HEALTH_WARNING = 2;
+   */
+  WARNING = 2,
+
+  /**
+   * Not functioning
+   *
+   * @generated from enum value: HEALTH_ERROR = 3;
+   */
+  ERROR = 3,
+}
+// Retrieve enum metadata with: proto3.getEnumType(Health)
+proto3.util.setEnumType(Health, "Health", [
+  { no: 0, name: "HEALTH_UNKNOWN" },
+  { no: 1, name: "HEALTH_OK" },
+  { no: 2, name: "HEALTH_WARNING" },
+  { no: 3, name: "HEALTH_ERROR" },
+]);
+
+/**
  * QueryMethod represents the available query methods. The details of these
  * methods are:
  *
@@ -100,6 +143,14 @@ export class Item extends Message<Item> {
    */
   linkedItems: Reference[] = [];
 
+  /**
+   * (optional) Represents the health of the item. Only items that have a
+   * clearly relevant health attribute should return a value for health
+   *
+   * @generated from field: optional Health health = 18;
+   */
+  health?: Health;
+
   constructor(data?: PartialMessage<Item>) {
     super();
     proto3.util.initPartial(data, this);
@@ -115,6 +166,7 @@ export class Item extends Message<Item> {
     { no: 5, name: "scope", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 16, name: "linkedItemQueries", kind: "message", T: Query, repeated: true },
     { no: 17, name: "linkedItems", kind: "message", T: Reference, repeated: true },
+    { no: 18, name: "health", kind: "enum", T: proto3.getEnumType(Health), opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Item {
