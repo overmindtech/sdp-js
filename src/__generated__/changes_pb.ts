@@ -5,6 +5,7 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
+import { Reference } from "./items_pb.ts";
 
 /**
  * @generated from enum changes.ChangeStatus
@@ -1187,6 +1188,20 @@ export class AppMetadata extends Message<AppMetadata> {
    */
   created?: Timestamp;
 
+  /**
+   * items that are part of the app
+   *
+   * @generated from field: repeated Reference items = 3;
+   */
+  items: Reference[] = [];
+
+  /**
+   * te last time that the list of items was updated
+   *
+   * @generated from field: google.protobuf.Timestamp itemsLastUpdated = 4;
+   */
+  itemsLastUpdated?: Timestamp;
+
   constructor(data?: PartialMessage<AppMetadata>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1197,6 +1212,8 @@ export class AppMetadata extends Message<AppMetadata> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 2, name: "created", kind: "message", T: Timestamp },
+    { no: 3, name: "items", kind: "message", T: Reference, repeated: true },
+    { no: 4, name: "itemsLastUpdated", kind: "message", T: Timestamp },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AppMetadata {
@@ -1239,36 +1256,11 @@ export class AppProperties extends Message<AppProperties> {
   description = "";
 
   /**
-   * AWS account ID for the aws-source that was configured for this application
-   * Example: "123456789123467"
+   * UUID of the bookmark query that returns all items in this app
    *
-   * @generated from field: string awsAccount = 3;
+   * @generated from field: bytes bookmarkUUID = 3;
    */
-  awsAccount = "";
-
-  /**
-   * A (public) webpage that provides the UI for this application.
-   * Example: https://www.manager.contoso.com/
-   *
-   * @generated from field: string webEndpoint = 4;
-   */
-  webEndpoint = "";
-
-  /**
-   * The API endpoint that provides the API for this application.
-   * Example: https://api.manager.contoso.com/
-   *
-   * @generated from field: string apiEndpoint = 5;
-   */
-  apiEndpoint = "";
-
-  /**
-   * The owner of this app
-   * Example: Susan
-   *
-   * @generated from field: string owner = 6;
-   */
-  owner = "";
+  bookmarkUUID = new Uint8Array(0);
 
   constructor(data?: PartialMessage<AppProperties>) {
     super();
@@ -1280,10 +1272,7 @@ export class AppProperties extends Message<AppProperties> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "awsAccount", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "webEndpoint", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 5, name: "apiEndpoint", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 6, name: "owner", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "bookmarkUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AppProperties {
