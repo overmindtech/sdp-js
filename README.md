@@ -26,4 +26,4 @@ npm run codequality:fix
 
 ## Releasing
 
-`npm publish` is automatically triggered when a new release is created in Github. As such all releases should also have tags.
+The package is automatically released each time a tag is created, so to release just create a tag such as `v1.23.6` and push that tag. This automatically triggers NPM publish etc.

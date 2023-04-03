@@ -37,3 +37,9 @@ jobs:
       - name: Commit version update
         continue-on-error: true
         run: git commit -am "Version Bump" && git push
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          generateReleaseNotes: true
+          token: ${{ secrets.GITHUB_TOKEN }}
