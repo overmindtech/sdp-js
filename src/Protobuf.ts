@@ -1,3 +1,4 @@
+// Types
 export {
   Bookmark,
   BookmarkProperties,
@@ -62,3 +63,8 @@ export {
   DeleteSnapshotRequest,
   DeleteSnapshotResponse,
 } from './__generated__/snapshots_pb.js'
+
+// Services
+export { BookmarksService } from './__generated__/bookmarks_connect'
+export { ChangesService } from './__generated__/changes_connect'
+export { SnapshotsService } from './__generated__/snapshots_connect'
