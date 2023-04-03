@@ -1,8 +1,9 @@
 name: Release
 
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   publish:
@@ -23,7 +24,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Pull the version from the tag and update the package.json
+      - name: Update Version
+        continue-on-error: true
+        run: npm version from-git --no-git-tag-version
+
       - name: Publish package
         run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Commit version update
+        continue-on-error: true
+        run: git commit -am "Version Bump" && git push
