@@ -5,26 +5,26 @@
 
 import { createQueryService } from "@bufbuild/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, GetAppRequest, GetAppResponse, GetChangeRequest, GetChangeResponse, GetChangesHomeRequest, GetChangesHomeResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppRequest, ListAppResponse, ListChangeRequest, ListChangeResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
+import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, GetAppRequest, GetAppResponse, GetChangeRequest, GetChangeResponse, GetChangesHomeRequest, GetChangesHomeResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppsRequest, ListAppsResponse, ListChangesRequest, ListChangesResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
 
 export const typeName = "changes.ChangesService";
 
 /**
- * @generated from rpc changes.ChangesService.ListApp
+ * @generated from rpc changes.ChangesService.ListApps
  */
-export const listApp = createQueryService({
+export const listApps = createQueryService({
   service: {
     methods: {
-      listApp: {
-        name: "ListApp",
+      listApps: {
+        name: "ListApps",
         kind: MethodKind.Unary,
-        I: ListAppRequest,
-        O: ListAppResponse,
+        I: ListAppsRequest,
+        O: ListAppsResponse,
       },
     },
     typeName: "changes.ChangesService",
   },
-}).listApp;
+}).listApps;
 
 /**
  * @generated from rpc changes.ChangesService.CreateApp
@@ -95,21 +95,21 @@ export const deleteApp = createQueryService({
 }).deleteApp;
 
 /**
- * @generated from rpc changes.ChangesService.ListChange
+ * @generated from rpc changes.ChangesService.ListChanges
  */
-export const listChange = createQueryService({
+export const listChanges = createQueryService({
   service: {
     methods: {
-      listChange: {
-        name: "ListChange",
+      listChanges: {
+        name: "ListChanges",
         kind: MethodKind.Unary,
-        I: ListChangeRequest,
-        O: ListChangeResponse,
+        I: ListChangesRequest,
+        O: ListChangesResponse,
       },
     },
     typeName: "changes.ChangesService",
   },
-}).listChange;
+}).listChanges;
 
 /**
  * @generated from rpc changes.ChangesService.CreateChange

@@ -5,13 +5,126 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
+import { Item, Query, Reference } from "./items_pb.ts";
 
 /**
- * Descriptor for a snapshot
- *
- * @generated from message SnapshotDescriptor
+ * @generated from message Snapshot
  */
-export class SnapshotDescriptor extends Message<SnapshotDescriptor> {
+export class Snapshot extends Message<Snapshot> {
+  /**
+   * @generated from field: SnapshotMetadata metadata = 1;
+   */
+  metadata?: SnapshotMetadata;
+
+  /**
+   * @generated from field: SnapshotProperties properties = 2;
+   */
+  properties?: SnapshotProperties;
+
+  constructor(data?: PartialMessage<Snapshot>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "Snapshot";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "metadata", kind: "message", T: SnapshotMetadata },
+    { no: 2, name: "properties", kind: "message", T: SnapshotProperties },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Snapshot {
+    return new Snapshot().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Snapshot {
+    return new Snapshot().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Snapshot {
+    return new Snapshot().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: Snapshot | PlainMessage<Snapshot> | undefined, b: Snapshot | PlainMessage<Snapshot> | undefined): boolean {
+    return proto3.util.equals(Snapshot, a, b);
+  }
+}
+
+/**
+ * @generated from message SnapshotProperties
+ */
+export class SnapshotProperties extends Message<SnapshotProperties> {
+  /**
+   * name of this snapshot
+   *
+   * @generated from field: string name = 1;
+   */
+  name = "";
+
+  /**
+   * description of this snapshot
+   *
+   * @generated from field: string description = 2;
+   */
+  description = "";
+
+  /**
+   * queries that make up the snapshot
+   *
+   * @generated from field: repeated Query queries = 3;
+   */
+  queries: Query[] = [];
+
+  /**
+   * items that should be excluded from the snapshot's results
+   *
+   * @generated from field: repeated Reference excludedItems = 4;
+   */
+  excludedItems: Reference[] = [];
+
+  /**
+   * items stored in the snapshot
+   *
+   * @generated from field: repeated Item items = 5;
+   */
+  items: Item[] = [];
+
+  constructor(data?: PartialMessage<SnapshotProperties>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "SnapshotProperties";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "queries", kind: "message", T: Query, repeated: true },
+    { no: 4, name: "excludedItems", kind: "message", T: Reference, repeated: true },
+    { no: 5, name: "items", kind: "message", T: Item, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SnapshotProperties {
+    return new SnapshotProperties().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SnapshotProperties {
+    return new SnapshotProperties().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SnapshotProperties {
+    return new SnapshotProperties().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SnapshotProperties | PlainMessage<SnapshotProperties> | undefined, b: SnapshotProperties | PlainMessage<SnapshotProperties> | undefined): boolean {
+    return proto3.util.equals(SnapshotProperties, a, b);
+  }
+}
+
+/**
+ * @generated from message SnapshotMetadata
+ */
+export class SnapshotMetadata extends Message<SnapshotMetadata> {
   /**
    * unique id to identify this snapshot
    *
@@ -27,412 +140,421 @@ export class SnapshotDescriptor extends Message<SnapshotDescriptor> {
   created?: Timestamp;
 
   /**
-   * user supplied name of this snapshot
+   * the number of items in this snapshot
    *
-   * @generated from field: string name = 3;
-   */
-  name = "";
-
-  /**
-   * user supplied description of this snapshot
-   *
-   * @generated from field: string description = 4;
-   */
-  description = "";
-
-  /**
-   * number of items in this snapshot
-   *
-   * @generated from field: uint32 size = 5;
+   * @generated from field: uint32 size = 3;
    */
   size = 0;
 
-  constructor(data?: PartialMessage<SnapshotDescriptor>) {
+  constructor(data?: PartialMessage<SnapshotMetadata>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "SnapshotDescriptor";
+  static readonly typeName = "SnapshotMetadata";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 2, name: "created", kind: "message", T: Timestamp },
-    { no: 3, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 5, name: "size", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+    { no: 3, name: "size", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SnapshotDescriptor {
-    return new SnapshotDescriptor().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SnapshotMetadata {
+    return new SnapshotMetadata().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SnapshotDescriptor {
-    return new SnapshotDescriptor().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SnapshotMetadata {
+    return new SnapshotMetadata().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SnapshotDescriptor {
-    return new SnapshotDescriptor().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SnapshotMetadata {
+    return new SnapshotMetadata().fromJsonString(jsonString, options);
   }
 
-  static equals(a: SnapshotDescriptor | PlainMessage<SnapshotDescriptor> | undefined, b: SnapshotDescriptor | PlainMessage<SnapshotDescriptor> | undefined): boolean {
-    return proto3.util.equals(SnapshotDescriptor, a, b);
+  static equals(a: SnapshotMetadata | PlainMessage<SnapshotMetadata> | undefined, b: SnapshotMetadata | PlainMessage<SnapshotMetadata> | undefined): boolean {
+    return proto3.util.equals(SnapshotMetadata, a, b);
   }
 }
 
 /**
- * Retrieve the list of stored query snapshots for the currently active account.
- * Returns a SnapshotList
+ * lists all snapshots
  *
- * TODO: pagination
- *
- * @generated from message ListSnapshots
+ * @generated from message ListSnapshotsRequest
  */
-export class ListSnapshots extends Message<ListSnapshots> {
-  constructor(data?: PartialMessage<ListSnapshots>) {
+export class ListSnapshotsRequest extends Message<ListSnapshotsRequest> {
+  constructor(data?: PartialMessage<ListSnapshotsRequest>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "ListSnapshots";
+  static readonly typeName = "ListSnapshotsRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListSnapshots {
-    return new ListSnapshots().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListSnapshotsRequest {
+    return new ListSnapshotsRequest().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListSnapshots {
-    return new ListSnapshots().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListSnapshotsRequest {
+    return new ListSnapshotsRequest().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListSnapshots {
-    return new ListSnapshots().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListSnapshotsRequest {
+    return new ListSnapshotsRequest().fromJsonString(jsonString, options);
   }
 
-  static equals(a: ListSnapshots | PlainMessage<ListSnapshots> | undefined, b: ListSnapshots | PlainMessage<ListSnapshots> | undefined): boolean {
-    return proto3.util.equals(ListSnapshots, a, b);
+  static equals(a: ListSnapshotsRequest | PlainMessage<ListSnapshotsRequest> | undefined, b: ListSnapshotsRequest | PlainMessage<ListSnapshotsRequest> | undefined): boolean {
+    return proto3.util.equals(ListSnapshotsRequest, a, b);
   }
 }
 
 /**
- * response format for ListSnapshots
- *
- * @generated from message SnapshotListResult
+ * @generated from message ListSnapshotResponse
  */
-export class SnapshotListResult extends Message<SnapshotListResult> {
+export class ListSnapshotResponse extends Message<ListSnapshotResponse> {
   /**
-   * @generated from field: bool success = 1;
-   */
-  success = false;
-
-  /**
-   * @generated from field: string errorMessage = 2;
-   */
-  errorMessage = "";
-
-  /**
-   * @generated from field: repeated SnapshotDescriptor snapshots = 3;
-   */
-  snapshots: SnapshotDescriptor[] = [];
-
-  constructor(data?: PartialMessage<SnapshotListResult>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "SnapshotListResult";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "snapshots", kind: "message", T: SnapshotDescriptor, repeated: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SnapshotListResult {
-    return new SnapshotListResult().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SnapshotListResult {
-    return new SnapshotListResult().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SnapshotListResult {
-    return new SnapshotListResult().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: SnapshotListResult | PlainMessage<SnapshotListResult> | undefined, b: SnapshotListResult | PlainMessage<SnapshotListResult> | undefined): boolean {
-    return proto3.util.equals(SnapshotListResult, a, b);
-  }
-}
-
-/**
- * Ask the gateway to store the current state as snapshot with the specified details.
- * Returns a SnapshotStored message when the snapshot is stored
- *
- * @generated from message StoreSnapshot
- */
-export class StoreSnapshot extends Message<StoreSnapshot> {
-  /**
-   * user supplied name of this snapshot
+   * the list of all snapshots
    *
-   * @generated from field: string name = 1;
+   * @generated from field: repeated Snapshot snapshots = 1;
    */
-  name = "";
+  snapshots: Snapshot[] = [];
 
-  /**
-   * user supplied description of this snapshot
-   *
-   * @generated from field: string description = 2;
-   */
-  description = "";
-
-  constructor(data?: PartialMessage<StoreSnapshot>) {
+  constructor(data?: PartialMessage<ListSnapshotResponse>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "StoreSnapshot";
+  static readonly typeName = "ListSnapshotResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "snapshots", kind: "message", T: Snapshot, repeated: true },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StoreSnapshot {
-    return new StoreSnapshot().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListSnapshotResponse {
+    return new ListSnapshotResponse().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): StoreSnapshot {
-    return new StoreSnapshot().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListSnapshotResponse {
+    return new ListSnapshotResponse().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): StoreSnapshot {
-    return new StoreSnapshot().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListSnapshotResponse {
+    return new ListSnapshotResponse().fromJsonString(jsonString, options);
   }
 
-  static equals(a: StoreSnapshot | PlainMessage<StoreSnapshot> | undefined, b: StoreSnapshot | PlainMessage<StoreSnapshot> | undefined): boolean {
-    return proto3.util.equals(StoreSnapshot, a, b);
+  static equals(a: ListSnapshotResponse | PlainMessage<ListSnapshotResponse> | undefined, b: ListSnapshotResponse | PlainMessage<ListSnapshotResponse> | undefined): boolean {
+    return proto3.util.equals(ListSnapshotResponse, a, b);
   }
 }
 
 /**
- * After a snapshot is successfully stored, this reply with the new snapshot's details is sent.
+ * creates a new snapshot
  *
- * @generated from message SnapshotStoreResult
+ * @generated from message CreateSnapshotRequest
  */
-export class SnapshotStoreResult extends Message<SnapshotStoreResult> {
+export class CreateSnapshotRequest extends Message<CreateSnapshotRequest> {
   /**
-   * @generated from field: bool success = 1;
+   * properties of the new snapshot
+   *
+   * @generated from field: SnapshotProperties properties = 1;
    */
-  success = false;
+  properties?: SnapshotProperties;
 
-  /**
-   * @generated from field: string errorMessage = 2;
-   */
-  errorMessage = "";
-
-  /**
-   * @generated from field: SnapshotDescriptor snapshot = 3;
-   */
-  snapshot?: SnapshotDescriptor;
-
-  constructor(data?: PartialMessage<SnapshotStoreResult>) {
+  constructor(data?: PartialMessage<CreateSnapshotRequest>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "SnapshotStoreResult";
+  static readonly typeName = "CreateSnapshotRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "snapshot", kind: "message", T: SnapshotDescriptor },
+    { no: 1, name: "properties", kind: "message", T: SnapshotProperties },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SnapshotStoreResult {
-    return new SnapshotStoreResult().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateSnapshotRequest {
+    return new CreateSnapshotRequest().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SnapshotStoreResult {
-    return new SnapshotStoreResult().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateSnapshotRequest {
+    return new CreateSnapshotRequest().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SnapshotStoreResult {
-    return new SnapshotStoreResult().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateSnapshotRequest {
+    return new CreateSnapshotRequest().fromJsonString(jsonString, options);
   }
 
-  static equals(a: SnapshotStoreResult | PlainMessage<SnapshotStoreResult> | undefined, b: SnapshotStoreResult | PlainMessage<SnapshotStoreResult> | undefined): boolean {
-    return proto3.util.equals(SnapshotStoreResult, a, b);
+  static equals(a: CreateSnapshotRequest | PlainMessage<CreateSnapshotRequest> | undefined, b: CreateSnapshotRequest | PlainMessage<CreateSnapshotRequest> | undefined): boolean {
+    return proto3.util.equals(CreateSnapshotRequest, a, b);
   }
 }
 
 /**
- * Ask the gateway to load the specified snapshot into the current state.
- * Results are streamed to the client in the same way query results are.
- *
- * @generated from message LoadSnapshot
+ * @generated from message CreateSnapshotResponse
  */
-export class LoadSnapshot extends Message<LoadSnapshot> {
+export class CreateSnapshotResponse extends Message<CreateSnapshotResponse> {
   /**
-   * unique id of the snapshot to load
+   * the newly created snapshot 
    *
+   * @generated from field: Snapshot snapshot = 1;
+   */
+  snapshot?: Snapshot;
+
+  constructor(data?: PartialMessage<CreateSnapshotResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "CreateSnapshotResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "snapshot", kind: "message", T: Snapshot },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateSnapshotResponse {
+    return new CreateSnapshotResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateSnapshotResponse {
+    return new CreateSnapshotResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateSnapshotResponse {
+    return new CreateSnapshotResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateSnapshotResponse | PlainMessage<CreateSnapshotResponse> | undefined, b: CreateSnapshotResponse | PlainMessage<CreateSnapshotResponse> | undefined): boolean {
+    return proto3.util.equals(CreateSnapshotResponse, a, b);
+  }
+}
+
+/**
+ * get the details of a specific snapshot
+ *
+ * @generated from message GetSnapshotRequest
+ */
+export class GetSnapshotRequest extends Message<GetSnapshotRequest> {
+  /**
    * @generated from field: bytes UUID = 1;
    */
   UUID = new Uint8Array(0);
 
-  constructor(data?: PartialMessage<LoadSnapshot>) {
+  constructor(data?: PartialMessage<GetSnapshotRequest>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "LoadSnapshot";
+  static readonly typeName = "GetSnapshotRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): LoadSnapshot {
-    return new LoadSnapshot().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetSnapshotRequest {
+    return new GetSnapshotRequest().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): LoadSnapshot {
-    return new LoadSnapshot().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetSnapshotRequest {
+    return new GetSnapshotRequest().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): LoadSnapshot {
-    return new LoadSnapshot().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetSnapshotRequest {
+    return new GetSnapshotRequest().fromJsonString(jsonString, options);
   }
 
-  static equals(a: LoadSnapshot | PlainMessage<LoadSnapshot> | undefined, b: LoadSnapshot | PlainMessage<LoadSnapshot> | undefined): boolean {
-    return proto3.util.equals(LoadSnapshot, a, b);
+  static equals(a: GetSnapshotRequest | PlainMessage<GetSnapshotRequest> | undefined, b: GetSnapshotRequest | PlainMessage<GetSnapshotRequest> | undefined): boolean {
+    return proto3.util.equals(GetSnapshotRequest, a, b);
   }
 }
 
 /**
- * @generated from message SnapshotLoadResult
+ * @generated from message GetSnapshotResponse
  */
-export class SnapshotLoadResult extends Message<SnapshotLoadResult> {
+export class GetSnapshotResponse extends Message<GetSnapshotResponse> {
   /**
-   * @generated from field: bool success = 1;
+   * @generated from field: Snapshot snapshot = 1;
    */
-  success = false;
+  snapshot?: Snapshot;
 
-  /**
-   * @generated from field: string errorMessage = 2;
-   */
-  errorMessage = "";
-
-  constructor(data?: PartialMessage<SnapshotLoadResult>) {
+  constructor(data?: PartialMessage<GetSnapshotResponse>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "SnapshotLoadResult";
+  static readonly typeName = "GetSnapshotResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "snapshot", kind: "message", T: Snapshot },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SnapshotLoadResult {
-    return new SnapshotLoadResult().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetSnapshotResponse {
+    return new GetSnapshotResponse().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SnapshotLoadResult {
-    return new SnapshotLoadResult().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetSnapshotResponse {
+    return new GetSnapshotResponse().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SnapshotLoadResult {
-    return new SnapshotLoadResult().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetSnapshotResponse {
+    return new GetSnapshotResponse().fromJsonString(jsonString, options);
   }
 
-  static equals(a: SnapshotLoadResult | PlainMessage<SnapshotLoadResult> | undefined, b: SnapshotLoadResult | PlainMessage<SnapshotLoadResult> | undefined): boolean {
-    return proto3.util.equals(SnapshotLoadResult, a, b);
+  static equals(a: GetSnapshotResponse | PlainMessage<GetSnapshotResponse> | undefined, b: GetSnapshotResponse | PlainMessage<GetSnapshotResponse> | undefined): boolean {
+    return proto3.util.equals(GetSnapshotResponse, a, b);
   }
 }
 
 /**
- * Delete the snapshot with the specified ID.
+ * updates the properties of an existing snapshot
  *
- * @generated from message DeleteSnapshot
+ * @generated from message UpdateSnapshotRequest
  */
-export class DeleteSnapshot extends Message<DeleteSnapshot> {
+export class UpdateSnapshotRequest extends Message<UpdateSnapshotRequest> {
   /**
-   * unique id of the snapshot to delete
-   *
    * @generated from field: bytes UUID = 1;
    */
   UUID = new Uint8Array(0);
 
-  constructor(data?: PartialMessage<DeleteSnapshot>) {
+  /**
+   * @generated from field: SnapshotProperties properties = 2;
+   */
+  properties?: SnapshotProperties;
+
+  constructor(data?: PartialMessage<UpdateSnapshotRequest>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "DeleteSnapshot";
+  static readonly typeName = "UpdateSnapshotRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "properties", kind: "message", T: SnapshotProperties },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteSnapshot {
-    return new DeleteSnapshot().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateSnapshotRequest {
+    return new UpdateSnapshotRequest().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteSnapshot {
-    return new DeleteSnapshot().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateSnapshotRequest {
+    return new UpdateSnapshotRequest().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteSnapshot {
-    return new DeleteSnapshot().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateSnapshotRequest {
+    return new UpdateSnapshotRequest().fromJsonString(jsonString, options);
   }
 
-  static equals(a: DeleteSnapshot | PlainMessage<DeleteSnapshot> | undefined, b: DeleteSnapshot | PlainMessage<DeleteSnapshot> | undefined): boolean {
-    return proto3.util.equals(DeleteSnapshot, a, b);
+  static equals(a: UpdateSnapshotRequest | PlainMessage<UpdateSnapshotRequest> | undefined, b: UpdateSnapshotRequest | PlainMessage<UpdateSnapshotRequest> | undefined): boolean {
+    return proto3.util.equals(UpdateSnapshotRequest, a, b);
   }
 }
 
 /**
- * @generated from message SnapshotDeleteResult
+ * @generated from message UpdateSnapshotResponse
  */
-export class SnapshotDeleteResult extends Message<SnapshotDeleteResult> {
+export class UpdateSnapshotResponse extends Message<UpdateSnapshotResponse> {
   /**
-   * @generated from field: bool success = 1;
+   * the updated version of the snapshot
+   *
+   * @generated from field: Snapshot snapshot = 1;
    */
-  success = false;
+  snapshot?: Snapshot;
 
-  /**
-   * @generated from field: string errorMessage = 2;
-   */
-  errorMessage = "";
-
-  constructor(data?: PartialMessage<SnapshotDeleteResult>) {
+  constructor(data?: PartialMessage<UpdateSnapshotResponse>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "SnapshotDeleteResult";
+  static readonly typeName = "UpdateSnapshotResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "snapshot", kind: "message", T: Snapshot },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SnapshotDeleteResult {
-    return new SnapshotDeleteResult().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateSnapshotResponse {
+    return new UpdateSnapshotResponse().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SnapshotDeleteResult {
-    return new SnapshotDeleteResult().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateSnapshotResponse {
+    return new UpdateSnapshotResponse().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SnapshotDeleteResult {
-    return new SnapshotDeleteResult().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateSnapshotResponse {
+    return new UpdateSnapshotResponse().fromJsonString(jsonString, options);
   }
 
-  static equals(a: SnapshotDeleteResult | PlainMessage<SnapshotDeleteResult> | undefined, b: SnapshotDeleteResult | PlainMessage<SnapshotDeleteResult> | undefined): boolean {
-    return proto3.util.equals(SnapshotDeleteResult, a, b);
+  static equals(a: UpdateSnapshotResponse | PlainMessage<UpdateSnapshotResponse> | undefined, b: UpdateSnapshotResponse | PlainMessage<UpdateSnapshotResponse> | undefined): boolean {
+    return proto3.util.equals(UpdateSnapshotResponse, a, b);
+  }
+}
+
+/**
+ * deletes a given snapshot
+ *
+ * @generated from message DeleteSnapshotRequest
+ */
+export class DeleteSnapshotRequest extends Message<DeleteSnapshotRequest> {
+  /**
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<DeleteSnapshotRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "DeleteSnapshotRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteSnapshotRequest {
+    return new DeleteSnapshotRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteSnapshotRequest {
+    return new DeleteSnapshotRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteSnapshotRequest {
+    return new DeleteSnapshotRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteSnapshotRequest | PlainMessage<DeleteSnapshotRequest> | undefined, b: DeleteSnapshotRequest | PlainMessage<DeleteSnapshotRequest> | undefined): boolean {
+    return proto3.util.equals(DeleteSnapshotRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message DeleteSnapshotResponse
+ */
+export class DeleteSnapshotResponse extends Message<DeleteSnapshotResponse> {
+  constructor(data?: PartialMessage<DeleteSnapshotResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "DeleteSnapshotResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteSnapshotResponse {
+    return new DeleteSnapshotResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteSnapshotResponse {
+    return new DeleteSnapshotResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteSnapshotResponse {
+    return new DeleteSnapshotResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteSnapshotResponse | PlainMessage<DeleteSnapshotResponse> | undefined, b: DeleteSnapshotResponse | PlainMessage<DeleteSnapshotResponse> | undefined): boolean {
+    return proto3.util.equals(DeleteSnapshotResponse, a, b);
   }
 }
 

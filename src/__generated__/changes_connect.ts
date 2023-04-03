@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, GetAppRequest, GetAppResponse, GetChangeRequest, GetChangeResponse, GetChangesHomeRequest, GetChangesHomeResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppRequest, ListAppResponse, ListChangeRequest, ListChangeResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
+import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, GetAppRequest, GetAppResponse, GetChangeRequest, GetChangeResponse, GetChangesHomeRequest, GetChangesHomeResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppsRequest, ListAppsResponse, ListChangesRequest, ListChangesResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -15,12 +15,12 @@ export const ChangesService = {
   typeName: "changes.ChangesService",
   methods: {
     /**
-     * @generated from rpc changes.ChangesService.ListApp
+     * @generated from rpc changes.ChangesService.ListApps
      */
-    listApp: {
-      name: "ListApp",
-      I: ListAppRequest,
-      O: ListAppResponse,
+    listApps: {
+      name: "ListApps",
+      I: ListAppsRequest,
+      O: ListAppsResponse,
       kind: MethodKind.Unary,
     },
     /**
@@ -60,12 +60,12 @@ export const ChangesService = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc changes.ChangesService.ListChange
+     * @generated from rpc changes.ChangesService.ListChanges
      */
-    listChange: {
-      name: "ListChange",
-      I: ListChangeRequest,
-      O: ListChangeResponse,
+    listChanges: {
+      name: "ListChanges",
+      I: ListChangesRequest,
+      O: ListChangesResponse,
       kind: MethodKind.Unary,
     },
     /**

@@ -6,9 +6,9 @@
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Duration, Message, proto3 } from "@bufbuild/protobuf";
 import { CancelQuery, Edge, Expand, Item, Query, QueryError, Reference, UndoExpand, UndoQuery } from "./items_pb.ts";
-import { DeleteSnapshot, ListSnapshots, LoadSnapshot, SnapshotDeleteResult, SnapshotListResult, SnapshotLoadResult, SnapshotStoreResult, StoreSnapshot } from "./snapshots_pb.ts";
-import { BookmarkDeleteResult, BookmarkListResult, BookmarkLoadResult, BookmarkStoreResult, DeleteBookmark, ListBookmarks, LoadBookmark, StoreBookmark } from "./bookmarks_pb.ts";
 import { ResponderState } from "./responses_pb.ts";
+import { Bookmark } from "./bookmarks_pb.ts";
+import { Snapshot } from "./snapshots_pb.ts";
 
 /**
  * A union of all request made to the gateway.
@@ -63,17 +63,9 @@ export class GatewayRequest extends Message<GatewayRequest> {
     case: "undoExpand";
   } | {
     /**
-     * return the list of snapshots for this account
-     *
-     * @generated from field: ListSnapshots listSnapshots = 9;
-     */
-    value: ListSnapshots;
-    case: "listSnapshots";
-  } | {
-    /**
      * store the current session state as snapshot
      *
-     * @generated from field: StoreSnapshot storeSnapshot = 10;
+     * @generated from field: gateway.StoreSnapshot storeSnapshot = 10;
      */
     value: StoreSnapshot;
     case: "storeSnapshot";
@@ -81,37 +73,21 @@ export class GatewayRequest extends Message<GatewayRequest> {
     /**
      * load a snapshot into the current state
      *
-     * @generated from field: LoadSnapshot loadSnapshot = 11;
-     */
-    value: LoadSnapshot;
-    case: "loadSnapshot";
-  } | {
-    /**
-     * delete a snapshot from the underlying storage
-     *
      * TODO: implement?
      * // cancel the loading of a snapshot
      * CancelLoadSnapshot cancelLoadSnapshot = ??;
      * // undo the loading of a snapshot
      * UndoLoadSnapshot undoLoadSnapshot = ??;
      *
-     * @generated from field: DeleteSnapshot deleteSnapshot = 12;
+     * @generated from field: gateway.LoadSnapshot loadSnapshot = 11;
      */
-    value: DeleteSnapshot;
-    case: "deleteSnapshot";
-  } | {
-    /**
-     * return the list of bookmarks for this account
-     *
-     * @generated from field: ListBookmarks listBookmarks = 13;
-     */
-    value: ListBookmarks;
-    case: "listBookmarks";
+    value: LoadSnapshot;
+    case: "loadSnapshot";
   } | {
     /**
      * store the current set of queries as bookmarks
      *
-     * @generated from field: StoreBookmark storeBookmark = 14;
+     * @generated from field: gateway.StoreBookmark storeBookmark = 14;
      */
     value: StoreBookmark;
     case: "storeBookmark";
@@ -119,24 +95,16 @@ export class GatewayRequest extends Message<GatewayRequest> {
     /**
      * load and execute a bookmark into the current state
      *
-     * @generated from field: LoadBookmark loadBookmark = 15;
-     */
-    value: LoadBookmark;
-    case: "loadBookmark";
-  } | {
-    /**
-     * delete a bookmark from the underlying storage
-     *
      * TODO: implement?
      * // cancel the loading of a Bookmark
      * CancelLoadBookmark cancelLoadBookmark = ??;
      * // undo the loading of a Bookmark
      * UndoLoadBookmark undoLoadBookmark = ??;
      *
-     * @generated from field: DeleteBookmark deleteBookmark = 16;
+     * @generated from field: gateway.LoadBookmark loadBookmark = 15;
      */
-    value: DeleteBookmark;
-    case: "deleteBookmark";
+    value: LoadBookmark;
+    case: "loadBookmark";
   } | { case: undefined; value?: undefined } = { case: undefined };
 
   /**
@@ -159,14 +127,10 @@ export class GatewayRequest extends Message<GatewayRequest> {
     { no: 4, name: "undoQuery", kind: "message", T: UndoQuery, oneof: "request_type" },
     { no: 7, name: "expand", kind: "message", T: Expand, oneof: "request_type" },
     { no: 8, name: "undoExpand", kind: "message", T: UndoExpand, oneof: "request_type" },
-    { no: 9, name: "listSnapshots", kind: "message", T: ListSnapshots, oneof: "request_type" },
     { no: 10, name: "storeSnapshot", kind: "message", T: StoreSnapshot, oneof: "request_type" },
     { no: 11, name: "loadSnapshot", kind: "message", T: LoadSnapshot, oneof: "request_type" },
-    { no: 12, name: "deleteSnapshot", kind: "message", T: DeleteSnapshot, oneof: "request_type" },
-    { no: 13, name: "listBookmarks", kind: "message", T: ListBookmarks, oneof: "request_type" },
     { no: 14, name: "storeBookmark", kind: "message", T: StoreBookmark, oneof: "request_type" },
     { no: 15, name: "loadBookmark", kind: "message", T: LoadBookmark, oneof: "request_type" },
-    { no: 16, name: "deleteBookmark", kind: "message", T: DeleteBookmark, oneof: "request_type" },
     { no: 2, name: "minStatusInterval", kind: "message", T: Duration, opt: true },
   ]);
 
@@ -264,52 +228,28 @@ export class GatewayResponse extends Message<GatewayResponse> {
     case: "updateItem";
   } | {
     /**
-     * @generated from field: SnapshotListResult snapshotListResult = 10;
-     */
-    value: SnapshotListResult;
-    case: "snapshotListResult";
-  } | {
-    /**
-     * @generated from field: SnapshotStoreResult snapshotStoreResult = 11;
+     * @generated from field: gateway.SnapshotStoreResult snapshotStoreResult = 11;
      */
     value: SnapshotStoreResult;
     case: "snapshotStoreResult";
   } | {
     /**
-     * @generated from field: SnapshotLoadResult snapshotLoadResult = 12;
+     * @generated from field: gateway.SnapshotLoadResult snapshotLoadResult = 12;
      */
     value: SnapshotLoadResult;
     case: "snapshotLoadResult";
   } | {
     /**
-     * @generated from field: SnapshotDeleteResult snapshotDeleteResult = 13;
-     */
-    value: SnapshotDeleteResult;
-    case: "snapshotDeleteResult";
-  } | {
-    /**
-     * @generated from field: BookmarkListResult bookmarkListResult = 14;
-     */
-    value: BookmarkListResult;
-    case: "bookmarkListResult";
-  } | {
-    /**
-     * @generated from field: BookmarkStoreResult bookmarkStoreResult = 15;
+     * @generated from field: gateway.BookmarkStoreResult bookmarkStoreResult = 15;
      */
     value: BookmarkStoreResult;
     case: "bookmarkStoreResult";
   } | {
     /**
-     * @generated from field: BookmarkLoadResult bookmarkLoadResult = 16;
+     * @generated from field: gateway.BookmarkLoadResult bookmarkLoadResult = 16;
      */
     value: BookmarkLoadResult;
     case: "bookmarkLoadResult";
-  } | {
-    /**
-     * @generated from field: BookmarkDeleteResult bookmarkDeleteResult = 17;
-     */
-    value: BookmarkDeleteResult;
-    case: "bookmarkDeleteResult";
   } | { case: undefined; value?: undefined } = { case: undefined };
 
   constructor(data?: PartialMessage<GatewayResponse>) {
@@ -328,14 +268,10 @@ export class GatewayResponse extends Message<GatewayResponse> {
     { no: 7, name: "deleteItem", kind: "message", T: Reference, oneof: "response_type" },
     { no: 8, name: "deleteEdge", kind: "message", T: Edge, oneof: "response_type" },
     { no: 9, name: "updateItem", kind: "message", T: Item, oneof: "response_type" },
-    { no: 10, name: "snapshotListResult", kind: "message", T: SnapshotListResult, oneof: "response_type" },
     { no: 11, name: "snapshotStoreResult", kind: "message", T: SnapshotStoreResult, oneof: "response_type" },
     { no: 12, name: "snapshotLoadResult", kind: "message", T: SnapshotLoadResult, oneof: "response_type" },
-    { no: 13, name: "snapshotDeleteResult", kind: "message", T: SnapshotDeleteResult, oneof: "response_type" },
-    { no: 14, name: "bookmarkListResult", kind: "message", T: BookmarkListResult, oneof: "response_type" },
     { no: 15, name: "bookmarkStoreResult", kind: "message", T: BookmarkStoreResult, oneof: "response_type" },
     { no: 16, name: "bookmarkLoadResult", kind: "message", T: BookmarkLoadResult, oneof: "response_type" },
-    { no: 17, name: "bookmarkDeleteResult", kind: "message", T: BookmarkDeleteResult, oneof: "response_type" },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GatewayResponse {
@@ -475,6 +411,378 @@ export class GatewayRequestStatus_Summary extends Message<GatewayRequestStatus_S
 
   static equals(a: GatewayRequestStatus_Summary | PlainMessage<GatewayRequestStatus_Summary> | undefined, b: GatewayRequestStatus_Summary | PlainMessage<GatewayRequestStatus_Summary> | undefined): boolean {
     return proto3.util.equals(GatewayRequestStatus_Summary, a, b);
+  }
+}
+
+/**
+ * Ask the gateway to store the current state as bookmark with the specified details.
+ * Returns a BookmarkStored message when the bookmark is stored
+ *
+ * @generated from message gateway.StoreBookmark
+ */
+export class StoreBookmark extends Message<StoreBookmark> {
+  /**
+   * user supplied name of this bookmark
+   *
+   * @generated from field: string name = 1;
+   */
+  name = "";
+
+  /**
+   * user supplied description of this bookmark
+   *
+   * @generated from field: string description = 2;
+   */
+  description = "";
+
+  constructor(data?: PartialMessage<StoreBookmark>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.StoreBookmark";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StoreBookmark {
+    return new StoreBookmark().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): StoreBookmark {
+    return new StoreBookmark().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): StoreBookmark {
+    return new StoreBookmark().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: StoreBookmark | PlainMessage<StoreBookmark> | undefined, b: StoreBookmark | PlainMessage<StoreBookmark> | undefined): boolean {
+    return proto3.util.equals(StoreBookmark, a, b);
+  }
+}
+
+/**
+ * After a bookmark is successfully stored, this reply with the new bookmark's details is sent.
+ *
+ * @generated from message gateway.BookmarkStoreResult
+ */
+export class BookmarkStoreResult extends Message<BookmarkStoreResult> {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success = false;
+
+  /**
+   * @generated from field: string errorMessage = 2;
+   */
+  errorMessage = "";
+
+  /**
+   * @generated from field: Bookmark bookmark = 3;
+   */
+  bookmark?: Bookmark;
+
+  constructor(data?: PartialMessage<BookmarkStoreResult>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.BookmarkStoreResult";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "bookmark", kind: "message", T: Bookmark },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): BookmarkStoreResult {
+    return new BookmarkStoreResult().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): BookmarkStoreResult {
+    return new BookmarkStoreResult().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): BookmarkStoreResult {
+    return new BookmarkStoreResult().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: BookmarkStoreResult | PlainMessage<BookmarkStoreResult> | undefined, b: BookmarkStoreResult | PlainMessage<BookmarkStoreResult> | undefined): boolean {
+    return proto3.util.equals(BookmarkStoreResult, a, b);
+  }
+}
+
+/**
+ * Ask the gateway to load the specified bookmark into the current state.
+ * Results are streamed to the client in the same way query results are.
+ *
+ * @generated from message gateway.LoadBookmark
+ */
+export class LoadBookmark extends Message<LoadBookmark> {
+  /**
+   * unique id of the bookmark to load
+   *
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<LoadBookmark>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.LoadBookmark";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): LoadBookmark {
+    return new LoadBookmark().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): LoadBookmark {
+    return new LoadBookmark().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): LoadBookmark {
+    return new LoadBookmark().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: LoadBookmark | PlainMessage<LoadBookmark> | undefined, b: LoadBookmark | PlainMessage<LoadBookmark> | undefined): boolean {
+    return proto3.util.equals(LoadBookmark, a, b);
+  }
+}
+
+/**
+ * @generated from message gateway.BookmarkLoadResult
+ */
+export class BookmarkLoadResult extends Message<BookmarkLoadResult> {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success = false;
+
+  /**
+   * @generated from field: string errorMessage = 2;
+   */
+  errorMessage = "";
+
+  constructor(data?: PartialMessage<BookmarkLoadResult>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.BookmarkLoadResult";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): BookmarkLoadResult {
+    return new BookmarkLoadResult().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): BookmarkLoadResult {
+    return new BookmarkLoadResult().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): BookmarkLoadResult {
+    return new BookmarkLoadResult().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: BookmarkLoadResult | PlainMessage<BookmarkLoadResult> | undefined, b: BookmarkLoadResult | PlainMessage<BookmarkLoadResult> | undefined): boolean {
+    return proto3.util.equals(BookmarkLoadResult, a, b);
+  }
+}
+
+/**
+ * Ask the gateway to store the current state as snapshot with the specified details.
+ * Returns a SnapshotStored message when the snapshot is stored
+ *
+ * @generated from message gateway.StoreSnapshot
+ */
+export class StoreSnapshot extends Message<StoreSnapshot> {
+  /**
+   * user supplied name of this snapshot
+   *
+   * @generated from field: string name = 1;
+   */
+  name = "";
+
+  /**
+   * user supplied description of this snapshot
+   *
+   * @generated from field: string description = 2;
+   */
+  description = "";
+
+  constructor(data?: PartialMessage<StoreSnapshot>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.StoreSnapshot";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StoreSnapshot {
+    return new StoreSnapshot().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): StoreSnapshot {
+    return new StoreSnapshot().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): StoreSnapshot {
+    return new StoreSnapshot().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: StoreSnapshot | PlainMessage<StoreSnapshot> | undefined, b: StoreSnapshot | PlainMessage<StoreSnapshot> | undefined): boolean {
+    return proto3.util.equals(StoreSnapshot, a, b);
+  }
+}
+
+/**
+ * After a snapshot is successfully stored, this reply with the new snapshot's details is sent.
+ *
+ * @generated from message gateway.SnapshotStoreResult
+ */
+export class SnapshotStoreResult extends Message<SnapshotStoreResult> {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success = false;
+
+  /**
+   * @generated from field: string errorMessage = 2;
+   */
+  errorMessage = "";
+
+  /**
+   * @generated from field: Snapshot snapshot = 3;
+   */
+  snapshot?: Snapshot;
+
+  constructor(data?: PartialMessage<SnapshotStoreResult>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.SnapshotStoreResult";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "snapshot", kind: "message", T: Snapshot },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SnapshotStoreResult {
+    return new SnapshotStoreResult().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SnapshotStoreResult {
+    return new SnapshotStoreResult().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SnapshotStoreResult {
+    return new SnapshotStoreResult().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SnapshotStoreResult | PlainMessage<SnapshotStoreResult> | undefined, b: SnapshotStoreResult | PlainMessage<SnapshotStoreResult> | undefined): boolean {
+    return proto3.util.equals(SnapshotStoreResult, a, b);
+  }
+}
+
+/**
+ * Ask the gateway to load the specified snapshot into the current state.
+ * Results are streamed to the client in the same way query results are.
+ *
+ * @generated from message gateway.LoadSnapshot
+ */
+export class LoadSnapshot extends Message<LoadSnapshot> {
+  /**
+   * unique id of the snapshot to load
+   *
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<LoadSnapshot>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.LoadSnapshot";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): LoadSnapshot {
+    return new LoadSnapshot().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): LoadSnapshot {
+    return new LoadSnapshot().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): LoadSnapshot {
+    return new LoadSnapshot().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: LoadSnapshot | PlainMessage<LoadSnapshot> | undefined, b: LoadSnapshot | PlainMessage<LoadSnapshot> | undefined): boolean {
+    return proto3.util.equals(LoadSnapshot, a, b);
+  }
+}
+
+/**
+ * @generated from message gateway.SnapshotLoadResult
+ */
+export class SnapshotLoadResult extends Message<SnapshotLoadResult> {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success = false;
+
+  /**
+   * @generated from field: string errorMessage = 2;
+   */
+  errorMessage = "";
+
+  constructor(data?: PartialMessage<SnapshotLoadResult>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.SnapshotLoadResult";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SnapshotLoadResult {
+    return new SnapshotLoadResult().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SnapshotLoadResult {
+    return new SnapshotLoadResult().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SnapshotLoadResult {
+    return new SnapshotLoadResult().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SnapshotLoadResult | PlainMessage<SnapshotLoadResult> | undefined, b: SnapshotLoadResult | PlainMessage<SnapshotLoadResult> | undefined): boolean {
+    return proto3.util.equals(SnapshotLoadResult, a, b);
   }
 }
 

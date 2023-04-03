@@ -120,1006 +120,6 @@ proto3.util.setEnumType(OnboardingStatus, "changes.OnboardingStatus", [
 ]);
 
 /**
- * @generated from message changes.ListAppRequest
- */
-export class ListAppRequest extends Message<ListAppRequest> {
-  constructor(data?: PartialMessage<ListAppRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.ListAppRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListAppRequest {
-    return new ListAppRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListAppRequest {
-    return new ListAppRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListAppRequest {
-    return new ListAppRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: ListAppRequest | PlainMessage<ListAppRequest> | undefined, b: ListAppRequest | PlainMessage<ListAppRequest> | undefined): boolean {
-    return proto3.util.equals(ListAppRequest, a, b);
-  }
-}
-
-/**
- * @generated from message changes.ListAppResponse
- */
-export class ListAppResponse extends Message<ListAppResponse> {
-  /**
-   * @generated from field: repeated changes.App response = 1;
-   */
-  response: App[] = [];
-
-  constructor(data?: PartialMessage<ListAppResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.ListAppResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "response", kind: "message", T: App, repeated: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListAppResponse {
-    return new ListAppResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListAppResponse {
-    return new ListAppResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListAppResponse {
-    return new ListAppResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: ListAppResponse | PlainMessage<ListAppResponse> | undefined, b: ListAppResponse | PlainMessage<ListAppResponse> | undefined): boolean {
-    return proto3.util.equals(ListAppResponse, a, b);
-  }
-}
-
-/**
- * @generated from message changes.CreateAppRequest
- */
-export class CreateAppRequest extends Message<CreateAppRequest> {
-  /**
-   * @generated from field: changes.AppProperties newApp = 1;
-   */
-  newApp?: AppProperties;
-
-  constructor(data?: PartialMessage<CreateAppRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.CreateAppRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "newApp", kind: "message", T: AppProperties },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateAppRequest {
-    return new CreateAppRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateAppRequest {
-    return new CreateAppRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateAppRequest {
-    return new CreateAppRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: CreateAppRequest | PlainMessage<CreateAppRequest> | undefined, b: CreateAppRequest | PlainMessage<CreateAppRequest> | undefined): boolean {
-    return proto3.util.equals(CreateAppRequest, a, b);
-  }
-}
-
-/**
- * @generated from message changes.CreateAppResponse
- */
-export class CreateAppResponse extends Message<CreateAppResponse> {
-  /**
-   * @generated from field: changes.App response = 1;
-   */
-  response?: App;
-
-  constructor(data?: PartialMessage<CreateAppResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.CreateAppResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "response", kind: "message", T: App },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateAppResponse {
-    return new CreateAppResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateAppResponse {
-    return new CreateAppResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateAppResponse {
-    return new CreateAppResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: CreateAppResponse | PlainMessage<CreateAppResponse> | undefined, b: CreateAppResponse | PlainMessage<CreateAppResponse> | undefined): boolean {
-    return proto3.util.equals(CreateAppResponse, a, b);
-  }
-}
-
-/**
- * @generated from message changes.GetAppRequest
- */
-export class GetAppRequest extends Message<GetAppRequest> {
-  /**
-   * @generated from field: bytes UUID = 1;
-   */
-  UUID = new Uint8Array(0);
-
-  constructor(data?: PartialMessage<GetAppRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.GetAppRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAppRequest {
-    return new GetAppRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAppRequest {
-    return new GetAppRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAppRequest {
-    return new GetAppRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: GetAppRequest | PlainMessage<GetAppRequest> | undefined, b: GetAppRequest | PlainMessage<GetAppRequest> | undefined): boolean {
-    return proto3.util.equals(GetAppRequest, a, b);
-  }
-}
-
-/**
- * @generated from message changes.GetAppResponse
- */
-export class GetAppResponse extends Message<GetAppResponse> {
-  /**
-   * @generated from field: changes.App response = 1;
-   */
-  response?: App;
-
-  constructor(data?: PartialMessage<GetAppResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.GetAppResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "response", kind: "message", T: App },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAppResponse {
-    return new GetAppResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAppResponse {
-    return new GetAppResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAppResponse {
-    return new GetAppResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: GetAppResponse | PlainMessage<GetAppResponse> | undefined, b: GetAppResponse | PlainMessage<GetAppResponse> | undefined): boolean {
-    return proto3.util.equals(GetAppResponse, a, b);
-  }
-}
-
-/**
- * @generated from message changes.UpdateAppRequest
- */
-export class UpdateAppRequest extends Message<UpdateAppRequest> {
-  /**
-   * @generated from field: bytes UUID = 1;
-   */
-  UUID = new Uint8Array(0);
-
-  /**
-   * @generated from field: changes.AppProperties newAppProperties = 2;
-   */
-  newAppProperties?: AppProperties;
-
-  constructor(data?: PartialMessage<UpdateAppRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.UpdateAppRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-    { no: 2, name: "newAppProperties", kind: "message", T: AppProperties },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateAppRequest {
-    return new UpdateAppRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateAppRequest {
-    return new UpdateAppRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateAppRequest {
-    return new UpdateAppRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: UpdateAppRequest | PlainMessage<UpdateAppRequest> | undefined, b: UpdateAppRequest | PlainMessage<UpdateAppRequest> | undefined): boolean {
-    return proto3.util.equals(UpdateAppRequest, a, b);
-  }
-}
-
-/**
- * @generated from message changes.UpdateAppResponse
- */
-export class UpdateAppResponse extends Message<UpdateAppResponse> {
-  /**
-   * @generated from field: changes.App response = 1;
-   */
-  response?: App;
-
-  constructor(data?: PartialMessage<UpdateAppResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.UpdateAppResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "response", kind: "message", T: App },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateAppResponse {
-    return new UpdateAppResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateAppResponse {
-    return new UpdateAppResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateAppResponse {
-    return new UpdateAppResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: UpdateAppResponse | PlainMessage<UpdateAppResponse> | undefined, b: UpdateAppResponse | PlainMessage<UpdateAppResponse> | undefined): boolean {
-    return proto3.util.equals(UpdateAppResponse, a, b);
-  }
-}
-
-/**
- * @generated from message changes.DeleteAppRequest
- */
-export class DeleteAppRequest extends Message<DeleteAppRequest> {
-  /**
-   * @generated from field: bytes UUID = 1;
-   */
-  UUID = new Uint8Array(0);
-
-  constructor(data?: PartialMessage<DeleteAppRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.DeleteAppRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteAppRequest {
-    return new DeleteAppRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteAppRequest {
-    return new DeleteAppRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteAppRequest {
-    return new DeleteAppRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: DeleteAppRequest | PlainMessage<DeleteAppRequest> | undefined, b: DeleteAppRequest | PlainMessage<DeleteAppRequest> | undefined): boolean {
-    return proto3.util.equals(DeleteAppRequest, a, b);
-  }
-}
-
-/**
- * @generated from message changes.DeleteAppResponse
- */
-export class DeleteAppResponse extends Message<DeleteAppResponse> {
-  constructor(data?: PartialMessage<DeleteAppResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.DeleteAppResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteAppResponse {
-    return new DeleteAppResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteAppResponse {
-    return new DeleteAppResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteAppResponse {
-    return new DeleteAppResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: DeleteAppResponse | PlainMessage<DeleteAppResponse> | undefined, b: DeleteAppResponse | PlainMessage<DeleteAppResponse> | undefined): boolean {
-    return proto3.util.equals(DeleteAppResponse, a, b);
-  }
-}
-
-/**
- * @generated from message changes.ListChangeRequest
- */
-export class ListChangeRequest extends Message<ListChangeRequest> {
-  constructor(data?: PartialMessage<ListChangeRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.ListChangeRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListChangeRequest {
-    return new ListChangeRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListChangeRequest {
-    return new ListChangeRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListChangeRequest {
-    return new ListChangeRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: ListChangeRequest | PlainMessage<ListChangeRequest> | undefined, b: ListChangeRequest | PlainMessage<ListChangeRequest> | undefined): boolean {
-    return proto3.util.equals(ListChangeRequest, a, b);
-  }
-}
-
-/**
- * @generated from message changes.ListChangeResponse
- */
-export class ListChangeResponse extends Message<ListChangeResponse> {
-  /**
-   * @generated from field: repeated changes.Change response = 1;
-   */
-  response: Change[] = [];
-
-  constructor(data?: PartialMessage<ListChangeResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.ListChangeResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "response", kind: "message", T: Change, repeated: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListChangeResponse {
-    return new ListChangeResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListChangeResponse {
-    return new ListChangeResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListChangeResponse {
-    return new ListChangeResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: ListChangeResponse | PlainMessage<ListChangeResponse> | undefined, b: ListChangeResponse | PlainMessage<ListChangeResponse> | undefined): boolean {
-    return proto3.util.equals(ListChangeResponse, a, b);
-  }
-}
-
-/**
- * @generated from message changes.CreateChangeRequest
- */
-export class CreateChangeRequest extends Message<CreateChangeRequest> {
-  /**
-   * @generated from field: changes.ChangeProperties newChange = 1;
-   */
-  newChange?: ChangeProperties;
-
-  constructor(data?: PartialMessage<CreateChangeRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.CreateChangeRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "newChange", kind: "message", T: ChangeProperties },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateChangeRequest {
-    return new CreateChangeRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateChangeRequest {
-    return new CreateChangeRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateChangeRequest {
-    return new CreateChangeRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: CreateChangeRequest | PlainMessage<CreateChangeRequest> | undefined, b: CreateChangeRequest | PlainMessage<CreateChangeRequest> | undefined): boolean {
-    return proto3.util.equals(CreateChangeRequest, a, b);
-  }
-}
-
-/**
- * @generated from message changes.CreateChangeResponse
- */
-export class CreateChangeResponse extends Message<CreateChangeResponse> {
-  /**
-   * @generated from field: changes.Change response = 1;
-   */
-  response?: Change;
-
-  constructor(data?: PartialMessage<CreateChangeResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.CreateChangeResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "response", kind: "message", T: Change },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateChangeResponse {
-    return new CreateChangeResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateChangeResponse {
-    return new CreateChangeResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateChangeResponse {
-    return new CreateChangeResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: CreateChangeResponse | PlainMessage<CreateChangeResponse> | undefined, b: CreateChangeResponse | PlainMessage<CreateChangeResponse> | undefined): boolean {
-    return proto3.util.equals(CreateChangeResponse, a, b);
-  }
-}
-
-/**
- * @generated from message changes.GetChangeRequest
- */
-export class GetChangeRequest extends Message<GetChangeRequest> {
-  /**
-   * @generated from field: bytes UUID = 1;
-   */
-  UUID = new Uint8Array(0);
-
-  constructor(data?: PartialMessage<GetChangeRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.GetChangeRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangeRequest {
-    return new GetChangeRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangeRequest {
-    return new GetChangeRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangeRequest {
-    return new GetChangeRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: GetChangeRequest | PlainMessage<GetChangeRequest> | undefined, b: GetChangeRequest | PlainMessage<GetChangeRequest> | undefined): boolean {
-    return proto3.util.equals(GetChangeRequest, a, b);
-  }
-}
-
-/**
- * @generated from message changes.GetChangeResponse
- */
-export class GetChangeResponse extends Message<GetChangeResponse> {
-  /**
-   * @generated from field: changes.Change response = 1;
-   */
-  response?: Change;
-
-  constructor(data?: PartialMessage<GetChangeResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.GetChangeResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "response", kind: "message", T: Change },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangeResponse {
-    return new GetChangeResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangeResponse {
-    return new GetChangeResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangeResponse {
-    return new GetChangeResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: GetChangeResponse | PlainMessage<GetChangeResponse> | undefined, b: GetChangeResponse | PlainMessage<GetChangeResponse> | undefined): boolean {
-    return proto3.util.equals(GetChangeResponse, a, b);
-  }
-}
-
-/**
- * @generated from message changes.UpdateChangeRequest
- */
-export class UpdateChangeRequest extends Message<UpdateChangeRequest> {
-  /**
-   * @generated from field: bytes UUID = 1;
-   */
-  UUID = new Uint8Array(0);
-
-  /**
-   * @generated from field: changes.ChangeProperties newChangeProperties = 2;
-   */
-  newChangeProperties?: ChangeProperties;
-
-  constructor(data?: PartialMessage<UpdateChangeRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.UpdateChangeRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-    { no: 2, name: "newChangeProperties", kind: "message", T: ChangeProperties },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateChangeRequest {
-    return new UpdateChangeRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateChangeRequest {
-    return new UpdateChangeRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateChangeRequest {
-    return new UpdateChangeRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: UpdateChangeRequest | PlainMessage<UpdateChangeRequest> | undefined, b: UpdateChangeRequest | PlainMessage<UpdateChangeRequest> | undefined): boolean {
-    return proto3.util.equals(UpdateChangeRequest, a, b);
-  }
-}
-
-/**
- * @generated from message changes.UpdateChangeResponse
- */
-export class UpdateChangeResponse extends Message<UpdateChangeResponse> {
-  /**
-   * @generated from field: changes.Change response = 1;
-   */
-  response?: Change;
-
-  constructor(data?: PartialMessage<UpdateChangeResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.UpdateChangeResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "response", kind: "message", T: Change },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateChangeResponse {
-    return new UpdateChangeResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateChangeResponse {
-    return new UpdateChangeResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateChangeResponse {
-    return new UpdateChangeResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: UpdateChangeResponse | PlainMessage<UpdateChangeResponse> | undefined, b: UpdateChangeResponse | PlainMessage<UpdateChangeResponse> | undefined): boolean {
-    return proto3.util.equals(UpdateChangeResponse, a, b);
-  }
-}
-
-/**
- * @generated from message changes.DeleteChangeRequest
- */
-export class DeleteChangeRequest extends Message<DeleteChangeRequest> {
-  /**
-   * @generated from field: bytes UUID = 1;
-   */
-  UUID = new Uint8Array(0);
-
-  constructor(data?: PartialMessage<DeleteChangeRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.DeleteChangeRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteChangeRequest {
-    return new DeleteChangeRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteChangeRequest {
-    return new DeleteChangeRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteChangeRequest {
-    return new DeleteChangeRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: DeleteChangeRequest | PlainMessage<DeleteChangeRequest> | undefined, b: DeleteChangeRequest | PlainMessage<DeleteChangeRequest> | undefined): boolean {
-    return proto3.util.equals(DeleteChangeRequest, a, b);
-  }
-}
-
-/**
- * @generated from message changes.DeleteChangeResponse
- */
-export class DeleteChangeResponse extends Message<DeleteChangeResponse> {
-  constructor(data?: PartialMessage<DeleteChangeResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.DeleteChangeResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteChangeResponse {
-    return new DeleteChangeResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteChangeResponse {
-    return new DeleteChangeResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteChangeResponse {
-    return new DeleteChangeResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: DeleteChangeResponse | PlainMessage<DeleteChangeResponse> | undefined, b: DeleteChangeResponse | PlainMessage<DeleteChangeResponse> | undefined): boolean {
-    return proto3.util.equals(DeleteChangeResponse, a, b);
-  }
-}
-
-/**
- * @generated from message changes.GetOnboardingRequest
- */
-export class GetOnboardingRequest extends Message<GetOnboardingRequest> {
-  constructor(data?: PartialMessage<GetOnboardingRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.GetOnboardingRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetOnboardingRequest {
-    return new GetOnboardingRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetOnboardingRequest {
-    return new GetOnboardingRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetOnboardingRequest {
-    return new GetOnboardingRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: GetOnboardingRequest | PlainMessage<GetOnboardingRequest> | undefined, b: GetOnboardingRequest | PlainMessage<GetOnboardingRequest> | undefined): boolean {
-    return proto3.util.equals(GetOnboardingRequest, a, b);
-  }
-}
-
-/**
- * @generated from message changes.GetOnboardingResponse
- */
-export class GetOnboardingResponse extends Message<GetOnboardingResponse> {
-  /**
-   * @generated from field: changes.Onboarding response = 1;
-   */
-  response?: Onboarding;
-
-  constructor(data?: PartialMessage<GetOnboardingResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.GetOnboardingResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "response", kind: "message", T: Onboarding },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetOnboardingResponse {
-    return new GetOnboardingResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetOnboardingResponse {
-    return new GetOnboardingResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetOnboardingResponse {
-    return new GetOnboardingResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: GetOnboardingResponse | PlainMessage<GetOnboardingResponse> | undefined, b: GetOnboardingResponse | PlainMessage<GetOnboardingResponse> | undefined): boolean {
-    return proto3.util.equals(GetOnboardingResponse, a, b);
-  }
-}
-
-/**
- * @generated from message changes.UpdateOnboardingRequest
- */
-export class UpdateOnboardingRequest extends Message<UpdateOnboardingRequest> {
-  /**
-   * @generated from field: changes.OnboardingProperties newOnboardingProperties = 2;
-   */
-  newOnboardingProperties?: OnboardingProperties;
-
-  constructor(data?: PartialMessage<UpdateOnboardingRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.UpdateOnboardingRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 2, name: "newOnboardingProperties", kind: "message", T: OnboardingProperties },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateOnboardingRequest {
-    return new UpdateOnboardingRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateOnboardingRequest {
-    return new UpdateOnboardingRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateOnboardingRequest {
-    return new UpdateOnboardingRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: UpdateOnboardingRequest | PlainMessage<UpdateOnboardingRequest> | undefined, b: UpdateOnboardingRequest | PlainMessage<UpdateOnboardingRequest> | undefined): boolean {
-    return proto3.util.equals(UpdateOnboardingRequest, a, b);
-  }
-}
-
-/**
- * @generated from message changes.UpdateOnboardingResponse
- */
-export class UpdateOnboardingResponse extends Message<UpdateOnboardingResponse> {
-  /**
-   * @generated from field: changes.Onboarding response = 1;
-   */
-  response?: Onboarding;
-
-  constructor(data?: PartialMessage<UpdateOnboardingResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.UpdateOnboardingResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "response", kind: "message", T: Onboarding },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateOnboardingResponse {
-    return new UpdateOnboardingResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateOnboardingResponse {
-    return new UpdateOnboardingResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateOnboardingResponse {
-    return new UpdateOnboardingResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: UpdateOnboardingResponse | PlainMessage<UpdateOnboardingResponse> | undefined, b: UpdateOnboardingResponse | PlainMessage<UpdateOnboardingResponse> | undefined): boolean {
-    return proto3.util.equals(UpdateOnboardingResponse, a, b);
-  }
-}
-
-/**
- * @generated from message changes.GetChangesHomeRequest
- */
-export class GetChangesHomeRequest extends Message<GetChangesHomeRequest> {
-  constructor(data?: PartialMessage<GetChangesHomeRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.GetChangesHomeRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangesHomeRequest {
-    return new GetChangesHomeRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangesHomeRequest {
-    return new GetChangesHomeRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangesHomeRequest {
-    return new GetChangesHomeRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: GetChangesHomeRequest | PlainMessage<GetChangesHomeRequest> | undefined, b: GetChangesHomeRequest | PlainMessage<GetChangesHomeRequest> | undefined): boolean {
-    return proto3.util.equals(GetChangesHomeRequest, a, b);
-  }
-}
-
-/**
- * @generated from message changes.GetChangesHomeResponse
- */
-export class GetChangesHomeResponse extends Message<GetChangesHomeResponse> {
-  /**
-   * @generated from oneof changes.GetChangesHomeResponse.data
-   */
-  data: {
-    /**
-     * @generated from field: changes.GetChangesHomeData changesHome = 1;
-     */
-    value: GetChangesHomeData;
-    case: "changesHome";
-  } | {
-    /**
-     * @generated from field: changes.Onboarding onboarding = 2;
-     */
-    value: Onboarding;
-    case: "onboarding";
-  } | { case: undefined; value?: undefined } = { case: undefined };
-
-  constructor(data?: PartialMessage<GetChangesHomeResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.GetChangesHomeResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "changesHome", kind: "message", T: GetChangesHomeData, oneof: "data" },
-    { no: 2, name: "onboarding", kind: "message", T: Onboarding, oneof: "data" },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangesHomeResponse {
-    return new GetChangesHomeResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangesHomeResponse {
-    return new GetChangesHomeResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangesHomeResponse {
-    return new GetChangesHomeResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: GetChangesHomeResponse | PlainMessage<GetChangesHomeResponse> | undefined, b: GetChangesHomeResponse | PlainMessage<GetChangesHomeResponse> | undefined): boolean {
-    return proto3.util.equals(GetChangesHomeResponse, a, b);
-  }
-}
-
-/**
- * @generated from message changes.GetChangesHomeData
- */
-export class GetChangesHomeData extends Message<GetChangesHomeData> {
-  /**
-   * @generated from field: string owner = 1;
-   */
-  owner = "";
-
-  /**
-   * @generated from field: repeated changes.Change recentChanges = 2;
-   */
-  recentChanges: Change[] = [];
-
-  /**
-   * @generated from field: repeated changes.App recentApps = 3;
-   */
-  recentApps: App[] = [];
-
-  constructor(data?: PartialMessage<GetChangesHomeData>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "changes.GetChangesHomeData";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "owner", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "recentChanges", kind: "message", T: Change, repeated: true },
-    { no: 3, name: "recentApps", kind: "message", T: App, repeated: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangesHomeData {
-    return new GetChangesHomeData().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangesHomeData {
-    return new GetChangesHomeData().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangesHomeData {
-    return new GetChangesHomeData().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: GetChangesHomeData | PlainMessage<GetChangesHomeData> | undefined, b: GetChangesHomeData | PlainMessage<GetChangesHomeData> | undefined): boolean {
-    return proto3.util.equals(GetChangesHomeData, a, b);
-  }
-}
-
-/**
  * a complete App with machine-supplied and user-supplied values
  *
  * @generated from message changes.App
@@ -1289,6 +289,380 @@ export class AppProperties extends Message<AppProperties> {
 
   static equals(a: AppProperties | PlainMessage<AppProperties> | undefined, b: AppProperties | PlainMessage<AppProperties> | undefined): boolean {
     return proto3.util.equals(AppProperties, a, b);
+  }
+}
+
+/**
+ * list all apps
+ *
+ * @generated from message changes.ListAppsRequest
+ */
+export class ListAppsRequest extends Message<ListAppsRequest> {
+  constructor(data?: PartialMessage<ListAppsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListAppsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListAppsRequest {
+    return new ListAppsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListAppsRequest {
+    return new ListAppsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListAppsRequest {
+    return new ListAppsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListAppsRequest | PlainMessage<ListAppsRequest> | undefined, b: ListAppsRequest | PlainMessage<ListAppsRequest> | undefined): boolean {
+    return proto3.util.equals(ListAppsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ListAppsResponse
+ */
+export class ListAppsResponse extends Message<ListAppsResponse> {
+  /**
+   * @generated from field: repeated changes.App apps = 1;
+   */
+  apps: App[] = [];
+
+  constructor(data?: PartialMessage<ListAppsResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListAppsResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "apps", kind: "message", T: App, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListAppsResponse {
+    return new ListAppsResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListAppsResponse {
+    return new ListAppsResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListAppsResponse {
+    return new ListAppsResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListAppsResponse | PlainMessage<ListAppsResponse> | undefined, b: ListAppsResponse | PlainMessage<ListAppsResponse> | undefined): boolean {
+    return proto3.util.equals(ListAppsResponse, a, b);
+  }
+}
+
+/**
+ * create a new app
+ *
+ * @generated from message changes.CreateAppRequest
+ */
+export class CreateAppRequest extends Message<CreateAppRequest> {
+  /**
+   * @generated from field: changes.AppProperties properties = 1;
+   */
+  properties?: AppProperties;
+
+  constructor(data?: PartialMessage<CreateAppRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.CreateAppRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "properties", kind: "message", T: AppProperties },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateAppRequest {
+    return new CreateAppRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateAppRequest {
+    return new CreateAppRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateAppRequest {
+    return new CreateAppRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateAppRequest | PlainMessage<CreateAppRequest> | undefined, b: CreateAppRequest | PlainMessage<CreateAppRequest> | undefined): boolean {
+    return proto3.util.equals(CreateAppRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.CreateAppResponse
+ */
+export class CreateAppResponse extends Message<CreateAppResponse> {
+  /**
+   * @generated from field: changes.App app = 1;
+   */
+  app?: App;
+
+  constructor(data?: PartialMessage<CreateAppResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.CreateAppResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "app", kind: "message", T: App },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateAppResponse {
+    return new CreateAppResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateAppResponse {
+    return new CreateAppResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateAppResponse {
+    return new CreateAppResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateAppResponse | PlainMessage<CreateAppResponse> | undefined, b: CreateAppResponse | PlainMessage<CreateAppResponse> | undefined): boolean {
+    return proto3.util.equals(CreateAppResponse, a, b);
+  }
+}
+
+/**
+ * get the details of an existing app
+ *
+ * @generated from message changes.GetAppRequest
+ */
+export class GetAppRequest extends Message<GetAppRequest> {
+  /**
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<GetAppRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetAppRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAppRequest {
+    return new GetAppRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAppRequest {
+    return new GetAppRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAppRequest {
+    return new GetAppRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetAppRequest | PlainMessage<GetAppRequest> | undefined, b: GetAppRequest | PlainMessage<GetAppRequest> | undefined): boolean {
+    return proto3.util.equals(GetAppRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetAppResponse
+ */
+export class GetAppResponse extends Message<GetAppResponse> {
+  /**
+   * @generated from field: changes.App app = 1;
+   */
+  app?: App;
+
+  constructor(data?: PartialMessage<GetAppResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetAppResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "app", kind: "message", T: App },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAppResponse {
+    return new GetAppResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAppResponse {
+    return new GetAppResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAppResponse {
+    return new GetAppResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetAppResponse | PlainMessage<GetAppResponse> | undefined, b: GetAppResponse | PlainMessage<GetAppResponse> | undefined): boolean {
+    return proto3.util.equals(GetAppResponse, a, b);
+  }
+}
+
+/**
+ * update an expsting app
+ *
+ * @generated from message changes.UpdateAppRequest
+ */
+export class UpdateAppRequest extends Message<UpdateAppRequest> {
+  /**
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  /**
+   * @generated from field: changes.AppProperties properties = 2;
+   */
+  properties?: AppProperties;
+
+  constructor(data?: PartialMessage<UpdateAppRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.UpdateAppRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "properties", kind: "message", T: AppProperties },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateAppRequest {
+    return new UpdateAppRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateAppRequest {
+    return new UpdateAppRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateAppRequest {
+    return new UpdateAppRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateAppRequest | PlainMessage<UpdateAppRequest> | undefined, b: UpdateAppRequest | PlainMessage<UpdateAppRequest> | undefined): boolean {
+    return proto3.util.equals(UpdateAppRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.UpdateAppResponse
+ */
+export class UpdateAppResponse extends Message<UpdateAppResponse> {
+  /**
+   * @generated from field: changes.App app = 1;
+   */
+  app?: App;
+
+  constructor(data?: PartialMessage<UpdateAppResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.UpdateAppResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "app", kind: "message", T: App },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateAppResponse {
+    return new UpdateAppResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateAppResponse {
+    return new UpdateAppResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateAppResponse {
+    return new UpdateAppResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateAppResponse | PlainMessage<UpdateAppResponse> | undefined, b: UpdateAppResponse | PlainMessage<UpdateAppResponse> | undefined): boolean {
+    return proto3.util.equals(UpdateAppResponse, a, b);
+  }
+}
+
+/**
+ * delete an app
+ *
+ * @generated from message changes.DeleteAppRequest
+ */
+export class DeleteAppRequest extends Message<DeleteAppRequest> {
+  /**
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<DeleteAppRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.DeleteAppRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteAppRequest {
+    return new DeleteAppRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteAppRequest {
+    return new DeleteAppRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteAppRequest {
+    return new DeleteAppRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteAppRequest | PlainMessage<DeleteAppRequest> | undefined, b: DeleteAppRequest | PlainMessage<DeleteAppRequest> | undefined): boolean {
+    return proto3.util.equals(DeleteAppRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.DeleteAppResponse
+ */
+export class DeleteAppResponse extends Message<DeleteAppResponse> {
+  constructor(data?: PartialMessage<DeleteAppResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.DeleteAppResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteAppResponse {
+    return new DeleteAppResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteAppResponse {
+    return new DeleteAppResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteAppResponse {
+    return new DeleteAppResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteAppResponse | PlainMessage<DeleteAppResponse> | undefined, b: DeleteAppResponse | PlainMessage<DeleteAppResponse> | undefined): boolean {
+    return proto3.util.equals(DeleteAppResponse, a, b);
   }
 }
 
@@ -1509,6 +883,380 @@ export class ChangeProperties extends Message<ChangeProperties> {
 }
 
 /**
+ * list all changes
+ *
+ * @generated from message changes.ListChangesRequest
+ */
+export class ListChangesRequest extends Message<ListChangesRequest> {
+  constructor(data?: PartialMessage<ListChangesRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListChangesRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListChangesRequest {
+    return new ListChangesRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListChangesRequest {
+    return new ListChangesRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListChangesRequest {
+    return new ListChangesRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListChangesRequest | PlainMessage<ListChangesRequest> | undefined, b: ListChangesRequest | PlainMessage<ListChangesRequest> | undefined): boolean {
+    return proto3.util.equals(ListChangesRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ListChangesResponse
+ */
+export class ListChangesResponse extends Message<ListChangesResponse> {
+  /**
+   * @generated from field: repeated changes.Change changes = 1;
+   */
+  changes: Change[] = [];
+
+  constructor(data?: PartialMessage<ListChangesResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListChangesResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changes", kind: "message", T: Change, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListChangesResponse {
+    return new ListChangesResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListChangesResponse {
+    return new ListChangesResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListChangesResponse {
+    return new ListChangesResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListChangesResponse | PlainMessage<ListChangesResponse> | undefined, b: ListChangesResponse | PlainMessage<ListChangesResponse> | undefined): boolean {
+    return proto3.util.equals(ListChangesResponse, a, b);
+  }
+}
+
+/**
+ * create a new change
+ *
+ * @generated from message changes.CreateChangeRequest
+ */
+export class CreateChangeRequest extends Message<CreateChangeRequest> {
+  /**
+   * @generated from field: changes.ChangeProperties properties = 1;
+   */
+  properties?: ChangeProperties;
+
+  constructor(data?: PartialMessage<CreateChangeRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.CreateChangeRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "properties", kind: "message", T: ChangeProperties },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateChangeRequest {
+    return new CreateChangeRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateChangeRequest {
+    return new CreateChangeRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateChangeRequest {
+    return new CreateChangeRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateChangeRequest | PlainMessage<CreateChangeRequest> | undefined, b: CreateChangeRequest | PlainMessage<CreateChangeRequest> | undefined): boolean {
+    return proto3.util.equals(CreateChangeRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.CreateChangeResponse
+ */
+export class CreateChangeResponse extends Message<CreateChangeResponse> {
+  /**
+   * @generated from field: changes.Change change = 1;
+   */
+  change?: Change;
+
+  constructor(data?: PartialMessage<CreateChangeResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.CreateChangeResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "change", kind: "message", T: Change },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateChangeResponse {
+    return new CreateChangeResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateChangeResponse {
+    return new CreateChangeResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateChangeResponse {
+    return new CreateChangeResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateChangeResponse | PlainMessage<CreateChangeResponse> | undefined, b: CreateChangeResponse | PlainMessage<CreateChangeResponse> | undefined): boolean {
+    return proto3.util.equals(CreateChangeResponse, a, b);
+  }
+}
+
+/**
+ * get the details of a specific change
+ *
+ * @generated from message changes.GetChangeRequest
+ */
+export class GetChangeRequest extends Message<GetChangeRequest> {
+  /**
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<GetChangeRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetChangeRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangeRequest {
+    return new GetChangeRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangeRequest {
+    return new GetChangeRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangeRequest {
+    return new GetChangeRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChangeRequest | PlainMessage<GetChangeRequest> | undefined, b: GetChangeRequest | PlainMessage<GetChangeRequest> | undefined): boolean {
+    return proto3.util.equals(GetChangeRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetChangeResponse
+ */
+export class GetChangeResponse extends Message<GetChangeResponse> {
+  /**
+   * @generated from field: changes.Change change = 1;
+   */
+  change?: Change;
+
+  constructor(data?: PartialMessage<GetChangeResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetChangeResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "change", kind: "message", T: Change },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangeResponse {
+    return new GetChangeResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangeResponse {
+    return new GetChangeResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangeResponse {
+    return new GetChangeResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChangeResponse | PlainMessage<GetChangeResponse> | undefined, b: GetChangeResponse | PlainMessage<GetChangeResponse> | undefined): boolean {
+    return proto3.util.equals(GetChangeResponse, a, b);
+  }
+}
+
+/**
+ * update an existing change
+ *
+ * @generated from message changes.UpdateChangeRequest
+ */
+export class UpdateChangeRequest extends Message<UpdateChangeRequest> {
+  /**
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  /**
+   * @generated from field: changes.ChangeProperties properties = 2;
+   */
+  properties?: ChangeProperties;
+
+  constructor(data?: PartialMessage<UpdateChangeRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.UpdateChangeRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "properties", kind: "message", T: ChangeProperties },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateChangeRequest {
+    return new UpdateChangeRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateChangeRequest {
+    return new UpdateChangeRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateChangeRequest {
+    return new UpdateChangeRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateChangeRequest | PlainMessage<UpdateChangeRequest> | undefined, b: UpdateChangeRequest | PlainMessage<UpdateChangeRequest> | undefined): boolean {
+    return proto3.util.equals(UpdateChangeRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.UpdateChangeResponse
+ */
+export class UpdateChangeResponse extends Message<UpdateChangeResponse> {
+  /**
+   * @generated from field: changes.Change change = 1;
+   */
+  change?: Change;
+
+  constructor(data?: PartialMessage<UpdateChangeResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.UpdateChangeResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "change", kind: "message", T: Change },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateChangeResponse {
+    return new UpdateChangeResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateChangeResponse {
+    return new UpdateChangeResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateChangeResponse {
+    return new UpdateChangeResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateChangeResponse | PlainMessage<UpdateChangeResponse> | undefined, b: UpdateChangeResponse | PlainMessage<UpdateChangeResponse> | undefined): boolean {
+    return proto3.util.equals(UpdateChangeResponse, a, b);
+  }
+}
+
+/**
+ * delete a change
+ *
+ * @generated from message changes.DeleteChangeRequest
+ */
+export class DeleteChangeRequest extends Message<DeleteChangeRequest> {
+  /**
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<DeleteChangeRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.DeleteChangeRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteChangeRequest {
+    return new DeleteChangeRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteChangeRequest {
+    return new DeleteChangeRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteChangeRequest {
+    return new DeleteChangeRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteChangeRequest | PlainMessage<DeleteChangeRequest> | undefined, b: DeleteChangeRequest | PlainMessage<DeleteChangeRequest> | undefined): boolean {
+    return proto3.util.equals(DeleteChangeRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.DeleteChangeResponse
+ */
+export class DeleteChangeResponse extends Message<DeleteChangeResponse> {
+  constructor(data?: PartialMessage<DeleteChangeResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.DeleteChangeResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteChangeResponse {
+    return new DeleteChangeResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteChangeResponse {
+    return new DeleteChangeResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteChangeResponse {
+    return new DeleteChangeResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteChangeResponse | PlainMessage<DeleteChangeResponse> | undefined, b: DeleteChangeResponse | PlainMessage<DeleteChangeResponse> | undefined): boolean {
+    return proto3.util.equals(DeleteChangeResponse, a, b);
+  }
+}
+
+/**
  * complete Onboarding information with machine-supplied and user-supplied values
  *
  * @generated from message changes.Onboarding
@@ -1660,6 +1408,282 @@ export class OnboardingProperties extends Message<OnboardingProperties> {
 
   static equals(a: OnboardingProperties | PlainMessage<OnboardingProperties> | undefined, b: OnboardingProperties | PlainMessage<OnboardingProperties> | undefined): boolean {
     return proto3.util.equals(OnboardingProperties, a, b);
+  }
+}
+
+/**
+ * get the onboarding status
+ *
+ * @generated from message changes.GetOnboardingRequest
+ */
+export class GetOnboardingRequest extends Message<GetOnboardingRequest> {
+  constructor(data?: PartialMessage<GetOnboardingRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetOnboardingRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetOnboardingRequest {
+    return new GetOnboardingRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetOnboardingRequest {
+    return new GetOnboardingRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetOnboardingRequest {
+    return new GetOnboardingRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetOnboardingRequest | PlainMessage<GetOnboardingRequest> | undefined, b: GetOnboardingRequest | PlainMessage<GetOnboardingRequest> | undefined): boolean {
+    return proto3.util.equals(GetOnboardingRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetOnboardingResponse
+ */
+export class GetOnboardingResponse extends Message<GetOnboardingResponse> {
+  /**
+   * @generated from field: changes.Onboarding onboarding = 1;
+   */
+  onboarding?: Onboarding;
+
+  constructor(data?: PartialMessage<GetOnboardingResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetOnboardingResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "onboarding", kind: "message", T: Onboarding },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetOnboardingResponse {
+    return new GetOnboardingResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetOnboardingResponse {
+    return new GetOnboardingResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetOnboardingResponse {
+    return new GetOnboardingResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetOnboardingResponse | PlainMessage<GetOnboardingResponse> | undefined, b: GetOnboardingResponse | PlainMessage<GetOnboardingResponse> | undefined): boolean {
+    return proto3.util.equals(GetOnboardingResponse, a, b);
+  }
+}
+
+/**
+ * update onboarding status
+ *
+ * @generated from message changes.UpdateOnboardingRequest
+ */
+export class UpdateOnboardingRequest extends Message<UpdateOnboardingRequest> {
+  /**
+   * @generated from field: changes.OnboardingProperties properties = 2;
+   */
+  properties?: OnboardingProperties;
+
+  constructor(data?: PartialMessage<UpdateOnboardingRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.UpdateOnboardingRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 2, name: "properties", kind: "message", T: OnboardingProperties },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateOnboardingRequest {
+    return new UpdateOnboardingRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateOnboardingRequest {
+    return new UpdateOnboardingRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateOnboardingRequest {
+    return new UpdateOnboardingRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateOnboardingRequest | PlainMessage<UpdateOnboardingRequest> | undefined, b: UpdateOnboardingRequest | PlainMessage<UpdateOnboardingRequest> | undefined): boolean {
+    return proto3.util.equals(UpdateOnboardingRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.UpdateOnboardingResponse
+ */
+export class UpdateOnboardingResponse extends Message<UpdateOnboardingResponse> {
+  /**
+   * @generated from field: changes.Onboarding onboarding = 1;
+   */
+  onboarding?: Onboarding;
+
+  constructor(data?: PartialMessage<UpdateOnboardingResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.UpdateOnboardingResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "onboarding", kind: "message", T: Onboarding },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateOnboardingResponse {
+    return new UpdateOnboardingResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateOnboardingResponse {
+    return new UpdateOnboardingResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateOnboardingResponse {
+    return new UpdateOnboardingResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateOnboardingResponse | PlainMessage<UpdateOnboardingResponse> | undefined, b: UpdateOnboardingResponse | PlainMessage<UpdateOnboardingResponse> | undefined): boolean {
+    return proto3.util.equals(UpdateOnboardingResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetChangesHomeRequest
+ */
+export class GetChangesHomeRequest extends Message<GetChangesHomeRequest> {
+  constructor(data?: PartialMessage<GetChangesHomeRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetChangesHomeRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangesHomeRequest {
+    return new GetChangesHomeRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangesHomeRequest {
+    return new GetChangesHomeRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangesHomeRequest {
+    return new GetChangesHomeRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChangesHomeRequest | PlainMessage<GetChangesHomeRequest> | undefined, b: GetChangesHomeRequest | PlainMessage<GetChangesHomeRequest> | undefined): boolean {
+    return proto3.util.equals(GetChangesHomeRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetChangesHomeResponse
+ */
+export class GetChangesHomeResponse extends Message<GetChangesHomeResponse> {
+  /**
+   * @generated from oneof changes.GetChangesHomeResponse.data
+   */
+  data: {
+    /**
+     * @generated from field: changes.GetChangesHomeData changesHome = 1;
+     */
+    value: GetChangesHomeData;
+    case: "changesHome";
+  } | {
+    /**
+     * @generated from field: changes.Onboarding onboarding = 2;
+     */
+    value: Onboarding;
+    case: "onboarding";
+  } | { case: undefined; value?: undefined } = { case: undefined };
+
+  constructor(data?: PartialMessage<GetChangesHomeResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetChangesHomeResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changesHome", kind: "message", T: GetChangesHomeData, oneof: "data" },
+    { no: 2, name: "onboarding", kind: "message", T: Onboarding, oneof: "data" },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangesHomeResponse {
+    return new GetChangesHomeResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangesHomeResponse {
+    return new GetChangesHomeResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangesHomeResponse {
+    return new GetChangesHomeResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChangesHomeResponse | PlainMessage<GetChangesHomeResponse> | undefined, b: GetChangesHomeResponse | PlainMessage<GetChangesHomeResponse> | undefined): boolean {
+    return proto3.util.equals(GetChangesHomeResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetChangesHomeData
+ */
+export class GetChangesHomeData extends Message<GetChangesHomeData> {
+  /**
+   * @generated from field: string owner = 1;
+   */
+  owner = "";
+
+  /**
+   * @generated from field: repeated changes.Change recentChanges = 2;
+   */
+  recentChanges: Change[] = [];
+
+  /**
+   * @generated from field: repeated changes.App recentApps = 3;
+   */
+  recentApps: App[] = [];
+
+  constructor(data?: PartialMessage<GetChangesHomeData>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetChangesHomeData";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "owner", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "recentChanges", kind: "message", T: Change, repeated: true },
+    { no: 3, name: "recentApps", kind: "message", T: App, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangesHomeData {
+    return new GetChangesHomeData().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangesHomeData {
+    return new GetChangesHomeData().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangesHomeData {
+    return new GetChangesHomeData().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChangesHomeData | PlainMessage<GetChangesHomeData> | undefined, b: GetChangesHomeData | PlainMessage<GetChangesHomeData> | undefined): boolean {
+    return proto3.util.equals(GetChangesHomeData, a, b);
   }
 }
 
