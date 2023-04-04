@@ -139,13 +139,6 @@ export class SnapshotMetadata extends Message<SnapshotMetadata> {
    */
   created?: Timestamp;
 
-  /**
-   * the number of items in this snapshot
-   *
-   * @generated from field: uint32 size = 3;
-   */
-  size = 0;
-
   constructor(data?: PartialMessage<SnapshotMetadata>) {
     super();
     proto3.util.initPartial(data, this);
@@ -156,7 +149,6 @@ export class SnapshotMetadata extends Message<SnapshotMetadata> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 2, name: "created", kind: "message", T: Timestamp },
-    { no: 3, name: "size", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SnapshotMetadata {
