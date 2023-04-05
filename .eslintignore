@@ -1,3 +1,4 @@
-lib
-.eslintrc.js
-./src/__generated__/*
+node_modules
+coverage
+dist
+src/__generated__

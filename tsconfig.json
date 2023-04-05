@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "moduleResolution": "node",
-    "isolatedModules": true,
-    "allowSyntheticDefaultImports": true
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "strict": true,
+    "types": ["vitest/globals"],
+    "skipLibCheck": true
   },
-  "exclude": ["dist", "package"]
+  "include": ["src"]
 }

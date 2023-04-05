@@ -8,20 +8,20 @@ Please make any changes in a feature branch and add a pull request. All changes 
 
 ### Testing
 
-Tests can be run with `npm run test` or the VSCode Test task
+Tests can be run with `pnpm run test` or the VSCode Test task
 
 ### Style
 
 Code formatting/style can be validated using:
 
 ```
-npm run codequality:check
+pnpm codequality:check
 ```
 
 And fixed using:
 
 ```
-npm run codequality:fix
+pnpm codequality:fix
 ```
 
 ## Releasing

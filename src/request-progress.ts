@@ -1,5 +1,5 @@
-import { Responder } from './Responder'
-import { Query, ResponderState, Response } from './Protobuf'
+import { Query, ResponderState, Response } from './protobuf'
+import { Responder } from './responder'
 
 export class RequestProgress {
   responders: Map<string, Responder> = new Map<string, Responder>()
@@ -34,14 +34,15 @@ export class RequestProgress {
       const now = new Date()
 
       // Loop over all results and check for stalls
-      this.responders.forEach((responder) => {
-        if (typeof responder.nextStateTime !== 'undefined') {
-          if (responder.nextStateTime < now) {
-            // This means that the responder has stalled
-            responder.state = ResponderState.STALLED
-          }
+      for (const responder of this.responders) {
+        if (
+          typeof responder[1].nextStateTime !== 'undefined' &&
+          responder[1].nextStateTime < now
+        ) {
+          // This means that the responder has stalled
+          responder[1].state = ResponderState.STALLED
         }
-      })
+      }
     }, stallCheckIntervalMs)
   }
 
@@ -49,11 +50,11 @@ export class RequestProgress {
   private countOfState(state: ResponderState): number {
     let x = 0
 
-    this.responders.forEach((v) => {
-      if (v.state == state) {
+    for (const v of this.responders) {
+      if (v[1].state === state) {
         x++
       }
-    })
+    }
 
     return x
   }
@@ -118,8 +119,8 @@ export class RequestProgress {
    * @returns True if all responders are done or stalled
    */
   allDone(): boolean {
-    if (this.numResponders() > 0 && this.inFlight == 0) {
-      return this.numWorking() == 0
+    if (this.numResponders() > 0 && this.inFlight === 0) {
+      return this.numWorking() === 0
     }
 
     return false
@@ -139,7 +140,7 @@ export class RequestProgress {
    * @param timeoutMs How long to wait before timing out
    * @returns "timeout" or "done"
    */
-  async waitForCompletion(timeoutMs = 3000): Promise<string> {
+  waitForCompletion(timeoutMs = 3000): Promise<string> {
     // How often to check for done-ness
     const doneCheckIntervalMs = 100
     let doneChecker: number
@@ -178,7 +179,7 @@ export class RequestProgress {
 
     // Pull details out of the response
     const responderName = response.responder
-    let nextUpdateTime: Date | undefined = undefined
+    let nextUpdateTime: Date | undefined
 
     // Get the responder or create a new one
     const responder =
@@ -190,7 +191,7 @@ export class RequestProgress {
       let nextUpdateMilliseconds = 0
 
       // Convert nanoseconds to milliseconds
-      nextUpdateMilliseconds = nextUpdateIn.nanos / 1000000
+      nextUpdateMilliseconds = nextUpdateIn.nanos / 1_000_000
 
       // Convert seconds to milliseconds and add
       nextUpdateMilliseconds =

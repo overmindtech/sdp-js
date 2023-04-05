@@ -1,5 +1,5 @@
 import { Duration, JsonValue, Struct, Timestamp } from '@bufbuild/protobuf'
-import { Item, ItemAttributes, Reference } from './Protobuf'
+import { Item, ItemAttributes, Reference } from './protobuf'
 
 /**
  * Creates a new ItemAttributes object from any javascript object that has
@@ -25,7 +25,7 @@ export function newItemAttributes(value: {
 export function newTimestamp(date: Date): Timestamp {
   const t = new Timestamp()
   t.seconds = BigInt(Math.floor(date.getTime() / 1000))
-  t.nanos = date.getMilliseconds() * 1000000
+  t.nanos = date.getMilliseconds() * 1_000_000
   return t
 }
 
@@ -53,10 +53,13 @@ export function newDuration(ms: number): Duration {
 export function getAttributeValue<T>(
   attributes: ItemAttributes,
   name: string
-): T {
+): T | undefined {
   const j = attributes.attrStruct?.toJson()
-  if (!j) return undefined
+  if (!j) {
+    return undefined
+  }
 
+  // @ts-expect-error // come back and type this properly.
   return j[name]
 }
 

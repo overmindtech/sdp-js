@@ -1,6 +1,9 @@
 node_modules
-.pnpm-store
-.DS_Store
+coverage
 dist
-package
+types
+.DS_Store
+.eslintcache
+*.log*
+*.env*
 *.tgz

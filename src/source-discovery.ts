@@ -1,10 +1,10 @@
+import { v4, parse } from 'uuid'
 import {
   CustomEventListenerOrEventListenerObject,
   GatewaySession,
-} from './GatewaySession'
-import { GatewayRequest, Item, Query, QueryMethod } from './Protobuf'
-import { v4, parse } from 'uuid'
-import { getUniqueAttributeValue, newDuration } from './Util'
+} from './gateway-session'
+import { GatewayRequest, Item, Query, QueryMethod } from './protobuf'
+import { getUniqueAttributeValue, newDuration } from './util'
 
 export enum DiscoveryField {
   TYPE = 0,
@@ -46,11 +46,13 @@ export class SourceDiscovery extends EventTarget {
     callback: CustomEventListenerOrEventListenerObject<string[]> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: typeof NewScopeEvent,
     callback: CustomEventListenerOrEventListenerObject<string[]> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: string,
     callback: EventListenerOrEventListenerObject | null,
@@ -64,11 +66,13 @@ export class SourceDiscovery extends EventTarget {
     callback: CustomEventListenerOrEventListenerObject<string[]> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: typeof NewScopeEvent,
     callback: CustomEventListenerOrEventListenerObject<string[]> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: string,
     callback: EventListenerOrEventListenerObject | null,
@@ -106,7 +110,7 @@ export class SourceDiscovery extends EventTarget {
           method: QueryMethod.LIST,
           timeout: newDuration(5000),
           UUID: parse(v4()),
-          type: type,
+          type,
         }),
       },
     })
