@@ -1,4 +1,5 @@
-import { newDuration, newItemAttributes } from '../Util'
+import { parse } from 'uuid'
+import { newDuration, newItemAttributes } from '../util'
 import {
   CancelQuery,
   Edge,
@@ -12,8 +13,7 @@ import {
   Expand,
   UndoQuery,
   QueryError_ErrorType,
-} from '../Protobuf'
-import { parse } from 'uuid'
+} from '../protobuf'
 import { Response } from '../__generated__/responses_pb'
 import {
   GatewayRequestStatus,
@@ -80,7 +80,7 @@ export const item = {
     scope: 'myPod',
     uniqueAttribute: 'pid',
     attributes: newItemAttributes({
-      pid: 12323,
+      pid: 12_323,
       state: 'running',
       cpuPercent: 99.99,
     }),

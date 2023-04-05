@@ -5,8 +5,8 @@ import {
   getAttributeValue,
   getUniqueAttributeValue,
   getGloballyUniqueName,
-} from '../Util'
-import { Item } from '../Protobuf'
+} from '../util'
+import { Item } from '../protobuf'
 
 describe('Util namespace', () => {
   describe('#newTimestamp', () => {

@@ -1,16 +1,14 @@
-/**
- * @jest-environment jsdom
- */
-
-import { RequestProgress } from '../RequestProgress'
+import { RequestProgress } from '../request-progress'
 import * as data from './sampledata.helper'
 
 describe('RequestProgress', () => {
   beforeAll(() => {
-    jest.useFakeTimers({ advanceTimers: true })
+    vi.useFakeTimers({
+      shouldAdvanceTime: true,
+    })
   })
   afterAll(() => {
-    jest.useRealTimers()
+    vi.useRealTimers()
   })
   describe('#processResponse()', () => {
     it('processes an initial WORKING response', () => {

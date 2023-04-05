@@ -13,7 +13,7 @@ import {
   BookmarkStoreResultEvent,
   SnapshotLoadResultEvent,
   SnapshotStoreResultEvent,
-} from './Events'
+} from './events'
 import {
   Edge,
   GatewayRequest,
@@ -28,7 +28,7 @@ import {
   BookmarkLoadResult,
   SnapshotStoreResult,
   SnapshotLoadResult,
-} from './Protobuf'
+} from './protobuf'
 
 export interface CustomEventListener<T> {
   (evt: CustomEvent<T>): void
@@ -39,6 +39,12 @@ export interface CustomEventListenerObject<T> {
 export type CustomEventListenerOrEventListenerObject<T> =
   | CustomEventListener<T>
   | CustomEventListenerObject<T>
+
+export type State =
+  | typeof WebSocket.CONNECTING
+  | typeof WebSocket.OPEN
+  | typeof WebSocket.CLOSING
+  | typeof WebSocket.CLOSED
 
 export class GatewaySession extends EventTarget {
   private socket: WebSocket
@@ -195,71 +201,85 @@ export class GatewaySession extends EventTarget {
     callback: CustomEventListenerOrEventListenerObject<string> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: typeof NewItemEvent,
     callback: CustomEventListenerOrEventListenerObject<Item> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: typeof NewEdgeEvent,
     callback: CustomEventListenerOrEventListenerObject<Edge> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: typeof DeleteItemEvent,
     callback: CustomEventListenerOrEventListenerObject<Reference> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: typeof DeleteEdgeEvent,
     callback: CustomEventListenerOrEventListenerObject<Edge> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: typeof UpdateItemEvent,
     callback: CustomEventListenerOrEventListenerObject<Item> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: typeof BookmarkStoreResultEvent,
     callback: CustomEventListenerOrEventListenerObject<BookmarkStoreResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: typeof BookmarkLoadResultEvent,
     callback: CustomEventListenerOrEventListenerObject<BookmarkLoadResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: typeof SnapshotStoreResultEvent,
     callback: CustomEventListenerOrEventListenerObject<SnapshotStoreResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: typeof SnapshotLoadResultEvent,
     callback: CustomEventListenerOrEventListenerObject<SnapshotLoadResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: typeof QueryErrorEvent,
     callback: CustomEventListenerOrEventListenerObject<QueryError> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: typeof StatusEvent,
     callback: CustomEventListenerOrEventListenerObject<GatewayRequestStatus> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: typeof SocketErrorEvent,
     callback: CustomEventListenerOrEventListenerObject<Event> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: typeof CloseEvent,
     callback: CustomEventListenerOrEventListenerObject<CloseEvent> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   addEventListener(
     type: string,
     callback: EventListenerOrEventListenerObject | null,
@@ -273,71 +293,85 @@ export class GatewaySession extends EventTarget {
     callback: CustomEventListenerOrEventListenerObject<string> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: typeof NewItemEvent,
     callback: CustomEventListenerOrEventListenerObject<Item> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: typeof NewEdgeEvent,
     callback: CustomEventListenerOrEventListenerObject<Edge> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: typeof DeleteItemEvent,
     callback: CustomEventListenerOrEventListenerObject<Reference> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: typeof DeleteEdgeEvent,
     callback: CustomEventListenerOrEventListenerObject<Edge> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: typeof UpdateItemEvent,
     callback: CustomEventListenerOrEventListenerObject<Item> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: typeof BookmarkStoreResultEvent,
     callback: CustomEventListenerOrEventListenerObject<BookmarkStoreResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: typeof BookmarkLoadResultEvent,
     callback: CustomEventListenerOrEventListenerObject<BookmarkLoadResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: typeof SnapshotStoreResultEvent,
     callback: CustomEventListenerOrEventListenerObject<SnapshotStoreResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: typeof SnapshotLoadResultEvent,
     callback: CustomEventListenerOrEventListenerObject<SnapshotLoadResult> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: typeof QueryErrorEvent,
     callback: CustomEventListenerOrEventListenerObject<QueryError> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: typeof StatusEvent,
     callback: CustomEventListenerOrEventListenerObject<GatewayRequestStatus> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: typeof SocketErrorEvent,
     callback: CustomEventListenerOrEventListenerObject<Event> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: typeof CloseEvent,
     callback: CustomEventListenerOrEventListenerObject<CloseEvent> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
+
   removeEventListener(
     type: string,
     callback: EventListenerOrEventListenerObject | null,
@@ -405,11 +439,7 @@ export class GatewaySession extends EventTarget {
    *
    * @returns The current state of the websocket connection
    */
-  state():
-    | typeof WebSocket.CONNECTING
-    | typeof WebSocket.OPEN
-    | typeof WebSocket.CLOSING
-    | typeof WebSocket.CLOSED {
-    return this.socket.readyState
+  state(): State {
+    return this.socket.readyState as State
   }
 }

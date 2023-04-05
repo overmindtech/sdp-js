@@ -1,27 +1,15 @@
-/**
- * Mocks
- */
-import WS from 'jest-websocket-mock'
-import { TextEncoder, TextDecoder } from 'util'
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-;(global as any).TextEncoder = TextEncoder
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-;(global as any).TextDecoder = TextDecoder
-
-/**
- * Real imports
- */
-import { GatewaySession } from '../GatewaySession'
+import { WS } from 'jest-websocket-mock'
+import { GatewaySession } from '../gateway-session'
 import {
   GatewayRequest,
   GatewayResponse,
   Item,
-  Query,
   Metadata,
+  Query,
   QueryMethod,
-} from '../Protobuf'
-import { newItemAttributes, newTimestamp } from '../Util'
-import { SourceDiscovery } from '../SourceDiscovery'
+} from '../protobuf'
+import { SourceDiscovery } from '../source-discovery'
+import { newItemAttributes, newTimestamp } from '../util'
 
 const TestServerAddress = 'ws://localhost:31035'
 
@@ -85,7 +73,7 @@ describe('SourceDiscovery', () => {
                       method: QueryMethod.GET,
                       query: 'per',
                       type: 'overmind-type',
-                      UUID: req.requestType.value,
+                      UUID: req.requestType.value.UUID,
                     }),
                   }),
                 }),
@@ -149,7 +137,7 @@ describe('SourceDiscovery', () => {
                       method: QueryMethod.GET,
                       query: 'per',
                       type: 'overmind-type',
-                      UUID: req.requestType.value,
+                      UUID: req.requestType.value.UUID,
                     }),
                   }),
                 }),
