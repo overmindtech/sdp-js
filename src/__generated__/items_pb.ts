@@ -40,6 +40,13 @@ export enum Health {
    * @generated from enum value: HEALTH_ERROR = 3;
    */
   ERROR = 3,
+
+  /**
+   * Health state is transitioning, such as when something is first provisioned 
+   *
+   * @generated from enum value: HEALTH_PENDING = 4;
+   */
+  PENDING = 4,
 }
 // Retrieve enum metadata with: proto3.getEnumType(Health)
 proto3.util.setEnumType(Health, "Health", [
@@ -47,6 +54,7 @@ proto3.util.setEnumType(Health, "Health", [
   { no: 1, name: "HEALTH_OK" },
   { no: 2, name: "HEALTH_WARNING" },
   { no: 3, name: "HEALTH_ERROR" },
+  { no: 4, name: "HEALTH_PENDING" },
 ]);
 
 /**
