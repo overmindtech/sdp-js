@@ -481,7 +481,7 @@ export class BookmarkStoreResult extends Message<BookmarkStoreResult> {
   errorMessage = "";
 
   /**
-   * @generated from field: Bookmark bookmark = 3;
+   * @generated from field: bookmarks.Bookmark bookmark = 3;
    */
   bookmark?: Bookmark;
 
@@ -667,7 +667,7 @@ export class SnapshotStoreResult extends Message<SnapshotStoreResult> {
   errorMessage = "";
 
   /**
-   * @generated from field: Snapshot snapshot = 3;
+   * @generated from field: snapshots.Snapshot snapshot = 3;
    */
   snapshot?: Snapshot;
 
