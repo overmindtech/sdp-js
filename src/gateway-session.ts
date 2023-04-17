@@ -28,6 +28,8 @@ import {
   BookmarkLoadResult,
   SnapshotStoreResult,
   SnapshotLoadResult,
+  StoreBookmark,
+  StoreSnapshot,
 } from './protobuf'
 
 export interface CustomEventListener<T> {
@@ -426,6 +428,67 @@ export class GatewaySession extends EventTarget {
         }
         break
     }
+  }
+
+  /**
+   * Creates a bookmark in the gateway and returns the bookmark from a promise
+   * @param bookmark The bookmark to create
+   */
+  storeBookmark(bookmark: StoreBookmark): Promise<BookmarkStoreResult> {
+    const req = new GatewayRequest({
+      requestType: {
+        case: 'storeBookmark',
+        value: bookmark,
+      },
+    })
+    return new Promise<BookmarkStoreResult>((resolve, reject) => {
+      const listener = (event: CustomEvent<BookmarkStoreResult>) => {
+        if (event.detail.bookmark?.properties?.name === bookmark.name) {
+          if (event.detail.success) {
+            resolve(event.detail)
+          } else {
+            reject(event.detail)
+          }
+
+          this.removeEventListener(BookmarkStoreResultEvent, listener)
+        }
+      }
+
+      this.addEventListener(BookmarkStoreResultEvent, listener)
+
+      this.sendRequest(req)
+    })
+  }
+
+  /**
+   * Creates a snapshot in the gateway and returns the snapshot from a promise
+   * @param snapshot The snapshot to create
+   */
+  storeSnapshot(snapshot: StoreSnapshot): Promise<SnapshotStoreResult> {
+    const req = new GatewayRequest({
+      requestType: {
+        case: 'storeSnapshot',
+        value: snapshot,
+      },
+    })
+
+    return new Promise<SnapshotStoreResult>((resolve, reject) => {
+      const listener = (event: CustomEvent<SnapshotStoreResult>) => {
+        if (event.detail.snapshot?.properties?.name === snapshot.name) {
+          if (event.detail.success) {
+            resolve(event.detail)
+          } else {
+            reject(event.detail)
+          }
+
+          this.removeEventListener(SnapshotStoreResultEvent, listener)
+        }
+      }
+
+      this.addEventListener(SnapshotStoreResultEvent, listener)
+
+      this.sendRequest(req)
+    })
   }
 
   /**
