@@ -16,7 +16,7 @@ import {
   UpdateItemEvent,
 } from '../events'
 import { GatewaySession } from '../gateway-session'
-import { GatewayResponse } from '../protobuf'
+import { GatewayResponse, StoreBookmark, StoreSnapshot } from '../protobuf'
 import * as data from './sampledata.helper'
 
 // create a WS instance
@@ -317,6 +317,86 @@ describe('GatewaySession', () => {
             )
 
             server.send(working.toBinary().buffer)
+          }))
+      })
+    })
+    describe('Handling async methods', () => {
+      const gs = new GatewaySession(TestServerAddress)
+
+      beforeAll(async () => {
+        await gs.ready
+      })
+
+      afterAll(() => {
+        gs.close()
+      })
+
+      describe('storeBookmark', () => {
+        it('should store a new bookmark', () =>
+          new Promise((resolve) => {
+            const data = {
+              name: 'new bookmark',
+              description: 'new description',
+            }
+            const bookmark = new StoreBookmark(data)
+            const response = new GatewayResponse({
+              responseType: {
+                case: 'bookmarkStoreResult',
+                value: {
+                  bookmark: {
+                    properties: {
+                      ...data,
+                    },
+                  },
+                  success: true,
+                },
+              },
+            })
+
+            gs.storeBookmark(bookmark).then((result) => {
+              expect(result.success).toBe(true)
+              expect(result?.bookmark?.properties?.name).toBe(data.name)
+              expect(result?.bookmark?.properties?.description).toBe(
+                data.description
+              )
+              resolve(undefined)
+            })
+
+            server.send(response.toBinary().buffer)
+          }))
+      })
+      describe('storeSnapshot', () => {
+        it('should store a new snapshot', () =>
+          new Promise((resolve) => {
+            const data = {
+              name: 'new snapshot',
+              description: 'new description',
+            }
+            const snapshot = new StoreSnapshot(data)
+            const response = new GatewayResponse({
+              responseType: {
+                case: 'snapshotStoreResult',
+                value: {
+                  snapshot: {
+                    properties: {
+                      ...data,
+                    },
+                  },
+                  success: true,
+                },
+              },
+            })
+
+            gs.storeSnapshot(snapshot).then((result) => {
+              expect(result.success).toBe(true)
+              expect(result?.snapshot?.properties?.name).toBe(data.name)
+              expect(result?.snapshot?.properties?.description).toBe(
+                data.description
+              )
+              resolve(undefined)
+            })
+
+            server.send(response.toBinary().buffer)
           }))
       })
     })

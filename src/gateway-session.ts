@@ -441,8 +441,7 @@ export class GatewaySession extends EventTarget {
         value: bookmark,
       },
     })
-
-    const promise = new Promise<BookmarkStoreResult>((resolve, reject) => {
+    return new Promise<BookmarkStoreResult>((resolve, reject) => {
       const listener = (event: CustomEvent<BookmarkStoreResult>) => {
         if (event.detail.bookmark?.properties?.name === bookmark.name) {
           if (event.detail.success) {
@@ -456,28 +455,26 @@ export class GatewaySession extends EventTarget {
       }
 
       this.addEventListener(BookmarkStoreResultEvent, listener)
+
+      this.sendRequest(req)
     })
-
-    this.sendRequest(req)
-
-    return promise
   }
 
   /**
    * Creates a snapshot in the gateway and returns the snapshot from a promise
-   * @param snapshop The snapshop to create
+   * @param snapshot The snapshot to create
    */
-  storeSnapshot(snapshop: StoreSnapshot): Promise<SnapshotStoreResult> {
+  storeSnapshot(snapshot: StoreSnapshot): Promise<SnapshotStoreResult> {
     const req = new GatewayRequest({
       requestType: {
         case: 'storeSnapshot',
-        value: snapshop,
+        value: snapshot,
       },
     })
 
-    const promise = new Promise<SnapshotStoreResult>((resolve, reject) => {
+    return new Promise<SnapshotStoreResult>((resolve, reject) => {
       const listener = (event: CustomEvent<SnapshotStoreResult>) => {
-        if (event.detail.snapshot?.properties?.name === snapshop.name) {
+        if (event.detail.snapshot?.properties?.name === snapshot.name) {
           if (event.detail.success) {
             resolve(event.detail)
           } else {
@@ -489,11 +486,9 @@ export class GatewaySession extends EventTarget {
       }
 
       this.addEventListener(SnapshotStoreResultEvent, listener)
+
+      this.sendRequest(req)
     })
-
-    this.sendRequest(req)
-
-    return promise
   }
 
   /**
