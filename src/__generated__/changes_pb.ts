@@ -184,21 +184,28 @@ export class AppMetadata extends Message<AppMetadata> {
   /**
    * timestamp when this app was created
    *
-   * @generated from field: google.protobuf.Timestamp created = 2;
+   * @generated from field: google.protobuf.Timestamp createdAt = 2;
    */
-  created?: Timestamp;
+  createdAt?: Timestamp;
+
+  /**
+   * timestamp when this app was last updated
+   *
+   * @generated from field: google.protobuf.Timestamp updatedAt = 3;
+   */
+  updatedAt?: Timestamp;
 
   /**
    * items that are part of the app
    *
-   * @generated from field: repeated Reference items = 3;
+   * @generated from field: repeated Reference items = 4;
    */
   items: Reference[] = [];
 
   /**
-   * te last time that the list of items was updated
+   * the last time that the list of items was updated
    *
-   * @generated from field: google.protobuf.Timestamp itemsLastUpdated = 4;
+   * @generated from field: google.protobuf.Timestamp itemsLastUpdated = 5;
    */
   itemsLastUpdated?: Timestamp;
 
@@ -211,9 +218,10 @@ export class AppMetadata extends Message<AppMetadata> {
   static readonly typeName = "changes.AppMetadata";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-    { no: 2, name: "created", kind: "message", T: Timestamp },
-    { no: 3, name: "items", kind: "message", T: Reference, repeated: true },
-    { no: 4, name: "itemsLastUpdated", kind: "message", T: Timestamp },
+    { no: 2, name: "createdAt", kind: "message", T: Timestamp },
+    { no: 3, name: "updatedAt", kind: "message", T: Timestamp },
+    { no: 4, name: "items", kind: "message", T: Reference, repeated: true },
+    { no: 5, name: "itemsLastUpdated", kind: "message", T: Timestamp },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AppMetadata {
@@ -731,9 +739,16 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
   /**
    * timestamp when this change was created
    *
-   * @generated from field: google.protobuf.Timestamp created = 2;
+   * @generated from field: google.protobuf.Timestamp createdAt = 2;
    */
-  created?: Timestamp;
+  createdAt?: Timestamp;
+
+  /**
+   * timestamp when this change was last updated
+   *
+   * @generated from field: google.protobuf.Timestamp updatedAt = 3;
+   */
+  updatedAt?: Timestamp;
 
   constructor(data?: PartialMessage<ChangeMetadata>) {
     super();
@@ -744,7 +759,8 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
   static readonly typeName = "changes.ChangeMetadata";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-    { no: 2, name: "created", kind: "message", T: Timestamp },
+    { no: 2, name: "createdAt", kind: "message", T: Timestamp },
+    { no: 3, name: "updatedAt", kind: "message", T: Timestamp },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeMetadata {
