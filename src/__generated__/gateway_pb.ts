@@ -5,7 +5,7 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Duration, Message, proto3 } from "@bufbuild/protobuf";
-import { CancelQuery, Edge, Expand, Item, Query, QueryError, Reference, UndoExpand, UndoQuery } from "./items_pb.ts";
+import { CancelQuery, Edge, Expand, Item, Query, QueryError, QueryStatus, Reference, UndoExpand, UndoQuery } from "./items_pb.ts";
 import { ResponderState } from "./responses_pb.ts";
 import { Bookmark } from "./bookmarks_pb.ts";
 import { Snapshot } from "./snapshots_pb.ts";
@@ -250,6 +250,14 @@ export class GatewayResponse extends Message<GatewayResponse> {
      */
     value: BookmarkLoadResult;
     case: "bookmarkLoadResult";
+  } | {
+    /**
+     * Status of requested queries
+     *
+     * @generated from field: QueryStatus queryStatus = 17;
+     */
+    value: QueryStatus;
+    case: "queryStatus";
   } | { case: undefined; value?: undefined } = { case: undefined };
 
   constructor(data?: PartialMessage<GatewayResponse>) {
@@ -272,6 +280,7 @@ export class GatewayResponse extends Message<GatewayResponse> {
     { no: 12, name: "snapshotLoadResult", kind: "message", T: SnapshotLoadResult, oneof: "response_type" },
     { no: 15, name: "bookmarkStoreResult", kind: "message", T: BookmarkStoreResult, oneof: "response_type" },
     { no: 16, name: "bookmarkLoadResult", kind: "message", T: BookmarkLoadResult, oneof: "response_type" },
+    { no: 17, name: "queryStatus", kind: "message", T: QueryStatus, oneof: "response_type" },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GatewayResponse {
@@ -571,6 +580,13 @@ export class BookmarkLoadResult extends Message<BookmarkLoadResult> {
    */
   errorMessage = "";
 
+  /**
+   * UUIDs of all queries that have been started as a result of loading this bookmark
+   *
+   * @generated from field: repeated bytes startedQueryUUIDs = 3;
+   */
+  startedQueryUUIDs: Uint8Array[] = [];
+
   constructor(data?: PartialMessage<BookmarkLoadResult>) {
     super();
     proto3.util.initPartial(data, this);
@@ -581,6 +597,7 @@ export class BookmarkLoadResult extends Message<BookmarkLoadResult> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "startedQueryUUIDs", kind: "scalar", T: 12 /* ScalarType.BYTES */, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): BookmarkLoadResult {

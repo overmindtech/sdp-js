@@ -42,7 +42,7 @@ export enum Health {
   ERROR = 3,
 
   /**
-   * Health state is transitioning, such as when something is first provisioned 
+   * Health state is transitioning, such as when something is first provisioned
    *
    * @generated from enum value: HEALTH_PENDING = 4;
    */
@@ -514,13 +514,115 @@ export class Query extends Message<Query> {
 }
 
 /**
+ * QueryStatus informs the client of status updates of all queries running in this session.
+ *
+ * @generated from message QueryStatus
+ */
+export class QueryStatus extends Message<QueryStatus> {
+  /**
+   * UUID of the query
+   *
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  /**
+   * @generated from field: QueryStatus.Status status = 2;
+   */
+  status = QueryStatus_Status.UNSPECIFIED;
+
+  constructor(data?: PartialMessage<QueryStatus>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "QueryStatus";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "status", kind: "enum", T: proto3.getEnumType(QueryStatus_Status) },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): QueryStatus {
+    return new QueryStatus().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): QueryStatus {
+    return new QueryStatus().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): QueryStatus {
+    return new QueryStatus().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: QueryStatus | PlainMessage<QueryStatus> | undefined, b: QueryStatus | PlainMessage<QueryStatus> | undefined): boolean {
+    return proto3.util.equals(QueryStatus, a, b);
+  }
+}
+
+/**
+ * The error type. Any types in here will be gracefully handled unless the
+ * type os "OTHER"
+ *
+ * @generated from enum QueryStatus.Status
+ */
+export enum QueryStatus_Status {
+  /**
+   * the status has not been specified
+   *
+   * @generated from enum value: UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * the query has been started
+   *
+   * @generated from enum value: STARTED = 1;
+   */
+  STARTED = 1,
+
+  /**
+   * the query has been cancelled.
+   * This is a final state.
+   *
+   * @generated from enum value: CANCELLED = 3;
+   */
+  CANCELLED = 3,
+
+  /**
+   * the query has finished with an error status. expect a separate QueryError describing that.
+   * This is a final state.
+   * TODO: fold the error details into this message
+   *
+   * @generated from enum value: ERRORED = 4;
+   */
+  ERRORED = 4,
+
+  /**
+   * The query has finished and all results have been sent over the wire
+   * This is a final state.
+   *
+   * @generated from enum value: FINISHED = 5;
+   */
+  FINISHED = 5,
+}
+// Retrieve enum metadata with: proto3.getEnumType(QueryStatus_Status)
+proto3.util.setEnumType(QueryStatus_Status, "QueryStatus.Status", [
+  { no: 0, name: "UNSPECIFIED" },
+  { no: 1, name: "STARTED" },
+  { no: 3, name: "CANCELLED" },
+  { no: 4, name: "ERRORED" },
+  { no: 5, name: "FINISHED" },
+]);
+
+/**
  * QueryError is sent back when an item query fails
  *
  * @generated from message QueryError
  */
 export class QueryError extends Message<QueryError> {
   /**
-   * UUID if the item query that this response is in relation to (in binary
+   * UUID of the item query that this response is in relation to (in binary
    * format)
    *
    * @generated from field: bytes UUID = 1;
