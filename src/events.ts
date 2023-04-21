@@ -57,6 +57,11 @@ export const SnapshotStoreResultEvent = 'snapshot-store-result'
 export const SnapshotLoadResultEvent = 'snapshot-load-result'
 
 /**
+ * This event informs the client of status updates of all queries running in this session.
+ */
+export const QueryStatusEvent = 'query-status'
+
+/**
  * This event means that an error was encountered by one of the responders
  * when responding to the request. This could indicate a failure, or might
  * be expected. It s up to the user to determine how these errors should be

@@ -36,6 +36,8 @@ export {
   Metadata,
   Items,
   Query,
+  QueryStatus,
+  QueryStatus_Status,
   QueryError,
   QueryError_ErrorType,
   CancelQuery,

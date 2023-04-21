@@ -2,6 +2,7 @@ import {
   SocketErrorEvent,
   NewItemEvent,
   NewEdgeEvent,
+  QueryStatusEvent,
   QueryErrorEvent,
   StatusEvent,
   ErrorEvent,
@@ -20,6 +21,7 @@ import {
   GatewayRequestStatus,
   GatewayResponse,
   Item,
+  QueryStatus,
   QueryError,
   Reference,
   UndoQuery,
@@ -133,6 +135,13 @@ export class GatewaySession extends EventTarget {
 
         this.dispatchEvent(
           new CustomEvent<GatewayRequestStatus>(StatusEvent, {
+            detail: response.responseType.value,
+          })
+        )
+        break
+      case 'queryStatus':
+        this.dispatchEvent(
+          new CustomEvent<QueryStatus>(QueryStatusEvent, {
             detail: response.responseType.value,
           })
         )
@@ -259,6 +268,12 @@ export class GatewaySession extends EventTarget {
   ): void
 
   addEventListener(
+    type: typeof QueryStatusEvent,
+    callback: CustomEventListenerOrEventListenerObject<QueryStatus> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+
+  addEventListener(
     type: typeof QueryErrorEvent,
     callback: CustomEventListenerOrEventListenerObject<QueryError> | null,
     options?: boolean | AddEventListenerOptions | undefined
@@ -347,6 +362,12 @@ export class GatewaySession extends EventTarget {
   removeEventListener(
     type: typeof SnapshotLoadResultEvent,
     callback: CustomEventListenerOrEventListenerObject<SnapshotLoadResult> | null,
+    options?: boolean | AddEventListenerOptions | undefined
+  ): void
+
+  removeEventListener(
+    type: typeof QueryStatusEvent,
+    callback: CustomEventListenerOrEventListenerObject<QueryStatus> | null,
     options?: boolean | AddEventListenerOptions | undefined
   ): void
 
