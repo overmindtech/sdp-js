@@ -444,6 +444,13 @@ export class StoreBookmark extends Message<StoreBookmark> {
    */
   description = "";
 
+  /**
+   * a correlation ID to match up requests and responses. set this to a value unique per connection
+   *
+   * @generated from field: bytes msgID = 3;
+   */
+  msgID = new Uint8Array(0);
+
   constructor(data?: PartialMessage<StoreBookmark>) {
     super();
     proto3.util.initPartial(data, this);
@@ -454,6 +461,7 @@ export class StoreBookmark extends Message<StoreBookmark> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StoreBookmark {
@@ -494,6 +502,13 @@ export class BookmarkStoreResult extends Message<BookmarkStoreResult> {
    */
   bookmark?: Bookmark;
 
+  /**
+   * a correlation ID to match up requests and responses. this field returns the contents of the request's msgID
+   *
+   * @generated from field: bytes msgID = 4;
+   */
+  msgID = new Uint8Array(0);
+
   constructor(data?: PartialMessage<BookmarkStoreResult>) {
     super();
     proto3.util.initPartial(data, this);
@@ -505,6 +520,7 @@ export class BookmarkStoreResult extends Message<BookmarkStoreResult> {
     { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "bookmark", kind: "message", T: Bookmark },
+    { no: 4, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): BookmarkStoreResult {
@@ -538,6 +554,13 @@ export class LoadBookmark extends Message<LoadBookmark> {
    */
   UUID = new Uint8Array(0);
 
+  /**
+   * a correlation ID to match up requests and responses. set this to a value unique per connection
+   *
+   * @generated from field: bytes msgID = 2;
+   */
+  msgID = new Uint8Array(0);
+
   constructor(data?: PartialMessage<LoadBookmark>) {
     super();
     proto3.util.initPartial(data, this);
@@ -547,6 +570,7 @@ export class LoadBookmark extends Message<LoadBookmark> {
   static readonly typeName = "gateway.LoadBookmark";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): LoadBookmark {
@@ -587,6 +611,13 @@ export class BookmarkLoadResult extends Message<BookmarkLoadResult> {
    */
   startedQueryUUIDs: Uint8Array[] = [];
 
+  /**
+   * a correlation ID to match up requests and responses. this field returns the contents of the request's msgID
+   *
+   * @generated from field: bytes msgID = 4;
+   */
+  msgID = new Uint8Array(0);
+
   constructor(data?: PartialMessage<BookmarkLoadResult>) {
     super();
     proto3.util.initPartial(data, this);
@@ -598,6 +629,7 @@ export class BookmarkLoadResult extends Message<BookmarkLoadResult> {
     { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "startedQueryUUIDs", kind: "scalar", T: 12 /* ScalarType.BYTES */, repeated: true },
+    { no: 4, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): BookmarkLoadResult {
@@ -638,6 +670,13 @@ export class StoreSnapshot extends Message<StoreSnapshot> {
    */
   description = "";
 
+  /**
+   * a correlation ID to match up requests and responses. set this to a value unique per connection
+   *
+   * @generated from field: bytes msgID = 3;
+   */
+  msgID = new Uint8Array(0);
+
   constructor(data?: PartialMessage<StoreSnapshot>) {
     super();
     proto3.util.initPartial(data, this);
@@ -648,6 +687,7 @@ export class StoreSnapshot extends Message<StoreSnapshot> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StoreSnapshot {
@@ -688,6 +728,13 @@ export class SnapshotStoreResult extends Message<SnapshotStoreResult> {
    */
   snapshot?: Snapshot;
 
+  /**
+   * a correlation ID to match up requests and responses. this field returns the contents of the request's msgID
+   *
+   * @generated from field: bytes msgID = 4;
+   */
+  msgID = new Uint8Array(0);
+
   constructor(data?: PartialMessage<SnapshotStoreResult>) {
     super();
     proto3.util.initPartial(data, this);
@@ -699,6 +746,7 @@ export class SnapshotStoreResult extends Message<SnapshotStoreResult> {
     { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "snapshot", kind: "message", T: Snapshot },
+    { no: 4, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SnapshotStoreResult {
@@ -732,6 +780,13 @@ export class LoadSnapshot extends Message<LoadSnapshot> {
    */
   UUID = new Uint8Array(0);
 
+  /**
+   * a correlation ID to match up requests and responses. set this to a value unique per connection
+   *
+   * @generated from field: bytes msgID = 2;
+   */
+  msgID = new Uint8Array(0);
+
   constructor(data?: PartialMessage<LoadSnapshot>) {
     super();
     proto3.util.initPartial(data, this);
@@ -741,6 +796,7 @@ export class LoadSnapshot extends Message<LoadSnapshot> {
   static readonly typeName = "gateway.LoadSnapshot";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): LoadSnapshot {
@@ -774,6 +830,13 @@ export class SnapshotLoadResult extends Message<SnapshotLoadResult> {
    */
   errorMessage = "";
 
+  /**
+   * a correlation ID to match up requests and responses. this field returns the contents of the request's msgID
+   *
+   * @generated from field: bytes msgID = 4;
+   */
+  msgID = new Uint8Array(0);
+
   constructor(data?: PartialMessage<SnapshotLoadResult>) {
     super();
     proto3.util.initPartial(data, this);
@@ -784,6 +847,7 @@ export class SnapshotLoadResult extends Message<SnapshotLoadResult> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SnapshotLoadResult {
