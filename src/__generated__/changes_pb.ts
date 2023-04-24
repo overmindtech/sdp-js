@@ -675,6 +675,86 @@ export class DeleteAppResponse extends Message<DeleteAppResponse> {
 }
 
 /**
+ * list all changes for an app
+ *
+ * @generated from message changes.ListAppChangesRequest
+ */
+export class ListAppChangesRequest extends Message<ListAppChangesRequest> {
+  /**
+   * The UUID of the app to list changes for
+   *
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<ListAppChangesRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListAppChangesRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListAppChangesRequest {
+    return new ListAppChangesRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListAppChangesRequest {
+    return new ListAppChangesRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListAppChangesRequest {
+    return new ListAppChangesRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListAppChangesRequest | PlainMessage<ListAppChangesRequest> | undefined, b: ListAppChangesRequest | PlainMessage<ListAppChangesRequest> | undefined): boolean {
+    return proto3.util.equals(ListAppChangesRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ListAppChangesResponse
+ */
+export class ListAppChangesResponse extends Message<ListAppChangesResponse> {
+  /**
+   * The list of changes rel
+   *
+   * @generated from field: repeated changes.Change changes = 1;
+   */
+  changes: Change[] = [];
+
+  constructor(data?: PartialMessage<ListAppChangesResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListAppChangesResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changes", kind: "message", T: Change, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListAppChangesResponse {
+    return new ListAppChangesResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListAppChangesResponse {
+    return new ListAppChangesResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListAppChangesResponse {
+    return new ListAppChangesResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListAppChangesResponse | PlainMessage<ListAppChangesResponse> | undefined, b: ListAppChangesResponse | PlainMessage<ListAppChangesResponse> | undefined): boolean {
+    return proto3.util.equals(ListAppChangesResponse, a, b);
+  }
+}
+
+/**
  * a complete Change with machine-supplied and user-supplied values
  *
  * @generated from message changes.Change

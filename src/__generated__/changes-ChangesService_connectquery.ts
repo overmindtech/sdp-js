@@ -5,7 +5,7 @@
 
 import { createQueryService } from "@bufbuild/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, GetAppRequest, GetAppResponse, GetChangeRequest, GetChangeResponse, GetChangesHomeRequest, GetChangesHomeResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppsRequest, ListAppsResponse, ListChangesRequest, ListChangesResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
+import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, GetAppRequest, GetAppResponse, GetChangeRequest, GetChangeResponse, GetChangesHomeRequest, GetChangesHomeResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppChangesRequest, ListAppChangesResponse, ListAppsRequest, ListAppsResponse, ListChangesRequest, ListChangesResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
 
 export const typeName = "changes.ChangesService";
 
@@ -229,3 +229,20 @@ export const getChangesHome = createQueryService({
     typeName: "changes.ChangesService",
   },
 }).getChangesHome;
+
+/**
+ * @generated from rpc changes.ChangesService.ListAppChanges
+ */
+export const listAppChanges = createQueryService({
+  service: {
+    methods: {
+      listAppChanges: {
+        name: "ListAppChanges",
+        kind: MethodKind.Unary,
+        I: ListAppChangesRequest,
+        O: ListAppChangesResponse,
+      },
+    },
+    typeName: "changes.ChangesService",
+  },
+}).listAppChanges;

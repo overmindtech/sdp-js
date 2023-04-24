@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, GetAppRequest, GetAppResponse, GetChangeRequest, GetChangeResponse, GetChangesHomeRequest, GetChangesHomeResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppsRequest, ListAppsResponse, ListChangesRequest, ListChangesResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
+import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, GetAppRequest, GetAppResponse, GetChangeRequest, GetChangeResponse, GetChangesHomeRequest, GetChangesHomeResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppChangesRequest, ListAppChangesResponse, ListAppsRequest, ListAppsResponse, ListChangesRequest, ListChangesResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -129,6 +129,15 @@ export const ChangesService = {
       name: "GetChangesHome",
       I: GetChangesHomeRequest,
       O: GetChangesHomeResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc changes.ChangesService.ListAppChanges
+     */
+    listAppChanges: {
+      name: "ListAppChanges",
+      I: ListAppChangesRequest,
+      O: ListAppChangesResponse,
       kind: MethodKind.Unary,
     },
   }
