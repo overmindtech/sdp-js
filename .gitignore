@@ -7,3 +7,4 @@ types
 *.log*
 *.env*
 *.tgz
+.pnpm-store
