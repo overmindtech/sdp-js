@@ -914,11 +914,22 @@ export class ChangeProperties extends Message<ChangeProperties> {
   ccEmails = "";
 
   /**
-   * UUID of a bookmark for the item queries of the items affected by this change, as selected by the customer when defining the change.
+   * UUID of a bookmark for the item queries of the items *directly* affected by
+   * this change. This might be parsed from a terrform plam, added from the API,
+   * parsed from a freeform ticket description etc.
    *
    * @generated from field: bytes affectedItemsBookmarkUUID = 7;
    */
   affectedItemsBookmarkUUID = new Uint8Array(0);
+
+  /**
+   * UUID of a bookmark for the item queries of the items *indirectly* affected
+   * by this change i.e. the blast radius. This will be determined
+   * automatically, but can refined by the user.
+   *
+   * @generated from field: bytes blastRadiusBookmarkUUID = 11;
+   */
+  blastRadiusBookmarkUUID = new Uint8Array(0);
 
   /**
    * UUID of the whole-system snapshot created before the change has started.
@@ -956,6 +967,7 @@ export class ChangeProperties extends Message<ChangeProperties> {
     { no: 5, name: "owner", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "ccEmails", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "affectedItemsBookmarkUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 11, name: "blastRadiusBookmarkUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 8, name: "systemBeforeSnapshotUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 9, name: "systemAfterSnapshotUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 10, name: "affectedAppsUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */, repeated: true },
@@ -1351,6 +1363,381 @@ export class DeleteChangeResponse extends Message<DeleteChangeResponse> {
     return proto3.util.equals(DeleteChangeResponse, a, b);
   }
 }
+
+/**
+ * @generated from message changes.CalculateBlastRadiusRequest
+ */
+export class CalculateBlastRadiusRequest extends Message<CalculateBlastRadiusRequest> {
+  /**
+   * ID of the change to calculate the blast radius for.
+   *
+   * @generated from field: bytes changeUUID = 1;
+   */
+  changeUUID = new Uint8Array(0);
+
+  /**
+   * If true, the blast radius will be calculated again, even if it was already.
+   * Otherwise if the blast radius has already been calculated (i.e. the status
+   * is `DEFINING` and `blastRadiusBookmarkUUID` is set) an error will be
+   * returned.
+   *
+   * @generated from field: bool force = 2;
+   */
+  force = false;
+
+  constructor(data?: PartialMessage<CalculateBlastRadiusRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.CalculateBlastRadiusRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changeUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "force", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CalculateBlastRadiusRequest {
+    return new CalculateBlastRadiusRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CalculateBlastRadiusRequest {
+    return new CalculateBlastRadiusRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CalculateBlastRadiusRequest {
+    return new CalculateBlastRadiusRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CalculateBlastRadiusRequest | PlainMessage<CalculateBlastRadiusRequest> | undefined, b: CalculateBlastRadiusRequest | PlainMessage<CalculateBlastRadiusRequest> | undefined): boolean {
+    return proto3.util.equals(CalculateBlastRadiusRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.CalculateBlastRadiusResponse
+ */
+export class CalculateBlastRadiusResponse extends Message<CalculateBlastRadiusResponse> {
+  /**
+   * @generated from field: changes.CalculateBlastRadiusResponse.State state = 1;
+   */
+  state = CalculateBlastRadiusResponse_State.DISCOVERING;
+
+  /**
+   * @generated from field: uint32 numItems = 2;
+   */
+  numItems = 0;
+
+  /**
+   * @generated from field: uint32 NumEdges = 3;
+   */
+  NumEdges = 0;
+
+  constructor(data?: PartialMessage<CalculateBlastRadiusResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.CalculateBlastRadiusResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "state", kind: "enum", T: proto3.getEnumType(CalculateBlastRadiusResponse_State) },
+    { no: 2, name: "numItems", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+    { no: 3, name: "NumEdges", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CalculateBlastRadiusResponse {
+    return new CalculateBlastRadiusResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CalculateBlastRadiusResponse {
+    return new CalculateBlastRadiusResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CalculateBlastRadiusResponse {
+    return new CalculateBlastRadiusResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CalculateBlastRadiusResponse | PlainMessage<CalculateBlastRadiusResponse> | undefined, b: CalculateBlastRadiusResponse | PlainMessage<CalculateBlastRadiusResponse> | undefined): boolean {
+    return proto3.util.equals(CalculateBlastRadiusResponse, a, b);
+  }
+}
+
+/**
+ * @generated from enum changes.CalculateBlastRadiusResponse.State
+ */
+export enum CalculateBlastRadiusResponse_State {
+  /**
+   * The blast radius is being calculated.
+   *
+   * @generated from enum value: STATE_DISCOVERING = 0;
+   */
+  DISCOVERING = 0,
+
+  /**
+   * The blast radius has been calculated and is being saved
+   *
+   * @generated from enum value: STATE_SAVING = 1;
+   */
+  SAVING = 1,
+
+  /**
+   * Determining which apps are within the blast radius
+   *
+   * @generated from enum value: STATE_FINDING_APPS = 2;
+   */
+  FINDING_APPS = 2,
+
+  /**
+   * Everything is complete
+   *
+   * @generated from enum value: STATE_DONE = 3;
+   */
+  DONE = 3,
+}
+// Retrieve enum metadata with: proto3.getEnumType(CalculateBlastRadiusResponse_State)
+proto3.util.setEnumType(CalculateBlastRadiusResponse_State, "changes.CalculateBlastRadiusResponse.State", [
+  { no: 0, name: "STATE_DISCOVERING" },
+  { no: 1, name: "STATE_SAVING" },
+  { no: 2, name: "STATE_FINDING_APPS" },
+  { no: 3, name: "STATE_DONE" },
+]);
+
+/**
+ * @generated from message changes.StartChangeRequest
+ */
+export class StartChangeRequest extends Message<StartChangeRequest> {
+  /**
+   * @generated from field: bytes changeUUID = 1;
+   */
+  changeUUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<StartChangeRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.StartChangeRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changeUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StartChangeRequest {
+    return new StartChangeRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): StartChangeRequest {
+    return new StartChangeRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): StartChangeRequest {
+    return new StartChangeRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: StartChangeRequest | PlainMessage<StartChangeRequest> | undefined, b: StartChangeRequest | PlainMessage<StartChangeRequest> | undefined): boolean {
+    return proto3.util.equals(StartChangeRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.StartChangeResponse
+ */
+export class StartChangeResponse extends Message<StartChangeResponse> {
+  /**
+   * @generated from field: changes.StartChangeResponse.State state = 1;
+   */
+  state = StartChangeResponse_State.TAKING_SNAPSHOT;
+
+  /**
+   * @generated from field: uint32 numItems = 2;
+   */
+  numItems = 0;
+
+  /**
+   * @generated from field: uint32 NumEdges = 3;
+   */
+  NumEdges = 0;
+
+  constructor(data?: PartialMessage<StartChangeResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.StartChangeResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "state", kind: "enum", T: proto3.getEnumType(StartChangeResponse_State) },
+    { no: 2, name: "numItems", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+    { no: 3, name: "NumEdges", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StartChangeResponse {
+    return new StartChangeResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): StartChangeResponse {
+    return new StartChangeResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): StartChangeResponse {
+    return new StartChangeResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: StartChangeResponse | PlainMessage<StartChangeResponse> | undefined, b: StartChangeResponse | PlainMessage<StartChangeResponse> | undefined): boolean {
+    return proto3.util.equals(StartChangeResponse, a, b);
+  }
+}
+
+/**
+ * @generated from enum changes.StartChangeResponse.State
+ */
+export enum StartChangeResponse_State {
+  /**
+   * Snapshot is being taken
+   *
+   * @generated from enum value: STATE_TAKING_SNAPSHOT = 0;
+   */
+  TAKING_SNAPSHOT = 0,
+
+  /**
+   * Snapshot is being saved
+   *
+   * @generated from enum value: STATE_SAVING_SNAPSHOT = 1;
+   */
+  SAVING_SNAPSHOT = 1,
+
+  /**
+   * Everything is complete
+   *
+   * @generated from enum value: STATE_DONE = 2;
+   */
+  DONE = 2,
+}
+// Retrieve enum metadata with: proto3.getEnumType(StartChangeResponse_State)
+proto3.util.setEnumType(StartChangeResponse_State, "changes.StartChangeResponse.State", [
+  { no: 0, name: "STATE_TAKING_SNAPSHOT" },
+  { no: 1, name: "STATE_SAVING_SNAPSHOT" },
+  { no: 2, name: "STATE_DONE" },
+]);
+
+/**
+ * @generated from message changes.EndChangeRequest
+ */
+export class EndChangeRequest extends Message<EndChangeRequest> {
+  /**
+   * @generated from field: bytes changeUUID = 1;
+   */
+  changeUUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<EndChangeRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.EndChangeRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changeUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): EndChangeRequest {
+    return new EndChangeRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): EndChangeRequest {
+    return new EndChangeRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): EndChangeRequest {
+    return new EndChangeRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: EndChangeRequest | PlainMessage<EndChangeRequest> | undefined, b: EndChangeRequest | PlainMessage<EndChangeRequest> | undefined): boolean {
+    return proto3.util.equals(EndChangeRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.EndChangeResponse
+ */
+export class EndChangeResponse extends Message<EndChangeResponse> {
+  /**
+   * @generated from field: changes.EndChangeResponse.State state = 1;
+   */
+  state = EndChangeResponse_State.TAKING_SNAPSHOT;
+
+  /**
+   * @generated from field: uint32 numItems = 2;
+   */
+  numItems = 0;
+
+  /**
+   * @generated from field: uint32 NumEdges = 3;
+   */
+  NumEdges = 0;
+
+  constructor(data?: PartialMessage<EndChangeResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.EndChangeResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "state", kind: "enum", T: proto3.getEnumType(EndChangeResponse_State) },
+    { no: 2, name: "numItems", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+    { no: 3, name: "NumEdges", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): EndChangeResponse {
+    return new EndChangeResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): EndChangeResponse {
+    return new EndChangeResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): EndChangeResponse {
+    return new EndChangeResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: EndChangeResponse | PlainMessage<EndChangeResponse> | undefined, b: EndChangeResponse | PlainMessage<EndChangeResponse> | undefined): boolean {
+    return proto3.util.equals(EndChangeResponse, a, b);
+  }
+}
+
+/**
+ * @generated from enum changes.EndChangeResponse.State
+ */
+export enum EndChangeResponse_State {
+  /**
+   * Snapshot is being taken
+   *
+   * @generated from enum value: STATE_TAKING_SNAPSHOT = 0;
+   */
+  TAKING_SNAPSHOT = 0,
+
+  /**
+   * Snapshot is being saved
+   *
+   * @generated from enum value: STATE_SAVING_SNAPSHOT = 1;
+   */
+  SAVING_SNAPSHOT = 1,
+
+  /**
+   * Everything is complete
+   *
+   * @generated from enum value: STATE_DONE = 2;
+   */
+  DONE = 2,
+}
+// Retrieve enum metadata with: proto3.getEnumType(EndChangeResponse_State)
+proto3.util.setEnumType(EndChangeResponse_State, "changes.EndChangeResponse.State", [
+  { no: 0, name: "STATE_TAKING_SNAPSHOT" },
+  { no: 1, name: "STATE_SAVING_SNAPSHOT" },
+  { no: 2, name: "STATE_DONE" },
+]);
 
 /**
  * complete Onboarding information with machine-supplied and user-supplied values

@@ -10,6 +10,8 @@ import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeR
 export const typeName = "changes.ChangesService";
 
 /**
+ * Lists all apps
+ *
  * @generated from rpc changes.ChangesService.ListApps
  */
 export const listApps = createQueryService({
@@ -27,6 +29,8 @@ export const listApps = createQueryService({
 }).listApps;
 
 /**
+ * Creates a new app
+ *
  * @generated from rpc changes.ChangesService.CreateApp
  */
 export const createApp = createQueryService({
@@ -44,6 +48,8 @@ export const createApp = createQueryService({
 }).createApp;
 
 /**
+ * Gets the details of an existing app
+ *
  * @generated from rpc changes.ChangesService.GetApp
  */
 export const getApp = createQueryService({
@@ -61,6 +67,8 @@ export const getApp = createQueryService({
 }).getApp;
 
 /**
+ * Updates an existing app
+ *
  * @generated from rpc changes.ChangesService.UpdateApp
  */
 export const updateApp = createQueryService({
@@ -78,6 +86,8 @@ export const updateApp = createQueryService({
 }).updateApp;
 
 /**
+ * Deletes an app
+ *
  * @generated from rpc changes.ChangesService.DeleteApp
  */
 export const deleteApp = createQueryService({
@@ -95,6 +105,8 @@ export const deleteApp = createQueryService({
 }).deleteApp;
 
 /**
+ * Lists all changes
+ *
  * @generated from rpc changes.ChangesService.ListChanges
  */
 export const listChanges = createQueryService({
@@ -112,6 +124,8 @@ export const listChanges = createQueryService({
 }).listChanges;
 
 /**
+ * Creates a new change
+ *
  * @generated from rpc changes.ChangesService.CreateChange
  */
 export const createChange = createQueryService({
@@ -129,6 +143,8 @@ export const createChange = createQueryService({
 }).createChange;
 
 /**
+ * Gets the details of an existing change
+ *
  * @generated from rpc changes.ChangesService.GetChange
  */
 export const getChange = createQueryService({
@@ -146,6 +162,8 @@ export const getChange = createQueryService({
 }).getChange;
 
 /**
+ * Updates an existing change
+ *
  * @generated from rpc changes.ChangesService.UpdateChange
  */
 export const updateChange = createQueryService({
@@ -163,6 +181,8 @@ export const updateChange = createQueryService({
 }).updateChange;
 
 /**
+ * Deletes a change
+ *
  * @generated from rpc changes.ChangesService.DeleteChange
  */
 export const deleteChange = createQueryService({
