@@ -12,26 +12,40 @@ import { Reference } from "./items_pb.ts";
  */
 export enum ChangeStatus {
   /**
+   * The change has been created, but the blast radius has not yet been
+   * calculated. The blast radius can be calculated using the
+   * `CalculateBlastRadius` RPC.
+   *
    * @generated from enum value: STATUS_UNSPECIFIED = 0;
    */
   STATUS_UNSPECIFIED = 0,
 
   /**
+   * The blast radius has been calculated, but the chnage has not yet started.
+   * The change can be started using the `StartChange` RPC.
+   *
    * @generated from enum value: STATUS_DEFINING = 1;
    */
   STATUS_DEFINING = 1,
 
   /**
+   * The change is in progress. The change can be ended using the `EndChange`
+   * RPC.
+   *
    * @generated from enum value: STATUS_HAPPENING = 2;
    */
   STATUS_HAPPENING = 2,
 
   /**
+   * The change has been ended, but the results have not yet been processed.
+   *
    * @generated from enum value: STATUS_PROCESSING = 3;
    */
   STATUS_PROCESSING = 3,
 
   /**
+   * The change has been ended and the results have been processed.
+   *
    * @generated from enum value: STATUS_DONE = 4;
    */
   STATUS_DONE = 4,
@@ -830,6 +844,14 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
    */
   updatedAt?: Timestamp;
 
+  /**
+   * The current status of this change. This is changed by the lifecycle
+   * functions such as `StartChange` and `EndChange`.
+   *
+   * @generated from field: changes.ChangeStatus status = 4;
+   */
+  status = ChangeStatus.STATUS_UNSPECIFIED;
+
   constructor(data?: PartialMessage<ChangeMetadata>) {
     super();
     proto3.util.initPartial(data, this);
@@ -841,6 +863,7 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
     { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 2, name: "createdAt", kind: "message", T: Timestamp },
     { no: 3, name: "updatedAt", kind: "message", T: Timestamp },
+    { no: 4, name: "status", kind: "enum", T: proto3.getEnumType(ChangeStatus) },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeMetadata {
@@ -866,13 +889,6 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
  * @generated from message changes.ChangeProperties
  */
 export class ChangeProperties extends Message<ChangeProperties> {
-  /**
-   * The current status of this change.
-   *
-   * @generated from field: changes.ChangeStatus status = 1;
-   */
-  status = ChangeStatus.STATUS_UNSPECIFIED;
-
   /**
    * Short title for this change.
    * Example: "database upgrade"
@@ -960,7 +976,6 @@ export class ChangeProperties extends Message<ChangeProperties> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "changes.ChangeProperties";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "status", kind: "enum", T: proto3.getEnumType(ChangeStatus) },
     { no: 2, name: "title", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "ticketLink", kind: "scalar", T: 9 /* ScalarType.STRING */ },
