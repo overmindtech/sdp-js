@@ -1,6 +1,6 @@
 {
   "name": "@overmindtech/sdp-js",
-  "version": "4.8.2",
+  "version": "4.8.3",
   "description": "Javascript and Typescript libraries for the State Description Protocol",
   "license": "MIT",
   "sideEffects": false,
@@ -32,8 +32,8 @@
     "codequality:fix": "pnpm lint:fix && pnpm prettier:fix"
   },
   "dependencies": {
-    "@bufbuild/connect-query": "^0.2.0",
-    "@bufbuild/protobuf": "^1.0.0",
+    "@bufbuild/connect-query": "^0.2.1",
+    "@bufbuild/protobuf": "^1.2.0",
     "@tanstack/react-query": "^4.20.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
