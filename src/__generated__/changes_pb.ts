@@ -2067,6 +2067,94 @@ export class UpdateOnboardingResponse extends Message<UpdateOnboardingResponse> 
 }
 
 /**
+ * @generated from message changes.SimulateChangeRequest
+ */
+export class SimulateChangeRequest extends Message<SimulateChangeRequest> {
+  /**
+   * The ID of the change to simulate
+   *
+   * @generated from field: bytes changeUUID = 1;
+   */
+  changeUUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<SimulateChangeRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.SimulateChangeRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changeUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SimulateChangeRequest {
+    return new SimulateChangeRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SimulateChangeRequest {
+    return new SimulateChangeRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SimulateChangeRequest {
+    return new SimulateChangeRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SimulateChangeRequest | PlainMessage<SimulateChangeRequest> | undefined, b: SimulateChangeRequest | PlainMessage<SimulateChangeRequest> | undefined): boolean {
+    return proto3.util.equals(SimulateChangeRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.SimulateChangeResponse
+ */
+export class SimulateChangeResponse extends Message<SimulateChangeResponse> {
+  /**
+   * Whether the simulation is complete
+   *
+   * @generated from field: bool done = 1;
+   */
+  done = false;
+
+  /**
+   * How far through the simulation process we are. This will be pretty
+   * apprioximate as it's not expected to take very long and is more to give the
+   * sense of progress than to be an accurate measure
+   *
+   * @generated from field: uint32 percentComplete = 2;
+   */
+  percentComplete = 0;
+
+  constructor(data?: PartialMessage<SimulateChangeResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.SimulateChangeResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "done", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "percentComplete", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SimulateChangeResponse {
+    return new SimulateChangeResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SimulateChangeResponse {
+    return new SimulateChangeResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SimulateChangeResponse {
+    return new SimulateChangeResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SimulateChangeResponse | PlainMessage<SimulateChangeResponse> | undefined, b: SimulateChangeResponse | PlainMessage<SimulateChangeResponse> | undefined): boolean {
+    return proto3.util.equals(SimulateChangeResponse, a, b);
+  }
+}
+
+/**
  * @generated from message changes.GetChangesHomeRequest
  */
 export class GetChangesHomeRequest extends Message<GetChangesHomeRequest> {
