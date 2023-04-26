@@ -5,7 +5,7 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
-import { Reference } from "./items_pb.ts";
+import { Item, Reference } from "./items_pb.ts";
 
 /**
  * @generated from enum changes.ChangeStatus
@@ -1878,6 +1878,16 @@ export class OnboardingProperties extends Message<OnboardingProperties> {
    */
   changeUUID = new Uint8Array(0);
 
+  /**
+   * List of items that the user should be able to select when simulating their
+   * change. These should be gathered by the frontend and should be items that
+   * are within 1 link of the application that the user defined so that we know
+   * we can find the app as part of the blast radius
+   *
+   * @generated from field: repeated Item selectableItems = 5;
+   */
+  selectableItems: Item[] = [];
+
   constructor(data?: PartialMessage<OnboardingProperties>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1890,6 +1900,7 @@ export class OnboardingProperties extends Message<OnboardingProperties> {
     { no: 2, name: "awsSourceUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 3, name: "appUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 4, name: "changeUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 5, name: "selectableItems", kind: "message", T: Item, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): OnboardingProperties {
