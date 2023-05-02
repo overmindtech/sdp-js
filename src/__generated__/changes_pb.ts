@@ -16,47 +16,47 @@ export enum ChangeStatus {
    * calculated. The blast radius can be calculated using the
    * `CalculateBlastRadius` RPC.
    *
-   * @generated from enum value: STATUS_UNSPECIFIED = 0;
+   * @generated from enum value: CHANGE_STATUS_UNSPECIFIED = 0;
    */
-  STATUS_UNSPECIFIED = 0,
+  UNSPECIFIED = 0,
 
   /**
    * The blast radius has been calculated, but the chnage has not yet started.
    * The change can be started using the `StartChange` RPC.
    *
-   * @generated from enum value: STATUS_DEFINING = 1;
+   * @generated from enum value: CHANGE_STATUS_DEFINING = 1;
    */
-  STATUS_DEFINING = 1,
+  DEFINING = 1,
 
   /**
    * The change is in progress. The change can be ended using the `EndChange`
    * RPC.
    *
-   * @generated from enum value: STATUS_HAPPENING = 2;
+   * @generated from enum value: CHANGE_STATUS_HAPPENING = 2;
    */
-  STATUS_HAPPENING = 2,
+  HAPPENING = 2,
 
   /**
    * The change has been ended, but the results have not yet been processed.
    *
-   * @generated from enum value: STATUS_PROCESSING = 3;
+   * @generated from enum value: CHANGE_STATUS_PROCESSING = 3;
    */
-  STATUS_PROCESSING = 3,
+  PROCESSING = 3,
 
   /**
    * The change has been ended and the results have been processed.
    *
-   * @generated from enum value: STATUS_DONE = 4;
+   * @generated from enum value: CHANGE_STATUS_DONE = 4;
    */
-  STATUS_DONE = 4,
+  DONE = 4,
 }
 // Retrieve enum metadata with: proto3.getEnumType(ChangeStatus)
 proto3.util.setEnumType(ChangeStatus, "changes.ChangeStatus", [
-  { no: 0, name: "STATUS_UNSPECIFIED" },
-  { no: 1, name: "STATUS_DEFINING" },
-  { no: 2, name: "STATUS_HAPPENING" },
-  { no: 3, name: "STATUS_PROCESSING" },
-  { no: 4, name: "STATUS_DONE" },
+  { no: 0, name: "CHANGE_STATUS_UNSPECIFIED" },
+  { no: 1, name: "CHANGE_STATUS_DEFINING" },
+  { no: 2, name: "CHANGE_STATUS_HAPPENING" },
+  { no: 3, name: "CHANGE_STATUS_PROCESSING" },
+  { no: 4, name: "CHANGE_STATUS_DONE" },
 ]);
 
 /**
@@ -850,7 +850,7 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
    *
    * @generated from field: changes.ChangeStatus status = 4;
    */
-  status = ChangeStatus.STATUS_UNSPECIFIED;
+  status = ChangeStatus.UNSPECIFIED;
 
   constructor(data?: PartialMessage<ChangeMetadata>) {
     super();
@@ -1436,7 +1436,7 @@ export class CalculateBlastRadiusResponse extends Message<CalculateBlastRadiusRe
   /**
    * @generated from field: changes.CalculateBlastRadiusResponse.State state = 1;
    */
-  state = CalculateBlastRadiusResponse_State.DISCOVERING;
+  state = CalculateBlastRadiusResponse_State.UNSPECIFIED;
 
   /**
    * @generated from field: uint32 numItems = 2;
@@ -1483,39 +1483,47 @@ export class CalculateBlastRadiusResponse extends Message<CalculateBlastRadiusRe
  */
 export enum CalculateBlastRadiusResponse_State {
   /**
+   * No state has been specified
+   *
+   * @generated from enum value: STATE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
    * The blast radius is being calculated.
    *
-   * @generated from enum value: STATE_DISCOVERING = 0;
+   * @generated from enum value: STATE_DISCOVERING = 1;
    */
-  DISCOVERING = 0,
+  DISCOVERING = 1,
 
   /**
    * The blast radius has been calculated and is being saved
    *
-   * @generated from enum value: STATE_SAVING = 1;
+   * @generated from enum value: STATE_SAVING = 2;
    */
-  SAVING = 1,
+  SAVING = 2,
 
   /**
    * Determining which apps are within the blast radius
    *
-   * @generated from enum value: STATE_FINDING_APPS = 2;
+   * @generated from enum value: STATE_FINDING_APPS = 3;
    */
-  FINDING_APPS = 2,
+  FINDING_APPS = 3,
 
   /**
    * Everything is complete
    *
-   * @generated from enum value: STATE_DONE = 3;
+   * @generated from enum value: STATE_DONE = 4;
    */
-  DONE = 3,
+  DONE = 4,
 }
 // Retrieve enum metadata with: proto3.getEnumType(CalculateBlastRadiusResponse_State)
 proto3.util.setEnumType(CalculateBlastRadiusResponse_State, "changes.CalculateBlastRadiusResponse.State", [
-  { no: 0, name: "STATE_DISCOVERING" },
-  { no: 1, name: "STATE_SAVING" },
-  { no: 2, name: "STATE_FINDING_APPS" },
-  { no: 3, name: "STATE_DONE" },
+  { no: 0, name: "STATE_UNSPECIFIED" },
+  { no: 1, name: "STATE_DISCOVERING" },
+  { no: 2, name: "STATE_SAVING" },
+  { no: 3, name: "STATE_FINDING_APPS" },
+  { no: 4, name: "STATE_DONE" },
 ]);
 
 /**
@@ -1562,7 +1570,7 @@ export class StartChangeResponse extends Message<StartChangeResponse> {
   /**
    * @generated from field: changes.StartChangeResponse.State state = 1;
    */
-  state = StartChangeResponse_State.TAKING_SNAPSHOT;
+  state = StartChangeResponse_State.UNSPECIFIED;
 
   /**
    * @generated from field: uint32 numItems = 2;
@@ -1609,31 +1617,39 @@ export class StartChangeResponse extends Message<StartChangeResponse> {
  */
 export enum StartChangeResponse_State {
   /**
+   * No state has been specified
+   *
+   * @generated from enum value: STATE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
    * Snapshot is being taken
    *
-   * @generated from enum value: STATE_TAKING_SNAPSHOT = 0;
+   * @generated from enum value: STATE_TAKING_SNAPSHOT = 1;
    */
-  TAKING_SNAPSHOT = 0,
+  TAKING_SNAPSHOT = 1,
 
   /**
    * Snapshot is being saved
    *
-   * @generated from enum value: STATE_SAVING_SNAPSHOT = 1;
+   * @generated from enum value: STATE_SAVING_SNAPSHOT = 2;
    */
-  SAVING_SNAPSHOT = 1,
+  SAVING_SNAPSHOT = 2,
 
   /**
    * Everything is complete
    *
-   * @generated from enum value: STATE_DONE = 2;
+   * @generated from enum value: STATE_DONE = 3;
    */
-  DONE = 2,
+  DONE = 3,
 }
 // Retrieve enum metadata with: proto3.getEnumType(StartChangeResponse_State)
 proto3.util.setEnumType(StartChangeResponse_State, "changes.StartChangeResponse.State", [
-  { no: 0, name: "STATE_TAKING_SNAPSHOT" },
-  { no: 1, name: "STATE_SAVING_SNAPSHOT" },
-  { no: 2, name: "STATE_DONE" },
+  { no: 0, name: "STATE_UNSPECIFIED" },
+  { no: 1, name: "STATE_TAKING_SNAPSHOT" },
+  { no: 2, name: "STATE_SAVING_SNAPSHOT" },
+  { no: 3, name: "STATE_DONE" },
 ]);
 
 /**
@@ -1680,7 +1696,7 @@ export class EndChangeResponse extends Message<EndChangeResponse> {
   /**
    * @generated from field: changes.EndChangeResponse.State state = 1;
    */
-  state = EndChangeResponse_State.TAKING_SNAPSHOT;
+  state = EndChangeResponse_State.UNSPECIFIED;
 
   /**
    * @generated from field: uint32 numItems = 2;
@@ -1727,31 +1743,39 @@ export class EndChangeResponse extends Message<EndChangeResponse> {
  */
 export enum EndChangeResponse_State {
   /**
+   * No state has been specified
+   *
+   * @generated from enum value: STATE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
    * Snapshot is being taken
    *
-   * @generated from enum value: STATE_TAKING_SNAPSHOT = 0;
+   * @generated from enum value: STATE_TAKING_SNAPSHOT = 1;
    */
-  TAKING_SNAPSHOT = 0,
+  TAKING_SNAPSHOT = 1,
 
   /**
    * Snapshot is being saved
    *
-   * @generated from enum value: STATE_SAVING_SNAPSHOT = 1;
+   * @generated from enum value: STATE_SAVING_SNAPSHOT = 2;
    */
-  SAVING_SNAPSHOT = 1,
+  SAVING_SNAPSHOT = 2,
 
   /**
    * Everything is complete
    *
-   * @generated from enum value: STATE_DONE = 2;
+   * @generated from enum value: STATE_DONE = 3;
    */
-  DONE = 2,
+  DONE = 3,
 }
 // Retrieve enum metadata with: proto3.getEnumType(EndChangeResponse_State)
 proto3.util.setEnumType(EndChangeResponse_State, "changes.EndChangeResponse.State", [
-  { no: 0, name: "STATE_TAKING_SNAPSHOT" },
-  { no: 1, name: "STATE_SAVING_SNAPSHOT" },
-  { no: 2, name: "STATE_DONE" },
+  { no: 0, name: "STATE_UNSPECIFIED" },
+  { no: 1, name: "STATE_TAKING_SNAPSHOT" },
+  { no: 2, name: "STATE_SAVING_SNAPSHOT" },
+  { no: 3, name: "STATE_DONE" },
 ]);
 
 /**
