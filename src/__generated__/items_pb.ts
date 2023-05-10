@@ -98,6 +98,166 @@ proto3.util.setEnumType(QueryMethod, "QueryMethod", [
 ]);
 
 /**
+ * This message stores additional information on Edges (and edge-like constructs) to determine how configuration changes can impact
+ * the linked items.
+ *
+ *  Blast Propagation options:
+ * |-------|-------|----------------------
+ * |   in  |  out  | result
+ * |-------|-------|----------------------
+ * | false | false | no change in any item can affect the other
+ * | false | true  | a change to this item can affect its linked items
+ * |       |       | example: a change to an EC2 instance can affect its DNS name (in the sense that other items depending on that DNS name will see the impact)
+ * | true  | false | a change to linked items can affect this item
+ * |       |       | example: changing the KMS key used by a DynamoDB table can impact the table, but no change to the table can impact the key
+ * | true  | true  | changes on boths sides of the link can affect the other
+ * |       |       | example: changes to both EC2 Instances and their volumes can affect the other side of the relation.
+ *
+ * @generated from message BlastPropagation
+ */
+export class BlastPropagation extends Message<BlastPropagation> {
+  /**
+   * is true if changes on linked items can affect this item
+   *
+   * @generated from field: bool in = 1;
+   */
+  in = false;
+
+  /**
+   * is true if changes on this item can affect linked items
+   *
+   * @generated from field: bool out = 2;
+   */
+  out = false;
+
+  constructor(data?: PartialMessage<BlastPropagation>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "BlastPropagation";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "in", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "out", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): BlastPropagation {
+    return new BlastPropagation().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): BlastPropagation {
+    return new BlastPropagation().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): BlastPropagation {
+    return new BlastPropagation().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: BlastPropagation | PlainMessage<BlastPropagation> | undefined, b: BlastPropagation | PlainMessage<BlastPropagation> | undefined): boolean {
+    return proto3.util.equals(BlastPropagation, a, b);
+  }
+}
+
+/**
+ * An annotated query to indicate potential linked items.
+ *
+ * @generated from message LinkedItemQuery
+ */
+export class LinkedItemQuery extends Message<LinkedItemQuery> {
+  /**
+   * the query that would find linked items
+   *
+   * @generated from field: Query query = 1;
+   */
+  query?: Query;
+
+  /**
+   * how configuration changes (i.e. the "blast") propagates over this link
+   *
+   * @generated from field: BlastPropagation blastPropagation = 2;
+   */
+  blastPropagation?: BlastPropagation;
+
+  constructor(data?: PartialMessage<LinkedItemQuery>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "LinkedItemQuery";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "query", kind: "message", T: Query },
+    { no: 2, name: "blastPropagation", kind: "message", T: BlastPropagation },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): LinkedItemQuery {
+    return new LinkedItemQuery().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): LinkedItemQuery {
+    return new LinkedItemQuery().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): LinkedItemQuery {
+    return new LinkedItemQuery().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: LinkedItemQuery | PlainMessage<LinkedItemQuery> | undefined, b: LinkedItemQuery | PlainMessage<LinkedItemQuery> | undefined): boolean {
+    return proto3.util.equals(LinkedItemQuery, a, b);
+  }
+}
+
+/**
+ * An annotated reference to list linked items.
+ *
+ * @generated from message LinkedItem
+ */
+export class LinkedItem extends Message<LinkedItem> {
+  /**
+   * the linked item
+   *
+   * @generated from field: Reference item = 1;
+   */
+  item?: Reference;
+
+  /**
+   * how configuration changes (i.e. the "blast") propagates over this link
+   *
+   * @generated from field: BlastPropagation blastPropagation = 2;
+   */
+  blastPropagation?: BlastPropagation;
+
+  constructor(data?: PartialMessage<LinkedItem>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "LinkedItem";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "item", kind: "message", T: Reference },
+    { no: 2, name: "blastPropagation", kind: "message", T: BlastPropagation },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): LinkedItem {
+    return new LinkedItem().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): LinkedItem {
+    return new LinkedItem().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): LinkedItem {
+    return new LinkedItem().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: LinkedItem | PlainMessage<LinkedItem> | undefined, b: LinkedItem | PlainMessage<LinkedItem> | undefined): boolean {
+    return proto3.util.equals(LinkedItem, a, b);
+  }
+}
+
+/**
  * This is the same as Item within the package with a couple of exceptions, no
  * real reason why this whole thing couldn't be modelled in protobuf though if
  * required. Just need to decide what if anything should remain private
@@ -140,16 +300,16 @@ export class Item extends Message<Item> {
    * Not all items will have relatedItems we are are using a two byte
    * integer to save one byte integers for more common things
    *
-   * @generated from field: repeated Query linkedItemQueries = 16;
+   * @generated from field: repeated LinkedItemQuery linkedItemQueries = 16;
    */
-  linkedItemQueries: Query[] = [];
+  linkedItemQueries: LinkedItemQuery[] = [];
 
   /**
    * Linked items
    *
-   * @generated from field: repeated Reference linkedItems = 17;
+   * @generated from field: repeated LinkedItem linkedItems = 17;
    */
-  linkedItems: Reference[] = [];
+  linkedItems: LinkedItem[] = [];
 
   /**
    * (optional) Represents the health of the item. Only items that have a
@@ -172,8 +332,8 @@ export class Item extends Message<Item> {
     { no: 3, name: "attributes", kind: "message", T: ItemAttributes },
     { no: 4, name: "metadata", kind: "message", T: Metadata },
     { no: 5, name: "scope", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 16, name: "linkedItemQueries", kind: "message", T: Query, repeated: true },
-    { no: 17, name: "linkedItems", kind: "message", T: Reference, repeated: true },
+    { no: 16, name: "linkedItemQueries", kind: "message", T: LinkedItemQuery, repeated: true },
+    { no: 17, name: "linkedItems", kind: "message", T: LinkedItem, repeated: true },
     { no: 18, name: "health", kind: "enum", T: proto3.getEnumType(Health), opt: true },
   ]);
 
@@ -402,14 +562,11 @@ export class Query extends Message<Query> {
   query = "";
 
   /**
-   * How deeply to link items. A value of 0 will mean that items are not linked.
-   * To resolve linked items "infinitely" simply set this to a high number, with
-   * the highest being 4,294,967,295. While this isn't truly *infinite*, chances
-   * are that it is effectively the same, think six degrees of separation etc.
+   * Defines how this query should behave when finding new items
    *
-   * @generated from field: uint32 linkDepth = 4;
+   * @generated from field: Query.RecursionBehaviour recursionBehaviour = 4;
    */
-  linkDepth = 0;
+  recursionBehaviour?: Query_RecursionBehaviour;
 
   /**
    * The scope for which we are requesting. To query all scopes use the the
@@ -486,7 +643,7 @@ export class Query extends Message<Query> {
     { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "method", kind: "enum", T: proto3.getEnumType(QueryMethod) },
     { no: 3, name: "query", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "linkDepth", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+    { no: 4, name: "recursionBehaviour", kind: "message", T: Query_RecursionBehaviour },
     { no: 5, name: "scope", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "ignoreCache", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 7, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
@@ -510,6 +667,58 @@ export class Query extends Message<Query> {
 
   static equals(a: Query | PlainMessage<Query> | undefined, b: Query | PlainMessage<Query> | undefined): boolean {
     return proto3.util.equals(Query, a, b);
+  }
+}
+
+/**
+ * Defines how this query should behave when finding new items
+ *
+ * @generated from message Query.RecursionBehaviour
+ */
+export class Query_RecursionBehaviour extends Message<Query_RecursionBehaviour> {
+  /**
+   * How deeply to link items. A value of 0 will mean that items are not linked.
+   * To resolve linked items "infinitely" simply set this to a high number, with
+   * the highest being 4,294,967,295. While this isn't truly *infinite*, chances
+   * are that it is effectively the same, think six degrees of separation etc.
+   *
+   * @generated from field: uint32 linkDepth = 1;
+   */
+  linkDepth = 0;
+
+  /**
+   * set to true to only follow links that propagate configuration change impact
+   *
+   * @generated from field: bool followOnlyBlastPropagation = 2;
+   */
+  followOnlyBlastPropagation = false;
+
+  constructor(data?: PartialMessage<Query_RecursionBehaviour>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "Query.RecursionBehaviour";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "linkDepth", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+    { no: 2, name: "followOnlyBlastPropagation", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Query_RecursionBehaviour {
+    return new Query_RecursionBehaviour().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Query_RecursionBehaviour {
+    return new Query_RecursionBehaviour().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Query_RecursionBehaviour {
+    return new Query_RecursionBehaviour().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: Query_RecursionBehaviour | PlainMessage<Query_RecursionBehaviour> | undefined, b: Query_RecursionBehaviour | PlainMessage<Query_RecursionBehaviour> | undefined): boolean {
+    return proto3.util.equals(Query_RecursionBehaviour, a, b);
   }
 }
 
@@ -1031,6 +1240,11 @@ export class Edge extends Message<Edge> {
    */
   to?: Reference;
 
+  /**
+   * @generated from field: BlastPropagation blastPropagation = 3;
+   */
+  blastPropagation?: BlastPropagation;
+
   constructor(data?: PartialMessage<Edge>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1041,6 +1255,7 @@ export class Edge extends Message<Edge> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "from", kind: "message", T: Reference },
     { no: 2, name: "to", kind: "message", T: Reference },
+    { no: 3, name: "blastPropagation", kind: "message", T: BlastPropagation },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Edge {
@@ -1129,9 +1344,9 @@ export class ReverseLinksResponse extends Message<ReverseLinksResponse> {
    * The item queries that should be executed in order to find items that link
    * to the requested item
    *
-   * @generated from field: repeated Query linkedItemQueries = 1;
+   * @generated from field: repeated LinkedItemQuery linkedItemQueries = 1;
    */
-  linkedItemQueries: Query[] = [];
+  linkedItemQueries: LinkedItemQuery[] = [];
 
   /**
    * An error, if present. If not this will be an empty string
@@ -1148,7 +1363,7 @@ export class ReverseLinksResponse extends Message<ReverseLinksResponse> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "ReverseLinksResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "linkedItemQueries", kind: "message", T: Query, repeated: true },
+    { no: 1, name: "linkedItemQueries", kind: "message", T: LinkedItemQuery, repeated: true },
     { no: 2, name: "error", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
