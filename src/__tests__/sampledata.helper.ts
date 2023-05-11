@@ -95,13 +95,12 @@ export const item = {
     }),
     linkedItems: [
       new LinkedItem({
-        item:
-          new Reference({
-            scope: 'global',
-            type: 'person',
-            uniqueAttributeValue: 'katie',
-          }),
-      })
+        item: new Reference({
+          scope: 'global',
+          type: 'person',
+          uniqueAttributeValue: 'katie',
+        }),
+      }),
     ],
   }),
   katie: new Item({
