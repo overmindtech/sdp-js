@@ -69,7 +69,7 @@ describe('SourceDiscovery', () => {
                     timestamp: newTimestamp(new Date()),
                     sourceQuery: new Query({
                       scope: 'global',
-                      linkDepth: 0,
+                      recursionBehaviour: { linkDepth: 0 },
                       method: QueryMethod.GET,
                       query: 'per',
                       type: 'overmind-type',
@@ -133,7 +133,7 @@ describe('SourceDiscovery', () => {
                     timestamp: newTimestamp(new Date()),
                     sourceQuery: new Query({
                       scope: 'global',
-                      linkDepth: 0,
+                      recursionBehaviour: { linkDepth: 0 },
                       method: QueryMethod.GET,
                       query: 'per',
                       type: 'overmind-type',

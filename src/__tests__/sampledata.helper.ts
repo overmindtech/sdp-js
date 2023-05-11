@@ -19,7 +19,7 @@ import {
   GatewayRequestStatus,
   GatewayRequestStatus_Summary,
 } from '../__generated__/gateway_pb'
-import {} from '../__generated__/items_pb'
+import { LinkedItem } from '../__generated__/items_pb'
 
 export const error = {
   NOTFOUND: new QueryError({
@@ -64,7 +64,7 @@ export const request = {
   LIST: new Query({
     type: 'package',
     method: QueryMethod.LIST,
-    linkDepth: 90,
+    recursionBehaviour: { linkDepth: 90 },
     scope: 'test.scope',
     itemSubject: 'itemSubject',
     responseSubject: 'responseSubject',
@@ -94,11 +94,14 @@ export const item = {
       age: 27,
     }),
     linkedItems: [
-      new Reference({
-        scope: 'global',
-        type: 'person',
-        uniqueAttributeValue: 'katie',
-      }),
+      new LinkedItem({
+        item:
+          new Reference({
+            scope: 'global',
+            type: 'person',
+            uniqueAttributeValue: 'katie',
+          }),
+      })
     ],
   }),
   katie: new Item({
@@ -139,7 +142,7 @@ export const gatewayRequest = {
       case: 'query',
       value: new Query({
         scope: 'test',
-        linkDepth: 10,
+        recursionBehaviour: { linkDepth: 10 },
         method: QueryMethod.GET,
         query: 'Dylan',
         itemSubject: 'return.item.foo',
