@@ -1304,6 +1304,13 @@ export class ReverseLinksRequest extends Message<ReverseLinksRequest> {
    */
   timeout?: Duration;
 
+  /**
+   * set to true to only return links that propagate configuration change impact
+   *
+   * @generated from field: bool followOnlyBlastPropagation = 3;
+   */
+  followOnlyBlastPropagation = false;
+
   constructor(data?: PartialMessage<ReverseLinksRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1314,6 +1321,7 @@ export class ReverseLinksRequest extends Message<ReverseLinksRequest> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "item", kind: "message", T: Reference },
     { no: 2, name: "timeout", kind: "message", T: Duration },
+    { no: 3, name: "followOnlyBlastPropagation", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ReverseLinksRequest {
