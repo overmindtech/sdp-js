@@ -5,7 +5,45 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
-import { Item, Reference } from "./items_pb.ts";
+import { Edge, Health, Item, Reference } from "./items_pb.ts";
+
+/**
+ * @generated from enum changes.ItemDiffStatus
+ */
+export enum ItemDiffStatus {
+  /**
+   * @generated from enum value: ITEM_DIFF_STATUS_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: ITEM_DIFF_STATUS_UNCHANGED = 1;
+   */
+  UNCHANGED = 1,
+
+  /**
+   * @generated from enum value: ITEM_DIFF_STATUS_CREATED = 2;
+   */
+  CREATED = 2,
+
+  /**
+   * @generated from enum value: ITEM_DIFF_STATUS_UPDATED = 3;
+   */
+  UPDATED = 3,
+
+  /**
+   * @generated from enum value: ITEM_DIFF_STATUS_DELETED = 4;
+   */
+  DELETED = 4,
+}
+// Retrieve enum metadata with: proto3.getEnumType(ItemDiffStatus)
+proto3.util.setEnumType(ItemDiffStatus, "changes.ItemDiffStatus", [
+  { no: 0, name: "ITEM_DIFF_STATUS_UNSPECIFIED" },
+  { no: 1, name: "ITEM_DIFF_STATUS_UNCHANGED" },
+  { no: 2, name: "ITEM_DIFF_STATUS_CREATED" },
+  { no: 3, name: "ITEM_DIFF_STATUS_UPDATED" },
+  { no: 4, name: "ITEM_DIFF_STATUS_DELETED" },
+]);
 
 /**
  * @generated from enum changes.ChangeStatus
@@ -134,6 +172,930 @@ proto3.util.setEnumType(OnboardingStatus, "changes.OnboardingStatus", [
 ]);
 
 /**
+ * @generated from message changes.GetDiffRequest
+ */
+export class GetDiffRequest extends Message<GetDiffRequest> {
+  /**
+   * @generated from field: bytes changeUUID = 1;
+   */
+  changeUUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<GetDiffRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetDiffRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changeUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetDiffRequest {
+    return new GetDiffRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetDiffRequest {
+    return new GetDiffRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetDiffRequest {
+    return new GetDiffRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetDiffRequest | PlainMessage<GetDiffRequest> | undefined, b: GetDiffRequest | PlainMessage<GetDiffRequest> | undefined): boolean {
+    return proto3.util.equals(GetDiffRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetDiffResponse
+ */
+export class GetDiffResponse extends Message<GetDiffResponse> {
+  /**
+   * @generated from field: repeated changes.ItemDiff items = 1;
+   */
+  items: ItemDiff[] = [];
+
+  /**
+   * @generated from field: repeated Edge edges = 2;
+   */
+  edges: Edge[] = [];
+
+  constructor(data?: PartialMessage<GetDiffResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetDiffResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "items", kind: "message", T: ItemDiff, repeated: true },
+    { no: 2, name: "edges", kind: "message", T: Edge, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetDiffResponse {
+    return new GetDiffResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetDiffResponse {
+    return new GetDiffResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetDiffResponse {
+    return new GetDiffResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetDiffResponse | PlainMessage<GetDiffResponse> | undefined, b: GetDiffResponse | PlainMessage<GetDiffResponse> | undefined): boolean {
+    return proto3.util.equals(GetDiffResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetChangeAuditLogRequest
+ */
+export class GetChangeAuditLogRequest extends Message<GetChangeAuditLogRequest> {
+  /**
+   * @generated from field: bytes changeUUID = 1;
+   */
+  changeUUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<GetChangeAuditLogRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetChangeAuditLogRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changeUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangeAuditLogRequest {
+    return new GetChangeAuditLogRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangeAuditLogRequest {
+    return new GetChangeAuditLogRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangeAuditLogRequest {
+    return new GetChangeAuditLogRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChangeAuditLogRequest | PlainMessage<GetChangeAuditLogRequest> | undefined, b: GetChangeAuditLogRequest | PlainMessage<GetChangeAuditLogRequest> | undefined): boolean {
+    return proto3.util.equals(GetChangeAuditLogRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetChangeAuditLogResponse
+ */
+export class GetChangeAuditLogResponse extends Message<GetChangeAuditLogResponse> {
+  /**
+   * @generated from field: repeated changes.ChangeAuditLogEntry entries = 1;
+   */
+  entries: ChangeAuditLogEntry[] = [];
+
+  constructor(data?: PartialMessage<GetChangeAuditLogResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetChangeAuditLogResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "entries", kind: "message", T: ChangeAuditLogEntry, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangeAuditLogResponse {
+    return new GetChangeAuditLogResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangeAuditLogResponse {
+    return new GetChangeAuditLogResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangeAuditLogResponse {
+    return new GetChangeAuditLogResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChangeAuditLogResponse | PlainMessage<GetChangeAuditLogResponse> | undefined, b: GetChangeAuditLogResponse | PlainMessage<GetChangeAuditLogResponse> | undefined): boolean {
+    return proto3.util.equals(GetChangeAuditLogResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ListChangingItemsSummaryRequest
+ */
+export class ListChangingItemsSummaryRequest extends Message<ListChangingItemsSummaryRequest> {
+  /**
+   * @generated from field: bytes changeUUID = 1;
+   */
+  changeUUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<ListChangingItemsSummaryRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListChangingItemsSummaryRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changeUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListChangingItemsSummaryRequest {
+    return new ListChangingItemsSummaryRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListChangingItemsSummaryRequest {
+    return new ListChangingItemsSummaryRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListChangingItemsSummaryRequest {
+    return new ListChangingItemsSummaryRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListChangingItemsSummaryRequest | PlainMessage<ListChangingItemsSummaryRequest> | undefined, b: ListChangingItemsSummaryRequest | PlainMessage<ListChangingItemsSummaryRequest> | undefined): boolean {
+    return proto3.util.equals(ListChangingItemsSummaryRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ListChangingItemsSummaryResponse
+ */
+export class ListChangingItemsSummaryResponse extends Message<ListChangingItemsSummaryResponse> {
+  /**
+   * @generated from field: repeated changes.ItemDiffSummary items = 1;
+   */
+  items: ItemDiffSummary[] = [];
+
+  constructor(data?: PartialMessage<ListChangingItemsSummaryResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListChangingItemsSummaryResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "items", kind: "message", T: ItemDiffSummary, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListChangingItemsSummaryResponse {
+    return new ListChangingItemsSummaryResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListChangingItemsSummaryResponse {
+    return new ListChangingItemsSummaryResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListChangingItemsSummaryResponse {
+    return new ListChangingItemsSummaryResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListChangingItemsSummaryResponse | PlainMessage<ListChangingItemsSummaryResponse> | undefined, b: ListChangingItemsSummaryResponse | PlainMessage<ListChangingItemsSummaryResponse> | undefined): boolean {
+    return proto3.util.equals(ListChangingItemsSummaryResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetAffectedAppsRequest
+ */
+export class GetAffectedAppsRequest extends Message<GetAffectedAppsRequest> {
+  /**
+   * @generated from field: bytes changeUUID = 1;
+   */
+  changeUUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<GetAffectedAppsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetAffectedAppsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changeUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAffectedAppsRequest {
+    return new GetAffectedAppsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAffectedAppsRequest {
+    return new GetAffectedAppsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAffectedAppsRequest {
+    return new GetAffectedAppsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetAffectedAppsRequest | PlainMessage<GetAffectedAppsRequest> | undefined, b: GetAffectedAppsRequest | PlainMessage<GetAffectedAppsRequest> | undefined): boolean {
+    return proto3.util.equals(GetAffectedAppsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetAffectedAppsResponse
+ */
+export class GetAffectedAppsResponse extends Message<GetAffectedAppsResponse> {
+  /**
+   * @generated from field: repeated changes.AppSummary apps = 1;
+   */
+  apps: AppSummary[] = [];
+
+  constructor(data?: PartialMessage<GetAffectedAppsResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetAffectedAppsResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "apps", kind: "message", T: AppSummary, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAffectedAppsResponse {
+    return new GetAffectedAppsResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAffectedAppsResponse {
+    return new GetAffectedAppsResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAffectedAppsResponse {
+    return new GetAffectedAppsResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetAffectedAppsResponse | PlainMessage<GetAffectedAppsResponse> | undefined, b: GetAffectedAppsResponse | PlainMessage<GetAffectedAppsResponse> | undefined): boolean {
+    return proto3.util.equals(GetAffectedAppsResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.UpdateChangingItemsRequest
+ */
+export class UpdateChangingItemsRequest extends Message<UpdateChangingItemsRequest> {
+  /**
+   * The change to update
+   *
+   * @generated from field: bytes changeUUID = 1;
+   */
+  changeUUID = new Uint8Array(0);
+
+  /**
+   * References to the items that are changing
+   *
+   * @generated from field: repeated Reference changingItems = 2;
+   */
+  changingItems: Reference[] = [];
+
+  constructor(data?: PartialMessage<UpdateChangingItemsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.UpdateChangingItemsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changeUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "changingItems", kind: "message", T: Reference, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateChangingItemsRequest {
+    return new UpdateChangingItemsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateChangingItemsRequest {
+    return new UpdateChangingItemsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateChangingItemsRequest {
+    return new UpdateChangingItemsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateChangingItemsRequest | PlainMessage<UpdateChangingItemsRequest> | undefined, b: UpdateChangingItemsRequest | PlainMessage<UpdateChangingItemsRequest> | undefined): boolean {
+    return proto3.util.equals(UpdateChangingItemsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ListAppChangesSummaryRequest
+ */
+export class ListAppChangesSummaryRequest extends Message<ListAppChangesSummaryRequest> {
+  /**
+   * @generated from field: bytes appUUID = 1;
+   */
+  appUUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<ListAppChangesSummaryRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListAppChangesSummaryRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "appUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListAppChangesSummaryRequest {
+    return new ListAppChangesSummaryRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListAppChangesSummaryRequest {
+    return new ListAppChangesSummaryRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListAppChangesSummaryRequest {
+    return new ListAppChangesSummaryRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListAppChangesSummaryRequest | PlainMessage<ListAppChangesSummaryRequest> | undefined, b: ListAppChangesSummaryRequest | PlainMessage<ListAppChangesSummaryRequest> | undefined): boolean {
+    return proto3.util.equals(ListAppChangesSummaryRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ListAppChangesSummaryResponse
+ */
+export class ListAppChangesSummaryResponse extends Message<ListAppChangesSummaryResponse> {
+  /**
+   * @generated from field: repeated changes.ChangeSummary changes = 1;
+   */
+  changes: ChangeSummary[] = [];
+
+  constructor(data?: PartialMessage<ListAppChangesSummaryResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListAppChangesSummaryResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changes", kind: "message", T: ChangeSummary, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListAppChangesSummaryResponse {
+    return new ListAppChangesSummaryResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListAppChangesSummaryResponse {
+    return new ListAppChangesSummaryResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListAppChangesSummaryResponse {
+    return new ListAppChangesSummaryResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListAppChangesSummaryResponse | PlainMessage<ListAppChangesSummaryResponse> | undefined, b: ListAppChangesSummaryResponse | PlainMessage<ListAppChangesSummaryResponse> | undefined): boolean {
+    return proto3.util.equals(ListAppChangesSummaryResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetAppSummaryRequest
+ */
+export class GetAppSummaryRequest extends Message<GetAppSummaryRequest> {
+  /**
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<GetAppSummaryRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetAppSummaryRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAppSummaryRequest {
+    return new GetAppSummaryRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAppSummaryRequest {
+    return new GetAppSummaryRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAppSummaryRequest {
+    return new GetAppSummaryRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetAppSummaryRequest | PlainMessage<GetAppSummaryRequest> | undefined, b: GetAppSummaryRequest | PlainMessage<GetAppSummaryRequest> | undefined): boolean {
+    return proto3.util.equals(GetAppSummaryRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetAppSummaryResponse
+ */
+export class GetAppSummaryResponse extends Message<GetAppSummaryResponse> {
+  /**
+   * @generated from field: changes.AppSummary app = 1;
+   */
+  app?: AppSummary;
+
+  constructor(data?: PartialMessage<GetAppSummaryResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetAppSummaryResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "app", kind: "message", T: AppSummary },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAppSummaryResponse {
+    return new GetAppSummaryResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAppSummaryResponse {
+    return new GetAppSummaryResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAppSummaryResponse {
+    return new GetAppSummaryResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetAppSummaryResponse | PlainMessage<GetAppSummaryResponse> | undefined, b: GetAppSummaryResponse | PlainMessage<GetAppSummaryResponse> | undefined): boolean {
+    return proto3.util.equals(GetAppSummaryResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ListHomeChangesRequest
+ */
+export class ListHomeChangesRequest extends Message<ListHomeChangesRequest> {
+  constructor(data?: PartialMessage<ListHomeChangesRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListHomeChangesRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListHomeChangesRequest {
+    return new ListHomeChangesRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListHomeChangesRequest {
+    return new ListHomeChangesRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListHomeChangesRequest {
+    return new ListHomeChangesRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListHomeChangesRequest | PlainMessage<ListHomeChangesRequest> | undefined, b: ListHomeChangesRequest | PlainMessage<ListHomeChangesRequest> | undefined): boolean {
+    return proto3.util.equals(ListHomeChangesRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ListHomeChangesResponse
+ */
+export class ListHomeChangesResponse extends Message<ListHomeChangesResponse> {
+  /**
+   * @generated from field: repeated changes.ChangeSummary changes = 1;
+   */
+  changes: ChangeSummary[] = [];
+
+  constructor(data?: PartialMessage<ListHomeChangesResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListHomeChangesResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changes", kind: "message", T: ChangeSummary, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListHomeChangesResponse {
+    return new ListHomeChangesResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListHomeChangesResponse {
+    return new ListHomeChangesResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListHomeChangesResponse {
+    return new ListHomeChangesResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListHomeChangesResponse | PlainMessage<ListHomeChangesResponse> | undefined, b: ListHomeChangesResponse | PlainMessage<ListHomeChangesResponse> | undefined): boolean {
+    return proto3.util.equals(ListHomeChangesResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ListHomeAppsRequest
+ */
+export class ListHomeAppsRequest extends Message<ListHomeAppsRequest> {
+  constructor(data?: PartialMessage<ListHomeAppsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListHomeAppsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListHomeAppsRequest {
+    return new ListHomeAppsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListHomeAppsRequest {
+    return new ListHomeAppsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListHomeAppsRequest {
+    return new ListHomeAppsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListHomeAppsRequest | PlainMessage<ListHomeAppsRequest> | undefined, b: ListHomeAppsRequest | PlainMessage<ListHomeAppsRequest> | undefined): boolean {
+    return proto3.util.equals(ListHomeAppsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ListHomeAppsResponse
+ */
+export class ListHomeAppsResponse extends Message<ListHomeAppsResponse> {
+  /**
+   * @generated from field: repeated changes.AppSummary apps = 1;
+   */
+  apps: AppSummary[] = [];
+
+  constructor(data?: PartialMessage<ListHomeAppsResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListHomeAppsResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "apps", kind: "message", T: AppSummary, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListHomeAppsResponse {
+    return new ListHomeAppsResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListHomeAppsResponse {
+    return new ListHomeAppsResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListHomeAppsResponse {
+    return new ListHomeAppsResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListHomeAppsResponse | PlainMessage<ListHomeAppsResponse> | undefined, b: ListHomeAppsResponse | PlainMessage<ListHomeAppsResponse> | undefined): boolean {
+    return proto3.util.equals(ListHomeAppsResponse, a, b);
+  }
+}
+
+/**
+ * Editor's node: I'm using references here rather than just directly
+ * embedding the name, uniqueAttributeValue and scope becuase the reference
+ * structs have some methods on them which it might be useful to use (like
+ * `String()`), and that some methods will accept a reference as a parameter
+ * and it doesn't make sense to have to re-construct one if you already have
+ * all the required data
+ *
+ * @generated from message changes.ItemDiffSummary
+ */
+export class ItemDiffSummary extends Message<ItemDiffSummary> {
+  /**
+   * A reference to the item that this diff is related to
+   *
+   * @generated from field: Reference item = 1;
+   */
+  item?: Reference;
+
+  /**
+   * The staus of the item
+   *
+   * @generated from field: changes.ItemDiffStatus status = 4;
+   */
+  status = ItemDiffStatus.UNSPECIFIED;
+
+  /**
+   * The health of the item currently (as opposed to before the change)
+   *
+   * @generated from field: Health healthAfter = 5;
+   */
+  healthAfter = Health.UNKNOWN;
+
+  constructor(data?: PartialMessage<ItemDiffSummary>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ItemDiffSummary";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "item", kind: "message", T: Reference },
+    { no: 4, name: "status", kind: "enum", T: proto3.getEnumType(ItemDiffStatus) },
+    { no: 5, name: "healthAfter", kind: "enum", T: proto3.getEnumType(Health) },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ItemDiffSummary {
+    return new ItemDiffSummary().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ItemDiffSummary {
+    return new ItemDiffSummary().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ItemDiffSummary {
+    return new ItemDiffSummary().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ItemDiffSummary | PlainMessage<ItemDiffSummary> | undefined, b: ItemDiffSummary | PlainMessage<ItemDiffSummary> | undefined): boolean {
+    return proto3.util.equals(ItemDiffSummary, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ItemDiff
+ */
+export class ItemDiff extends Message<ItemDiff> {
+  /**
+   * A reference to the item that this diff is related to
+   *
+   * @generated from field: Reference item = 1;
+   */
+  item?: Reference;
+
+  /**
+   * The staus of the item
+   *
+   * @generated from field: changes.ItemDiffStatus status = 2;
+   */
+  status = ItemDiffStatus.UNSPECIFIED;
+
+  /**
+   * @generated from field: Item before = 3;
+   */
+  before?: Item;
+
+  /**
+   * @generated from field: Item after = 4;
+   */
+  after?: Item;
+
+  constructor(data?: PartialMessage<ItemDiff>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ItemDiff";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "item", kind: "message", T: Reference },
+    { no: 2, name: "status", kind: "enum", T: proto3.getEnumType(ItemDiffStatus) },
+    { no: 3, name: "before", kind: "message", T: Item },
+    { no: 4, name: "after", kind: "message", T: Item },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ItemDiff {
+    return new ItemDiff().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ItemDiff {
+    return new ItemDiff().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ItemDiff {
+    return new ItemDiff().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ItemDiff | PlainMessage<ItemDiff> | undefined, b: ItemDiff | PlainMessage<ItemDiff> | undefined): boolean {
+    return proto3.util.equals(ItemDiff, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ChangeAuditLogEntry
+ */
+export class ChangeAuditLogEntry extends Message<ChangeAuditLogEntry> {
+  /**
+   * The status that the change was in when this event happened
+   *
+   * @generated from field: changes.ChangeStatus status = 1;
+   */
+  status = ChangeStatus.UNSPECIFIED;
+
+  /**
+   * The message that describes this event
+   *
+   * @generated from field: string statusMessage = 2;
+   */
+  statusMessage = "";
+
+  /**
+   * The time that this event happened
+   *
+   * @generated from field: google.protobuf.Timestamp happenedAt = 3;
+   */
+  happenedAt?: Timestamp;
+
+  /**
+   * The name of the user that performed this action
+   *
+   * @generated from field: string actorName = 4;
+   */
+  actorName = "";
+
+  constructor(data?: PartialMessage<ChangeAuditLogEntry>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ChangeAuditLogEntry";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "status", kind: "enum", T: proto3.getEnumType(ChangeStatus) },
+    { no: 2, name: "statusMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "happenedAt", kind: "message", T: Timestamp },
+    { no: 4, name: "actorName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeAuditLogEntry {
+    return new ChangeAuditLogEntry().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChangeAuditLogEntry {
+    return new ChangeAuditLogEntry().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChangeAuditLogEntry {
+    return new ChangeAuditLogEntry().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChangeAuditLogEntry | PlainMessage<ChangeAuditLogEntry> | undefined, b: ChangeAuditLogEntry | PlainMessage<ChangeAuditLogEntry> | undefined): boolean {
+    return proto3.util.equals(ChangeAuditLogEntry, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.AppSummary
+ */
+export class AppSummary extends Message<AppSummary> {
+  /**
+   * unique id to identify this app
+   *
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  /**
+   * Name of this App
+   * Example: "Contoso Manager"
+   *
+   * @generated from field: string name = 2;
+   */
+  name = "";
+
+  /**
+   * Description of this App Example: "The Contoso Manager manages the contoso.
+   * Notable components are storage, compute and the web. Talk to Jimmy or Susan
+   * on 555-CM LEAD for more details."
+   *
+   * @generated from field: string description = 3;
+   */
+  description = "";
+
+  /**
+   * number of changes that have affected this app
+   *
+   * @generated from field: int32 numChangesAffecting = 4;
+   */
+  numChangesAffecting = 0;
+
+  /**
+   * the number of items that make up this app
+   *
+   * @generated from field: int32 numItems = 5;
+   */
+  numItems = 0;
+
+  /**
+   * timestamp when this app was created
+   *
+   * @generated from field: google.protobuf.Timestamp createdAt = 6;
+   */
+  createdAt?: Timestamp;
+
+  /**
+   * The name of the person that created the app
+   *
+   * @generated from field: string creatorName = 7;
+   */
+  creatorName = "";
+
+  /**
+   * the url for this app. This will only be set if the app was created using
+   * the `CreateSimpleApp` RPC.
+   *
+   * @generated from field: string url = 9;
+   */
+  url = "";
+
+  /**
+   * UUID of the bookmark query that returns all items in this app
+   *
+   * @generated from field: bytes bookmarkUUID = 10;
+   */
+  bookmarkUUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<AppSummary>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.AppSummary";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "numChangesAffecting", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 5, name: "numItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 6, name: "createdAt", kind: "message", T: Timestamp },
+    { no: 7, name: "creatorName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 9, name: "url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 10, name: "bookmarkUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AppSummary {
+    return new AppSummary().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AppSummary {
+    return new AppSummary().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AppSummary {
+    return new AppSummary().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: AppSummary | PlainMessage<AppSummary> | undefined, b: AppSummary | PlainMessage<AppSummary> | undefined): boolean {
+    return proto3.util.equals(AppSummary, a, b);
+  }
+}
+
+/**
  * a complete App with machine-supplied and user-supplied values
  *
  * @generated from message changes.App
@@ -223,6 +1185,35 @@ export class AppMetadata extends Message<AppMetadata> {
    */
   itemsLastUpdated?: Timestamp;
 
+  /**
+   * number of changes that have affected this app
+   *
+   * @generated from field: int32 numChangesAffecting = 6;
+   */
+  numChangesAffecting = 0;
+
+  /**
+   * the number of items that make up this app
+   *
+   * @generated from field: int32 numItems = 8;
+   */
+  numItems = 0;
+
+  /**
+   * the name of the person that created the app
+   *
+   * @generated from field: string creatorName = 7;
+   */
+  creatorName = "";
+
+  /**
+   * the url for this app. This will only be set if the app was created using
+   * the `CreateSimpleApp` RPC.
+   *
+   * @generated from field: string url = 9;
+   */
+  url = "";
+
   constructor(data?: PartialMessage<AppMetadata>) {
     super();
     proto3.util.initPartial(data, this);
@@ -236,6 +1227,10 @@ export class AppMetadata extends Message<AppMetadata> {
     { no: 3, name: "updatedAt", kind: "message", T: Timestamp },
     { no: 4, name: "items", kind: "message", T: Reference, repeated: true },
     { no: 5, name: "itemsLastUpdated", kind: "message", T: Timestamp },
+    { no: 6, name: "numChangesAffecting", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 8, name: "numItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 7, name: "creatorName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 9, name: "url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AppMetadata {
@@ -270,8 +1265,9 @@ export class AppProperties extends Message<AppProperties> {
   name = "";
 
   /**
-   * Description of this App
-   * Example: "The Contoso Manager manages the contoso. Notable components are storage, compute and the web. Talk to Jimmy or Susan on 555-CM LEAD for more details."
+   * Description of this App. Example: "The Contoso Manager manages the contoso.
+   * Notable components are storage, compute and the web. Talk to Jimmy or Susan
+   * on 555-CM LEAD for more details."
    *
    * @generated from field: string description = 2;
    */
@@ -457,6 +1453,98 @@ export class CreateAppResponse extends Message<CreateAppResponse> {
 
   static equals(a: CreateAppResponse | PlainMessage<CreateAppResponse> | undefined, b: CreateAppResponse | PlainMessage<CreateAppResponse> | undefined): boolean {
     return proto3.util.equals(CreateAppResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.CreateSimpleAppRequest
+ */
+export class CreateSimpleAppRequest extends Message<CreateSimpleAppRequest> {
+  /**
+   * The name of the app
+   *
+   * @generated from field: string name = 1;
+   */
+  name = "";
+
+  /**
+   * The description of the app
+   *
+   * @generated from field: string description = 2;
+   */
+  description = "";
+
+  /**
+   * The URL of the app
+   *
+   * @generated from field: string url = 3;
+   */
+  url = "";
+
+  constructor(data?: PartialMessage<CreateSimpleAppRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.CreateSimpleAppRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateSimpleAppRequest {
+    return new CreateSimpleAppRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateSimpleAppRequest {
+    return new CreateSimpleAppRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateSimpleAppRequest {
+    return new CreateSimpleAppRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateSimpleAppRequest | PlainMessage<CreateSimpleAppRequest> | undefined, b: CreateSimpleAppRequest | PlainMessage<CreateSimpleAppRequest> | undefined): boolean {
+    return proto3.util.equals(CreateSimpleAppRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.CreateSimpleAppResponse
+ */
+export class CreateSimpleAppResponse extends Message<CreateSimpleAppResponse> {
+  /**
+   * @generated from field: changes.App app = 1;
+   */
+  app?: App;
+
+  constructor(data?: PartialMessage<CreateSimpleAppResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.CreateSimpleAppResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "app", kind: "message", T: App },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateSimpleAppResponse {
+    return new CreateSimpleAppResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateSimpleAppResponse {
+    return new CreateSimpleAppResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateSimpleAppResponse {
+    return new CreateSimpleAppResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateSimpleAppResponse | PlainMessage<CreateSimpleAppResponse> | undefined, b: CreateSimpleAppResponse | PlainMessage<CreateSimpleAppResponse> | undefined): boolean {
+    return proto3.util.equals(CreateSimpleAppResponse, a, b);
   }
 }
 
@@ -734,7 +1822,7 @@ export class ListAppChangesRequest extends Message<ListAppChangesRequest> {
  */
 export class ListAppChangesResponse extends Message<ListAppChangesResponse> {
   /**
-   * The list of changes rel
+   * The list of changes related to an app
    *
    * @generated from field: repeated changes.Change changes = 1;
    */
@@ -765,6 +1853,106 @@ export class ListAppChangesResponse extends Message<ListAppChangesResponse> {
 
   static equals(a: ListAppChangesResponse | PlainMessage<ListAppChangesResponse> | undefined, b: ListAppChangesResponse | PlainMessage<ListAppChangesResponse> | undefined): boolean {
     return proto3.util.equals(ListAppChangesResponse, a, b);
+  }
+}
+
+/**
+ * A smaller summary of a change
+ *
+ * @generated from message changes.ChangeSummary
+ */
+export class ChangeSummary extends Message<ChangeSummary> {
+  /**
+   * unique id to identify this change
+   *
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  /**
+   * Short title for this change.
+   * Example: "database upgrade"
+   *
+   * @generated from field: string title = 2;
+   */
+  title = "";
+
+  /**
+   * The current status of this change. This is changed by the lifecycle
+   * functions such as `StartChange` and `EndChange`.
+   *
+   * @generated from field: changes.ChangeStatus status = 3;
+   */
+  status = ChangeStatus.UNSPECIFIED;
+
+  /**
+   * Link to the ticket for this change.
+   * Example: "http://jira.contoso-engineering.com/browse/CM-1337"
+   *
+   * @generated from field: string ticketLink = 4;
+   */
+  ticketLink = "";
+
+  /**
+   * timestamp when this change was created
+   *
+   * @generated from field: google.protobuf.Timestamp createdAt = 5;
+   */
+  createdAt?: Timestamp;
+
+  /**
+   * The name of the user that created the change
+   *
+   * @generated from field: string creatorName = 6;
+   */
+  creatorName = "";
+
+  /**
+   * The number of apps that will be affected by this change
+   *
+   * @generated from field: int32 numAffectedApps = 8;
+   */
+  numAffectedApps = 0;
+
+  /**
+   * The number of items in the blast radius if this change 
+   *
+   * @generated from field: int32 numAffectedItems = 9;
+   */
+  numAffectedItems = 0;
+
+  constructor(data?: PartialMessage<ChangeSummary>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ChangeSummary";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "title", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "status", kind: "enum", T: proto3.getEnumType(ChangeStatus) },
+    { no: 4, name: "ticketLink", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "createdAt", kind: "message", T: Timestamp },
+    { no: 6, name: "creatorName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "numAffectedApps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 9, name: "numAffectedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeSummary {
+    return new ChangeSummary().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChangeSummary {
+    return new ChangeSummary().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChangeSummary {
+    return new ChangeSummary().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChangeSummary | PlainMessage<ChangeSummary> | undefined, b: ChangeSummary | PlainMessage<ChangeSummary> | undefined): boolean {
+    return proto3.util.equals(ChangeSummary, a, b);
   }
 }
 
@@ -852,6 +2040,81 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
    */
   status = ChangeStatus.UNSPECIFIED;
 
+  /**
+   * The name of the user that created the change
+   *
+   * @generated from field: string creatorName = 5;
+   */
+  creatorName = "";
+
+  /**
+   * The number of apps that will be affected by this change
+   *
+   * @generated from field: int32 numAffectedApps = 6;
+   */
+  numAffectedApps = 0;
+
+  /**
+   * The number of items in the blast radius if this change 
+   *
+   * @generated from field: int32 numAffectedItems = 7;
+   */
+  numAffectedItems = 0;
+
+  /**
+   * The number of items within the blast radius that were not affected by this
+   * change
+   *
+   * @generated from field: int32 numUnchangedItems = 8;
+   */
+  numUnchangedItems = 0;
+
+  /**
+   * The number of items that were created as part of this change
+   *
+   * @generated from field: int32 numCreatedItems = 9;
+   */
+  numCreatedItems = 0;
+
+  /**
+   * The number of items that were updated as part of this change
+   *
+   * @generated from field: int32 numUpdatedItems = 10;
+   */
+  numUpdatedItems = 0;
+
+  /**
+   * The number of items that were deleted as part of this change
+   *
+   * @generated from field: int32 numDeletedItems = 11;
+   */
+  numDeletedItems = 0;
+
+  /**
+   * @generated from field: changes.ChangeMetadata.HealthChange UnknownHealthChange = 12;
+   */
+  UnknownHealthChange?: ChangeMetadata_HealthChange;
+
+  /**
+   * @generated from field: changes.ChangeMetadata.HealthChange OkHealthChange = 13;
+   */
+  OkHealthChange?: ChangeMetadata_HealthChange;
+
+  /**
+   * @generated from field: changes.ChangeMetadata.HealthChange WarningHealthChange = 14;
+   */
+  WarningHealthChange?: ChangeMetadata_HealthChange;
+
+  /**
+   * @generated from field: changes.ChangeMetadata.HealthChange ErrorHealthChange = 15;
+   */
+  ErrorHealthChange?: ChangeMetadata_HealthChange;
+
+  /**
+   * @generated from field: changes.ChangeMetadata.HealthChange PendingHealthChange = 16;
+   */
+  PendingHealthChange?: ChangeMetadata_HealthChange;
+
   constructor(data?: PartialMessage<ChangeMetadata>) {
     super();
     proto3.util.initPartial(data, this);
@@ -864,6 +2127,18 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
     { no: 2, name: "createdAt", kind: "message", T: Timestamp },
     { no: 3, name: "updatedAt", kind: "message", T: Timestamp },
     { no: 4, name: "status", kind: "enum", T: proto3.getEnumType(ChangeStatus) },
+    { no: 5, name: "creatorName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "numAffectedApps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 7, name: "numAffectedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 8, name: "numUnchangedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 9, name: "numCreatedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 10, name: "numUpdatedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 11, name: "numDeletedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 12, name: "UnknownHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
+    { no: 13, name: "OkHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
+    { no: 14, name: "WarningHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
+    { no: 15, name: "ErrorHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
+    { no: 16, name: "PendingHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeMetadata {
@@ -880,6 +2155,68 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
 
   static equals(a: ChangeMetadata | PlainMessage<ChangeMetadata> | undefined, b: ChangeMetadata | PlainMessage<ChangeMetadata> | undefined): boolean {
     return proto3.util.equals(ChangeMetadata, a, b);
+  }
+}
+
+/**
+ * Represents the current state of a given health state, and the amount that
+ * it has changed. This doesn't just look at the change in total number of
+ * items, but also the number of items that have been added and removed, even
+ * if they were to add to the same number
+ *
+ * @generated from message changes.ChangeMetadata.HealthChange
+ */
+export class ChangeMetadata_HealthChange extends Message<ChangeMetadata_HealthChange> {
+  /**
+   * The number of items that were added to this health state as part of the
+   * change
+   *
+   * @generated from field: int32 added = 1;
+   */
+  added = 0;
+
+  /**
+   * The number of items that were removed them this health state as part of
+   * the change
+   *
+   * @generated from field: int32 removed = 2;
+   */
+  removed = 0;
+
+  /**
+   * The final number of items that were in this health state
+   *
+   * @generated from field: int32 finalTotal = 3;
+   */
+  finalTotal = 0;
+
+  constructor(data?: PartialMessage<ChangeMetadata_HealthChange>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ChangeMetadata.HealthChange";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "added", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 2, name: "removed", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "finalTotal", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeMetadata_HealthChange {
+    return new ChangeMetadata_HealthChange().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChangeMetadata_HealthChange {
+    return new ChangeMetadata_HealthChange().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChangeMetadata_HealthChange {
+    return new ChangeMetadata_HealthChange().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChangeMetadata_HealthChange | PlainMessage<ChangeMetadata_HealthChange> | undefined, b: ChangeMetadata_HealthChange | PlainMessage<ChangeMetadata_HealthChange> | undefined): boolean {
+    return proto3.util.equals(ChangeMetadata_HealthChange, a, b);
   }
 }
 
@@ -934,18 +2271,18 @@ export class ChangeProperties extends Message<ChangeProperties> {
    * this change. This might be parsed from a terrform plam, added from the API,
    * parsed from a freeform ticket description etc.
    *
-   * @generated from field: bytes affectedItemsBookmarkUUID = 7;
+   * @generated from field: bytes changingItemsBookmarkUUID = 7;
    */
-  affectedItemsBookmarkUUID = new Uint8Array(0);
+  changingItemsBookmarkUUID = new Uint8Array(0);
 
   /**
-   * UUID of a bookmark for the item queries of the items *indirectly* affected
-   * by this change i.e. the blast radius. This will be determined
-   * automatically, but can refined by the user.
+   * UUID of a snapshot for the item queries of the items *indirectly* affected
+   * by this change i.e. the blast radius. The initial selection will be determined
+   * automatically based off changingItemsBookmark, but can refined by the user.
    *
-   * @generated from field: bytes blastRadiusBookmarkUUID = 11;
+   * @generated from field: bytes blastRadiusSnapshotUUID = 11;
    */
-  blastRadiusBookmarkUUID = new Uint8Array(0);
+  blastRadiusSnapshotUUID = new Uint8Array(0);
 
   /**
    * UUID of the whole-system snapshot created before the change has started.
@@ -981,8 +2318,8 @@ export class ChangeProperties extends Message<ChangeProperties> {
     { no: 4, name: "ticketLink", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 5, name: "owner", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "ccEmails", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 7, name: "affectedItemsBookmarkUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-    { no: 11, name: "blastRadiusBookmarkUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 7, name: "changingItemsBookmarkUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 11, name: "blastRadiusSnapshotUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 8, name: "systemBeforeSnapshotUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 9, name: "systemAfterSnapshotUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 10, name: "affectedAppsUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */, repeated: true },
@@ -1444,9 +2781,9 @@ export class CalculateBlastRadiusResponse extends Message<CalculateBlastRadiusRe
   numItems = 0;
 
   /**
-   * @generated from field: uint32 NumEdges = 3;
+   * @generated from field: uint32 numEdges = 3;
    */
-  NumEdges = 0;
+  numEdges = 0;
 
   constructor(data?: PartialMessage<CalculateBlastRadiusResponse>) {
     super();
@@ -1458,7 +2795,7 @@ export class CalculateBlastRadiusResponse extends Message<CalculateBlastRadiusRe
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "state", kind: "enum", T: proto3.getEnumType(CalculateBlastRadiusResponse_State) },
     { no: 2, name: "numItems", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
-    { no: 3, name: "NumEdges", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+    { no: 3, name: "numEdges", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CalculateBlastRadiusResponse {

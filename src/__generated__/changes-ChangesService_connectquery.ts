@@ -5,7 +5,7 @@
 
 import { createQueryService } from "@bufbuild/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, GetAppRequest, GetAppResponse, GetChangeRequest, GetChangeResponse, GetChangesHomeRequest, GetChangesHomeResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppChangesRequest, ListAppChangesResponse, ListAppsRequest, ListAppsResponse, ListChangesRequest, ListChangesResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
+import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, CreateSimpleAppRequest, CreateSimpleAppResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, GetAffectedAppsRequest, GetAffectedAppsResponse, GetAppRequest, GetAppResponse, GetAppSummaryRequest, GetAppSummaryResponse, GetChangeAuditLogRequest, GetChangeAuditLogResponse, GetChangeRequest, GetChangeResponse, GetChangesHomeRequest, GetChangesHomeResponse, GetDiffRequest, GetDiffResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppChangesRequest, ListAppChangesResponse, ListAppChangesSummaryRequest, ListAppChangesSummaryResponse, ListAppsRequest, ListAppsResponse, ListChangesRequest, ListChangesResponse, ListChangingItemsSummaryRequest, ListChangingItemsSummaryResponse, ListHomeAppsRequest, ListHomeAppsResponse, ListHomeChangesRequest, ListHomeChangesResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
 
 export const typeName = "changes.ChangesService";
 
@@ -46,6 +46,26 @@ export const createApp = createQueryService({
     typeName: "changes.ChangesService",
   },
 }).createApp;
+
+/**
+ * Creates an app using just a URL as input. This automatically creates and
+ * sets the bookmark UUID, along with the url for display in the GUI
+ *
+ * @generated from rpc changes.ChangesService.CreateSimpleApp
+ */
+export const createSimpleApp = createQueryService({
+  service: {
+    methods: {
+      createSimpleApp: {
+        name: "CreateSimpleApp",
+        kind: MethodKind.Unary,
+        I: CreateSimpleAppRequest,
+        O: CreateSimpleAppResponse,
+      },
+    },
+    typeName: "changes.ChangesService",
+  },
+}).createSimpleApp;
 
 /**
  * Gets the details of an existing app
@@ -200,6 +220,25 @@ export const deleteChange = createQueryService({
 }).deleteChange;
 
 /**
+ * Returns a list of change summaries, designed for use in the changes home page
+ *
+ * @generated from rpc changes.ChangesService.GetChangesHome
+ */
+export const getChangesHome = createQueryService({
+  service: {
+    methods: {
+      getChangesHome: {
+        name: "GetChangesHome",
+        kind: MethodKind.Unary,
+        I: GetChangesHomeRequest,
+        O: GetChangesHomeResponse,
+      },
+    },
+    typeName: "changes.ChangesService",
+  },
+}).getChangesHome;
+
+/**
  * @generated from rpc changes.ChangesService.GetOnboarding
  */
 export const getOnboarding = createQueryService({
@@ -234,23 +273,65 @@ export const updateOnboarding = createQueryService({
 }).updateOnboarding;
 
 /**
- * @generated from rpc changes.ChangesService.GetChangesHome
+ * Lists all apps, designed for use in the apps home page
+ *
+ * @generated from rpc changes.ChangesService.ListHomeApps
  */
-export const getChangesHome = createQueryService({
+export const listHomeApps = createQueryService({
   service: {
     methods: {
-      getChangesHome: {
-        name: "GetChangesHome",
+      listHomeApps: {
+        name: "ListHomeApps",
         kind: MethodKind.Unary,
-        I: GetChangesHomeRequest,
-        O: GetChangesHomeResponse,
+        I: ListHomeAppsRequest,
+        O: ListHomeAppsResponse,
       },
     },
     typeName: "changes.ChangesService",
   },
-}).getChangesHome;
+}).listHomeApps;
 
 /**
+ * Lists all changes, designed for use in the changes home page
+ *
+ * @generated from rpc changes.ChangesService.ListHomeChanges
+ */
+export const listHomeChanges = createQueryService({
+  service: {
+    methods: {
+      listHomeChanges: {
+        name: "ListHomeChanges",
+        kind: MethodKind.Unary,
+        I: ListHomeChangesRequest,
+        O: ListHomeChangesResponse,
+      },
+    },
+    typeName: "changes.ChangesService",
+  },
+}).listHomeChanges;
+
+/**
+ * Gets a summary of an app, used when a user clicks on a given app
+ *
+ * @generated from rpc changes.ChangesService.GetAppSummary
+ */
+export const getAppSummary = createQueryService({
+  service: {
+    methods: {
+      getAppSummary: {
+        name: "GetAppSummary",
+        kind: MethodKind.Unary,
+        I: GetAppSummaryRequest,
+        O: GetAppSummaryResponse,
+      },
+    },
+    typeName: "changes.ChangesService",
+  },
+}).getAppSummary;
+
+/**
+ * Lists all changes affecting an app
+ *
  * @generated from rpc changes.ChangesService.ListAppChanges
  */
 export const listAppChanges = createQueryService({
@@ -266,3 +347,104 @@ export const listAppChanges = createQueryService({
     typeName: "changes.ChangesService",
   },
 }).listAppChanges;
+
+/**
+ * Lists all changes affecting an app, returning only a summary of each change
+ * rather than the full details
+ *
+ * @generated from rpc changes.ChangesService.ListAppChangesSummary
+ */
+export const listAppChangesSummary = createQueryService({
+  service: {
+    methods: {
+      listAppChangesSummary: {
+        name: "ListAppChangesSummary",
+        kind: MethodKind.Unary,
+        I: ListAppChangesSummaryRequest,
+        O: ListAppChangesSummaryResponse,
+      },
+    },
+    typeName: "changes.ChangesService",
+  },
+}).listAppChangesSummary;
+
+/**
+ * Returns a list of apps that are affected by this change. This is calculated
+ * by looking at the blast radius snapshot and finding all apps that have
+ * items in the snapshot.
+ *
+ * @generated from rpc changes.ChangesService.GetAffectedApps
+ */
+export const getAffectedApps = createQueryService({
+  service: {
+    methods: {
+      getAffectedApps: {
+        name: "GetAffectedApps",
+        kind: MethodKind.Unary,
+        I: GetAffectedAppsRequest,
+        O: GetAffectedAppsResponse,
+      },
+    },
+    typeName: "changes.ChangesService",
+  },
+}).getAffectedApps;
+
+/**
+ * Gets the diff summary for all items that were planned to change as part of
+ * this change. This includes the high level details of the item, and the
+ * status (e.g. changed, deleted) but not the diff itself
+ *
+ * @generated from rpc changes.ChangesService.ListChangingItemsSummary
+ */
+export const listChangingItemsSummary = createQueryService({
+  service: {
+    methods: {
+      listChangingItemsSummary: {
+        name: "ListChangingItemsSummary",
+        kind: MethodKind.Unary,
+        I: ListChangingItemsSummaryRequest,
+        O: ListChangingItemsSummaryResponse,
+      },
+    },
+    typeName: "changes.ChangesService",
+  },
+}).listChangingItemsSummary;
+
+/**
+ * Gets the audit log for a given change
+ *
+ * @generated from rpc changes.ChangesService.GetChangeAuditLog
+ */
+export const getChangeAuditLog = createQueryService({
+  service: {
+    methods: {
+      getChangeAuditLog: {
+        name: "GetChangeAuditLog",
+        kind: MethodKind.Unary,
+        I: GetChangeAuditLogRequest,
+        O: GetChangeAuditLogResponse,
+      },
+    },
+    typeName: "changes.ChangesService",
+  },
+}).getChangeAuditLog;
+
+/**
+ * Gets the full diff of everything that changed as part of this "change".
+ * This includes all items and also edges between them
+ *
+ * @generated from rpc changes.ChangesService.GetDiff
+ */
+export const getDiff = createQueryService({
+  service: {
+    methods: {
+      getDiff: {
+        name: "GetDiff",
+        kind: MethodKind.Unary,
+        I: GetDiffRequest,
+        O: GetDiffResponse,
+      },
+    },
+    typeName: "changes.ChangesService",
+  },
+}).getDiff;

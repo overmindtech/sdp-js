@@ -95,12 +95,6 @@ export class GatewayRequest extends Message<GatewayRequest> {
     /**
      * load and execute a bookmark into the current state
      *
-     * TODO: implement?
-     * // cancel the loading of a Bookmark
-     * CancelLoadBookmark cancelLoadBookmark = ??;
-     * // undo the loading of a Bookmark
-     * UndoLoadBookmark undoLoadBookmark = ??;
-     *
      * @generated from field: gateway.LoadBookmark loadBookmark = 15;
      */
     value: LoadBookmark;

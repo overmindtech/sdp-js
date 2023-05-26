@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CalculateBlastRadiusRequest, CalculateBlastRadiusResponse, CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, EndChangeRequest, EndChangeResponse, GetAppRequest, GetAppResponse, GetChangeRequest, GetChangeResponse, GetChangesHomeRequest, GetChangesHomeResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppChangesRequest, ListAppChangesResponse, ListAppsRequest, ListAppsResponse, ListChangesRequest, ListChangesResponse, SimulateChangeRequest, SimulateChangeResponse, StartChangeRequest, StartChangeResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
+import { CalculateBlastRadiusRequest, CalculateBlastRadiusResponse, CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, CreateSimpleAppRequest, CreateSimpleAppResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, EndChangeRequest, EndChangeResponse, GetAffectedAppsRequest, GetAffectedAppsResponse, GetAppRequest, GetAppResponse, GetAppSummaryRequest, GetAppSummaryResponse, GetChangeAuditLogRequest, GetChangeAuditLogResponse, GetChangeRequest, GetChangeResponse, GetChangesHomeRequest, GetChangesHomeResponse, GetDiffRequest, GetDiffResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppChangesRequest, ListAppChangesResponse, ListAppChangesSummaryRequest, ListAppChangesSummaryResponse, ListAppsRequest, ListAppsResponse, ListChangesRequest, ListChangesResponse, ListChangingItemsSummaryRequest, ListChangingItemsSummaryResponse, ListHomeAppsRequest, ListHomeAppsResponse, ListHomeChangesRequest, ListHomeChangesResponse, SimulateChangeRequest, SimulateChangeResponse, StartChangeRequest, StartChangeResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateChangingItemsRequest, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -34,6 +34,18 @@ export const ChangesService = {
       name: "CreateApp",
       I: CreateAppRequest,
       O: CreateAppResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Creates an app using just a URL as input. This automatically creates and
+     * sets the bookmark UUID, along with the url for display in the GUI
+     *
+     * @generated from rpc changes.ChangesService.CreateSimpleApp
+     */
+    createSimpleApp: {
+      name: "CreateSimpleApp",
+      I: CreateSimpleAppRequest,
+      O: CreateSimpleAppResponse,
       kind: MethodKind.Unary,
     },
     /**
@@ -126,8 +138,8 @@ export const ChangesService = {
     },
     /**
      * Calculates the blast radius of a change using the
-     * `affectedItemsBookmarkUUID` as the starting point. If the
-     * `affectedItemsBookmarkUUID` is blank, this will return an error.
+     * `changingItemsBookmarkUUID` as the starting point. If the
+     * `changingItemsBookmarkUUID` is blank, this will return an error.
      * Returns a stream of status updates. The response stream closes when all calculating has been done.
      * Executing this RPC will move the Change to the `STATUS_DEFINING` state or return an error.
      *
@@ -153,7 +165,8 @@ export const ChangesService = {
       kind: MethodKind.ServerStreaming,
     },
     /**
-     * Takes the "after" snapshot, stores it in `systemAfterSnapshotUUID` and
+     * Takes the "after" snapshot, stores it in `systemAfterSnapshotUUID`, calculates
+     * the change diff and stores it as a list of DiffedItems and
      * advances the change status to `STATUS_DONE`
      *
      * @generated from rpc changes.ChangesService.EndChange
@@ -163,6 +176,31 @@ export const ChangesService = {
       I: EndChangeRequest,
       O: EndChangeResponse,
       kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * Simulates a change without the user actually having to do anything. The
+     * change specified in the request should be in the `STATUS_DEFINING` state.
+     * It will be moved to the `STATUS_DONE` state after the simulation is
+     * complete.
+     *
+     * @generated from rpc changes.ChangesService.SimulateChange
+     */
+    simulateChange: {
+      name: "SimulateChange",
+      I: SimulateChangeRequest,
+      O: SimulateChangeResponse,
+      kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * Returns a list of change summaries, designed for use in the changes home page
+     *
+     * @generated from rpc changes.ChangesService.GetChangesHome
+     */
+    getChangesHome: {
+      name: "GetChangesHome",
+      I: GetChangesHomeRequest,
+      O: GetChangesHomeResponse,
+      kind: MethodKind.Unary,
     },
     /**
      * @generated from rpc changes.ChangesService.GetOnboarding
@@ -183,35 +221,123 @@ export const ChangesService = {
       kind: MethodKind.Unary,
     },
     /**
-     * Simulates a change without the user actually having to do anything. The
-     * change specified in the request should be in the `STATUS_DEFINING` state.
-     * It will be moved to the `STATUS_DONE` state after the simulation is
-     * complete.
+     * Lists all apps, designed for use in the apps home page
      *
-     * @generated from rpc changes.ChangesService.SimulateChange
+     * @generated from rpc changes.ChangesService.ListHomeApps
      */
-    simulateChange: {
-      name: "SimulateChange",
-      I: SimulateChangeRequest,
-      O: SimulateChangeResponse,
-      kind: MethodKind.ServerStreaming,
-    },
-    /**
-     * @generated from rpc changes.ChangesService.GetChangesHome
-     */
-    getChangesHome: {
-      name: "GetChangesHome",
-      I: GetChangesHomeRequest,
-      O: GetChangesHomeResponse,
+    listHomeApps: {
+      name: "ListHomeApps",
+      I: ListHomeAppsRequest,
+      O: ListHomeAppsResponse,
       kind: MethodKind.Unary,
     },
     /**
+     * Lists all changes, designed for use in the changes home page
+     *
+     * @generated from rpc changes.ChangesService.ListHomeChanges
+     */
+    listHomeChanges: {
+      name: "ListHomeChanges",
+      I: ListHomeChangesRequest,
+      O: ListHomeChangesResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Gets a summary of an app, used when a user clicks on a given app
+     *
+     * @generated from rpc changes.ChangesService.GetAppSummary
+     */
+    getAppSummary: {
+      name: "GetAppSummary",
+      I: GetAppSummaryRequest,
+      O: GetAppSummaryResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Lists all changes affecting an app
+     *
      * @generated from rpc changes.ChangesService.ListAppChanges
      */
     listAppChanges: {
       name: "ListAppChanges",
       I: ListAppChangesRequest,
       O: ListAppChangesResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Lists all changes affecting an app, returning only a summary of each change
+     * rather than the full details
+     *
+     * @generated from rpc changes.ChangesService.ListAppChangesSummary
+     */
+    listAppChangesSummary: {
+      name: "ListAppChangesSummary",
+      I: ListAppChangesSummaryRequest,
+      O: ListAppChangesSummaryResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * This sets the items that are changing in a given change, and updates the
+     * blast radius. In the backend this will convert the references to GET
+     * requests, save them to a bookmark, and set this as the
+     * changingItemsBookmarkUUID in the change itself before triggering a blast
+     * radius calculation
+     *
+     * @generated from rpc changes.ChangesService.UpdateChangingItems
+     */
+    updateChangingItems: {
+      name: "UpdateChangingItems",
+      I: UpdateChangingItemsRequest,
+      O: CalculateBlastRadiusResponse,
+      kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * Returns a list of apps that are affected by this change. This is calculated
+     * by looking at the blast radius snapshot and finding all apps that have
+     * items in the snapshot.
+     *
+     * @generated from rpc changes.ChangesService.GetAffectedApps
+     */
+    getAffectedApps: {
+      name: "GetAffectedApps",
+      I: GetAffectedAppsRequest,
+      O: GetAffectedAppsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Gets the diff summary for all items that were planned to change as part of
+     * this change. This includes the high level details of the item, and the
+     * status (e.g. changed, deleted) but not the diff itself
+     *
+     * @generated from rpc changes.ChangesService.ListChangingItemsSummary
+     */
+    listChangingItemsSummary: {
+      name: "ListChangingItemsSummary",
+      I: ListChangingItemsSummaryRequest,
+      O: ListChangingItemsSummaryResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Gets the audit log for a given change
+     *
+     * @generated from rpc changes.ChangesService.GetChangeAuditLog
+     */
+    getChangeAuditLog: {
+      name: "GetChangeAuditLog",
+      I: GetChangeAuditLogRequest,
+      O: GetChangeAuditLogResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Gets the full diff of everything that changed as part of this "change".
+     * This includes all items and also edges between them
+     *
+     * @generated from rpc changes.ChangesService.GetDiff
+     */
+    getDiff: {
+      name: "GetDiff",
+      I: GetDiffRequest,
+      O: GetDiffResponse,
       kind: MethodKind.Unary,
     },
   }
