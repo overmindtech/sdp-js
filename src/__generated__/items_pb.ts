@@ -5,6 +5,7 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Duration, Message, proto3, Struct, Timestamp } from "@bufbuild/protobuf";
+import { Response } from "./responses_pb.ts";
 
 /**
  * Represents the health of something, the meaning of each state may depend on
@@ -719,6 +720,69 @@ export class Query_RecursionBehaviour extends Message<Query_RecursionBehaviour> 
 
   static equals(a: Query_RecursionBehaviour | PlainMessage<Query_RecursionBehaviour> | undefined, b: Query_RecursionBehaviour | PlainMessage<Query_RecursionBehaviour> | undefined): boolean {
     return proto3.util.equals(Query_RecursionBehaviour, a, b);
+  }
+}
+
+/**
+ * @generated from message QueryResponse
+ */
+export class QueryResponse extends Message<QueryResponse> {
+  /**
+   * @generated from oneof QueryResponse.response_type
+   */
+  responseType: {
+    /**
+     * A new item that has been discovered
+     *
+     * @generated from field: Item newItem = 2;
+     */
+    value: Item;
+    case: "newItem";
+  } | {
+    /**
+     * Status update
+     *
+     * @generated from field: Response response = 3;
+     */
+    value: Response;
+    case: "response";
+  } | {
+    /**
+     * An error has been encountered
+     *
+     * @generated from field: QueryError error = 4;
+     */
+    value: QueryError;
+    case: "error";
+  } | { case: undefined; value?: undefined } = { case: undefined };
+
+  constructor(data?: PartialMessage<QueryResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "QueryResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 2, name: "newItem", kind: "message", T: Item, oneof: "response_type" },
+    { no: 3, name: "response", kind: "message", T: Response, oneof: "response_type" },
+    { no: 4, name: "error", kind: "message", T: QueryError, oneof: "response_type" },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): QueryResponse {
+    return new QueryResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): QueryResponse {
+    return new QueryResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): QueryResponse {
+    return new QueryResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: QueryResponse | PlainMessage<QueryResponse> | undefined, b: QueryResponse | PlainMessage<QueryResponse> | undefined): boolean {
+    return proto3.util.equals(QueryResponse, a, b);
   }
 }
 
