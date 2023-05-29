@@ -612,27 +612,6 @@ export class Query extends Message<Query> {
    */
   timeout?: Duration;
 
-  /**
-   * Subject that items resulting from the query should be sent to
-   *
-   * @generated from field: string itemSubject = 16;
-   */
-  itemSubject = "";
-
-  /**
-   * Subject that both interim and final responses should be sent to
-   *
-   * @generated from field: string responseSubject = 17;
-   */
-  responseSubject = "";
-
-  /**
-   * Subject that errors will be sent to
-   *
-   * @generated from field: string errorSubject = 18;
-   */
-  errorSubject = "";
-
   constructor(data?: PartialMessage<Query>) {
     super();
     proto3.util.initPartial(data, this);
@@ -649,9 +628,6 @@ export class Query extends Message<Query> {
     { no: 6, name: "ignoreCache", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 7, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 8, name: "timeout", kind: "message", T: Duration },
-    { no: 16, name: "itemSubject", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 17, name: "responseSubject", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 18, name: "errorSubject", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Query {
