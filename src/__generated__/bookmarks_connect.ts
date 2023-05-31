@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateBookmarkRequest, CreateBookmarkResponse, DeleteBookmarkRequest, DeleteBookmarkResponse, GetBookmarkRequest, GetBookmarkResponse, ListBookmarkResponse, ListBookmarksRequest, UpdateBookmarkRequest, UpdateBookmarkResponse } from "./bookmarks_pb.ts";
+import { CreateBookmarkRequest, CreateBookmarkResponse, DeleteBookmarkRequest, DeleteBookmarkResponse, GetAffectedBookmarksRequest, GetAffectedBookmarksResponse, GetBookmarkRequest, GetBookmarkResponse, ListBookmarkResponse, ListBookmarksRequest, UpdateBookmarkRequest, UpdateBookmarkResponse } from "./bookmarks_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -55,6 +55,17 @@ export const BookmarksService = {
       name: "DeleteBookmark",
       I: DeleteBookmarkRequest,
       O: DeleteBookmarkResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * a helper method to find all affected apps for a given blast radius snapshot
+     *
+     * @generated from rpc bookmarks.BookmarksService.GetAffectedBookmarks
+     */
+    getAffectedBookmarks: {
+      name: "GetAffectedBookmarks",
+      I: GetAffectedBookmarksRequest,
+      O: GetAffectedBookmarksResponse,
       kind: MethodKind.Unary,
     },
   }

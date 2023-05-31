@@ -548,3 +548,89 @@ export class DeleteBookmarkResponse extends Message<DeleteBookmarkResponse> {
   }
 }
 
+/**
+ * @generated from message bookmarks.GetAffectedBookmarksRequest
+ */
+export class GetAffectedBookmarksRequest extends Message<GetAffectedBookmarksRequest> {
+  /**
+   * the snapshot to consider
+   *
+   * @generated from field: bytes snapshotUUID = 1;
+   */
+  snapshotUUID = new Uint8Array(0);
+
+  /**
+   * the bookmarks to filter
+   *
+   * @generated from field: repeated bytes bookmarkUUIDs = 2;
+   */
+  bookmarkUUIDs: Uint8Array[] = [];
+
+  constructor(data?: PartialMessage<GetAffectedBookmarksRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "bookmarks.GetAffectedBookmarksRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "snapshotUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "bookmarkUUIDs", kind: "scalar", T: 12 /* ScalarType.BYTES */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAffectedBookmarksRequest {
+    return new GetAffectedBookmarksRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAffectedBookmarksRequest {
+    return new GetAffectedBookmarksRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAffectedBookmarksRequest {
+    return new GetAffectedBookmarksRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetAffectedBookmarksRequest | PlainMessage<GetAffectedBookmarksRequest> | undefined, b: GetAffectedBookmarksRequest | PlainMessage<GetAffectedBookmarksRequest> | undefined): boolean {
+    return proto3.util.equals(GetAffectedBookmarksRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message bookmarks.GetAffectedBookmarksResponse
+ */
+export class GetAffectedBookmarksResponse extends Message<GetAffectedBookmarksResponse> {
+  /**
+   * the bookmarks that intersected with the snapshot
+   *
+   * @generated from field: repeated bytes bookmarkUUIDs = 1;
+   */
+  bookmarkUUIDs: Uint8Array[] = [];
+
+  constructor(data?: PartialMessage<GetAffectedBookmarksResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "bookmarks.GetAffectedBookmarksResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "bookmarkUUIDs", kind: "scalar", T: 12 /* ScalarType.BYTES */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAffectedBookmarksResponse {
+    return new GetAffectedBookmarksResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAffectedBookmarksResponse {
+    return new GetAffectedBookmarksResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAffectedBookmarksResponse {
+    return new GetAffectedBookmarksResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetAffectedBookmarksResponse | PlainMessage<GetAffectedBookmarksResponse> | undefined, b: GetAffectedBookmarksResponse | PlainMessage<GetAffectedBookmarksResponse> | undefined): boolean {
+    return proto3.util.equals(GetAffectedBookmarksResponse, a, b);
+  }
+}
+

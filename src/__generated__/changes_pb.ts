@@ -1915,7 +1915,7 @@ export class ChangeSummary extends Message<ChangeSummary> {
   numAffectedApps = 0;
 
   /**
-   * The number of items in the blast radius if this change 
+   * The number of items in the blast radius if this change
    *
    * @generated from field: int32 numAffectedItems = 9;
    */
@@ -2055,7 +2055,7 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
   numAffectedApps = 0;
 
   /**
-   * The number of items in the blast radius if this change 
+   * The number of items in the blast radius if this change
    *
    * @generated from field: int32 numAffectedItems = 7;
    */

@@ -5,7 +5,7 @@
 
 import { createQueryService } from "@bufbuild/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateBookmarkRequest, CreateBookmarkResponse, DeleteBookmarkRequest, DeleteBookmarkResponse, GetBookmarkRequest, GetBookmarkResponse, ListBookmarkResponse, ListBookmarksRequest, UpdateBookmarkRequest, UpdateBookmarkResponse } from "./bookmarks_pb.ts";
+import { CreateBookmarkRequest, CreateBookmarkResponse, DeleteBookmarkRequest, DeleteBookmarkResponse, GetAffectedBookmarksRequest, GetAffectedBookmarksResponse, GetBookmarkRequest, GetBookmarkResponse, ListBookmarkResponse, ListBookmarksRequest, UpdateBookmarkRequest, UpdateBookmarkResponse } from "./bookmarks_pb.ts";
 
 export const typeName = "bookmarks.BookmarksService";
 
@@ -93,3 +93,22 @@ export const deleteBookmark = createQueryService({
     typeName: "bookmarks.BookmarksService",
   },
 }).deleteBookmark;
+
+/**
+ * a helper method to find all affected apps for a given blast radius snapshot
+ *
+ * @generated from rpc bookmarks.BookmarksService.GetAffectedBookmarks
+ */
+export const getAffectedBookmarks = createQueryService({
+  service: {
+    methods: {
+      getAffectedBookmarks: {
+        name: "GetAffectedBookmarks",
+        kind: MethodKind.Unary,
+        I: GetAffectedBookmarksRequest,
+        O: GetAffectedBookmarksResponse,
+      },
+    },
+    typeName: "bookmarks.BookmarksService",
+  },
+}).getAffectedBookmarks;
