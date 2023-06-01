@@ -18,6 +18,20 @@ export function newItemAttributes(value: {
 }
 
 /**
+ * Converts an item to a reference
+ * @param item The item to convert to a reference
+ * @returns A reference to that item
+ */
+export function toReference(item: Item): Reference {
+  const reference = new Reference()
+  reference.scope = item.scope
+  reference.type = item.type
+  reference.uniqueAttributeValue = getUniqueAttributeValue(item)
+
+  return reference
+}
+
+/**
  * Create a new timestamp object from a Date
  * @param date The date to convert
  * @returns A timestamp in protobuf format

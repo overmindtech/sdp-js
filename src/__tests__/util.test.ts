@@ -5,6 +5,7 @@ import {
   getAttributeValue,
   getUniqueAttributeValue,
   getGloballyUniqueName,
+  toReference,
 } from '../util'
 import { Item } from '../protobuf'
 
@@ -24,6 +25,25 @@ describe('Util namespace', () => {
 
       expect(d.seconds).toBe(BigInt(0))
       expect(d.nanos).toBe(1_000_000)
+    })
+  })
+
+  describe('#newReference', () => {
+    it('returns a fully populated reference', () => {
+      const item = new Item({
+        type: 'person',
+        uniqueAttribute: 'name',
+        attributes: newItemAttributes({
+          name: 'dylan',
+        }),
+        scope: 'global',
+      })
+
+      const ref = toReference(item)
+
+      expect(ref.scope).toEqual('global')
+      expect(ref.type).toEqual('person')
+      expect(ref.uniqueAttributeValue).toEqual('dylan')
     })
   })
 
