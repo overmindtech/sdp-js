@@ -7,8 +7,6 @@ import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialM
 import { Duration, Message, proto3 } from "@bufbuild/protobuf";
 import { CancelQuery, Edge, Expand, Item, Query, QueryError, QueryStatus, Reference, UndoExpand, UndoQuery } from "./items_pb.ts";
 import { ResponderState } from "./responses_pb.ts";
-import { Bookmark } from "./bookmarks_pb.ts";
-import { Snapshot } from "./snapshots_pb.ts";
 
 /**
  * A union of all request made to the gateway.
@@ -492,16 +490,18 @@ export class BookmarkStoreResult extends Message<BookmarkStoreResult> {
   errorMessage = "";
 
   /**
-   * @generated from field: bookmarks.Bookmark bookmark = 3;
-   */
-  bookmark?: Bookmark;
-
-  /**
    * a correlation ID to match up requests and responses. this field returns the contents of the request's msgID
    *
    * @generated from field: bytes msgID = 4;
    */
   msgID = new Uint8Array(0);
+
+  /**
+   * UUID of the newly created bookmark
+   *
+   * @generated from field: bytes bookmarkID = 5;
+   */
+  bookmarkID = new Uint8Array(0);
 
   constructor(data?: PartialMessage<BookmarkStoreResult>) {
     super();
@@ -513,8 +513,8 @@ export class BookmarkStoreResult extends Message<BookmarkStoreResult> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "bookmark", kind: "message", T: Bookmark },
     { no: 4, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 5, name: "bookmarkID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): BookmarkStoreResult {
@@ -718,16 +718,18 @@ export class SnapshotStoreResult extends Message<SnapshotStoreResult> {
   errorMessage = "";
 
   /**
-   * @generated from field: snapshots.Snapshot snapshot = 3;
-   */
-  snapshot?: Snapshot;
-
-  /**
    * a correlation ID to match up requests and responses. this field returns the contents of the request's msgID
    *
    * @generated from field: bytes msgID = 4;
    */
   msgID = new Uint8Array(0);
+
+  /**
+   * The UUID of the newly stored snapshot
+   *
+   * @generated from field: bytes snapshotID = 5;
+   */
+  snapshotID = new Uint8Array(0);
 
   constructor(data?: PartialMessage<SnapshotStoreResult>) {
     super();
@@ -739,8 +741,8 @@ export class SnapshotStoreResult extends Message<SnapshotStoreResult> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "snapshot", kind: "message", T: Snapshot },
     { no: 4, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 5, name: "snapshotID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SnapshotStoreResult {
