@@ -18,6 +18,7 @@ import {
 import { GatewaySession } from '../gateway-session'
 import { GatewayResponse, StoreBookmark, StoreSnapshot } from '../protobuf'
 import * as data from './sampledata.helper'
+import { parse, v4 } from 'uuid'
 
 // create a WS instance
 const TestServerAddress = 'ws://localhost:31274'
@@ -337,17 +338,15 @@ describe('GatewaySession', () => {
             const data = {
               name: 'new bookmark',
               description: 'new description',
+              msgID: parse(v4())
             }
             const bookmark = new StoreBookmark(data)
             const response = new GatewayResponse({
               responseType: {
                 case: 'bookmarkStoreResult',
                 value: {
-                  bookmark: {
-                    properties: {
-                      ...data,
-                    },
-                  },
+                  bookmarkID: parse(v4()),
+                  msgID: bookmark.msgID,
                   success: true,
                 },
               },
@@ -355,10 +354,7 @@ describe('GatewaySession', () => {
 
             gs.storeBookmark(bookmark).then((result) => {
               expect(result.success).toBe(true)
-              expect(result?.bookmark?.properties?.name).toBe(data.name)
-              expect(result?.bookmark?.properties?.description).toBe(
-                data.description
-              )
+              expect(result.msgID.toString()).toBe(bookmark.msgID.toString())
               resolve(undefined)
             })
 
@@ -371,17 +367,15 @@ describe('GatewaySession', () => {
             const data = {
               name: 'new snapshot',
               description: 'new description',
+              msgID: parse(v4())
             }
             const snapshot = new StoreSnapshot(data)
             const response = new GatewayResponse({
               responseType: {
                 case: 'snapshotStoreResult',
                 value: {
-                  snapshot: {
-                    properties: {
-                      ...data,
-                    },
-                  },
+                  msgID: snapshot.msgID,
+                  snapshotID: parse(v4()),
                   success: true,
                 },
               },
@@ -389,10 +383,7 @@ describe('GatewaySession', () => {
 
             gs.storeSnapshot(snapshot).then((result) => {
               expect(result.success).toBe(true)
-              expect(result?.snapshot?.properties?.name).toBe(data.name)
-              expect(result?.snapshot?.properties?.description).toBe(
-                data.description
-              )
+              expect(result?.msgID?.toString()).toBe(snapshot.msgID.toString())
               resolve(undefined)
             })
 

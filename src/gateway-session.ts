@@ -1,3 +1,4 @@
+import { v4, parse } from 'uuid'
 import {
   SocketErrorEvent,
   NewItemEvent,
@@ -456,15 +457,19 @@ export class GatewaySession extends EventTarget {
    * @param bookmark The bookmark to create
    */
   storeBookmark(bookmark: StoreBookmark): Promise<BookmarkStoreResult> {
+    // Set a custom message ID if not set
+    if (bookmark.msgID.length === 0) bookmark.msgID = parse(v4())
+
     const req = new GatewayRequest({
       requestType: {
         case: 'storeBookmark',
         value: bookmark,
       },
     })
+
     return new Promise<BookmarkStoreResult>((resolve, reject) => {
       const listener = (event: CustomEvent<BookmarkStoreResult>) => {
-        if (event.detail.bookmark?.properties?.name === bookmark.name) {
+        if (event.detail.msgID.toString() === bookmark.msgID.toString()) {
           if (event.detail.success) {
             resolve(event.detail)
           } else {
@@ -486,6 +491,9 @@ export class GatewaySession extends EventTarget {
    * @param snapshot The snapshot to create
    */
   storeSnapshot(snapshot: StoreSnapshot): Promise<SnapshotStoreResult> {
+    // Set a custom message ID
+    if (snapshot.msgID.length === 0) snapshot.msgID = parse(v4())
+
     const req = new GatewayRequest({
       requestType: {
         case: 'storeSnapshot',
@@ -495,7 +503,7 @@ export class GatewaySession extends EventTarget {
 
     return new Promise<SnapshotStoreResult>((resolve, reject) => {
       const listener = (event: CustomEvent<SnapshotStoreResult>) => {
-        if (event.detail.snapshot?.properties?.name === snapshot.name) {
+        if (event.detail.msgID.toString() === snapshot.msgID.toString()) {
           if (event.detail.success) {
             resolve(event.detail)
           } else {
