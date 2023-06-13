@@ -3,6 +3,7 @@ import { WS } from 'jest-websocket-mock'
 /**
  * Real imports
  */
+import { parse, v4 } from 'uuid'
 import {
   NewItemEvent,
   NewEdgeEvent,
@@ -18,7 +19,6 @@ import {
 import { GatewaySession } from '../gateway-session'
 import { GatewayResponse, StoreBookmark, StoreSnapshot } from '../protobuf'
 import * as data from './sampledata.helper'
-import { parse, v4 } from 'uuid'
 
 // create a WS instance
 const TestServerAddress = 'ws://localhost:31274'
@@ -338,7 +338,7 @@ describe('GatewaySession', () => {
             const data = {
               name: 'new bookmark',
               description: 'new description',
-              msgID: parse(v4())
+              msgID: parse(v4()),
             }
             const bookmark = new StoreBookmark(data)
             const response = new GatewayResponse({
@@ -367,7 +367,7 @@ describe('GatewaySession', () => {
             const data = {
               name: 'new snapshot',
               description: 'new description',
-              msgID: parse(v4())
+              msgID: parse(v4()),
             }
             const snapshot = new StoreSnapshot(data)
             const response = new GatewayResponse({

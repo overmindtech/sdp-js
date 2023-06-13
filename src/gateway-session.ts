@@ -458,7 +458,9 @@ export class GatewaySession extends EventTarget {
    */
   storeBookmark(bookmark: StoreBookmark): Promise<BookmarkStoreResult> {
     // Set a custom message ID if not set
-    if (bookmark.msgID.length === 0) bookmark.msgID = parse(v4())
+    if (bookmark.msgID.length === 0) {
+      bookmark.msgID = parse(v4())
+    }
 
     const req = new GatewayRequest({
       requestType: {
@@ -492,7 +494,9 @@ export class GatewaySession extends EventTarget {
    */
   storeSnapshot(snapshot: StoreSnapshot): Promise<SnapshotStoreResult> {
     // Set a custom message ID
-    if (snapshot.msgID.length === 0) snapshot.msgID = parse(v4())
+    if (snapshot.msgID.length === 0) {
+      snapshot.msgID = parse(v4())
+    }
 
     const req = new GatewayRequest({
       requestType: {
