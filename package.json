@@ -32,7 +32,7 @@
     "codequality:fix": "pnpm lint:fix && pnpm prettier:fix"
   },
   "dependencies": {
-    "@bufbuild/connect-query": "^0.2.1",
+    "@bufbuild/connect-query": "^0.3.0",
     "@bufbuild/protobuf": "^1.2.0",
     "@tanstack/react-query": "^4.20.4",
     "react": "^18.2.0",
