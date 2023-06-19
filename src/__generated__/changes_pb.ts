@@ -1915,7 +1915,7 @@ export class ChangeSummary extends Message<ChangeSummary> {
   numAffectedApps = 0;
 
   /**
-   * The number of items in the blast radius if this change
+   * The number of items in the blast radius of this change
    *
    * @generated from field: int32 numAffectedItems = 9;
    */
@@ -3177,6 +3177,13 @@ export class OnboardingMetadata extends Message<OnboardingMetadata> {
    */
   created?: Timestamp;
 
+  /**
+   * whether or not the user already has an AWS source configured
+   *
+   * @generated from field: bool hasAwsSource = 3;
+   */
+  hasAwsSource = false;
+
   constructor(data?: PartialMessage<OnboardingMetadata>) {
     super();
     proto3.util.initPartial(data, this);
@@ -3186,6 +3193,7 @@ export class OnboardingMetadata extends Message<OnboardingMetadata> {
   static readonly typeName = "changes.OnboardingMetadata";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 2, name: "created", kind: "message", T: Timestamp },
+    { no: 3, name: "hasAwsSource", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): OnboardingMetadata {
