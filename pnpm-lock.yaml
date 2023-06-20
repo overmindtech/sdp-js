@@ -1,12 +1,16 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 dependencies:
   '@bufbuild/connect-query':
     specifier: ^0.3.0
-    version: 0.3.0(@bufbuild/connect@0.10.0)(@bufbuild/protobuf@1.2.0)(@tanstack/react-query@4.28.0)(react-dom@18.2.0)(react@18.2.0)
+    version: 0.3.0(@bufbuild/connect@0.10.0)(@bufbuild/protobuf@1.2.1)(@tanstack/react-query@4.28.0)(react-dom@18.2.0)(react@18.2.0)
   '@bufbuild/protobuf':
-    specifier: ^1.2.0
-    version: 1.2.0
+    specifier: ^1.2.1
+    version: 1.2.1
   '@tanstack/react-query':
     specifier: ^4.20.4
     version: 4.28.0(react-dom@18.2.0)(react@18.2.0)
@@ -278,7 +282,7 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@bufbuild/connect-query@0.3.0(@bufbuild/connect@0.10.0)(@bufbuild/protobuf@1.2.0)(@tanstack/react-query@4.28.0)(react-dom@18.2.0)(react@18.2.0):
+  /@bufbuild/connect-query@0.3.0(@bufbuild/connect@0.10.0)(@bufbuild/protobuf@1.2.1)(@tanstack/react-query@4.28.0)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-J0Yx1SnlwPd/DySoHKxG8bZQ0wE9gC9fXW04XV0DdvZg8sBJcF6buFdUQEUNVP5SEgDvbzF7/veoAXwZJ+J9zw==}
     peerDependencies:
       '@bufbuild/connect': '>=0.9.1'
@@ -287,24 +291,24 @@ packages:
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
-      '@bufbuild/connect': 0.10.0(@bufbuild/protobuf@1.2.0)
-      '@bufbuild/protobuf': 1.2.0
+      '@bufbuild/connect': 0.10.0(@bufbuild/protobuf@1.2.1)
+      '@bufbuild/protobuf': 1.2.1
       '@tanstack/react-query': 4.28.0(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       stable-hash: 0.0.3
     dev: false
 
-  /@bufbuild/connect@0.10.0(@bufbuild/protobuf@1.2.0):
+  /@bufbuild/connect@0.10.0(@bufbuild/protobuf@1.2.1):
     resolution: {integrity: sha512-psNHc7R0DDZ2Dl/HVPw1MF5hGMTEjnRROPSqs9YPCjy+ztCNF97wPOUH3S4Qud2nNw9Hn+vqZd+Y4v9G5J+d1A==}
     peerDependencies:
       '@bufbuild/protobuf': ^1.2.1
     dependencies:
-      '@bufbuild/protobuf': 1.2.0
+      '@bufbuild/protobuf': 1.2.1
     dev: false
 
-  /@bufbuild/protobuf@1.2.0:
-    resolution: {integrity: sha512-MBVuQMOBHxgGnZ9XCUIi8WOy5O/T4ma3TduCRhRvndv3UDbG9cHgd8h6nOYSGyBYPEvXf1z9nTwhp8mVIDbq2g==}
+  /@bufbuild/protobuf@1.2.1:
+    resolution: {integrity: sha512-cwwGvLGqvoaOZmoP5+i4v/rbW+rHkguvTehuZyM2p/xpmaNSdT2h3B7kHw33aiffv35t1XrYHIkdJSEkSEMJuA==}
     dev: false
 
   /@esbuild/android-arm64@0.17.15:
