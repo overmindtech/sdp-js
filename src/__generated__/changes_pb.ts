@@ -107,68 +107,32 @@ export enum OnboardingStatus {
   UNSPECIFIED = 0,
 
   /**
-   * @generated from enum value: ONBOARDING_STATUS_WELCOME_PAGE = 1;
+   * @generated from enum value: ONBOARDING_STATUS_ADD_AWS_ACCOUNT = 1;
    */
-  WELCOME_PAGE = 1,
+  ADD_AWS_ACCOUNT = 1,
 
   /**
-   * @generated from enum value: ONBOARDING_STATUS_CONFIGURE_AWS_INTRO = 2;
+   * @generated from enum value: ONBOARDING_STATUS_ADD_APP = 2;
    */
-  CONFIGURE_AWS_INTRO = 2,
+  ADD_APP = 2,
 
   /**
-   * @generated from enum value: ONBOARDING_STATUS_CONFIGURE_AWS_PARAMS = 3;
+   * @generated from enum value: ONBOARDING_STATUS_SIMULATE_CHANGE = 3;
    */
-  CONFIGURE_AWS_PARAMS = 3,
+  SIMULATE_CHANGE = 3,
 
   /**
-   * @generated from enum value: ONBOARDING_STATUS_CONFIGURE_AWS_SUCCESS = 4;
+   * @generated from enum value: ONBOARDING_STATUS_DONE = 4;
    */
-  CONFIGURE_AWS_SUCCESS = 4,
-
-  /**
-   * @generated from enum value: ONBOARDING_STATUS_DEFINE_APP_PARAMS = 5;
-   */
-  DEFINE_APP_PARAMS = 5,
-
-  /**
-   * @generated from enum value: ONBOARDING_STATUS_DEMO_CHANGE_PARAMS = 6;
-   */
-  DEMO_CHANGE_PARAMS = 6,
-
-  /**
-   * @generated from enum value: ONBOARDING_STATUS_DEMO_CHANGE_GRAPH = 7;
-   */
-  DEMO_CHANGE_GRAPH = 7,
-
-  /**
-   * @generated from enum value: ONBOARDING_STATUS_SIMULATING_CHANGE = 8;
-   */
-  SIMULATING_CHANGE = 8,
-
-  /**
-   * @generated from enum value: ONBOARDING_STATUS_RESULTS = 9;
-   */
-  RESULTS = 9,
-
-  /**
-   * @generated from enum value: ONBOARDING_STATUS_DONE = 10;
-   */
-  DONE = 10,
+  DONE = 4,
 }
 // Retrieve enum metadata with: proto3.getEnumType(OnboardingStatus)
 proto3.util.setEnumType(OnboardingStatus, "changes.OnboardingStatus", [
   { no: 0, name: "ONBOARDING_STATUS_UNSPECIFIED" },
-  { no: 1, name: "ONBOARDING_STATUS_WELCOME_PAGE" },
-  { no: 2, name: "ONBOARDING_STATUS_CONFIGURE_AWS_INTRO" },
-  { no: 3, name: "ONBOARDING_STATUS_CONFIGURE_AWS_PARAMS" },
-  { no: 4, name: "ONBOARDING_STATUS_CONFIGURE_AWS_SUCCESS" },
-  { no: 5, name: "ONBOARDING_STATUS_DEFINE_APP_PARAMS" },
-  { no: 6, name: "ONBOARDING_STATUS_DEMO_CHANGE_PARAMS" },
-  { no: 7, name: "ONBOARDING_STATUS_DEMO_CHANGE_GRAPH" },
-  { no: 8, name: "ONBOARDING_STATUS_SIMULATING_CHANGE" },
-  { no: 9, name: "ONBOARDING_STATUS_RESULTS" },
-  { no: 10, name: "ONBOARDING_STATUS_DONE" },
+  { no: 1, name: "ONBOARDING_STATUS_ADD_AWS_ACCOUNT" },
+  { no: 2, name: "ONBOARDING_STATUS_ADD_APP" },
+  { no: 3, name: "ONBOARDING_STATUS_SIMULATE_CHANGE" },
+  { no: 4, name: "ONBOARDING_STATUS_DONE" },
 ]);
 
 /**
