@@ -7,7 +7,7 @@ on:
 
 jobs:
   publish:
-    name: "Release"
+    name: 'Release'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,10 +19,10 @@ jobs:
         with:
           node-version: 19
           cache: pnpm
-          registry-url: "https://registry.npmjs.org"
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       # Pull the version from the tag and update the package.json
       - name: Update Version
