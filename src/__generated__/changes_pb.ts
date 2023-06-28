@@ -2681,6 +2681,68 @@ export class DeleteChangeResponse extends Message<DeleteChangeResponse> {
 }
 
 /**
+ * @generated from message changes.RefreshStateRequest
+ */
+export class RefreshStateRequest extends Message<RefreshStateRequest> {
+  constructor(data?: PartialMessage<RefreshStateRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.RefreshStateRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RefreshStateRequest {
+    return new RefreshStateRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RefreshStateRequest {
+    return new RefreshStateRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RefreshStateRequest {
+    return new RefreshStateRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RefreshStateRequest | PlainMessage<RefreshStateRequest> | undefined, b: RefreshStateRequest | PlainMessage<RefreshStateRequest> | undefined): boolean {
+    return proto3.util.equals(RefreshStateRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.RefreshStateResponse
+ */
+export class RefreshStateResponse extends Message<RefreshStateResponse> {
+  constructor(data?: PartialMessage<RefreshStateResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.RefreshStateResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RefreshStateResponse {
+    return new RefreshStateResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RefreshStateResponse {
+    return new RefreshStateResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RefreshStateResponse {
+    return new RefreshStateResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RefreshStateResponse | PlainMessage<RefreshStateResponse> | undefined, b: RefreshStateResponse | PlainMessage<RefreshStateResponse> | undefined): boolean {
+    return proto3.util.equals(RefreshStateResponse, a, b);
+  }
+}
+
+/**
  * @generated from message changes.CalculateBlastRadiusRequest
  */
 export class CalculateBlastRadiusRequest extends Message<CalculateBlastRadiusRequest> {
