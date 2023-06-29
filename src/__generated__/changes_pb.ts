@@ -117,22 +117,28 @@ export enum OnboardingStatus {
   ADD_APP = 2,
 
   /**
-   * @generated from enum value: ONBOARDING_STATUS_SIMULATE_CHANGE = 3;
+   * @generated from enum value: ONBOARDING_STATUS_CREATE_CHANGE = 3;
    */
-  SIMULATE_CHANGE = 3,
+  CREATE_CHANGE = 3,
 
   /**
-   * @generated from enum value: ONBOARDING_STATUS_DONE = 4;
+   * @generated from enum value: ONBOARDING_STATUS_SIMULATE_CHANGE = 4;
    */
-  DONE = 4,
+  SIMULATE_CHANGE = 4,
+
+  /**
+   * @generated from enum value: ONBOARDING_STATUS_DONE = 5;
+   */
+  DONE = 5,
 }
 // Retrieve enum metadata with: proto3.getEnumType(OnboardingStatus)
 proto3.util.setEnumType(OnboardingStatus, "changes.OnboardingStatus", [
   { no: 0, name: "ONBOARDING_STATUS_UNSPECIFIED" },
   { no: 1, name: "ONBOARDING_STATUS_ADD_AWS_ACCOUNT" },
   { no: 2, name: "ONBOARDING_STATUS_ADD_APP" },
-  { no: 3, name: "ONBOARDING_STATUS_SIMULATE_CHANGE" },
-  { no: 4, name: "ONBOARDING_STATUS_DONE" },
+  { no: 3, name: "ONBOARDING_STATUS_CREATE_CHANGE" },
+  { no: 4, name: "ONBOARDING_STATUS_SIMULATE_CHANGE" },
+  { no: 5, name: "ONBOARDING_STATUS_DONE" },
 ]);
 
 /**
