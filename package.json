@@ -47,7 +47,7 @@
     "changelogen": "^0.5.1",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-config-unjs": "^0.1.0",
+    "eslint-config-unjs": "^0.2.0",
     "jest-websocket-mock": "^2.4.0",
     "prettier": "^2.8.7",
     "typescript": "^4.9.5",
