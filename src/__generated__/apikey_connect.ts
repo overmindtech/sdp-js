@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateAPIKeyRequest, CreateAPIKeyResponse, DeleteAPIKeyRequest, DeleteAPIKeyResponse, ExchangeKeyForTokenRequest, ExchangeKeyForTokenResponse, GetAPIKeyRequest, GetAPIKeyResponse, ListAPIKeysRequest, ListAPIKeysResponse } from "./apikey_pb.ts";
+import { CreateAPIKeyRequest, CreateAPIKeyResponse, DeleteAPIKeyRequest, DeleteAPIKeyResponse, ExchangeKeyForTokenRequest, ExchangeKeyForTokenResponse, GetAPIKeyRequest, GetAPIKeyResponse, ListAPIKeysRequest, ListAPIKeysResponse, UpdateAPIKeyRequest, UpdateAPIKeyResponse } from "./apikey_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -40,6 +40,15 @@ export const ApiKeyService = {
       name: "GetAPIKey",
       I: GetAPIKeyRequest,
       O: GetAPIKeyResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc apikeys.ApiKeyService.UpdateAPIKey
+     */
+    updateAPIKey: {
+      name: "UpdateAPIKey",
+      I: UpdateAPIKeyRequest,
+      O: UpdateAPIKeyResponse,
       kind: MethodKind.Unary,
     },
     /**

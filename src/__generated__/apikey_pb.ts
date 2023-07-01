@@ -412,6 +412,92 @@ export class GetAPIKeyResponse extends Message<GetAPIKeyResponse> {
 }
 
 /**
+ * @generated from message apikeys.UpdateAPIKeyRequest
+ */
+export class UpdateAPIKeyRequest extends Message<UpdateAPIKeyRequest> {
+  /**
+   * The UUID of the API key to update
+   *
+   * @generated from field: bytes uuid = 1;
+   */
+  uuid = new Uint8Array(0);
+
+  /**
+   * New properties to update
+   *
+   * @generated from field: apikeys.APIKeyProperties properties = 2;
+   */
+  properties?: APIKeyProperties;
+
+  constructor(data?: PartialMessage<UpdateAPIKeyRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "apikeys.UpdateAPIKeyRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "uuid", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "properties", kind: "message", T: APIKeyProperties },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateAPIKeyRequest {
+    return new UpdateAPIKeyRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateAPIKeyRequest {
+    return new UpdateAPIKeyRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateAPIKeyRequest {
+    return new UpdateAPIKeyRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateAPIKeyRequest | PlainMessage<UpdateAPIKeyRequest> | undefined, b: UpdateAPIKeyRequest | PlainMessage<UpdateAPIKeyRequest> | undefined): boolean {
+    return proto3.util.equals(UpdateAPIKeyRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message apikeys.UpdateAPIKeyResponse
+ */
+export class UpdateAPIKeyResponse extends Message<UpdateAPIKeyResponse> {
+  /**
+   * The updated API key
+   *
+   * @generated from field: apikeys.APIKey key = 1;
+   */
+  key?: APIKey;
+
+  constructor(data?: PartialMessage<UpdateAPIKeyResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "apikeys.UpdateAPIKeyResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "key", kind: "message", T: APIKey },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateAPIKeyResponse {
+    return new UpdateAPIKeyResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateAPIKeyResponse {
+    return new UpdateAPIKeyResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateAPIKeyResponse {
+    return new UpdateAPIKeyResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateAPIKeyResponse | PlainMessage<UpdateAPIKeyResponse> | undefined, b: UpdateAPIKeyResponse | PlainMessage<UpdateAPIKeyResponse> | undefined): boolean {
+    return proto3.util.equals(UpdateAPIKeyResponse, a, b);
+  }
+}
+
+/**
  * @generated from message apikeys.ListAPIKeysRequest
  */
 export class ListAPIKeysRequest extends Message<ListAPIKeysRequest> {

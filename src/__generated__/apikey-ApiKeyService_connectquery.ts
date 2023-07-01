@@ -5,7 +5,7 @@
 
 import { createQueryService } from "@bufbuild/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateAPIKeyRequest, CreateAPIKeyResponse, DeleteAPIKeyRequest, DeleteAPIKeyResponse, ExchangeKeyForTokenRequest, ExchangeKeyForTokenResponse, GetAPIKeyRequest, GetAPIKeyResponse, ListAPIKeysRequest, ListAPIKeysResponse } from "./apikey_pb.ts";
+import { CreateAPIKeyRequest, CreateAPIKeyResponse, DeleteAPIKeyRequest, DeleteAPIKeyResponse, ExchangeKeyForTokenRequest, ExchangeKeyForTokenResponse, GetAPIKeyRequest, GetAPIKeyResponse, ListAPIKeysRequest, ListAPIKeysResponse, UpdateAPIKeyRequest, UpdateAPIKeyResponse } from "./apikey_pb.ts";
 
 export const typeName = "apikeys.ApiKeyService";
 
@@ -46,6 +46,23 @@ export const getAPIKey = createQueryService({
     typeName: "apikeys.ApiKeyService",
   },
 }).getAPIKey;
+
+/**
+ * @generated from rpc apikeys.ApiKeyService.UpdateAPIKey
+ */
+export const updateAPIKey = createQueryService({
+  service: {
+    methods: {
+      updateAPIKey: {
+        name: "UpdateAPIKey",
+        kind: MethodKind.Unary,
+        I: UpdateAPIKeyRequest,
+        O: UpdateAPIKeyResponse,
+      },
+    },
+    typeName: "apikeys.ApiKeyService",
+  },
+}).updateAPIKey;
 
 /**
  * @generated from rpc apikeys.ApiKeyService.ListAPIKeys
