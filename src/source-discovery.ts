@@ -13,12 +13,15 @@ export enum DiscoveryField {
 
 function toString(field: DiscoveryField): string {
   switch (field) {
-    case DiscoveryField.TYPE:
+    case DiscoveryField.TYPE: {
       return 'overmind-type'
-    case DiscoveryField.SCOPE:
+    }
+    case DiscoveryField.SCOPE: {
       return 'overmind-scope'
-    default:
+    }
+    default: {
       return ''
+    }
   }
 }
 
@@ -125,7 +128,7 @@ export class SourceDiscovery extends EventTarget {
    */
   processItem(item: Item): void {
     switch (item.type) {
-      case 'overmind-scope':
+      case 'overmind-scope': {
         // Add the suggestion to the list
         this.scopes.push(getUniqueAttributeValue(item))
         this.scopes.sort()
@@ -137,7 +140,8 @@ export class SourceDiscovery extends EventTarget {
           })
         )
         break
-      case 'overmind-type':
+      }
+      case 'overmind-type': {
         // Add the suggestion to the list
         this.types.push(getUniqueAttributeValue(item))
         this.types.sort()
@@ -149,8 +153,10 @@ export class SourceDiscovery extends EventTarget {
           })
         )
         break
-      default:
+      }
+      default: {
         break
+      }
     }
   }
 }

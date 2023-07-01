@@ -36,7 +36,7 @@ export class RequestProgress {
       // Loop over all results and check for stalls
       for (const responder of this.responders) {
         if (
-          typeof responder[1].nextStateTime !== 'undefined' &&
+          responder[1].nextStateTime !== undefined &&
           responder[1].nextStateTime < now
         ) {
           // This means that the responder has stalled
@@ -187,7 +187,7 @@ export class RequestProgress {
 
     // If there is a next update time the calculate it
     const nextUpdateIn = response.nextUpdateIn
-    if (typeof nextUpdateIn !== 'undefined') {
+    if (nextUpdateIn !== undefined) {
       let nextUpdateMilliseconds = 0
 
       // Convert nanoseconds to milliseconds
