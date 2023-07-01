@@ -108,29 +108,32 @@ export class GatewaySession extends EventTarget {
     const response = GatewayResponse.fromBinary(binary)
 
     switch (response.responseType.case) {
-      case 'error':
+      case 'error': {
         this.dispatchEvent(
           new CustomEvent<string>(ErrorEvent, {
             detail: response.responseType.value,
           })
         )
         break
+      }
 
-      case 'newItem':
+      case 'newItem': {
         this.dispatchEvent(
           new CustomEvent<Item>(NewItemEvent, {
             detail: response.responseType.value,
           })
         )
         break
-      case 'newEdge':
+      }
+      case 'newEdge': {
         this.dispatchEvent(
           new CustomEvent<Edge>(NewEdgeEvent, {
             detail: response.responseType.value,
           })
         )
         break
-      case 'status':
+      }
+      case 'status': {
         // Update the local status
         this.status = response.responseType.value
 
@@ -140,71 +143,82 @@ export class GatewaySession extends EventTarget {
           })
         )
         break
-      case 'queryStatus':
+      }
+      case 'queryStatus': {
         this.dispatchEvent(
           new CustomEvent<QueryStatus>(QueryStatusEvent, {
             detail: response.responseType.value,
           })
         )
         break
-      case 'queryError':
+      }
+      case 'queryError': {
         this.dispatchEvent(
           new CustomEvent<QueryError>(QueryErrorEvent, {
             detail: response.responseType.value,
           })
         )
         break
-      case 'deleteItem':
+      }
+      case 'deleteItem': {
         this.dispatchEvent(
           new CustomEvent<Reference>(DeleteItemEvent, {
             detail: response.responseType.value,
           })
         )
         break
-      case 'deleteEdge':
+      }
+      case 'deleteEdge': {
         this.dispatchEvent(
           new CustomEvent<Edge>(DeleteEdgeEvent, {
             detail: response.responseType.value,
           })
         )
         break
-      case 'updateItem':
+      }
+      case 'updateItem': {
         this.dispatchEvent(
           new CustomEvent<Item>(UpdateItemEvent, {
             detail: response.responseType.value,
           })
         )
         break
-      case 'bookmarkLoadResult':
+      }
+      case 'bookmarkLoadResult': {
         this.dispatchEvent(
           new CustomEvent<BookmarkLoadResult>(BookmarkLoadResultEvent, {
             detail: response.responseType.value,
           })
         )
         break
-      case 'bookmarkStoreResult':
+      }
+      case 'bookmarkStoreResult': {
         this.dispatchEvent(
           new CustomEvent<BookmarkStoreResult>(BookmarkStoreResultEvent, {
             detail: response.responseType.value,
           })
         )
         break
-      case 'snapshotLoadResult':
+      }
+      case 'snapshotLoadResult': {
         this.dispatchEvent(
           new CustomEvent<SnapshotLoadResult>(SnapshotLoadResultEvent, {
             detail: response.responseType.value,
           })
         )
         break
-      case 'snapshotStoreResult':
+      }
+      case 'snapshotStoreResult': {
         this.dispatchEvent(
           new CustomEvent<SnapshotStoreResult>(SnapshotStoreResultEvent, {
             detail: response.responseType.value,
           })
         )
         break
-      default:
+      }
+      default: {
         break
+      }
     }
   }
 
@@ -419,7 +433,7 @@ export class GatewaySession extends EventTarget {
    */
   undoRequest(request: GatewayRequest) {
     switch (request.requestType.case) {
-      case 'query':
+      case 'query': {
         {
           const undoReq = new GatewayRequest({
             requestType: {
@@ -434,7 +448,8 @@ export class GatewaySession extends EventTarget {
           this.socket.send(binary)
         }
         break
-      case 'expand':
+      }
+      case 'expand': {
         {
           const undoReq = new GatewayRequest({
             requestType: {
@@ -449,6 +464,7 @@ export class GatewaySession extends EventTarget {
           this.socket.send(binary)
         }
         break
+      }
     }
   }
 
