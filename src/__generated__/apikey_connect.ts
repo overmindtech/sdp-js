@@ -31,7 +31,7 @@ export const ApiKeyService = {
       name: "CreateAPIKey",
       I: CreateAPIKeyRequest,
       O: CreateAPIKeyResponse,
-      kind: MethodKind.ServerStreaming,
+      kind: MethodKind.Unary,
     },
     /**
      * @generated from rpc apikeys.ApiKeyService.GetAPIKey

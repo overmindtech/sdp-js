@@ -5,9 +5,30 @@
 
 import { createQueryService } from "@bufbuild/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
-import { DeleteAPIKeyRequest, DeleteAPIKeyResponse, ExchangeKeyForTokenRequest, ExchangeKeyForTokenResponse, GetAPIKeyRequest, GetAPIKeyResponse, ListAPIKeysRequest, ListAPIKeysResponse } from "./apikey_pb.ts";
+import { CreateAPIKeyRequest, CreateAPIKeyResponse, DeleteAPIKeyRequest, DeleteAPIKeyResponse, ExchangeKeyForTokenRequest, ExchangeKeyForTokenResponse, GetAPIKeyRequest, GetAPIKeyResponse, ListAPIKeysRequest, ListAPIKeysResponse } from "./apikey_pb.ts";
 
 export const typeName = "apikeys.ApiKeyService";
+
+/**
+ * Creates an API key, pending access token generation from Auth0. The key
+ * cannot be used until the user has been redirected to the given URL which
+ * allows Auth0 to actually generate an access token
+ *
+ * @generated from rpc apikeys.ApiKeyService.CreateAPIKey
+ */
+export const createAPIKey = createQueryService({
+  service: {
+    methods: {
+      createAPIKey: {
+        name: "CreateAPIKey",
+        kind: MethodKind.Unary,
+        I: CreateAPIKeyRequest,
+        O: CreateAPIKeyResponse,
+      },
+    },
+    typeName: "apikeys.ApiKeyService",
+  },
+}).createAPIKey;
 
 /**
  * @generated from rpc apikeys.ApiKeyService.GetAPIKey
