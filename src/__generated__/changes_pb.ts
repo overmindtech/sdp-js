@@ -639,6 +639,80 @@ export class GetAppSummaryResponse extends Message<GetAppSummaryResponse> {
 }
 
 /**
+ * @generated from message changes.GetAppSummariesRequest
+ */
+export class GetAppSummariesRequest extends Message<GetAppSummariesRequest> {
+  /**
+   * @generated from field: repeated bytes UUID = 1;
+   */
+  UUID: Uint8Array[] = [];
+
+  constructor(data?: PartialMessage<GetAppSummariesRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetAppSummariesRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAppSummariesRequest {
+    return new GetAppSummariesRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAppSummariesRequest {
+    return new GetAppSummariesRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAppSummariesRequest {
+    return new GetAppSummariesRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetAppSummariesRequest | PlainMessage<GetAppSummariesRequest> | undefined, b: GetAppSummariesRequest | PlainMessage<GetAppSummariesRequest> | undefined): boolean {
+    return proto3.util.equals(GetAppSummariesRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetAppSummariesResponse
+ */
+export class GetAppSummariesResponse extends Message<GetAppSummariesResponse> {
+  /**
+   * @generated from field: repeated changes.AppSummary app = 1;
+   */
+  app: AppSummary[] = [];
+
+  constructor(data?: PartialMessage<GetAppSummariesResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetAppSummariesResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "app", kind: "message", T: AppSummary, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAppSummariesResponse {
+    return new GetAppSummariesResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetAppSummariesResponse {
+    return new GetAppSummariesResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetAppSummariesResponse {
+    return new GetAppSummariesResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetAppSummariesResponse | PlainMessage<GetAppSummariesResponse> | undefined, b: GetAppSummariesResponse | PlainMessage<GetAppSummariesResponse> | undefined): boolean {
+    return proto3.util.equals(GetAppSummariesResponse, a, b);
+  }
+}
+
+/**
  * @generated from message changes.ListHomeChangesRequest
  */
 export class ListHomeChangesRequest extends Message<ListHomeChangesRequest> {
