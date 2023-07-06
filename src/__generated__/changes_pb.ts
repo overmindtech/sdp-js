@@ -643,9 +643,9 @@ export class GetAppSummaryResponse extends Message<GetAppSummaryResponse> {
  */
 export class GetAppSummariesRequest extends Message<GetAppSummariesRequest> {
   /**
-   * @generated from field: repeated bytes UUID = 1;
+   * @generated from field: repeated bytes UUIDs = 1;
    */
-  UUID: Uint8Array[] = [];
+  UUIDs: Uint8Array[] = [];
 
   constructor(data?: PartialMessage<GetAppSummariesRequest>) {
     super();
@@ -655,7 +655,7 @@ export class GetAppSummariesRequest extends Message<GetAppSummariesRequest> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "changes.GetAppSummariesRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */, repeated: true },
+    { no: 1, name: "UUIDs", kind: "scalar", T: 12 /* ScalarType.BYTES */, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAppSummariesRequest {
@@ -680,9 +680,9 @@ export class GetAppSummariesRequest extends Message<GetAppSummariesRequest> {
  */
 export class GetAppSummariesResponse extends Message<GetAppSummariesResponse> {
   /**
-   * @generated from field: repeated changes.AppSummary app = 1;
+   * @generated from field: repeated changes.AppSummary apps = 1;
    */
-  app: AppSummary[] = [];
+  apps: AppSummary[] = [];
 
   constructor(data?: PartialMessage<GetAppSummariesResponse>) {
     super();
@@ -692,7 +692,7 @@ export class GetAppSummariesResponse extends Message<GetAppSummariesResponse> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "changes.GetAppSummariesResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "app", kind: "message", T: AppSummary, repeated: true },
+    { no: 1, name: "apps", kind: "message", T: AppSummary, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetAppSummariesResponse {
