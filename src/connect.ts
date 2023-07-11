@@ -38,3 +38,11 @@ export {
   updateSnapshot,
   deleteSnapshot,
 } from './__generated__/snapshots-SnapshotsService_connectquery'
+export {
+  createAPIKey,
+  deleteAPIKey,
+  listAPIKeys,
+  getAPIKey,
+  exchangeKeyForToken,
+  updateAPIKey,
+} from './__generated__/apikey-ApiKeyService_connectquery'
