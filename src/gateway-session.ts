@@ -74,7 +74,7 @@ export class GatewaySession extends EventTarget {
           this.removeEventListener('error', rejecter)
           resolve()
         },
-        { once: true }
+        { once: true },
       )
     })
 
@@ -82,7 +82,7 @@ export class GatewaySession extends EventTarget {
       this.dispatchEvent(
         new CustomEvent<Event>(SocketErrorEvent, {
           detail: event,
-        })
+        }),
       )
     })
 
@@ -90,7 +90,7 @@ export class GatewaySession extends EventTarget {
       this.dispatchEvent(
         new CustomEvent<CloseEvent>(CloseEvent, {
           detail: closeEvent,
-        })
+        }),
       )
     })
 
@@ -112,7 +112,7 @@ export class GatewaySession extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<string>(ErrorEvent, {
             detail: response.responseType.value,
-          })
+          }),
         )
         break
       }
@@ -121,7 +121,7 @@ export class GatewaySession extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<Item>(NewItemEvent, {
             detail: response.responseType.value,
-          })
+          }),
         )
         break
       }
@@ -129,7 +129,7 @@ export class GatewaySession extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<Edge>(NewEdgeEvent, {
             detail: response.responseType.value,
-          })
+          }),
         )
         break
       }
@@ -140,7 +140,7 @@ export class GatewaySession extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<GatewayRequestStatus>(StatusEvent, {
             detail: response.responseType.value,
-          })
+          }),
         )
         break
       }
@@ -148,7 +148,7 @@ export class GatewaySession extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<QueryStatus>(QueryStatusEvent, {
             detail: response.responseType.value,
-          })
+          }),
         )
         break
       }
@@ -156,7 +156,7 @@ export class GatewaySession extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<QueryError>(QueryErrorEvent, {
             detail: response.responseType.value,
-          })
+          }),
         )
         break
       }
@@ -164,7 +164,7 @@ export class GatewaySession extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<Reference>(DeleteItemEvent, {
             detail: response.responseType.value,
-          })
+          }),
         )
         break
       }
@@ -172,7 +172,7 @@ export class GatewaySession extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<Edge>(DeleteEdgeEvent, {
             detail: response.responseType.value,
-          })
+          }),
         )
         break
       }
@@ -180,7 +180,7 @@ export class GatewaySession extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<Item>(UpdateItemEvent, {
             detail: response.responseType.value,
-          })
+          }),
         )
         break
       }
@@ -188,7 +188,7 @@ export class GatewaySession extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<BookmarkLoadResult>(BookmarkLoadResultEvent, {
             detail: response.responseType.value,
-          })
+          }),
         )
         break
       }
@@ -196,7 +196,7 @@ export class GatewaySession extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<BookmarkStoreResult>(BookmarkStoreResultEvent, {
             detail: response.responseType.value,
-          })
+          }),
         )
         break
       }
@@ -204,7 +204,7 @@ export class GatewaySession extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<SnapshotLoadResult>(SnapshotLoadResultEvent, {
             detail: response.responseType.value,
-          })
+          }),
         )
         break
       }
@@ -212,7 +212,7 @@ export class GatewaySession extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<SnapshotStoreResult>(SnapshotStoreResultEvent, {
             detail: response.responseType.value,
-          })
+          }),
         )
         break
       }
@@ -225,97 +225,97 @@ export class GatewaySession extends EventTarget {
   addEventListener(
     type: typeof ErrorEvent,
     callback: CustomEventListenerOrEventListenerObject<string> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: typeof NewItemEvent,
     callback: CustomEventListenerOrEventListenerObject<Item> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: typeof NewEdgeEvent,
     callback: CustomEventListenerOrEventListenerObject<Edge> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: typeof DeleteItemEvent,
     callback: CustomEventListenerOrEventListenerObject<Reference> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: typeof DeleteEdgeEvent,
     callback: CustomEventListenerOrEventListenerObject<Edge> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: typeof UpdateItemEvent,
     callback: CustomEventListenerOrEventListenerObject<Item> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: typeof BookmarkStoreResultEvent,
     callback: CustomEventListenerOrEventListenerObject<BookmarkStoreResult> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: typeof BookmarkLoadResultEvent,
     callback: CustomEventListenerOrEventListenerObject<BookmarkLoadResult> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: typeof SnapshotStoreResultEvent,
     callback: CustomEventListenerOrEventListenerObject<SnapshotStoreResult> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: typeof SnapshotLoadResultEvent,
     callback: CustomEventListenerOrEventListenerObject<SnapshotLoadResult> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: typeof QueryStatusEvent,
     callback: CustomEventListenerOrEventListenerObject<QueryStatus> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: typeof QueryErrorEvent,
     callback: CustomEventListenerOrEventListenerObject<QueryError> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: typeof StatusEvent,
     callback: CustomEventListenerOrEventListenerObject<GatewayRequestStatus> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: typeof SocketErrorEvent,
     callback: CustomEventListenerOrEventListenerObject<Event> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: typeof CloseEvent,
     callback: CustomEventListenerOrEventListenerObject<CloseEvent> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   addEventListener(
     type: string,
     callback: EventListenerOrEventListenerObject | null,
-    options?: AddEventListenerOptions | boolean
+    options?: AddEventListenerOptions | boolean,
   ): void {
     super.addEventListener(type, callback, options)
   }
@@ -323,97 +323,97 @@ export class GatewaySession extends EventTarget {
   removeEventListener(
     type: typeof ErrorEvent,
     callback: CustomEventListenerOrEventListenerObject<string> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: typeof NewItemEvent,
     callback: CustomEventListenerOrEventListenerObject<Item> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: typeof NewEdgeEvent,
     callback: CustomEventListenerOrEventListenerObject<Edge> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: typeof DeleteItemEvent,
     callback: CustomEventListenerOrEventListenerObject<Reference> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: typeof DeleteEdgeEvent,
     callback: CustomEventListenerOrEventListenerObject<Edge> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: typeof UpdateItemEvent,
     callback: CustomEventListenerOrEventListenerObject<Item> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: typeof BookmarkStoreResultEvent,
     callback: CustomEventListenerOrEventListenerObject<BookmarkStoreResult> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: typeof BookmarkLoadResultEvent,
     callback: CustomEventListenerOrEventListenerObject<BookmarkLoadResult> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: typeof SnapshotStoreResultEvent,
     callback: CustomEventListenerOrEventListenerObject<SnapshotStoreResult> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: typeof SnapshotLoadResultEvent,
     callback: CustomEventListenerOrEventListenerObject<SnapshotLoadResult> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: typeof QueryStatusEvent,
     callback: CustomEventListenerOrEventListenerObject<QueryStatus> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: typeof QueryErrorEvent,
     callback: CustomEventListenerOrEventListenerObject<QueryError> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: typeof StatusEvent,
     callback: CustomEventListenerOrEventListenerObject<GatewayRequestStatus> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: typeof SocketErrorEvent,
     callback: CustomEventListenerOrEventListenerObject<Event> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: typeof CloseEvent,
     callback: CustomEventListenerOrEventListenerObject<CloseEvent> | null,
-    options?: boolean | AddEventListenerOptions | undefined
+    options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
   removeEventListener(
     type: string,
     callback: EventListenerOrEventListenerObject | null,
-    options?: boolean | EventListenerOptions | undefined
+    options?: boolean | EventListenerOptions | undefined,
   ): void {
     super.removeEventListener(type, callback, options)
   }

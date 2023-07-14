@@ -147,7 +147,7 @@ export class RequestProgress {
 
     // Create the timeout promise
     const timeout = new Promise<string>((resolve) =>
-      setTimeout(resolve, timeoutMs, 'timeout')
+      setTimeout(resolve, timeoutMs, 'timeout'),
     )
 
     // Create the done promise
@@ -160,7 +160,7 @@ export class RequestProgress {
           }
         },
         doneCheckIntervalMs,
-        resolve
+        resolve,
       )
 
       timeout.then(() => {
