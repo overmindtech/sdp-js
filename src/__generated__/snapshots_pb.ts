@@ -6,6 +6,7 @@
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
 import { Item, Query, Reference } from "./items_pb.ts";
+import { Bookmark } from "./bookmarks_pb.ts";
 
 /**
  * @generated from message snapshots.Snapshot
@@ -286,7 +287,7 @@ export class CreateSnapshotRequest extends Message<CreateSnapshotRequest> {
  */
 export class CreateSnapshotResponse extends Message<CreateSnapshotResponse> {
   /**
-   * the newly created snapshot 
+   * the newly created snapshot
    *
    * @generated from field: snapshots.Snapshot snapshot = 1;
    */
@@ -547,6 +548,82 @@ export class DeleteSnapshotResponse extends Message<DeleteSnapshotResponse> {
 
   static equals(a: DeleteSnapshotResponse | PlainMessage<DeleteSnapshotResponse> | undefined, b: DeleteSnapshotResponse | PlainMessage<DeleteSnapshotResponse> | undefined): boolean {
     return proto3.util.equals(DeleteSnapshotResponse, a, b);
+  }
+}
+
+/**
+ * get the initial data
+ *
+ * @generated from message snapshots.GetInitialDataRequest
+ */
+export class GetInitialDataRequest extends Message<GetInitialDataRequest> {
+  constructor(data?: PartialMessage<GetInitialDataRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "snapshots.GetInitialDataRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetInitialDataRequest {
+    return new GetInitialDataRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetInitialDataRequest {
+    return new GetInitialDataRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetInitialDataRequest {
+    return new GetInitialDataRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetInitialDataRequest | PlainMessage<GetInitialDataRequest> | undefined, b: GetInitialDataRequest | PlainMessage<GetInitialDataRequest> | undefined): boolean {
+    return proto3.util.equals(GetInitialDataRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message snapshots.GetInitialDataResponse
+ */
+export class GetInitialDataResponse extends Message<GetInitialDataResponse> {
+  /**
+   * @generated from field: snapshots.Snapshot blastRadiusSnapshot = 1;
+   */
+  blastRadiusSnapshot?: Snapshot;
+
+  /**
+   * @generated from field: bookmarks.Bookmark changingItemsBookmark = 2;
+   */
+  changingItemsBookmark?: Bookmark;
+
+  constructor(data?: PartialMessage<GetInitialDataResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "snapshots.GetInitialDataResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "blastRadiusSnapshot", kind: "message", T: Snapshot },
+    { no: 2, name: "changingItemsBookmark", kind: "message", T: Bookmark },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetInitialDataResponse {
+    return new GetInitialDataResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetInitialDataResponse {
+    return new GetInitialDataResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetInitialDataResponse {
+    return new GetInitialDataResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetInitialDataResponse | PlainMessage<GetInitialDataResponse> | undefined, b: GetInitialDataResponse | PlainMessage<GetInitialDataResponse> | undefined): boolean {
+    return proto3.util.equals(GetInitialDataResponse, a, b);
   }
 }
 

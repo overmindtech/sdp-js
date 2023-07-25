@@ -5,7 +5,7 @@
 
 import { createQueryService } from "@bufbuild/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateSnapshotRequest, CreateSnapshotResponse, DeleteSnapshotRequest, DeleteSnapshotResponse, GetSnapshotRequest, GetSnapshotResponse, ListSnapshotResponse, ListSnapshotsRequest, UpdateSnapshotRequest, UpdateSnapshotResponse } from "./snapshots_pb.ts";
+import { CreateSnapshotRequest, CreateSnapshotResponse, DeleteSnapshotRequest, DeleteSnapshotResponse, GetInitialDataRequest, GetInitialDataResponse, GetSnapshotRequest, GetSnapshotResponse, ListSnapshotResponse, ListSnapshotsRequest, UpdateSnapshotRequest, UpdateSnapshotResponse } from "./snapshots_pb.ts";
 
 export const typeName = "snapshots.SnapshotsService";
 
@@ -93,3 +93,22 @@ export const deleteSnapshot = createQueryService({
     typeName: "snapshots.SnapshotsService",
   },
 }).deleteSnapshot;
+
+/**
+ * retrieve the initial data for the example change
+ *
+ * @generated from rpc snapshots.SnapshotsService.GetInitialData
+ */
+export const getInitialData = createQueryService({
+  service: {
+    methods: {
+      getInitialData: {
+        name: "GetInitialData",
+        kind: MethodKind.Unary,
+        I: GetInitialDataRequest,
+        O: GetInitialDataResponse,
+      },
+    },
+    typeName: "snapshots.SnapshotsService",
+  },
+}).getInitialData;
