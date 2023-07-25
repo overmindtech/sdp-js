@@ -40,26 +40,26 @@ export class SourceDiscovery extends EventTarget {
 
     // Listen for results
     this.session.addEventListener('new-item', (item) =>
-      this.processItem(item.detail),
+      this.processItem(item.detail)
     )
   }
 
   addEventListener(
     type: typeof NewTypeEvent,
     callback: CustomEventListenerOrEventListenerObject<string[]> | null,
-    options?: boolean | AddEventListenerOptions | undefined,
+    options?: boolean | AddEventListenerOptions | undefined
   ): void
 
   addEventListener(
     type: typeof NewScopeEvent,
     callback: CustomEventListenerOrEventListenerObject<string[]> | null,
-    options?: boolean | AddEventListenerOptions | undefined,
+    options?: boolean | AddEventListenerOptions | undefined
   ): void
 
   addEventListener(
     type: string,
     callback: EventListenerOrEventListenerObject | null,
-    options?: AddEventListenerOptions | boolean,
+    options?: AddEventListenerOptions | boolean
   ): void {
     super.addEventListener(type, callback, options)
   }
@@ -67,19 +67,19 @@ export class SourceDiscovery extends EventTarget {
   removeEventListener(
     type: typeof NewTypeEvent,
     callback: CustomEventListenerOrEventListenerObject<string[]> | null,
-    options?: boolean | AddEventListenerOptions | undefined,
+    options?: boolean | AddEventListenerOptions | undefined
   ): void
 
   removeEventListener(
     type: typeof NewScopeEvent,
     callback: CustomEventListenerOrEventListenerObject<string[]> | null,
-    options?: boolean | AddEventListenerOptions | undefined,
+    options?: boolean | AddEventListenerOptions | undefined
   ): void
 
   removeEventListener(
     type: string,
     callback: EventListenerOrEventListenerObject | null,
-    options?: boolean | EventListenerOptions | undefined,
+    options?: boolean | EventListenerOptions | undefined
   ): void {
     super.removeEventListener(type, callback, options)
   }
@@ -137,7 +137,7 @@ export class SourceDiscovery extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<string[]>(NewScopeEvent, {
             detail: this.scopes,
-          }),
+          })
         )
         break
       }
@@ -150,7 +150,7 @@ export class SourceDiscovery extends EventTarget {
         this.dispatchEvent(
           new CustomEvent<string[]>(NewTypeEvent, {
             detail: this.types,
-          }),
+          })
         )
         break
       }

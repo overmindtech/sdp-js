@@ -52,7 +52,7 @@ describe('GatewaySession', () => {
         gs.sendRequest(data.gatewayRequest.itemRequest)
 
         expect(await server.nextMessage).toEqual(
-          data.gatewayRequest.itemRequest.toBinary(),
+          data.gatewayRequest.itemRequest.toBinary()
         )
       })
     })
@@ -85,7 +85,7 @@ describe('GatewaySession', () => {
                 expect(event.detail).toEqual('some error')
                 resolve(undefined)
               },
-              { once: true },
+              { once: true }
             )
 
             server.send(response.toBinary().buffer)
@@ -108,7 +108,7 @@ describe('GatewaySession', () => {
                 expect(event.detail.type).toEqual(data.item.dylan.type)
                 resolve(undefined)
               },
-              { once: true },
+              { once: true }
             )
 
             server.send(response.toBinary().buffer)
@@ -132,7 +132,7 @@ describe('GatewaySession', () => {
                 expect(event.detail.to).toEqual(data.edge.basic.to)
                 resolve(undefined)
               },
-              { once: true },
+              { once: true }
             )
 
             server.send(response.toBinary().buffer)
@@ -154,11 +154,11 @@ describe('GatewaySession', () => {
               (event) => {
                 expect(event.detail.scope).toEqual(data.error.NOSCOPE.scope)
                 expect(event.detail.errorType).toEqual(
-                  data.error.NOSCOPE.errorType,
+                  data.error.NOSCOPE.errorType
                 )
                 resolve(undefined)
               },
-              { once: true },
+              { once: true }
             )
 
             server.send(response.toBinary().buffer)
@@ -180,11 +180,11 @@ describe('GatewaySession', () => {
               (event) => {
                 expect(event.detail.scope).toEqual(data.reference.scope)
                 expect(event.detail.uniqueAttributeValue).toEqual(
-                  data.reference.uniqueAttributeValue,
+                  data.reference.uniqueAttributeValue
                 )
                 resolve(undefined)
               },
-              { once: true },
+              { once: true }
             )
 
             server.send(response.toBinary().buffer)
@@ -205,14 +205,14 @@ describe('GatewaySession', () => {
               DeleteEdgeEvent,
               (event) => {
                 expect(event.detail.from?.toString()).toEqual(
-                  data.edge.basic.from?.toString(),
+                  data.edge.basic.from?.toString()
                 )
                 expect(event.detail.to?.toString()).toEqual(
-                  data.edge.basic.to?.toString(),
+                  data.edge.basic.to?.toString()
                 )
                 resolve(undefined)
               },
-              { once: true },
+              { once: true }
             )
 
             server.send(response.toBinary().buffer)
@@ -234,11 +234,11 @@ describe('GatewaySession', () => {
               (event) => {
                 expect(event.detail.scope).toEqual(data.item.dylan.scope)
                 expect(event.detail.getType()).toEqual(
-                  data.item.dylan.getType(),
+                  data.item.dylan.getType()
                 )
                 resolve(undefined)
               },
-              { once: true },
+              { once: true }
             )
 
             server.send(response.toBinary().buffer)
@@ -259,14 +259,14 @@ describe('GatewaySession', () => {
               StatusEvent,
               (event) => {
                 expect(event.detail.postProcessingComplete).toEqual(
-                  data.gatewayStatus.working.postProcessingComplete,
+                  data.gatewayStatus.working.postProcessingComplete
                 )
                 expect(event.detail.summary?.toJsonString()).toEqual(
-                  data.gatewayStatus.working.summary?.toJsonString(),
+                  data.gatewayStatus.working.summary?.toJsonString()
                 )
                 resolve(undefined)
               },
-              { once: true },
+              { once: true }
             )
 
             server.send(response.toBinary().buffer)
@@ -291,10 +291,10 @@ describe('GatewaySession', () => {
               StatusEvent,
               () => {
                 expect(gs.status?.postProcessingComplete).toEqual(
-                  data.gatewayStatus.working.postProcessingComplete,
+                  data.gatewayStatus.working.postProcessingComplete
                 )
                 expect(gs.status?.summary?.toJsonString()).toEqual(
-                  data.gatewayStatus.working.summary?.toJsonString(),
+                  data.gatewayStatus.working.summary?.toJsonString()
                 )
 
                 // Add the second test
@@ -302,19 +302,19 @@ describe('GatewaySession', () => {
                   StatusEvent,
                   () => {
                     expect(gs.status?.postProcessingComplete).toEqual(
-                      data.gatewayStatus.done.postProcessingComplete,
+                      data.gatewayStatus.done.postProcessingComplete
                     )
                     expect(gs.status?.summary?.toJsonString()).toEqual(
-                      data.gatewayStatus.done.summary?.toJsonString(),
+                      data.gatewayStatus.done.summary?.toJsonString()
                     )
                     resolve(undefined)
                   },
-                  { once: true },
+                  { once: true }
                 )
 
                 server.send(doneResponse.toBinary().buffer)
               },
-              { once: true },
+              { once: true }
             )
 
             server.send(working.toBinary().buffer)

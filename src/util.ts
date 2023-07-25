@@ -66,7 +66,7 @@ export function newDuration(ms: number): Duration {
  */
 export function getAttributeValue<T>(
   attributes: ItemAttributes,
-  name: string,
+  name: string
 ): T | undefined {
   const j = attributes.attrStruct?.toJson()
   if (!j) {
