@@ -18,7 +18,6 @@ export {
   getChange,
   updateChange,
   deleteChange,
-  getChangesHome,
   getOnboarding,
   updateOnboarding,
   listHomeApps,
