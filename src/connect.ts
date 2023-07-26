@@ -4,6 +4,7 @@ export {
   createBookmark,
   getBookmark,
   updateBookmark,
+  getAffectedBookmarks,
   deleteBookmark,
 } from './__generated__/bookmarks-BookmarksService_connectquery'
 export {
@@ -15,6 +16,7 @@ export {
   deleteApp,
   listChanges,
   createChange,
+  refreshState,
   getChange,
   updateChange,
   deleteChange,
@@ -29,11 +31,14 @@ export {
   listChangingItemsSummary,
   getChangeAuditLog,
   getDiff,
+  getChangeTimeline,
+  getAppSummaries,
 } from './__generated__/changes-ChangesService_connectquery'
 export {
   listSnapshots,
   createSnapshot,
   getSnapshot,
+  getInitialData,
   updateSnapshot,
   deleteSnapshot,
 } from './__generated__/snapshots-SnapshotsService_connectquery'
