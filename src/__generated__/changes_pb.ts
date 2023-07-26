@@ -142,6 +142,144 @@ proto3.util.setEnumType(OnboardingStatus, "changes.OnboardingStatus", [
 ]);
 
 /**
+ * @generated from message changes.GetChangeTimelineRequest
+ */
+export class GetChangeTimelineRequest extends Message<GetChangeTimelineRequest> {
+  /**
+   * @generated from field: bytes changeUUID = 1;
+   */
+  changeUUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<GetChangeTimelineRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetChangeTimelineRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changeUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangeTimelineRequest {
+    return new GetChangeTimelineRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangeTimelineRequest {
+    return new GetChangeTimelineRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangeTimelineRequest {
+    return new GetChangeTimelineRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChangeTimelineRequest | PlainMessage<GetChangeTimelineRequest> | undefined, b: GetChangeTimelineRequest | PlainMessage<GetChangeTimelineRequest> | undefined): boolean {
+    return proto3.util.equals(GetChangeTimelineRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetChangeTimelineResponse
+ */
+export class GetChangeTimelineResponse extends Message<GetChangeTimelineResponse> {
+  /**
+   * @generated from field: repeated changes.ChangeTimelineEntry entries = 1;
+   */
+  entries: ChangeTimelineEntry[] = [];
+
+  constructor(data?: PartialMessage<GetChangeTimelineResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetChangeTimelineResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "entries", kind: "message", T: ChangeTimelineEntry, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangeTimelineResponse {
+    return new GetChangeTimelineResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangeTimelineResponse {
+    return new GetChangeTimelineResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangeTimelineResponse {
+    return new GetChangeTimelineResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChangeTimelineResponse | PlainMessage<GetChangeTimelineResponse> | undefined, b: GetChangeTimelineResponse | PlainMessage<GetChangeTimelineResponse> | undefined): boolean {
+    return proto3.util.equals(GetChangeTimelineResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ChangeTimelineEntry
+ */
+export class ChangeTimelineEntry extends Message<ChangeTimelineEntry> {
+  /**
+   * The status that this event should be associated with. Usually this would be
+   * the status that the changed ended up in as a result of this action
+   *
+   * @generated from field: changes.ChangeStatus status = 1;
+   */
+  status = ChangeStatus.UNSPECIFIED;
+
+  /**
+   * The message that describes this event
+   *
+   * @generated from field: string statusMessage = 2;
+   */
+  statusMessage = "";
+
+  /**
+   * The time that this event happened
+   *
+   * @generated from field: google.protobuf.Timestamp happenedAt = 3;
+   */
+  happenedAt?: Timestamp;
+
+  /**
+   * The name of the user that performed this action
+   *
+   * @generated from field: string actorName = 4;
+   */
+  actorName = "";
+
+  constructor(data?: PartialMessage<ChangeTimelineEntry>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ChangeTimelineEntry";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "status", kind: "enum", T: proto3.getEnumType(ChangeStatus) },
+    { no: 2, name: "statusMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "happenedAt", kind: "message", T: Timestamp },
+    { no: 4, name: "actorName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeTimelineEntry {
+    return new ChangeTimelineEntry().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChangeTimelineEntry {
+    return new ChangeTimelineEntry().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChangeTimelineEntry {
+    return new ChangeTimelineEntry().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChangeTimelineEntry | PlainMessage<ChangeTimelineEntry> | undefined, b: ChangeTimelineEntry | PlainMessage<ChangeTimelineEntry> | undefined): boolean {
+    return proto3.util.equals(ChangeTimelineEntry, a, b);
+  }
+}
+
+/**
  * @generated from message changes.GetDiffRequest
  */
 export class GetDiffRequest extends Message<GetDiffRequest> {
