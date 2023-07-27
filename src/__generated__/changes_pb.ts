@@ -321,9 +321,20 @@ export class GetDiffRequest extends Message<GetDiffRequest> {
  */
 export class GetDiffResponse extends Message<GetDiffResponse> {
   /**
-   * @generated from field: repeated changes.ItemDiff items = 1;
+   * Changes to items that were used to calculate the blast radius, i.e. items
+   * we expected to change
+   *
+   * @generated from field: repeated changes.ItemDiff expectedItems = 1;
    */
-  items: ItemDiff[] = [];
+  expectedItems: ItemDiff[] = [];
+
+  /**
+   * Items that changed within the blast radius, but that weren't used to
+   * calculate it i.e. unexpected changes
+   *
+   * @generated from field: repeated changes.ItemDiff unexpectedItems = 3;
+   */
+  unexpectedItems: ItemDiff[] = [];
 
   /**
    * @generated from field: repeated Edge edges = 2;
@@ -338,7 +349,8 @@ export class GetDiffResponse extends Message<GetDiffResponse> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "changes.GetDiffResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "items", kind: "message", T: ItemDiff, repeated: true },
+    { no: 1, name: "expectedItems", kind: "message", T: ItemDiff, repeated: true },
+    { no: 3, name: "unexpectedItems", kind: "message", T: ItemDiff, repeated: true },
     { no: 2, name: "edges", kind: "message", T: Edge, repeated: true },
   ]);
 
