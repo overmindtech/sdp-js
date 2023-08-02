@@ -5,7 +5,7 @@
 
 import { createQueryService } from "@bufbuild/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, CreateSimpleAppRequest, CreateSimpleAppResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, GetAffectedAppsRequest, GetAffectedAppsResponse, GetAppRequest, GetAppResponse, GetAppSummariesRequest, GetAppSummariesResponse, GetAppSummaryRequest, GetAppSummaryResponse, GetChangeAuditLogRequest, GetChangeAuditLogResponse, GetChangeRequest, GetChangeResponse, GetChangeTimelineRequest, GetChangeTimelineResponse, GetDiffRequest, GetDiffResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppChangesRequest, ListAppChangesResponse, ListAppChangesSummaryRequest, ListAppChangesSummaryResponse, ListAppsRequest, ListAppsResponse, ListChangesRequest, ListChangesResponse, ListChangingItemsSummaryRequest, ListChangingItemsSummaryResponse, ListHomeAppsRequest, ListHomeAppsResponse, ListHomeChangesRequest, ListHomeChangesResponse, RefreshStateRequest, RefreshStateResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
+import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, CreateSimpleAppRequest, CreateSimpleAppResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, GetAffectedAppsRequest, GetAffectedAppsResponse, GetAppRequest, GetAppResponse, GetAppSummariesRequest, GetAppSummariesResponse, GetAppSummaryRequest, GetAppSummaryResponse, GetChangeRequest, GetChangeResponse, GetChangeTimelineRequest, GetChangeTimelineResponse, GetDiffRequest, GetDiffResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppChangesRequest, ListAppChangesResponse, ListAppChangesSummaryRequest, ListAppChangesSummaryResponse, ListAppsRequest, ListAppsResponse, ListChangesRequest, ListChangesResponse, ListChangingItemsSummaryRequest, ListChangingItemsSummaryResponse, ListHomeAppsRequest, ListHomeAppsResponse, ListHomeChangesRequest, ListHomeChangesResponse, RefreshStateRequest, RefreshStateResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
 
 export const typeName = "changes.ChangesService";
 
@@ -448,25 +448,6 @@ export const listChangingItemsSummary = createQueryService({
     typeName: "changes.ChangesService",
   },
 }).listChangingItemsSummary;
-
-/**
- * Gets the audit log for a given change
- *
- * @generated from rpc changes.ChangesService.GetChangeAuditLog
- */
-export const getChangeAuditLog = createQueryService({
-  service: {
-    methods: {
-      getChangeAuditLog: {
-        name: "GetChangeAuditLog",
-        kind: MethodKind.Unary,
-        I: GetChangeAuditLogRequest,
-        O: GetChangeAuditLogResponse,
-      },
-    },
-    typeName: "changes.ChangesService",
-  },
-}).getChangeAuditLog;
 
 /**
  * Gets the full diff of everything that changed as part of this "change".
