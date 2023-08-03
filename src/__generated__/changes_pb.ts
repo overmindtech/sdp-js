@@ -2470,6 +2470,82 @@ export class ListChangesResponse extends Message<ListChangesResponse> {
 }
 
 /**
+ * list all changes in a specific status
+ *
+ * @generated from message changes.ListChangesByStatusRequest
+ */
+export class ListChangesByStatusRequest extends Message<ListChangesByStatusRequest> {
+  /**
+   * @generated from field: changes.ChangeStatus status = 1;
+   */
+  status = ChangeStatus.UNSPECIFIED;
+
+  constructor(data?: PartialMessage<ListChangesByStatusRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListChangesByStatusRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "status", kind: "enum", T: proto3.getEnumType(ChangeStatus) },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListChangesByStatusRequest {
+    return new ListChangesByStatusRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListChangesByStatusRequest {
+    return new ListChangesByStatusRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListChangesByStatusRequest {
+    return new ListChangesByStatusRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListChangesByStatusRequest | PlainMessage<ListChangesByStatusRequest> | undefined, b: ListChangesByStatusRequest | PlainMessage<ListChangesByStatusRequest> | undefined): boolean {
+    return proto3.util.equals(ListChangesByStatusRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ListChangesByStatusResponse
+ */
+export class ListChangesByStatusResponse extends Message<ListChangesByStatusResponse> {
+  /**
+   * @generated from field: repeated changes.Change changes = 1;
+   */
+  changes: Change[] = [];
+
+  constructor(data?: PartialMessage<ListChangesByStatusResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListChangesByStatusResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changes", kind: "message", T: Change, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListChangesByStatusResponse {
+    return new ListChangesByStatusResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListChangesByStatusResponse {
+    return new ListChangesByStatusResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListChangesByStatusResponse {
+    return new ListChangesByStatusResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListChangesByStatusResponse | PlainMessage<ListChangesByStatusResponse> | undefined, b: ListChangesByStatusResponse | PlainMessage<ListChangesByStatusResponse> | undefined): boolean {
+    return proto3.util.equals(ListChangesByStatusResponse, a, b);
+  }
+}
+
+/**
  * create a new change
  *
  * @generated from message changes.CreateChangeRequest
