@@ -29,7 +29,6 @@ export {
   listAppChangesSummary,
   getAffectedApps,
   listChangingItemsSummary,
-  getChangeAuditLog,
   getDiff,
   getChangeTimeline,
   getAppSummaries,
