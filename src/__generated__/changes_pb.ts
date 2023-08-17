@@ -59,7 +59,7 @@ export enum ChangeStatus {
   UNSPECIFIED = 0,
 
   /**
-   * The blast radius has been calculated, but the chnage has not yet started.
+   * The blast radius has been calculated, but the change has not yet started.
    * The change can be started using the `StartChange` RPC.
    *
    * @generated from enum value: CHANGE_STATUS_DEFINING = 1;
