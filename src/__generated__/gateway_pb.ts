@@ -558,9 +558,9 @@ export class LoadBookmark extends Message<LoadBookmark> {
   /**
    * set to true to force fetching fresh data
    *
-   * @generated from field: bool skipCache = 3;
+   * @generated from field: bool ignoreCache = 3;
    */
-  skipCache = false;
+  ignoreCache = false;
 
   constructor(data?: PartialMessage<LoadBookmark>) {
     super();
@@ -572,7 +572,7 @@ export class LoadBookmark extends Message<LoadBookmark> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 2, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-    { no: 3, name: "skipCache", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 3, name: "ignoreCache", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): LoadBookmark {
