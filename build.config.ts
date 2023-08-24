@@ -1,6 +1,11 @@
 import { defineBuildConfig } from 'unbuild'
 
 export default defineBuildConfig({
-  // Generates .d.ts declaration file
-  declaration: true,
+  entries: [
+    {
+      builder: 'mkdist',
+      input: './src/',
+      declaration: 'compatible',
+    },
+  ],
 })

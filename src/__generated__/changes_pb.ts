@@ -5,7 +5,7 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
-import { Edge, Health, Item, Reference } from "./items_pb.ts";
+import { Edge, Health, Item, Reference } from "./items_pb";
 
 /**
  * @generated from enum changes.ItemDiffStatus

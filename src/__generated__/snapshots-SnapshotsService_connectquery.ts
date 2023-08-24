@@ -5,7 +5,7 @@
 
 import { createQueryService } from "@bufbuild/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateSnapshotRequest, CreateSnapshotResponse, DeleteSnapshotRequest, DeleteSnapshotResponse, GetInitialDataRequest, GetInitialDataResponse, GetSnapshotRequest, GetSnapshotResponse, ListSnapshotResponse, ListSnapshotsRequest, UpdateSnapshotRequest, UpdateSnapshotResponse } from "./snapshots_pb.ts";
+import { CreateSnapshotRequest, CreateSnapshotResponse, DeleteSnapshotRequest, DeleteSnapshotResponse, GetInitialDataRequest, GetInitialDataResponse, GetSnapshotRequest, GetSnapshotResponse, ListSnapshotResponse, ListSnapshotsRequest, UpdateSnapshotRequest, UpdateSnapshotResponse } from "./snapshots_pb";
 
 export const typeName = "snapshots.SnapshotsService";
 

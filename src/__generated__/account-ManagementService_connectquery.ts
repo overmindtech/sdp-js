@@ -5,7 +5,7 @@
 
 import { createQueryService } from "@bufbuild/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListSourcesRequest, ListSourcesResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
+import { CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListSourcesRequest, ListSourcesResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb";
 
 export const typeName = "account.ManagementService";
 

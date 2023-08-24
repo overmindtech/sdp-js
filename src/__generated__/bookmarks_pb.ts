@@ -5,7 +5,7 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
-import { Query, Reference } from "./items_pb.ts";
+import { Query, Reference } from "./items_pb";
 
 /**
  * a complete Bookmark with user-supplied and machine-supplied values

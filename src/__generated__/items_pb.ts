@@ -5,7 +5,7 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Duration, Message, proto3, Struct, Timestamp } from "@bufbuild/protobuf";
-import { Response } from "./responses_pb.ts";
+import { Response } from "./responses_pb";
 
 /**
  * Represents the health of something, the meaning of each state may depend on

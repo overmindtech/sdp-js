@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateSnapshotRequest, CreateSnapshotResponse, DeleteSnapshotRequest, DeleteSnapshotResponse, GetInitialDataRequest, GetInitialDataResponse, GetSnapshotRequest, GetSnapshotResponse, ListSnapshotResponse, ListSnapshotsRequest, UpdateSnapshotRequest, UpdateSnapshotResponse } from "./snapshots_pb.ts";
+import { CreateSnapshotRequest, CreateSnapshotResponse, DeleteSnapshotRequest, DeleteSnapshotResponse, GetInitialDataRequest, GetInitialDataResponse, GetSnapshotRequest, GetSnapshotResponse, ListSnapshotResponse, ListSnapshotsRequest, UpdateSnapshotRequest, UpdateSnapshotResponse } from "./snapshots_pb";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**

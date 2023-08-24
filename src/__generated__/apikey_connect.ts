@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateAPIKeyRequest, CreateAPIKeyResponse, DeleteAPIKeyRequest, DeleteAPIKeyResponse, ExchangeKeyForTokenRequest, ExchangeKeyForTokenResponse, GetAPIKeyRequest, GetAPIKeyResponse, ListAPIKeysRequest, ListAPIKeysResponse, UpdateAPIKeyRequest, UpdateAPIKeyResponse } from "./apikey_pb.ts";
+import { CreateAPIKeyRequest, CreateAPIKeyResponse, DeleteAPIKeyRequest, DeleteAPIKeyResponse, ExchangeKeyForTokenRequest, ExchangeKeyForTokenResponse, GetAPIKeyRequest, GetAPIKeyResponse, ListAPIKeysRequest, ListAPIKeysResponse, UpdateAPIKeyRequest, UpdateAPIKeyResponse } from "./apikey_pb";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**

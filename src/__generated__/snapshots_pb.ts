@@ -5,8 +5,8 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
-import { Item, Query, Reference } from "./items_pb.ts";
-import { Bookmark } from "./bookmarks_pb.ts";
+import { Item, Query, Reference } from "./items_pb";
+import { Bookmark } from "./bookmarks_pb";
 
 /**
  * @generated from message snapshots.Snapshot

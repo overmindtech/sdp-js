@@ -5,8 +5,8 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Duration, Message, proto3 } from "@bufbuild/protobuf";
-import { CancelQuery, Edge, Expand, Item, Query, QueryError, QueryStatus, Reference, UndoExpand, UndoQuery } from "./items_pb.ts";
-import { ResponderState } from "./responses_pb.ts";
+import { CancelQuery, Edge, Expand, Item, Query, QueryError, QueryStatus, Reference, UndoExpand, UndoQuery } from "./items_pb";
+import { ResponderState } from "./responses_pb";
 
 /**
  * A union of all request made to the gateway.
