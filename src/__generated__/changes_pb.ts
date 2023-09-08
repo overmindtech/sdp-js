@@ -1978,6 +1978,13 @@ export class ChangeSummary extends Message<ChangeSummary> {
    */
   numAffectedItems = 0;
 
+  /**
+   * The number of edges in the blast radius of this change
+   *
+   * @generated from field: int32 numAffectedEdges = 10;
+   */
+  numAffectedEdges = 0;
+
   constructor(data?: PartialMessage<ChangeSummary>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1994,6 +2001,7 @@ export class ChangeSummary extends Message<ChangeSummary> {
     { no: 6, name: "creatorName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 8, name: "numAffectedApps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 9, name: "numAffectedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 10, name: "numAffectedEdges", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeSummary {
@@ -2119,6 +2127,13 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
   numAffectedItems = 0;
 
   /**
+   * The number of edges in the blast radius if this change
+   *
+   * @generated from field: int32 numAffectedEdges = 17;
+   */
+  numAffectedEdges = 0;
+
+  /**
    * The number of items within the blast radius that were not affected by this
    * change
    *
@@ -2187,6 +2202,7 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
     { no: 5, name: "creatorName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "numAffectedApps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 7, name: "numAffectedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 17, name: "numAffectedEdges", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 8, name: "numUnchangedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 9, name: "numCreatedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 10, name: "numUpdatedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
