@@ -612,6 +612,17 @@ export class Query extends Message<Query> {
    */
   timeout?: Duration;
 
+  /**
+   * The deadline for this query. When the deadline elapses, results become
+   * irrelevant for the sender and any processing can stop. The deadline gets
+   * propagated to all related queries (e.g. for linked items) and processes.
+   * Note: there is currently a migration going on from timeouts to durations,
+   * so depending on which service is hit, either one is evaluated.
+   *
+   * @generated from field: google.protobuf.Timestamp deadline = 9;
+   */
+  deadline?: Timestamp;
+
   constructor(data?: PartialMessage<Query>) {
     super();
     proto3.util.initPartial(data, this);
@@ -628,6 +639,7 @@ export class Query extends Message<Query> {
     { no: 6, name: "ignoreCache", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 7, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 8, name: "timeout", kind: "message", T: Duration },
+    { no: 9, name: "deadline", kind: "message", T: Timestamp },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Query {
@@ -1351,6 +1363,17 @@ export class ReverseLinksRequest extends Message<ReverseLinksRequest> {
    */
   followOnlyBlastPropagation = false;
 
+  /**
+   * The deadline for this request. When the deadline elapses, results become
+   * irrelevant for the requestor and any processing can stop. The deadline gets
+   * propagated to all related requests and processes. Note: there is currently
+   * a migration going on from timeouts to durations, so depending on which
+   * service is hit, either one is evaluated.
+   *
+   * @generated from field: google.protobuf.Timestamp deadline = 4;
+   */
+  deadline?: Timestamp;
+
   constructor(data?: PartialMessage<ReverseLinksRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1362,6 +1385,7 @@ export class ReverseLinksRequest extends Message<ReverseLinksRequest> {
     { no: 1, name: "item", kind: "message", T: Reference },
     { no: 2, name: "timeout", kind: "message", T: Duration },
     { no: 3, name: "followOnlyBlastPropagation", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 4, name: "deadline", kind: "message", T: Timestamp },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ReverseLinksRequest {
