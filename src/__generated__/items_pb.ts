@@ -601,18 +601,6 @@ export class Query extends Message<Query> {
   UUID = new Uint8Array(0);
 
   /**
-   * The timeout for this query. This will affect both the initial query, and
-   * also any linked item queries that are executed as part of it. This means
-   * that if a query has a timeout of 10s, and takes 2s to complete, the linked
-   * item queries should have a remaining timeout of 8s meaning that the entire
-   * query including all linking needs to be done in 10s, not 10s for *each*
-   * query
-   *
-   * @generated from field: google.protobuf.Duration timeout = 8;
-   */
-  timeout?: Duration;
-
-  /**
    * The deadline for this query. When the deadline elapses, results become
    * irrelevant for the sender and any processing can stop. The deadline gets
    * propagated to all related queries (e.g. for linked items) and processes.
@@ -638,7 +626,6 @@ export class Query extends Message<Query> {
     { no: 5, name: "scope", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "ignoreCache", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 7, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-    { no: 8, name: "timeout", kind: "message", T: Duration },
     { no: 9, name: "deadline", kind: "message", T: Timestamp },
   ]);
 
@@ -1350,13 +1337,6 @@ export class ReverseLinksRequest extends Message<ReverseLinksRequest> {
   item?: Reference;
 
   /**
-   * The timeout for this request
-   *
-   * @generated from field: google.protobuf.Duration timeout = 2;
-   */
-  timeout?: Duration;
-
-  /**
    * set to true to only return links that propagate configuration change impact
    *
    * @generated from field: bool followOnlyBlastPropagation = 3;
@@ -1383,7 +1363,6 @@ export class ReverseLinksRequest extends Message<ReverseLinksRequest> {
   static readonly typeName = "ReverseLinksRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "item", kind: "message", T: Reference },
-    { no: 2, name: "timeout", kind: "message", T: Duration },
     { no: 3, name: "followOnlyBlastPropagation", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 4, name: "deadline", kind: "message", T: Timestamp },
   ]);
