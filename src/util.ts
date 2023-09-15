@@ -58,6 +58,17 @@ export function newDuration(ms: number): Duration {
 }
 
 /**
+ * Converts a number of milliseconds to a protobuf Timestamp that number of milliseconds in the future.
+ *
+ * @param ms The number of milliseconds
+ * @returns A timestamp in protobuf format
+ */
+export function newDeadline(ms: number): Timestamp {
+  const deadline = new Date(Date.now() + ms)
+  return Timestamp.fromDate(deadline)
+}
+
+/**
  * Gets the value of a particular attribute. *Note:* that this only supports
  * attributes at the top level currently
  * @param attributes The attributes to query

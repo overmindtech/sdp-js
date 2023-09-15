@@ -4,7 +4,7 @@ import {
   GatewaySession,
 } from './gateway-session'
 import { GatewayRequest, Item, Query, QueryMethod } from './protobuf'
-import { getUniqueAttributeValue, newDuration } from './util'
+import { getUniqueAttributeValue, newDeadline } from './util'
 
 export enum DiscoveryField {
   TYPE = 0,
@@ -111,7 +111,7 @@ export class SourceDiscovery extends EventTarget {
         value: new Query({
           scope: 'global',
           method: QueryMethod.LIST,
-          timeout: newDuration(5000),
+          deadline: newDeadline(5000),
           UUID: parse(v4()),
           type,
         }),
