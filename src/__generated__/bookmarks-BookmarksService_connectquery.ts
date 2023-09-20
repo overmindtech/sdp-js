@@ -10,6 +10,8 @@ import { CreateBookmarkRequest, CreateBookmarkResponse, DeleteBookmarkRequest, D
 export const typeName = "bookmarks.BookmarksService";
 
 /**
+ * returns all bookmarks of the current user. note that this does not include the actual bookmark data, use GetBookmark for that
+ *
  * @generated from rpc bookmarks.BookmarksService.ListBookmarks
  */
 export const listBookmarks = createQueryService({

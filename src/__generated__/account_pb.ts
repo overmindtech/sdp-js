@@ -1351,6 +1351,13 @@ export class DeleteSourceResponse extends Message<DeleteSourceResponse> {
  * @generated from message account.KeepaliveSourcesRequest
  */
 export class KeepaliveSourcesRequest extends Message<KeepaliveSourcesRequest> {
+  /**
+   * Set to true to have the API call wait until the source is up and healthy
+   *
+   * @generated from field: bool waitForHealthy = 1;
+   */
+  waitForHealthy = false;
+
   constructor(data?: PartialMessage<KeepaliveSourcesRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1359,6 +1366,7 @@ export class KeepaliveSourcesRequest extends Message<KeepaliveSourcesRequest> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "account.KeepaliveSourcesRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "waitForHealthy", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): KeepaliveSourcesRequest {
@@ -1382,6 +1390,20 @@ export class KeepaliveSourcesRequest extends Message<KeepaliveSourcesRequest> {
  * @generated from message account.KeepaliveSourcesResponse
  */
 export class KeepaliveSourcesResponse extends Message<KeepaliveSourcesResponse> {
+  /**
+   * returns true if any of the sources did not come up in time
+   *
+   * @generated from field: bool failed = 1;
+   */
+  failed = false;
+
+  /**
+   * returns an indication of why not all sources were healthy
+   *
+   * @generated from field: string error = 2;
+   */
+  error = "";
+
   constructor(data?: PartialMessage<KeepaliveSourcesResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1390,6 +1412,8 @@ export class KeepaliveSourcesResponse extends Message<KeepaliveSourcesResponse> 
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "account.KeepaliveSourcesResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "failed", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "error", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): KeepaliveSourcesResponse {

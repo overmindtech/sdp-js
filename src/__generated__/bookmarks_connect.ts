@@ -13,6 +13,8 @@ export const BookmarksService = {
   typeName: "bookmarks.BookmarksService",
   methods: {
     /**
+     * returns all bookmarks of the current user. note that this does not include the actual bookmark data, use GetBookmark for that
+     *
      * @generated from rpc bookmarks.BookmarksService.ListBookmarks
      */
     listBookmarks: {
