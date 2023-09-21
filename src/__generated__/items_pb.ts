@@ -1127,6 +1127,13 @@ export class Expand extends Message<Expand> {
    */
   UUID = new Uint8Array(0);
 
+  /**
+   * The time at which the gateway should stop processing the queries spawned by this request
+   *
+   * @generated from field: google.protobuf.Timestamp deadline = 4;
+   */
+  deadline?: Timestamp;
+
   constructor(data?: PartialMessage<Expand>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1138,6 +1145,7 @@ export class Expand extends Message<Expand> {
     { no: 1, name: "item", kind: "message", T: Reference },
     { no: 2, name: "linkDepth", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
     { no: 3, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 4, name: "deadline", kind: "message", T: Timestamp },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Expand {

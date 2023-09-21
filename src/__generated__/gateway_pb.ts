@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
-import { Duration, Message, proto3 } from "@bufbuild/protobuf";
+import { Duration, Message, proto3, Timestamp } from "@bufbuild/protobuf";
 import { CancelQuery, Edge, Expand, Item, Query, QueryError, QueryStatus, Reference, UndoExpand, UndoQuery } from "./items_pb.ts";
 import { ResponderState } from "./responses_pb.ts";
 
@@ -562,6 +562,13 @@ export class LoadBookmark extends Message<LoadBookmark> {
    */
   ignoreCache = false;
 
+  /**
+   * The time at which the gateway should stop processing the queries spawned by this request
+   *
+   * @generated from field: google.protobuf.Timestamp deadline = 4;
+   */
+  deadline?: Timestamp;
+
   constructor(data?: PartialMessage<LoadBookmark>) {
     super();
     proto3.util.initPartial(data, this);
@@ -573,6 +580,7 @@ export class LoadBookmark extends Message<LoadBookmark> {
     { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 2, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 3, name: "ignoreCache", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 4, name: "deadline", kind: "message", T: Timestamp },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): LoadBookmark {
