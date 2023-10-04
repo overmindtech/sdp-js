@@ -320,6 +320,15 @@ export class Item extends Message<Item> {
    */
   health?: Health;
 
+  /**
+   * Arbitrary key-value pairs that can be used to store additional information.
+   * These tags are retrieved from the source and map to the target's definition
+   * of a tag (e.g. AWS tags, Kubernetes labels, etc.)
+   *
+   * @generated from field: map<string, string> tags = 19;
+   */
+  tags: { [key: string]: string } = {};
+
   constructor(data?: PartialMessage<Item>) {
     super();
     proto3.util.initPartial(data, this);
@@ -336,6 +345,7 @@ export class Item extends Message<Item> {
     { no: 16, name: "linkedItemQueries", kind: "message", T: LinkedItemQuery, repeated: true },
     { no: 17, name: "linkedItems", kind: "message", T: LinkedItem, repeated: true },
     { no: 18, name: "health", kind: "enum", T: proto3.getEnumType(Health), opt: true },
+    { no: 19, name: "tags", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 9 /* ScalarType.STRING */} },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Item {
