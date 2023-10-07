@@ -419,6 +419,13 @@ export class GatewaySession extends EventTarget {
   }
 
   /**
+   * Whether there are currently any queries running
+   */
+  get queriesRunning(): boolean {
+    return (this.status?.summary?.working || 0) > 0
+  }
+
+  /**
    * Sends a request to the gateway
    * @param request The request to send
    */

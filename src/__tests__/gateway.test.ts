@@ -264,6 +264,7 @@ describe('GatewaySession', () => {
                 expect(event.detail.summary?.toJsonString()).toEqual(
                   data.gatewayStatus.working.summary?.toJsonString(),
                 )
+                expect(gs.queriesRunning).toBeTruthy()
                 resolve(undefined)
               },
               { once: true },
