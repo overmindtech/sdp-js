@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { createQueryService } from "@bufbuild/connect-query";
+import { createQueryService } from "@connectrpc/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
 import { CreateInviteRequest, CreateInviteResponse, ListInvitesRequest, ListInvitesResponse, RevokeInviteRequest, RevokeInviteResponse } from "./invites_pb.ts";
 

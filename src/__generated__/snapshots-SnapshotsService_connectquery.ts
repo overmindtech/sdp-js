@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { createQueryService } from "@bufbuild/connect-query";
+import { createQueryService } from "@connectrpc/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
 import { CreateSnapshotRequest, CreateSnapshotResponse, DeleteSnapshotRequest, DeleteSnapshotResponse, GetInitialDataRequest, GetInitialDataResponse, GetSnapshotRequest, GetSnapshotResponse, ListSnapshotResponse, ListSnapshotsRequest, UpdateSnapshotRequest, UpdateSnapshotResponse } from "./snapshots_pb.ts";
 
