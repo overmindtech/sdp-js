@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { createQueryService } from "@bufbuild/connect-query";
+import { createQueryService } from "@connectrpc/connect-query";
 import { MethodKind } from "@bufbuild/protobuf";
 import { CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListSourcesRequest, ListSourcesResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
 
