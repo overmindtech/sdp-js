@@ -56,6 +56,9 @@ export class GatewaySession extends EventTarget {
   ready: Promise<void>
   status?: GatewayRequestStatus
 
+  // Whether there are any queries running
+  queriesRunning = false;
+
   constructor(url: string) {
     super()
 
@@ -136,6 +139,7 @@ export class GatewaySession extends EventTarget {
       case 'status': {
         // Update the local status
         this.status = response.responseType.value
+        this.queriesRunning = (this.status.summary?.working || 0) > 0
 
         this.dispatchEvent(
           new CustomEvent<GatewayRequestStatus>(StatusEvent, {
@@ -416,13 +420,6 @@ export class GatewaySession extends EventTarget {
     options?: boolean | EventListenerOptions | undefined,
   ): void {
     super.removeEventListener(type, callback, options)
-  }
-
-  /**
-   * Whether there are currently any queries running
-   */
-  get queriesRunning(): boolean {
-    return (this.status?.summary?.working || 0) > 0
   }
 
   /**
