@@ -57,7 +57,7 @@ export class GatewaySession extends EventTarget {
   status?: GatewayRequestStatus
 
   // Whether there are any queries running
-  queriesRunning = false;
+  queriesRunning = false
 
   constructor(url: string) {
     super()
