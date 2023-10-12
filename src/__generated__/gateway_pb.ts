@@ -443,6 +443,15 @@ export class StoreBookmark extends Message<StoreBookmark> {
    */
   msgID = new Uint8Array(0);
 
+  /**
+   * whether this bookmark should be stored as a system bookmark. System
+   * bookmarks are hidden and can only be returned via the UUID, they don't
+   * show up in lists
+   *
+   * @generated from field: bool isSystem = 4;
+   */
+  isSystem = false;
+
   constructor(data?: PartialMessage<StoreBookmark>) {
     super();
     proto3.util.initPartial(data, this);
@@ -454,6 +463,7 @@ export class StoreBookmark extends Message<StoreBookmark> {
     { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 4, name: "isSystem", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StoreBookmark {

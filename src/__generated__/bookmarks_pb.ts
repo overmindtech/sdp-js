@@ -86,6 +86,15 @@ export class BookmarkProperties extends Message<BookmarkProperties> {
    */
   excludedItems: Reference[] = [];
 
+  /**
+   * Whether this bookmark is a system bookmark. System bookmarks are hidden
+   * from list results and can therefore only be accessed by their UUID.
+   * Bookmarks created by users are not system bookmarks.
+   *
+   * @generated from field: bool isSystem = 5;
+   */
+  isSystem = false;
+
   constructor(data?: PartialMessage<BookmarkProperties>) {
     super();
     proto3.util.initPartial(data, this);
@@ -98,6 +107,7 @@ export class BookmarkProperties extends Message<BookmarkProperties> {
     { no: 2, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "queries", kind: "message", T: Query, repeated: true },
     { no: 4, name: "excludedItems", kind: "message", T: Reference, repeated: true },
+    { no: 5, name: "isSystem", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): BookmarkProperties {
