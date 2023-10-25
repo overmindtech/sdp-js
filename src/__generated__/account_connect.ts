@@ -7,7 +7,7 @@ import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteSourceReq
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
- * The admin service allows users with Admin privileges to any account. Many if
+ * The admin service allows users with Admin privileges to any account. Many of
  * the RPCs in this service mirror RPCs in the ManagementService, but allow the
  * user to specfy an account to operate on, rather than using the account that
  * the user belongs to.
