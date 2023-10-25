@@ -35,6 +35,11 @@ export enum ItemDiffStatus {
    * @generated from enum value: ITEM_DIFF_STATUS_DELETED = 4;
    */
   DELETED = 4,
+
+  /**
+   * @generated from enum value: ITEM_DIFF_STATUS_REPLACED = 5;
+   */
+  REPLACED = 5,
 }
 // Retrieve enum metadata with: proto3.getEnumType(ItemDiffStatus)
 proto3.util.setEnumType(ItemDiffStatus, "changes.ItemDiffStatus", [
@@ -43,6 +48,7 @@ proto3.util.setEnumType(ItemDiffStatus, "changes.ItemDiffStatus", [
   { no: 2, name: "ITEM_DIFF_STATUS_CREATED" },
   { no: 3, name: "ITEM_DIFF_STATUS_UPDATED" },
   { no: 4, name: "ITEM_DIFF_STATUS_DELETED" },
+  { no: 5, name: "ITEM_DIFF_STATUS_REPLACED" },
 ]);
 
 /**
