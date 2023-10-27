@@ -2162,6 +2162,13 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
   numUpdatedItems = 0;
 
   /**
+   * The number of items that were replaced as part of this change
+   *
+   * @generated from field: int32 numReplacedItems = 18;
+   */
+  numReplacedItems = 0;
+
+  /**
    * The number of items that were deleted as part of this change
    *
    * @generated from field: int32 numDeletedItems = 11;
@@ -2212,6 +2219,7 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
     { no: 8, name: "numUnchangedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 9, name: "numCreatedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 10, name: "numUpdatedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 18, name: "numReplacedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 11, name: "numDeletedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 12, name: "UnknownHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
     { no: 13, name: "OkHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
