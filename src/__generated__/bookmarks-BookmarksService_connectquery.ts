@@ -16,7 +16,7 @@ export const BookmarksService = {
   typeName: "bookmarks.BookmarksService",
   methods: {
     /**
-     * returns all bookmarks of the current user. note that this does not include the actual bookmark data, use GetBookmark for that
+     * ListBookmarks returns all bookmarks of the current user. note that this does not include the actual bookmark data, use GetBookmark for that
      *
      * @generated from rpc bookmarks.BookmarksService.ListBookmarks
      */
@@ -27,6 +27,8 @@ export const BookmarksService = {
       kind: MethodKind.Unary,
     },
     /**
+     * CreateBookmark creates a new bookmark
+     *
      * @generated from rpc bookmarks.BookmarksService.CreateBookmark
      */
     createBookmark: {
@@ -36,6 +38,8 @@ export const BookmarksService = {
       kind: MethodKind.Unary,
     },
     /**
+     * GetBookmark returns the bookmark with the given UUID. This can also return snapshots as bookmarks and will strip the stored items from the response.
+     *
      * @generated from rpc bookmarks.BookmarksService.GetBookmark
      */
     getBookmark: {
@@ -79,18 +83,22 @@ export const BookmarksService = {
 const $queryService = createQueryService({  service: BookmarksService,});
 
 /**
- * returns all bookmarks of the current user. note that this does not include the actual bookmark data, use GetBookmark for that
+ * ListBookmarks returns all bookmarks of the current user. note that this does not include the actual bookmark data, use GetBookmark for that
  *
  * @generated from rpc bookmarks.BookmarksService.ListBookmarks
  */
 export const listBookmarks: UnaryFunctionsWithHooks<ListBookmarksRequest, ListBookmarkResponse> = {   ...$queryService.listBookmarks,  ...createUnaryHooks($queryService.listBookmarks)};
 
 /**
+ * CreateBookmark creates a new bookmark
+ *
  * @generated from rpc bookmarks.BookmarksService.CreateBookmark
  */
 export const createBookmark: UnaryFunctionsWithHooks<CreateBookmarkRequest, CreateBookmarkResponse> = {   ...$queryService.createBookmark,  ...createUnaryHooks($queryService.createBookmark)};
 
 /**
+ * GetBookmark returns the bookmark with the given UUID. This can also return snapshots as bookmarks and will strip the stored items from the response.
+ *
  * @generated from rpc bookmarks.BookmarksService.GetBookmark
  */
 export const getBookmark: UnaryFunctionsWithHooks<GetBookmarkRequest, GetBookmarkResponse> = {   ...$queryService.getBookmark,  ...createUnaryHooks($queryService.getBookmark)};

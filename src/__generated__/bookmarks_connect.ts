@@ -13,7 +13,7 @@ export const BookmarksService = {
   typeName: "bookmarks.BookmarksService",
   methods: {
     /**
-     * returns all bookmarks of the current user. note that this does not include the actual bookmark data, use GetBookmark for that
+     * ListBookmarks returns all bookmarks of the current user. note that this does not include the actual bookmark data, use GetBookmark for that
      *
      * @generated from rpc bookmarks.BookmarksService.ListBookmarks
      */
@@ -24,6 +24,8 @@ export const BookmarksService = {
       kind: MethodKind.Unary,
     },
     /**
+     * CreateBookmark creates a new bookmark
+     *
      * @generated from rpc bookmarks.BookmarksService.CreateBookmark
      */
     createBookmark: {
@@ -33,6 +35,8 @@ export const BookmarksService = {
       kind: MethodKind.Unary,
     },
     /**
+     * GetBookmark returns the bookmark with the given UUID. This can also return snapshots as bookmarks and will strip the stored items from the response.
+     *
      * @generated from rpc bookmarks.BookmarksService.GetBookmark
      */
     getBookmark: {

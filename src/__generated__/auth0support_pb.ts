@@ -25,6 +25,11 @@ export class Auth0CreateUserRequest extends Message<Auth0CreateUserRequest> {
    */
   name = "";
 
+  /**
+   * @generated from field: bool email_verified = 4;
+   */
+  emailVerified = false;
+
   constructor(data?: PartialMessage<Auth0CreateUserRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -36,6 +41,7 @@ export class Auth0CreateUserRequest extends Message<Auth0CreateUserRequest> {
     { no: 1, name: "user_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "email", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "email_verified", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Auth0CreateUserRequest {
