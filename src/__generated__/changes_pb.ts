@@ -5,7 +5,7 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
-import { Edge, Health, Item, Reference } from "./items_pb.ts";
+import { Edge, Health, Item, Query, Reference } from "./items_pb.ts";
 
 /**
  * @generated from enum changes.ItemDiffStatus
@@ -569,6 +569,101 @@ export class UpdateChangingItemsRequest extends Message<UpdateChangingItemsReque
 
   static equals(a: UpdateChangingItemsRequest | PlainMessage<UpdateChangingItemsRequest> | undefined, b: UpdateChangingItemsRequest | PlainMessage<UpdateChangingItemsRequest> | undefined): boolean {
     return proto3.util.equals(UpdateChangingItemsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.MappedItemDiff
+ */
+export class MappedItemDiff extends Message<MappedItemDiff> {
+  /**
+   * The item that is changing and any know changes to it
+   *
+   * @generated from field: changes.ItemDiff item = 1;
+   */
+  item?: ItemDiff;
+
+  /**
+   * a mapping query that can be used to find the item. this can be empty if the
+   * submitter does not know how to map this item.
+   *
+   * @generated from field: optional Query mappingQuery = 2;
+   */
+  mappingQuery?: Query;
+
+  constructor(data?: PartialMessage<MappedItemDiff>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.MappedItemDiff";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "item", kind: "message", T: ItemDiff },
+    { no: 2, name: "mappingQuery", kind: "message", T: Query, opt: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MappedItemDiff {
+    return new MappedItemDiff().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MappedItemDiff {
+    return new MappedItemDiff().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MappedItemDiff {
+    return new MappedItemDiff().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: MappedItemDiff | PlainMessage<MappedItemDiff> | undefined, b: MappedItemDiff | PlainMessage<MappedItemDiff> | undefined): boolean {
+    return proto3.util.equals(MappedItemDiff, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.UpdatePlannedChangesRequest
+ */
+export class UpdatePlannedChangesRequest extends Message<UpdatePlannedChangesRequest> {
+  /**
+   * The change to update
+   *
+   * @generated from field: bytes changeUUID = 1;
+   */
+  changeUUID = new Uint8Array(0);
+
+  /**
+   * the changing items
+   *
+   * @generated from field: repeated changes.MappedItemDiff changingItems = 2;
+   */
+  changingItems: MappedItemDiff[] = [];
+
+  constructor(data?: PartialMessage<UpdatePlannedChangesRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.UpdatePlannedChangesRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changeUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "changingItems", kind: "message", T: MappedItemDiff, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdatePlannedChangesRequest {
+    return new UpdatePlannedChangesRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdatePlannedChangesRequest {
+    return new UpdatePlannedChangesRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdatePlannedChangesRequest {
+    return new UpdatePlannedChangesRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdatePlannedChangesRequest | PlainMessage<UpdatePlannedChangesRequest> | undefined, b: UpdatePlannedChangesRequest | PlainMessage<UpdatePlannedChangesRequest> | undefined): boolean {
+    return proto3.util.equals(UpdatePlannedChangesRequest, a, b);
   }
 }
 
@@ -2392,6 +2487,13 @@ export class ChangeProperties extends Message<ChangeProperties> {
    */
   affectedAppsUUID: Uint8Array[] = [];
 
+  /**
+   * a list of item diffs that were planned to be changed as part of this change. For all items that we could map, the ItemDiff.Reference will be set to the actual item found.
+   *
+   * @generated from field: repeated changes.ItemDiff plannedChanges = 12;
+   */
+  plannedChanges: ItemDiff[] = [];
+
   constructor(data?: PartialMessage<ChangeProperties>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2410,6 +2512,7 @@ export class ChangeProperties extends Message<ChangeProperties> {
     { no: 8, name: "systemBeforeSnapshotUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 9, name: "systemAfterSnapshotUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 10, name: "affectedAppsUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */, repeated: true },
+    { no: 12, name: "plannedChanges", kind: "message", T: ItemDiff, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeProperties {
