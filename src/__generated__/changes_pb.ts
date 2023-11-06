@@ -2295,6 +2295,16 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
    */
   PendingHealthChange?: ChangeMetadata_HealthChange;
 
+  /**
+   * @generated from field: changes.RiskCalculationStatus RiskCalculationStatus = 19;
+   */
+  RiskCalculationStatus?: RiskCalculationStatus;
+
+  /**
+   * @generated from field: repeated changes.Risk risks = 20;
+   */
+  risks: Risk[] = [];
+
   constructor(data?: PartialMessage<ChangeMetadata>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2321,6 +2331,8 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
     { no: 14, name: "WarningHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
     { no: 15, name: "ErrorHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
     { no: 16, name: "PendingHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
+    { no: 19, name: "RiskCalculationStatus", kind: "message", T: RiskCalculationStatus },
+    { no: 20, name: "risks", kind: "message", T: Risk, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeMetadata {
@@ -3839,4 +3851,177 @@ export class SimulateChangeResponse extends Message<SimulateChangeResponse> {
     return proto3.util.equals(SimulateChangeResponse, a, b);
   }
 }
+
+/**
+ * @generated from message changes.Risk
+ */
+export class Risk extends Message<Risk> {
+  /**
+   * @generated from field: string title = 1;
+   */
+  title = "";
+
+  /**
+   * @generated from field: changes.Risk.Severity severity = 2;
+   */
+  severity = Risk_Severity.UNSPECIFIED;
+
+  /**
+   * @generated from field: string description = 3;
+   */
+  description = "";
+
+  /**
+   * @generated from field: repeated Reference relatedItems = 4;
+   */
+  relatedItems: Reference[] = [];
+
+  constructor(data?: PartialMessage<Risk>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.Risk";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "title", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "severity", kind: "enum", T: proto3.getEnumType(Risk_Severity) },
+    { no: 3, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "relatedItems", kind: "message", T: Reference, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Risk {
+    return new Risk().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Risk {
+    return new Risk().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Risk {
+    return new Risk().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: Risk | PlainMessage<Risk> | undefined, b: Risk | PlainMessage<Risk> | undefined): boolean {
+    return proto3.util.equals(Risk, a, b);
+  }
+}
+
+/**
+ * @generated from enum changes.Risk.Severity
+ */
+export enum Risk_Severity {
+  /**
+   * @generated from enum value: SEVERITY_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: SEVERITY_LOW = 1;
+   */
+  LOW = 1,
+
+  /**
+   * @generated from enum value: SEVERITY_MEDIUM = 2;
+   */
+  MEDIUM = 2,
+
+  /**
+   * @generated from enum value: SEVERITY_HIGH = 3;
+   */
+  HIGH = 3,
+}
+// Retrieve enum metadata with: proto3.getEnumType(Risk_Severity)
+proto3.util.setEnumType(Risk_Severity, "changes.Risk.Severity", [
+  { no: 0, name: "SEVERITY_UNSPECIFIED" },
+  { no: 1, name: "SEVERITY_LOW" },
+  { no: 2, name: "SEVERITY_MEDIUM" },
+  { no: 3, name: "SEVERITY_HIGH" },
+]);
+
+/**
+ * @generated from message changes.RiskCalculationStatus
+ */
+export class RiskCalculationStatus extends Message<RiskCalculationStatus> {
+  /**
+   * @generated from field: changes.RiskCalculationStatus.Status status = 1;
+   */
+  status = RiskCalculationStatus_Status.UNSPECIFIED;
+
+  /**
+   * A message that should be rendered along with the status. This won't be
+   * shown when the status is `STATUS_DONE` since nothing went wrong. But other
+   * status could show this message e.g. if a calculation was skipped because
+   * the user opted out or didn't have enough credits
+   *
+   * @generated from field: string message = 2;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<RiskCalculationStatus>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.RiskCalculationStatus";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "status", kind: "enum", T: proto3.getEnumType(RiskCalculationStatus_Status) },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RiskCalculationStatus {
+    return new RiskCalculationStatus().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RiskCalculationStatus {
+    return new RiskCalculationStatus().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RiskCalculationStatus {
+    return new RiskCalculationStatus().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RiskCalculationStatus | PlainMessage<RiskCalculationStatus> | undefined, b: RiskCalculationStatus | PlainMessage<RiskCalculationStatus> | undefined): boolean {
+    return proto3.util.equals(RiskCalculationStatus, a, b);
+  }
+}
+
+/**
+ * @generated from enum changes.RiskCalculationStatus.Status
+ */
+export enum RiskCalculationStatus_Status {
+  /**
+   * @generated from enum value: STATUS_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: STATUS_INPROGRESS = 1;
+   */
+  INPROGRESS = 1,
+
+  /**
+   * @generated from enum value: STATUS_SKIPPED = 2;
+   */
+  SKIPPED = 2,
+
+  /**
+   * @generated from enum value: STATUS_DONE = 3;
+   */
+  DONE = 3,
+
+  /**
+   * @generated from enum value: STATUS_ERROR = 4;
+   */
+  ERROR = 4,
+}
+// Retrieve enum metadata with: proto3.getEnumType(RiskCalculationStatus_Status)
+proto3.util.setEnumType(RiskCalculationStatus_Status, "changes.RiskCalculationStatus.Status", [
+  { no: 0, name: "STATUS_UNSPECIFIED" },
+  { no: 1, name: "STATUS_INPROGRESS" },
+  { no: 2, name: "STATUS_SKIPPED" },
+  { no: 3, name: "STATUS_DONE" },
+  { no: 4, name: "STATUS_ERROR" },
+]);
 
