@@ -2086,6 +2086,27 @@ export class ChangeSummary extends Message<ChangeSummary> {
    */
   numAffectedEdges = 0;
 
+  /**
+   * The number of low risks in this change
+   *
+   * @generated from field: int32 numLowRisk = 11;
+   */
+  numLowRisk = 0;
+
+  /**
+   * The number of medium risks in this change
+   *
+   * @generated from field: int32 numMediumRisk = 12;
+   */
+  numMediumRisk = 0;
+
+  /**
+   * The number of high risks in this change
+   *
+   * @generated from field: int32 numHighRisk = 13;
+   */
+  numHighRisk = 0;
+
   constructor(data?: PartialMessage<ChangeSummary>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2103,6 +2124,9 @@ export class ChangeSummary extends Message<ChangeSummary> {
     { no: 8, name: "numAffectedApps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 9, name: "numAffectedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 10, name: "numAffectedEdges", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 11, name: "numLowRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 12, name: "numMediumRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 13, name: "numHighRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeSummary {
@@ -2296,14 +2320,35 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
   PendingHealthChange?: ChangeMetadata_HealthChange;
 
   /**
-   * @generated from field: changes.RiskCalculationStatus RiskCalculationStatus = 19;
+   * @generated from field: changes.RiskCalculationStatus riskCalculationStatus = 19;
    */
-  RiskCalculationStatus?: RiskCalculationStatus;
+  riskCalculationStatus?: RiskCalculationStatus;
 
   /**
    * @generated from field: repeated changes.Risk risks = 20;
    */
   risks: Risk[] = [];
+
+  /**
+   * The number of low risks in this change
+   *
+   * @generated from field: int32 numLowRisk = 21;
+   */
+  numLowRisk = 0;
+
+  /**
+   * The number of medium risks in this change
+   *
+   * @generated from field: int32 numMediumRisk = 22;
+   */
+  numMediumRisk = 0;
+
+  /**
+   * The number of high risks in this change
+   *
+   * @generated from field: int32 numHighRisk = 23;
+   */
+  numHighRisk = 0;
 
   constructor(data?: PartialMessage<ChangeMetadata>) {
     super();
@@ -2331,8 +2376,11 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
     { no: 14, name: "WarningHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
     { no: 15, name: "ErrorHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
     { no: 16, name: "PendingHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
-    { no: 19, name: "RiskCalculationStatus", kind: "message", T: RiskCalculationStatus },
+    { no: 19, name: "riskCalculationStatus", kind: "message", T: RiskCalculationStatus },
     { no: 20, name: "risks", kind: "message", T: Risk, repeated: true },
+    { no: 21, name: "numLowRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 22, name: "numMediumRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 23, name: "numHighRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeMetadata {
