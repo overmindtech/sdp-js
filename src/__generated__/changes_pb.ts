@@ -3905,6 +3905,11 @@ export class SimulateChangeResponse extends Message<SimulateChangeResponse> {
  */
 export class Risk extends Message<Risk> {
   /**
+   * @generated from field: bytes UUID = 5;
+   */
+  UUID = new Uint8Array(0);
+
+  /**
    * @generated from field: string title = 1;
    */
   title = "";
@@ -3932,6 +3937,7 @@ export class Risk extends Message<Risk> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "changes.Risk";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 5, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 1, name: "title", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "severity", kind: "enum", T: proto3.getEnumType(Risk_Severity) },
     { no: 3, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
