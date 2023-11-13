@@ -11,24 +11,47 @@ import { Message, proto3 } from "@bufbuild/protobuf";
  */
 export class Auth0CreateUserRequest extends Message<Auth0CreateUserRequest> {
   /**
+   * The Auth0 User ID
+   *
    * @generated from field: string user_id = 1;
    */
   userId = "";
 
   /**
+   * The user's email address
+   *
    * @generated from field: string email = 2;
    */
   email = "";
 
   /**
-   * @generated from field: string name = 3;
+   * The user's full name
+   *
+   * @generated from field: string name = 3 [deprecated = true];
+   * @deprecated
    */
   name = "";
 
   /**
+   * Whether the user's email address has been verified
+   *
    * @generated from field: bool email_verified = 4;
    */
   emailVerified = false;
+
+  /**
+   * The user's first name
+   *
+   * @generated from field: string first_name = 5;
+   */
+  firstName = "";
+
+  /**
+   * The user's last name
+   *
+   * @generated from field: string last_name = 6;
+   */
+  lastName = "";
 
   constructor(data?: PartialMessage<Auth0CreateUserRequest>) {
     super();
@@ -42,6 +65,8 @@ export class Auth0CreateUserRequest extends Message<Auth0CreateUserRequest> {
     { no: 2, name: "email", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "email_verified", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 5, name: "first_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "last_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Auth0CreateUserRequest {
