@@ -2554,6 +2554,20 @@ export class ChangeProperties extends Message<ChangeProperties> {
    */
   plannedChanges: ItemDiff[] = [];
 
+  /**
+   * The raw plan output for calculating the change's risks.
+   *
+   * @generated from field: string rawPlan = 13;
+   */
+  rawPlan = "";
+
+  /**
+   * The code changes of this change for calculating the change's risks.
+   *
+   * @generated from field: string codeChanges = 14;
+   */
+  codeChanges = "";
+
   constructor(data?: PartialMessage<ChangeProperties>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2573,6 +2587,8 @@ export class ChangeProperties extends Message<ChangeProperties> {
     { no: 9, name: "systemAfterSnapshotUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 10, name: "affectedAppsUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */, repeated: true },
     { no: 12, name: "plannedChanges", kind: "message", T: ItemDiff, repeated: true },
+    { no: 13, name: "rawPlan", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 14, name: "codeChanges", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeProperties {
