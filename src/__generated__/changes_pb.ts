@@ -6,6 +6,8 @@
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
 import { Edge, Health, Item, Query, Reference } from "./items_pb.ts";
+import { Bookmark } from "./bookmarks_pb.ts";
+import { Snapshot } from "./snapshots_pb.ts";
 
 /**
  * @generated from enum changes.ItemDiffStatus
@@ -4094,4 +4096,151 @@ proto3.util.setEnumType(RiskCalculationStatus_Status, "changes.RiskCalculationSt
   { no: 3, name: "STATUS_DONE" },
   { no: 4, name: "STATUS_ERROR" },
 ]);
+
+/**
+ * @generated from message changes.ChangeArchive
+ */
+export class ChangeArchive extends Message<ChangeArchive> {
+  /**
+   * @generated from field: changes.Change Change = 1;
+   */
+  Change?: Change;
+
+  /**
+   * @generated from field: optional bookmarks.Bookmark changingItemsBookmark = 2;
+   */
+  changingItemsBookmark?: Bookmark;
+
+  /**
+   * @generated from field: optional snapshots.Snapshot blastRadiusSnapshot = 3;
+   */
+  blastRadiusSnapshot?: Snapshot;
+
+  /**
+   * @generated from field: optional snapshots.Snapshot systemBeforeSnapshot = 4;
+   */
+  systemBeforeSnapshot?: Snapshot;
+
+  /**
+   * @generated from field: optional snapshots.Snapshot systemAfterSnapshot = 5;
+   */
+  systemAfterSnapshot?: Snapshot;
+
+  /**
+   * @generated from field: repeated changes.App affectedApps = 6;
+   */
+  affectedApps: App[] = [];
+
+  /**
+   * @generated from field: repeated changes.ChangeTimelineEntry timeline = 7;
+   */
+  timeline: ChangeTimelineEntry[] = [];
+
+  constructor(data?: PartialMessage<ChangeArchive>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ChangeArchive";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "Change", kind: "message", T: Change },
+    { no: 2, name: "changingItemsBookmark", kind: "message", T: Bookmark, opt: true },
+    { no: 3, name: "blastRadiusSnapshot", kind: "message", T: Snapshot, opt: true },
+    { no: 4, name: "systemBeforeSnapshot", kind: "message", T: Snapshot, opt: true },
+    { no: 5, name: "systemAfterSnapshot", kind: "message", T: Snapshot, opt: true },
+    { no: 6, name: "affectedApps", kind: "message", T: App, repeated: true },
+    { no: 7, name: "timeline", kind: "message", T: ChangeTimelineEntry, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeArchive {
+    return new ChangeArchive().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChangeArchive {
+    return new ChangeArchive().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChangeArchive {
+    return new ChangeArchive().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChangeArchive | PlainMessage<ChangeArchive> | undefined, b: ChangeArchive | PlainMessage<ChangeArchive> | undefined): boolean {
+    return proto3.util.equals(ChangeArchive, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetChangeArchiveRequest
+ */
+export class GetChangeArchiveRequest extends Message<GetChangeArchiveRequest> {
+  /**
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<GetChangeArchiveRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetChangeArchiveRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangeArchiveRequest {
+    return new GetChangeArchiveRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangeArchiveRequest {
+    return new GetChangeArchiveRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangeArchiveRequest {
+    return new GetChangeArchiveRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChangeArchiveRequest | PlainMessage<GetChangeArchiveRequest> | undefined, b: GetChangeArchiveRequest | PlainMessage<GetChangeArchiveRequest> | undefined): boolean {
+    return proto3.util.equals(GetChangeArchiveRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetChangeArchiveResponse
+ */
+export class GetChangeArchiveResponse extends Message<GetChangeArchiveResponse> {
+  /**
+   * @generated from field: changes.ChangeArchive changeArchive = 1;
+   */
+  changeArchive?: ChangeArchive;
+
+  constructor(data?: PartialMessage<GetChangeArchiveResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetChangeArchiveResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changeArchive", kind: "message", T: ChangeArchive },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangeArchiveResponse {
+    return new GetChangeArchiveResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangeArchiveResponse {
+    return new GetChangeArchiveResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangeArchiveResponse {
+    return new GetChangeArchiveResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChangeArchiveResponse | PlainMessage<GetChangeArchiveResponse> | undefined, b: GetChangeArchiveResponse | PlainMessage<GetChangeArchiveResponse> | undefined): boolean {
+    return proto3.util.equals(GetChangeArchiveResponse, a, b);
+  }
+}
 

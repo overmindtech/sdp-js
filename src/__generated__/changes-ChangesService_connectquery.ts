@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CalculateBlastRadiusRequest, CalculateBlastRadiusResponse, CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, CreateSimpleAppRequest, CreateSimpleAppResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, EndChangeRequest, EndChangeResponse, GetAffectedAppsRequest, GetAffectedAppsResponse, GetAppRequest, GetAppResponse, GetAppSummariesRequest, GetAppSummariesResponse, GetAppSummaryRequest, GetAppSummaryResponse, GetChangeRequest, GetChangeResponse, GetChangeTimelineRequest, GetChangeTimelineResponse, GetDiffRequest, GetDiffResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppChangesRequest, ListAppChangesResponse, ListAppChangesSummaryRequest, ListAppChangesSummaryResponse, ListAppsRequest, ListAppsResponse, ListChangesByStatusRequest, ListChangesByStatusResponse, ListChangesRequest, ListChangesResponse, ListChangingItemsSummaryRequest, ListChangingItemsSummaryResponse, ListHomeAppsRequest, ListHomeAppsResponse, ListHomeChangesRequest, ListHomeChangesResponse, RefreshStateRequest, RefreshStateResponse, SimulateChangeRequest, SimulateChangeResponse, StartChangeRequest, StartChangeResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateChangingItemsRequest, UpdateOnboardingRequest, UpdateOnboardingResponse, UpdatePlannedChangesRequest } from "./changes_pb.ts";
+import { CalculateBlastRadiusRequest, CalculateBlastRadiusResponse, CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, CreateSimpleAppRequest, CreateSimpleAppResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, EndChangeRequest, EndChangeResponse, GetAffectedAppsRequest, GetAffectedAppsResponse, GetAppRequest, GetAppResponse, GetAppSummariesRequest, GetAppSummariesResponse, GetAppSummaryRequest, GetAppSummaryResponse, GetChangeArchiveRequest, GetChangeArchiveResponse, GetChangeRequest, GetChangeResponse, GetChangeTimelineRequest, GetChangeTimelineResponse, GetDiffRequest, GetDiffResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppChangesRequest, ListAppChangesResponse, ListAppChangesSummaryRequest, ListAppChangesSummaryResponse, ListAppsRequest, ListAppsResponse, ListChangesByStatusRequest, ListChangesByStatusResponse, ListChangesRequest, ListChangesResponse, ListChangingItemsSummaryRequest, ListChangingItemsSummaryResponse, ListHomeAppsRequest, ListHomeAppsResponse, ListHomeChangesRequest, ListHomeChangesResponse, RefreshStateRequest, RefreshStateResponse, SimulateChangeRequest, SimulateChangeResponse, StartChangeRequest, StartChangeResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateChangingItemsRequest, UpdateOnboardingRequest, UpdateOnboardingResponse, UpdatePlannedChangesRequest } from "./changes_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 import { createQueryService, createUnaryHooks, UnaryFunctionsWithHooks } from "@connectrpc/connect-query";
 
@@ -126,6 +126,17 @@ export const ChangesService = {
       name: "GetChange",
       I: GetChangeRequest,
       O: GetChangeResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Gets the all data of an existing change for archival
+     *
+     * @generated from rpc changes.ChangesService.GetChangeArchive
+     */
+    getChangeArchive: {
+      name: "GetChangeArchive",
+      I: GetChangeArchiveRequest,
+      O: GetChangeArchiveResponse,
       kind: MethodKind.Unary,
     },
     /**
@@ -457,6 +468,13 @@ export const createChange: UnaryFunctionsWithHooks<CreateChangeRequest, CreateCh
  * @generated from rpc changes.ChangesService.GetChange
  */
 export const getChange: UnaryFunctionsWithHooks<GetChangeRequest, GetChangeResponse> = {   ...$queryService.getChange,  ...createUnaryHooks($queryService.getChange)};
+
+/**
+ * Gets the all data of an existing change for archival
+ *
+ * @generated from rpc changes.ChangesService.GetChangeArchive
+ */
+export const getChangeArchive: UnaryFunctionsWithHooks<GetChangeArchiveRequest, GetChangeArchiveResponse> = {   ...$queryService.getChangeArchive,  ...createUnaryHooks($queryService.getChangeArchive)};
 
 /**
  * Updates an existing change
