@@ -49,3 +49,4 @@ export {
   exchangeKeyForToken,
   updateAPIKey,
 } from './__generated__/apikey-ApiKeyService_connectquery'
+export * as ManagementService from './__generated__/account-ManagementService_connectquery'
