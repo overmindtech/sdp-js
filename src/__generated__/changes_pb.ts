@@ -2322,11 +2322,15 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
   PendingHealthChange?: ChangeMetadata_HealthChange;
 
   /**
+   * The status of the risk calculation
+   *
    * @generated from field: changes.RiskCalculationStatus riskCalculationStatus = 19;
    */
   riskCalculationStatus?: RiskCalculationStatus;
 
   /**
+   * The risks that are related to this change
+   *
    * @generated from field: repeated changes.Risk risks = 20;
    */
   risks: Risk[] = [];
@@ -2351,6 +2355,18 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
    * @generated from field: int32 numHighRisk = 23;
    */
   numHighRisk = 0;
+
+  /**
+   * A list of references to the items that taken into account when calculating
+   * risks. Due to inherent limitations in the way we calculate risks, for large
+   * changes we might need to consider only a subset of the blast radius. This
+   * means that risks might be missed if they relate to items that weren't
+   * considered. This list is used to show the user which items were considered,
+   * and which were not.
+   *
+   * @generated from field: repeated Reference sampledItemsForRiskCalculation = 24;
+   */
+  sampledItemsForRiskCalculation: Reference[] = [];
 
   constructor(data?: PartialMessage<ChangeMetadata>) {
     super();
@@ -2383,6 +2399,7 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
     { no: 21, name: "numLowRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 22, name: "numMediumRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 23, name: "numHighRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 24, name: "sampledItemsForRiskCalculation", kind: "message", T: Reference, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeMetadata {
