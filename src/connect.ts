@@ -49,4 +49,13 @@ export {
   exchangeKeyForToken,
   updateAPIKey,
 } from './__generated__/apikey-ApiKeyService_connectquery'
-export * as ManagementServiceRPC from './__generated__/account-ManagementService_connectquery'
+export {
+  getAccount,
+  listSources,
+  createSource,
+  getSource,
+  updateSource,
+  deleteSource,
+  keepaliveSources,
+  createToken,
+} from './__generated__/account-ManagementService_connectquery'
