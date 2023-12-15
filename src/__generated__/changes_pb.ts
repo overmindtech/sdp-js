@@ -2535,7 +2535,7 @@ export class ChangeProperties extends Message<ChangeProperties> {
 
   /**
    * UUID of a bookmark for the item queries of the items *directly* affected by
-   * this change. This might be parsed from a terraform plam, added from the API,
+   * this change. This might be parsed from a terraform plan, added from the API,
    * parsed from a freeform ticket description etc.
    *
    * @generated from field: bytes changingItemsBookmarkUUID = 7;
