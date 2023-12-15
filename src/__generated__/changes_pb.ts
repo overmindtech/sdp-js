@@ -350,9 +350,9 @@ export class GetDiffResponse extends Message<GetDiffResponse> {
   /**
    * Items that were planned to be changed, but were not changed
    *
-   * @generated from field: repeated changes.ItemDiff unexpectedUnchangedItems = 4;
+   * @generated from field: repeated changes.ItemDiff missingItems = 4;
    */
-  unexpectedUnchangedItems: ItemDiff[] = [];
+  missingItems: ItemDiff[] = [];
 
   constructor(data?: PartialMessage<GetDiffResponse>) {
     super();
@@ -365,7 +365,7 @@ export class GetDiffResponse extends Message<GetDiffResponse> {
     { no: 1, name: "expectedItems", kind: "message", T: ItemDiff, repeated: true },
     { no: 3, name: "unexpectedItems", kind: "message", T: ItemDiff, repeated: true },
     { no: 2, name: "edges", kind: "message", T: Edge, repeated: true },
-    { no: 4, name: "unexpectedUnchangedItems", kind: "message", T: ItemDiff, repeated: true },
+    { no: 4, name: "missingItems", kind: "message", T: ItemDiff, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetDiffResponse {
