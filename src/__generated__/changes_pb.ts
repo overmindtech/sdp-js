@@ -329,16 +329,14 @@ export class GetDiffRequest extends Message<GetDiffRequest> {
  */
 export class GetDiffResponse extends Message<GetDiffResponse> {
   /**
-   * Changes to items that were used to calculate the blast radius, i.e. items
-   * we expected to change
+   * Items that were planned to be changed, and were changed
    *
    * @generated from field: repeated changes.ItemDiff expectedItems = 1;
    */
   expectedItems: ItemDiff[] = [];
 
   /**
-   * Items that changed within the blast radius, but that weren't used to
-   * calculate it i.e. unexpected changes
+   * Items that were changed, but were not planned to be changed
    *
    * @generated from field: repeated changes.ItemDiff unexpectedItems = 3;
    */
@@ -348,6 +346,13 @@ export class GetDiffResponse extends Message<GetDiffResponse> {
    * @generated from field: repeated Edge edges = 2;
    */
   edges: Edge[] = [];
+
+  /**
+   * Items that were planned to be changed, but were not changed
+   *
+   * @generated from field: repeated changes.ItemDiff unexpectedUnchangedItems = 4;
+   */
+  unexpectedUnchangedItems: ItemDiff[] = [];
 
   constructor(data?: PartialMessage<GetDiffResponse>) {
     super();
@@ -360,6 +365,7 @@ export class GetDiffResponse extends Message<GetDiffResponse> {
     { no: 1, name: "expectedItems", kind: "message", T: ItemDiff, repeated: true },
     { no: 3, name: "unexpectedItems", kind: "message", T: ItemDiff, repeated: true },
     { no: 2, name: "edges", kind: "message", T: Edge, repeated: true },
+    { no: 4, name: "unexpectedUnchangedItems", kind: "message", T: ItemDiff, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetDiffResponse {
