@@ -697,15 +697,6 @@ export class StoreSnapshot extends Message<StoreSnapshot> {
    */
   msgID = new Uint8Array(0);
 
-  /**
-   * whether this snapshot should be stored as a system snapshot. System
-   * snapshots are hidden and can only be returned via the UUID, they don't
-   * show up in lists
-   *
-   * @generated from field: bool isSystem = 4;
-   */
-  isSystem = false;
-
   constructor(data?: PartialMessage<StoreSnapshot>) {
     super();
     proto3.util.initPartial(data, this);
@@ -717,7 +708,6 @@ export class StoreSnapshot extends Message<StoreSnapshot> {
     { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-    { no: 4, name: "isSystem", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StoreSnapshot {
@@ -767,14 +757,6 @@ export class SnapshotStoreResult extends Message<SnapshotStoreResult> {
    */
   snapshotID = new Uint8Array(0);
 
-  /**
-   * System snapshots are hidden and can only be returned via the UUID, they
-   * don't show up in lists
-   *
-   * @generated from field: bool isSystem = 6;
-   */
-  isSystem = false;
-
   constructor(data?: PartialMessage<SnapshotStoreResult>) {
     super();
     proto3.util.initPartial(data, this);
@@ -787,7 +769,6 @@ export class SnapshotStoreResult extends Message<SnapshotStoreResult> {
     { no: 2, name: "errorMessage", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "msgID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 5, name: "snapshotID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-    { no: 6, name: "isSystem", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SnapshotStoreResult {
