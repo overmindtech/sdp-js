@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@bufbuild/protobuf": "^1.2.1",
-    "@connectrpc/connect-query": "^0.6.0",
+    "@connectrpc/connect-query": "^1.0.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
