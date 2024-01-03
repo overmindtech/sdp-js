@@ -585,7 +585,7 @@ export class UpdateChangingItemsRequest extends Message<UpdateChangingItemsReque
  */
 export class MappedItemDiff extends Message<MappedItemDiff> {
   /**
-   * The item that is changing and any know changes to it
+   * The item that is changing and any known changes to it
    *
    * @generated from field: changes.ItemDiff item = 1;
    */
