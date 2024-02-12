@@ -2918,39 +2918,15 @@ export class GetChangeRisksRequest extends Message<GetChangeRisksRequest> {
 }
 
 /**
- * @generated from message changes.GetChangeRisksResponse
+ * @generated from message changes.ChangeRiskMetadata
  */
-export class GetChangeRisksResponse extends Message<GetChangeRisksResponse> {
+export class ChangeRiskMetadata extends Message<ChangeRiskMetadata> {
   /**
    * The status of the risk calculation
    *
    * @generated from field: changes.RiskCalculationStatus riskCalculationStatus = 1;
    */
   riskCalculationStatus?: RiskCalculationStatus;
-
-  /**
-   * The description of the current step within the STATUS_INPROGRESS status.
-   * This will only be populated when the status is STATUS_INPROGRESS
-   *
-   * @generated from field: string stepDescription = 2;
-   */
-  stepDescription = "";
-
-  /**
-   * The current step within the STATUS_INPROGRESS status. These give more
-   * granularity and should be shown to the user so they can see that the
-   * calculation is progressing
-   *
-   * @generated from field: int32 currentStep = 3;
-   */
-  currentStep = 0;
-
-  /**
-   * The total num,ber of steps within the STATUS_INPROGRESS status
-   *
-   * @generated from field: int32 totalSteps = 4;
-   */
-  totalSteps = 0;
 
   /**
    * The risks that are related to this change
@@ -2980,6 +2956,47 @@ export class GetChangeRisksResponse extends Message<GetChangeRisksResponse> {
    */
   numHighRisk = 0;
 
+  constructor(data?: PartialMessage<ChangeRiskMetadata>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ChangeRiskMetadata";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "riskCalculationStatus", kind: "message", T: RiskCalculationStatus },
+    { no: 5, name: "risks", kind: "message", T: Risk, repeated: true },
+    { no: 6, name: "numLowRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 7, name: "numMediumRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 8, name: "numHighRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeRiskMetadata {
+    return new ChangeRiskMetadata().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChangeRiskMetadata {
+    return new ChangeRiskMetadata().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChangeRiskMetadata {
+    return new ChangeRiskMetadata().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChangeRiskMetadata | PlainMessage<ChangeRiskMetadata> | undefined, b: ChangeRiskMetadata | PlainMessage<ChangeRiskMetadata> | undefined): boolean {
+    return proto3.util.equals(ChangeRiskMetadata, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetChangeRisksResponse
+ */
+export class GetChangeRisksResponse extends Message<GetChangeRisksResponse> {
+  /**
+   * @generated from field: changes.ChangeRiskMetadata changeRiskMetadata = 1;
+   */
+  changeRiskMetadata?: ChangeRiskMetadata;
+
   constructor(data?: PartialMessage<GetChangeRisksResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2988,14 +3005,7 @@ export class GetChangeRisksResponse extends Message<GetChangeRisksResponse> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "changes.GetChangeRisksResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "riskCalculationStatus", kind: "message", T: RiskCalculationStatus },
-    { no: 2, name: "stepDescription", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "currentStep", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 4, name: "totalSteps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 5, name: "risks", kind: "message", T: Risk, repeated: true },
-    { no: 6, name: "numLowRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 7, name: "numMediumRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 8, name: "numHighRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 1, name: "changeRiskMetadata", kind: "message", T: ChangeRiskMetadata },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangeRisksResponse {
@@ -4137,6 +4147,22 @@ export class RiskCalculationStatus extends Message<RiskCalculationStatus> {
    */
   message = "";
 
+  /**
+   * The total number of steps within the STATUS_INPROGRESS status
+   *
+   * @generated from field: int32 numSteps = 3;
+   */
+  numSteps = 0;
+
+  /**
+   * The current step within the STATUS_INPROGRESS status. These give more
+   * granularity and should be shown to the user so they can see that the
+   * calculation is progressing
+   *
+   * @generated from field: int32 currentStep = 4;
+   */
+  currentStep = 0;
+
   constructor(data?: PartialMessage<RiskCalculationStatus>) {
     super();
     proto3.util.initPartial(data, this);
@@ -4147,6 +4173,8 @@ export class RiskCalculationStatus extends Message<RiskCalculationStatus> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "status", kind: "enum", T: proto3.getEnumType(RiskCalculationStatus_Status) },
     { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "numSteps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "currentStep", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RiskCalculationStatus {
@@ -4243,6 +4271,11 @@ export class ChangeArchive extends Message<ChangeArchive> {
    */
   timeline: ChangeTimelineEntry[] = [];
 
+  /**
+   * @generated from field: changes.ChangeRiskMetadata changeRiskMetadata = 8;
+   */
+  changeRiskMetadata?: ChangeRiskMetadata;
+
   constructor(data?: PartialMessage<ChangeArchive>) {
     super();
     proto3.util.initPartial(data, this);
@@ -4258,6 +4291,7 @@ export class ChangeArchive extends Message<ChangeArchive> {
     { no: 5, name: "systemAfterSnapshot", kind: "message", T: Snapshot, opt: true },
     { no: 6, name: "affectedApps", kind: "message", T: App, repeated: true },
     { no: 7, name: "timeline", kind: "message", T: ChangeTimelineEntry, repeated: true },
+    { no: 8, name: "changeRiskMetadata", kind: "message", T: ChangeRiskMetadata },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeArchive {
