@@ -2327,53 +2327,6 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
    */
   PendingHealthChange?: ChangeMetadata_HealthChange;
 
-  /**
-   * The status of the risk calculation
-   *
-   * @generated from field: changes.RiskCalculationStatus riskCalculationStatus = 19;
-   */
-  riskCalculationStatus?: RiskCalculationStatus;
-
-  /**
-   * The risks that are related to this change
-   *
-   * @generated from field: repeated changes.Risk risks = 20;
-   */
-  risks: Risk[] = [];
-
-  /**
-   * The number of low risks in this change
-   *
-   * @generated from field: int32 numLowRisk = 21;
-   */
-  numLowRisk = 0;
-
-  /**
-   * The number of medium risks in this change
-   *
-   * @generated from field: int32 numMediumRisk = 22;
-   */
-  numMediumRisk = 0;
-
-  /**
-   * The number of high risks in this change
-   *
-   * @generated from field: int32 numHighRisk = 23;
-   */
-  numHighRisk = 0;
-
-  /**
-   * A list of references to the items that taken into account when calculating
-   * risks. Due to inherent limitations in the way we calculate risks, for large
-   * changes we might need to consider only a subset of the blast radius. This
-   * means that risks might be missed if they relate to items that weren't
-   * considered. This list is used to show the user which items were considered,
-   * and which were not.
-   *
-   * @generated from field: repeated Reference sampledItemsForRiskCalculation = 24;
-   */
-  sampledItemsForRiskCalculation: Reference[] = [];
-
   constructor(data?: PartialMessage<ChangeMetadata>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2400,12 +2353,6 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
     { no: 14, name: "WarningHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
     { no: 15, name: "ErrorHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
     { no: 16, name: "PendingHealthChange", kind: "message", T: ChangeMetadata_HealthChange },
-    { no: 19, name: "riskCalculationStatus", kind: "message", T: RiskCalculationStatus },
-    { no: 20, name: "risks", kind: "message", T: Risk, repeated: true },
-    { no: 21, name: "numLowRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 22, name: "numMediumRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 23, name: "numHighRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 24, name: "sampledItemsForRiskCalculation", kind: "message", T: Reference, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeMetadata {
@@ -2928,6 +2875,143 @@ export class GetChangeResponse extends Message<GetChangeResponse> {
 
   static equals(a: GetChangeResponse | PlainMessage<GetChangeResponse> | undefined, b: GetChangeResponse | PlainMessage<GetChangeResponse> | undefined): boolean {
     return proto3.util.equals(GetChangeResponse, a, b);
+  }
+}
+
+/**
+ * get the details of a specific change
+ *
+ * @generated from message changes.GetChangeRisksRequest
+ */
+export class GetChangeRisksRequest extends Message<GetChangeRisksRequest> {
+  /**
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<GetChangeRisksRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetChangeRisksRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangeRisksRequest {
+    return new GetChangeRisksRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangeRisksRequest {
+    return new GetChangeRisksRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangeRisksRequest {
+    return new GetChangeRisksRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChangeRisksRequest | PlainMessage<GetChangeRisksRequest> | undefined, b: GetChangeRisksRequest | PlainMessage<GetChangeRisksRequest> | undefined): boolean {
+    return proto3.util.equals(GetChangeRisksRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.GetChangeRisksResponse
+ */
+export class GetChangeRisksResponse extends Message<GetChangeRisksResponse> {
+  /**
+   * The status of the risk calculation
+   *
+   * @generated from field: changes.RiskCalculationStatus riskCalculationStatus = 1;
+   */
+  riskCalculationStatus?: RiskCalculationStatus;
+
+  /**
+   * The description of the current step within the STATUS_INPROGRESS status.
+   * This will only be populated when the status is STATUS_INPROGRESS
+   *
+   * @generated from field: string stepDescription = 2;
+   */
+  stepDescription = "";
+
+  /**
+   * The current step within the STATUS_INPROGRESS status. These give more
+   * granularity and should be shown to the user so they can see that the
+   * calculation is progressing
+   *
+   * @generated from field: int32 currentStep = 3;
+   */
+  currentStep = 0;
+
+  /**
+   * The total num,ber of steps within the STATUS_INPROGRESS status
+   *
+   * @generated from field: int32 totalSteps = 4;
+   */
+  totalSteps = 0;
+
+  /**
+   * The risks that are related to this change
+   *
+   * @generated from field: repeated changes.Risk risks = 5;
+   */
+  risks: Risk[] = [];
+
+  /**
+   * The number of low risks in this change
+   *
+   * @generated from field: int32 numLowRisk = 6;
+   */
+  numLowRisk = 0;
+
+  /**
+   * The number of medium risks in this change
+   *
+   * @generated from field: int32 numMediumRisk = 7;
+   */
+  numMediumRisk = 0;
+
+  /**
+   * The number of high risks in this change
+   *
+   * @generated from field: int32 numHighRisk = 8;
+   */
+  numHighRisk = 0;
+
+  constructor(data?: PartialMessage<GetChangeRisksResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.GetChangeRisksResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "riskCalculationStatus", kind: "message", T: RiskCalculationStatus },
+    { no: 2, name: "stepDescription", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "currentStep", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "totalSteps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 5, name: "risks", kind: "message", T: Risk, repeated: true },
+    { no: 6, name: "numLowRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 7, name: "numMediumRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 8, name: "numHighRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangeRisksResponse {
+    return new GetChangeRisksResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChangeRisksResponse {
+    return new GetChangeRisksResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChangeRisksResponse {
+    return new GetChangeRisksResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChangeRisksResponse | PlainMessage<GetChangeRisksResponse> | undefined, b: GetChangeRisksResponse | PlainMessage<GetChangeRisksResponse> | undefined): boolean {
+    return proto3.util.equals(GetChangeRisksResponse, a, b);
   }
 }
 
