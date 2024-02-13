@@ -59,3 +59,8 @@ export {
   keepaliveSources,
   createToken,
 } from './__generated__/account-ManagementService_connectquery'
+export {
+  listInvites,
+  createInvite,
+  revokeInvite,
+} from './__generated__/invites-InviteService_connectquery'
