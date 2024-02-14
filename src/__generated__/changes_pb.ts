@@ -4143,14 +4143,20 @@ export class RiskCalculationStatus extends Message<RiskCalculationStatus> {
    * status could show this message e.g. if a calculation was skipped because
    * the user opted out or didn't have enough credits
    *
-   * @generated from field: string message = 2;
+   * This is deprecated in favour of the `progressMilestones` field
+   *
+   * @generated from field: string message = 2 [deprecated = true];
+   * @deprecated
    */
   message = "";
 
   /**
    * The total number of steps within the STATUS_INPROGRESS status
    *
-   * @generated from field: int32 numSteps = 3;
+   * This is deprecated in favour of the `progressMilestones` field
+   *
+   * @generated from field: int32 numSteps = 3 [deprecated = true];
+   * @deprecated
    */
   numSteps = 0;
 
@@ -4159,9 +4165,21 @@ export class RiskCalculationStatus extends Message<RiskCalculationStatus> {
    * granularity and should be shown to the user so they can see that the
    * calculation is progressing
    *
-   * @generated from field: int32 currentStep = 4;
+   * This is deprecated in favour of the `progressMilestones` field
+   *
+   * @generated from field: int32 currentStep = 4 [deprecated = true];
+   * @deprecated
    */
   currentStep = 0;
+
+  /**
+   * Milestones within the risk calculation process. They will be populated when
+   * the status is `STATUS_INPROGRESS` and show a more detailed breakdown of the
+   * progress
+   *
+   * @generated from field: repeated changes.RiskCalculationStatus.ProgressMilestone progressMilestones = 5;
+   */
+  progressMilestones: RiskCalculationStatus_ProgressMilestone[] = [];
 
   constructor(data?: PartialMessage<RiskCalculationStatus>) {
     super();
@@ -4175,6 +4193,7 @@ export class RiskCalculationStatus extends Message<RiskCalculationStatus> {
     { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "numSteps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 4, name: "currentStep", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 5, name: "progressMilestones", kind: "message", T: RiskCalculationStatus_ProgressMilestone, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RiskCalculationStatus {
@@ -4230,6 +4249,103 @@ proto3.util.setEnumType(RiskCalculationStatus_Status, "changes.RiskCalculationSt
   { no: 2, name: "STATUS_SKIPPED" },
   { no: 3, name: "STATUS_DONE" },
   { no: 4, name: "STATUS_ERROR" },
+]);
+
+/**
+ * @generated from message changes.RiskCalculationStatus.ProgressMilestone
+ */
+export class RiskCalculationStatus_ProgressMilestone extends Message<RiskCalculationStatus_ProgressMilestone> {
+  /**
+   * The description of this milestone
+   *
+   * @generated from field: string description = 1;
+   */
+  description = "";
+
+  /**
+   * The status of this milestone
+   *
+   * @generated from field: changes.RiskCalculationStatus.ProgressMilestone.Status status = 2;
+   */
+  status = RiskCalculationStatus_ProgressMilestone_Status.PENDING;
+
+  constructor(data?: PartialMessage<RiskCalculationStatus_ProgressMilestone>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.RiskCalculationStatus.ProgressMilestone";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "status", kind: "enum", T: proto3.getEnumType(RiskCalculationStatus_ProgressMilestone_Status) },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RiskCalculationStatus_ProgressMilestone {
+    return new RiskCalculationStatus_ProgressMilestone().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RiskCalculationStatus_ProgressMilestone {
+    return new RiskCalculationStatus_ProgressMilestone().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RiskCalculationStatus_ProgressMilestone {
+    return new RiskCalculationStatus_ProgressMilestone().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RiskCalculationStatus_ProgressMilestone | PlainMessage<RiskCalculationStatus_ProgressMilestone> | undefined, b: RiskCalculationStatus_ProgressMilestone | PlainMessage<RiskCalculationStatus_ProgressMilestone> | undefined): boolean {
+    return proto3.util.equals(RiskCalculationStatus_ProgressMilestone, a, b);
+  }
+}
+
+/**
+ * @generated from enum changes.RiskCalculationStatus.ProgressMilestone.Status
+ */
+export enum RiskCalculationStatus_ProgressMilestone_Status {
+  /**
+   * The milestone hasn't been reached yet
+   *
+   * @generated from enum value: STATUS_PENDING = 0;
+   */
+  PENDING = 0,
+
+  /**
+   * The milestone is currently being worked on
+   *
+   * @generated from enum value: STATUS_INPROGRESS = 1;
+   */
+  INPROGRESS = 1,
+
+  /**
+   * The milestone has been completed
+   *
+   * @generated from enum value: STATUS_DONE = 2;
+   */
+  DONE = 2,
+
+  /**
+   * The milestone failed
+   *
+   * @generated from enum value: STATUS_ERROR = 3;
+   */
+  ERROR = 3,
+
+  /**
+   * The milestone was skipped. This will happen to future milestones if
+   * there is an error. For example an error at step 1 will mean the others
+   * were skipped
+   *
+   * @generated from enum value: STATUS_SKIPPED = 4;
+   */
+  SKIPPED = 4,
+}
+// Retrieve enum metadata with: proto3.getEnumType(RiskCalculationStatus_ProgressMilestone_Status)
+proto3.util.setEnumType(RiskCalculationStatus_ProgressMilestone_Status, "changes.RiskCalculationStatus.ProgressMilestone.Status", [
+  { no: 0, name: "STATUS_PENDING" },
+  { no: 1, name: "STATUS_INPROGRESS" },
+  { no: 2, name: "STATUS_DONE" },
+  { no: 3, name: "STATUS_ERROR" },
+  { no: 4, name: "STATUS_SKIPPED" },
 ]);
 
 /**
