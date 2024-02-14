@@ -51,12 +51,45 @@ export type State =
   | typeof WebSocket.CLOSING
   | typeof WebSocket.CLOSED
 
+type RecordedMessage = {
+  msg: Uint8Array
+  timestamp: Date
+}
+
+type RecordedMessageJSON = {
+  msg: string
+  timestamp: string
+}
+
+// Converts a Uint8Array to a Base64 string
+function uint8ArrayToBase64(buffer: Uint8Array): string {
+  return btoa(String.fromCharCode.apply(undefined, [...buffer]))
+}
+
+// Converts a Base64 string back to a Uint8Array
+function base64ToUint8Array(base64: string): Uint8Array {
+  const binaryString = atob(base64)
+  const len = binaryString.length
+  const bytes = new Uint8Array(len)
+  for (let i = 0; i < len; i++) {
+    const codePointAt = binaryString.codePointAt(i)
+    if (codePointAt) {
+      bytes[i] = codePointAt
+    }
+  }
+  return bytes
+}
+
 export class GatewaySession extends EventTarget {
   private socket: WebSocket
   ready: Promise<void>
   status?: GatewayRequestStatus
 
-  constructor(url: string) {
+  // Data that was recorded from this session. Will only be populated if `record`
+  // is set to true when creating the session
+  _recordedData: RecordedMessage[] = []
+
+  constructor(url: string, record = false) {
     super()
 
     this.socket = new WebSocket(url)
@@ -97,6 +130,66 @@ export class GatewaySession extends EventTarget {
     this.socket.addEventListener('message', (ev: MessageEvent<ArrayBuffer>) => {
       this._processMessage(ev.data)
     })
+
+    if (record) {
+      this.socket.addEventListener(
+        'message',
+        (ev: MessageEvent<ArrayBuffer>) => {
+          this._recordedData.push({
+            msg: new Uint8Array(ev.data),
+            timestamp: new Date(),
+          })
+        },
+      )
+    }
+  }
+
+  /**
+   * Exports the recorded data as a JSON string. This can be used to replay the
+   * data later if the `record` option was set to true when creating the session
+   */
+  exportRecordingJSON(): string {
+    const data: RecordedMessageJSON[] = this._recordedData.map((msg) => {
+      return {
+        msg: uint8ArrayToBase64(msg.msg),
+        timestamp: msg.timestamp.toISOString(),
+      }
+    })
+
+    return JSON.stringify(data)
+  }
+
+  /**
+   * Replays the recorded data
+   * @param data The recorded data to replay
+   */
+  async replayRecordingJSON(jsonString: string) {
+    const parsedData = JSON.parse(jsonString)
+    const data: RecordedMessage[] = parsedData.map(
+      (item: { msg: string; timestamp: string }): RecordedMessage => ({
+        msg: base64ToUint8Array(item.msg),
+        timestamp: new Date(item.timestamp),
+      }),
+    )
+
+    // Loop over the data using the index
+    for (let i = 0; i < data.length; i++) {
+      // Process the message
+      this._processMessage(data[i].msg)
+
+      // If we are not at the end of the array, calculate the time to wait
+      if (i < data.length - 1) {
+        const next = data[i + 1]
+        const current = data[i]
+
+        // Calculate the time to wait
+        const timeToWait =
+          next.timestamp.getTime() - current.timestamp.getTime()
+
+        // Wait for the timeToWait before going to the next message using await
+        await new Promise((resolve) => setTimeout(resolve, timeToWait))
+      }
+    }
   }
 
   /**
