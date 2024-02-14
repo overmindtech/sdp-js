@@ -32,6 +32,8 @@ export {
   getDiff,
   getChangeTimeline,
   getAppSummaries,
+  getChangeRisks,
+  getChangeArchive,
 } from './__generated__/changes-ChangesService_connectquery'
 export {
   listSnapshots,
