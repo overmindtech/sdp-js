@@ -3308,6 +3308,15 @@ export class CalculateBlastRadiusResponse extends Message<CalculateBlastRadiusRe
    */
   numEdges = 0;
 
+  /**
+   * A list of errors that were encountered as part of calculating the blast
+   * radius. These should only be populated if the state is `STATE_DONE` to
+   * avoid sending them repeatedly
+   *
+   * @generated from field: repeated string errors = 4;
+   */
+  errors: string[] = [];
+
   constructor(data?: PartialMessage<CalculateBlastRadiusResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -3319,6 +3328,7 @@ export class CalculateBlastRadiusResponse extends Message<CalculateBlastRadiusRe
     { no: 1, name: "state", kind: "enum", T: proto3.getEnumType(CalculateBlastRadiusResponse_State) },
     { no: 2, name: "numItems", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
     { no: 3, name: "numEdges", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+    { no: 4, name: "errors", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CalculateBlastRadiusResponse {
