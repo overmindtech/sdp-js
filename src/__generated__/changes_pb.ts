@@ -2115,6 +2115,14 @@ export class ChangeSummary extends Message<ChangeSummary> {
    */
   numHighRisk = 0;
 
+  /**
+   * Quick description of the change.
+   * Example: "upgrade of the database to get access to the new contoso management processor"
+   *
+   * @generated from field: string description = 14;
+   */
+  description = "";
+
   constructor(data?: PartialMessage<ChangeSummary>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2135,6 +2143,7 @@ export class ChangeSummary extends Message<ChangeSummary> {
     { no: 11, name: "numLowRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 12, name: "numMediumRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 13, name: "numHighRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 14, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeSummary {
