@@ -65,4 +65,5 @@ export {
   listInvites,
   createInvite,
   revokeInvite,
+  resendInvite,
 } from './__generated__/invites-InviteService_connectquery'
