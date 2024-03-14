@@ -283,3 +283,71 @@ export class RevokeInviteResponse extends Message<RevokeInviteResponse> {
   }
 }
 
+/**
+ * @generated from message invites.ResendInviteRequest
+ */
+export class ResendInviteRequest extends Message<ResendInviteRequest> {
+  /**
+   * @generated from field: string email = 1;
+   */
+  email = "";
+
+  constructor(data?: PartialMessage<ResendInviteRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "invites.ResendInviteRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "email", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ResendInviteRequest {
+    return new ResendInviteRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ResendInviteRequest {
+    return new ResendInviteRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ResendInviteRequest {
+    return new ResendInviteRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ResendInviteRequest | PlainMessage<ResendInviteRequest> | undefined, b: ResendInviteRequest | PlainMessage<ResendInviteRequest> | undefined): boolean {
+    return proto3.util.equals(ResendInviteRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message invites.ResendInviteResponse
+ */
+export class ResendInviteResponse extends Message<ResendInviteResponse> {
+  constructor(data?: PartialMessage<ResendInviteResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "invites.ResendInviteResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ResendInviteResponse {
+    return new ResendInviteResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ResendInviteResponse {
+    return new ResendInviteResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ResendInviteResponse {
+    return new ResendInviteResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ResendInviteResponse | PlainMessage<ResendInviteResponse> | undefined, b: ResendInviteResponse | PlainMessage<ResendInviteResponse> | undefined): boolean {
+    return proto3.util.equals(ResendInviteResponse, a, b);
+  }
+}
+

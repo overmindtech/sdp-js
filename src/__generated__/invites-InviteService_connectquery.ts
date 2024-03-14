@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateInviteRequest, CreateInviteResponse, ListInvitesRequest, ListInvitesResponse, RevokeInviteRequest, RevokeInviteResponse } from "./invites_pb.ts";
+import { CreateInviteRequest, CreateInviteResponse, ListInvitesRequest, ListInvitesResponse, ResendInviteRequest, ResendInviteResponse, RevokeInviteRequest, RevokeInviteResponse } from "./invites_pb.ts";
 
 /**
  * @generated from rpc invites.InviteService.CreateInvite
@@ -43,6 +43,20 @@ export const revokeInvite = {
   kind: MethodKind.Unary,
   I: RevokeInviteRequest,
   O: RevokeInviteResponse,
+  service: {
+    typeName: "invites.InviteService"
+  }
+} as const;
+
+/**
+ * @generated from rpc invites.InviteService.ResendInvite
+ */
+export const resendInvite = {
+  localName: "resendInvite",
+  name: "ResendInvite",
+  kind: MethodKind.Unary,
+  I: ResendInviteRequest,
+  O: ResendInviteResponse,
   service: {
     typeName: "invites.InviteService"
   }

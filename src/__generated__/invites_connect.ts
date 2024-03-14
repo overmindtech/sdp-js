@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateInviteRequest, CreateInviteResponse, ListInvitesRequest, ListInvitesResponse, RevokeInviteRequest, RevokeInviteResponse } from "./invites_pb.ts";
+import { CreateInviteRequest, CreateInviteResponse, ListInvitesRequest, ListInvitesResponse, ResendInviteRequest, ResendInviteResponse, RevokeInviteRequest, RevokeInviteResponse } from "./invites_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -39,6 +39,15 @@ export const InviteService = {
       name: "RevokeInvite",
       I: RevokeInviteRequest,
       O: RevokeInviteResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc invites.InviteService.ResendInvite
+     */
+    resendInvite: {
+      name: "ResendInvite",
+      I: ResendInviteRequest,
+      O: ResendInviteResponse,
       kind: MethodKind.Unary,
     },
   }
