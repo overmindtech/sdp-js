@@ -1,6 +1,6 @@
 {
   "name": "@overmindtech/sdp-js",
-  "version": "7.4.1",
+  "version": "7.4.2",
   "description": "Javascript and Typescript libraries for the State Description Protocol",
   "license": "MIT",
   "sideEffects": false,
