@@ -644,14 +644,14 @@ export class Source extends Message<Source> {
  */
 export class SourceMetadata extends Message<SourceMetadata> {
   /**
-   * TOOD: Chnage to ID along with everything else
+   * TOOD: Change to ID along with everything else
    *
    * @generated from field: bytes UUID = 1;
    */
   UUID = new Uint8Array(0);
 
   /**
-   * The name of the nats JWT that has been generated for this source
+   * The name of the NATS JWT that has been generated for this source
    *
    * @generated from field: string TokenName = 2;
    */

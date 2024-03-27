@@ -145,7 +145,7 @@ export const AdminService = {
 } as const;
 
 /**
- * RPCS to manage the user's account, sources etc. All requests to this API are
+ * RPCs to manage the user's account, sources etc. All requests to this API are
  * scoped to that user's account via the
  * `https://api.overmind.tech/account-name` claim in the suppplied token
  *
