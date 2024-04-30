@@ -55,7 +55,9 @@ export const getAccount = {
 } as const;
 
 /**
- * Deletes an account
+ * Completely deletes an account. This includes all of the data in that
+ * account, bookmarks, changes etc. It also deletes all users from Auth0
+ * that are associated with this account
  *
  * @generated from rpc account.AdminService.DeleteAccount
  */
@@ -71,7 +73,7 @@ export const deleteAccount = {
 } as const;
 
 /**
- * Lists all sources within the closen account
+ * Lists all sources within the chosen account
  *
  * @generated from rpc account.AdminService.ListSources
  */
@@ -87,7 +89,7 @@ export const listSources = {
 } as const;
 
 /**
- * Creates a new source within the closen account
+ * Creates a new source within the chosen account
  *
  * @generated from rpc account.AdminService.CreateSource
  */
@@ -103,7 +105,7 @@ export const createSource = {
 } as const;
 
 /**
- * Get the details of a source within the closen account
+ * Get the details of a source within the chosen account
  *
  * @generated from rpc account.AdminService.GetSource
  */
@@ -119,7 +121,7 @@ export const getSource = {
 } as const;
 
 /**
- * Update the details of a source within the closen account
+ * Update the details of a source within the chosen account
  *
  * @generated from rpc account.AdminService.UpdateSource
  */
@@ -135,7 +137,7 @@ export const updateSource = {
 } as const;
 
 /**
- * Deletes a source from a closen account
+ * Deletes a source from a chosen account
  *
  * @generated from rpc account.AdminService.DeleteSource
  */

@@ -51,7 +51,9 @@ export const AdminService = {
       kind: MethodKind.Unary,
     },
     /**
-     * Deletes an account
+     * Completely deletes an account. This includes all of the data in that
+     * account, bookmarks, changes etc. It also deletes all users from Auth0
+     * that are associated with this account
      *
      * @generated from rpc account.AdminService.DeleteAccount
      */
@@ -62,7 +64,7 @@ export const AdminService = {
       kind: MethodKind.Unary,
     },
     /**
-     * Lists all sources within the closen account
+     * Lists all sources within the chosen account
      *
      * @generated from rpc account.AdminService.ListSources
      */
@@ -73,7 +75,7 @@ export const AdminService = {
       kind: MethodKind.Unary,
     },
     /**
-     * Creates a new source within the closen account
+     * Creates a new source within the chosen account
      *
      * @generated from rpc account.AdminService.CreateSource
      */
@@ -84,7 +86,7 @@ export const AdminService = {
       kind: MethodKind.Unary,
     },
     /**
-     * Get the details of a source within the closen account
+     * Get the details of a source within the chosen account
      *
      * @generated from rpc account.AdminService.GetSource
      */
@@ -95,7 +97,7 @@ export const AdminService = {
       kind: MethodKind.Unary,
     },
     /**
-     * Update the details of a source within the closen account
+     * Update the details of a source within the chosen account
      *
      * @generated from rpc account.AdminService.UpdateSource
      */
@@ -106,7 +108,7 @@ export const AdminService = {
       kind: MethodKind.Unary,
     },
     /**
-     * Deletes a source from a closen account
+     * Deletes a source from a chosen account
      *
      * @generated from rpc account.AdminService.DeleteSource
      */
@@ -166,7 +168,9 @@ export const ManagementService = {
       kind: MethodKind.Unary,
     },
     /**
-     * Deletes the user's account
+     * Completely deletes the user's account. This includes all of the data in
+     * that account, bookmarks, changes etc. It also deletes the current user,
+     * and all other users in that account from Auth0
      *
      * @generated from rpc account.ManagementService.DeleteAccount
      */

@@ -23,7 +23,9 @@ export const getAccount = {
 } as const;
 
 /**
- * Deletes the user's account
+ * Completely deletes the user's account. This includes all of the data in
+ * that account, bookmarks, changes etc. It also deletes the current user,
+ * and all other users in that account from Auth0
  *
  * @generated from rpc account.ManagementService.DeleteAccount
  */
