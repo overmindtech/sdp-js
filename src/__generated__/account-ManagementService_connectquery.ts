@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListSourcesRequest, ListSourcesResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
+import { CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListSourcesRequest, ListSourcesResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
 
 /**
  * Get the details of the account that this user belongs to
@@ -17,6 +17,22 @@ export const getAccount = {
   kind: MethodKind.Unary,
   I: GetAccountRequest,
   O: GetAccountResponse,
+  service: {
+    typeName: "account.ManagementService"
+  }
+} as const;
+
+/**
+ * Deletes the user's account
+ *
+ * @generated from rpc account.ManagementService.DeleteAccount
+ */
+export const deleteAccount = {
+  localName: "deleteAccount",
+  name: "DeleteAccount",
+  kind: MethodKind.Unary,
+  I: DeleteAccountRequest,
+  O: DeleteAccountResponse,
   service: {
     typeName: "account.ManagementService"
   }

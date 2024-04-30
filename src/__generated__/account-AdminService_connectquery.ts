@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceResponse, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceResponse, GetAccountResponse, GetSourceResponse, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListSourcesResponse, UpdateSourceResponse } from "./account_pb.ts";
+import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteAccountRequest, AdminDeleteAccountResponse, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceResponse, CreateTokenResponse, DeleteSourceResponse, GetAccountResponse, GetSourceResponse, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListSourcesResponse, UpdateSourceResponse } from "./account_pb.ts";
 
 /**
  * Lists the details of all NATS Accounts
@@ -63,8 +63,8 @@ export const deleteAccount = {
   localName: "deleteAccount",
   name: "DeleteAccount",
   kind: MethodKind.Unary,
-  I: DeleteAccountRequest,
-  O: DeleteAccountResponse,
+  I: AdminDeleteAccountRequest,
+  O: AdminDeleteAccountResponse,
   service: {
     typeName: "account.AdminService"
   }

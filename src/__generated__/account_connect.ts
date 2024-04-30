@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListSourcesRequest, ListSourcesResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
+import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteAccountRequest, AdminDeleteAccountResponse, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListSourcesRequest, ListSourcesResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -57,8 +57,8 @@ export const AdminService = {
      */
     deleteAccount: {
       name: "DeleteAccount",
-      I: DeleteAccountRequest,
-      O: DeleteAccountResponse,
+      I: AdminDeleteAccountRequest,
+      O: AdminDeleteAccountResponse,
       kind: MethodKind.Unary,
     },
     /**
@@ -163,6 +163,17 @@ export const ManagementService = {
       name: "GetAccount",
       I: GetAccountRequest,
       O: GetAccountResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Deletes the user's account
+     *
+     * @generated from rpc account.ManagementService.DeleteAccount
+     */
+    deleteAccount: {
+      name: "DeleteAccount",
+      I: DeleteAccountRequest,
+      O: DeleteAccountResponse,
       kind: MethodKind.Unary,
     },
     /**

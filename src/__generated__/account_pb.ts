@@ -226,9 +226,9 @@ export class AdminGetAccountRequest extends Message<AdminGetAccountRequest> {
 }
 
 /**
- * @generated from message account.DeleteAccountRequest
+ * @generated from message account.AdminDeleteAccountRequest
  */
-export class DeleteAccountRequest extends Message<DeleteAccountRequest> {
+export class AdminDeleteAccountRequest extends Message<AdminDeleteAccountRequest> {
   /**
    * The name of the account to delete
    *
@@ -236,62 +236,62 @@ export class DeleteAccountRequest extends Message<DeleteAccountRequest> {
    */
   name = "";
 
-  constructor(data?: PartialMessage<DeleteAccountRequest>) {
+  constructor(data?: PartialMessage<AdminDeleteAccountRequest>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "account.DeleteAccountRequest";
+  static readonly typeName = "account.AdminDeleteAccountRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteAccountRequest {
-    return new DeleteAccountRequest().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AdminDeleteAccountRequest {
+    return new AdminDeleteAccountRequest().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteAccountRequest {
-    return new DeleteAccountRequest().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AdminDeleteAccountRequest {
+    return new AdminDeleteAccountRequest().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteAccountRequest {
-    return new DeleteAccountRequest().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AdminDeleteAccountRequest {
+    return new AdminDeleteAccountRequest().fromJsonString(jsonString, options);
   }
 
-  static equals(a: DeleteAccountRequest | PlainMessage<DeleteAccountRequest> | undefined, b: DeleteAccountRequest | PlainMessage<DeleteAccountRequest> | undefined): boolean {
-    return proto3.util.equals(DeleteAccountRequest, a, b);
+  static equals(a: AdminDeleteAccountRequest | PlainMessage<AdminDeleteAccountRequest> | undefined, b: AdminDeleteAccountRequest | PlainMessage<AdminDeleteAccountRequest> | undefined): boolean {
+    return proto3.util.equals(AdminDeleteAccountRequest, a, b);
   }
 }
 
 /**
- * @generated from message account.DeleteAccountResponse
+ * @generated from message account.AdminDeleteAccountResponse
  */
-export class DeleteAccountResponse extends Message<DeleteAccountResponse> {
-  constructor(data?: PartialMessage<DeleteAccountResponse>) {
+export class AdminDeleteAccountResponse extends Message<AdminDeleteAccountResponse> {
+  constructor(data?: PartialMessage<AdminDeleteAccountResponse>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "account.DeleteAccountResponse";
+  static readonly typeName = "account.AdminDeleteAccountResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteAccountResponse {
-    return new DeleteAccountResponse().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AdminDeleteAccountResponse {
+    return new AdminDeleteAccountResponse().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteAccountResponse {
-    return new DeleteAccountResponse().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AdminDeleteAccountResponse {
+    return new AdminDeleteAccountResponse().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteAccountResponse {
-    return new DeleteAccountResponse().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AdminDeleteAccountResponse {
+    return new AdminDeleteAccountResponse().fromJsonString(jsonString, options);
   }
 
-  static equals(a: DeleteAccountResponse | PlainMessage<DeleteAccountResponse> | undefined, b: DeleteAccountResponse | PlainMessage<DeleteAccountResponse> | undefined): boolean {
-    return proto3.util.equals(DeleteAccountResponse, a, b);
+  static equals(a: AdminDeleteAccountResponse | PlainMessage<AdminDeleteAccountResponse> | undefined, b: AdminDeleteAccountResponse | PlainMessage<AdminDeleteAccountResponse> | undefined): boolean {
+    return proto3.util.equals(AdminDeleteAccountResponse, a, b);
   }
 }
 
@@ -974,6 +974,77 @@ export class GetAccountResponse extends Message<GetAccountResponse> {
 
   static equals(a: GetAccountResponse | PlainMessage<GetAccountResponse> | undefined, b: GetAccountResponse | PlainMessage<GetAccountResponse> | undefined): boolean {
     return proto3.util.equals(GetAccountResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message account.DeleteAccountRequest
+ */
+export class DeleteAccountRequest extends Message<DeleteAccountRequest> {
+  /**
+   * Set to true to confirm that the user is sure they want to delete their
+   * account. This is to prevent accidental deletions
+   *
+   * @generated from field: bool iAmSure = 1;
+   */
+  iAmSure = false;
+
+  constructor(data?: PartialMessage<DeleteAccountRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.DeleteAccountRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "iAmSure", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteAccountRequest {
+    return new DeleteAccountRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteAccountRequest {
+    return new DeleteAccountRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteAccountRequest {
+    return new DeleteAccountRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteAccountRequest | PlainMessage<DeleteAccountRequest> | undefined, b: DeleteAccountRequest | PlainMessage<DeleteAccountRequest> | undefined): boolean {
+    return proto3.util.equals(DeleteAccountRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message account.DeleteAccountResponse
+ */
+export class DeleteAccountResponse extends Message<DeleteAccountResponse> {
+  constructor(data?: PartialMessage<DeleteAccountResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.DeleteAccountResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteAccountResponse {
+    return new DeleteAccountResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteAccountResponse {
+    return new DeleteAccountResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteAccountResponse {
+    return new DeleteAccountResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteAccountResponse | PlainMessage<DeleteAccountResponse> | undefined, b: DeleteAccountResponse | PlainMessage<DeleteAccountResponse> | undefined): boolean {
+    return proto3.util.equals(DeleteAccountResponse, a, b);
   }
 }
 
