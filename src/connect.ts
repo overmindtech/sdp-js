@@ -34,6 +34,7 @@ export {
   getAppSummaries,
   getChangeRisks,
   getChangeArchive,
+  listChangesByStatus,
 } from './__generated__/changes-ChangesService_connectquery'
 export {
   listSnapshots,
@@ -60,6 +61,7 @@ export {
   deleteSource,
   keepaliveSources,
   createToken,
+  deleteAccount,
 } from './__generated__/account-ManagementService_connectquery'
 export {
   listInvites,
