@@ -4157,41 +4157,6 @@ export class RiskCalculationStatus extends Message<RiskCalculationStatus> {
   status = RiskCalculationStatus_Status.UNSPECIFIED;
 
   /**
-   * A message that should be rendered along with the status. This won't be
-   * shown when the status is `STATUS_DONE` since nothing went wrong. But other
-   * status could show this message e.g. if a calculation was skipped because
-   * the user opted out or didn't have enough credits
-   *
-   * This is deprecated in favour of the `progressMilestones` field
-   *
-   * @generated from field: string message = 2 [deprecated = true];
-   * @deprecated
-   */
-  message = "";
-
-  /**
-   * The total number of steps within the STATUS_INPROGRESS status
-   *
-   * This is deprecated in favour of the `progressMilestones` field
-   *
-   * @generated from field: int32 numSteps = 3 [deprecated = true];
-   * @deprecated
-   */
-  numSteps = 0;
-
-  /**
-   * The current step within the STATUS_INPROGRESS status. These give more
-   * granularity and should be shown to the user so they can see that the
-   * calculation is progressing
-   *
-   * This is deprecated in favour of the `progressMilestones` field
-   *
-   * @generated from field: int32 currentStep = 4 [deprecated = true];
-   * @deprecated
-   */
-  currentStep = 0;
-
-  /**
    * Milestones within the risk calculation process. They will be populated when
    * the status is `STATUS_INPROGRESS` and show a more detailed breakdown of the
    * progress
@@ -4209,9 +4174,6 @@ export class RiskCalculationStatus extends Message<RiskCalculationStatus> {
   static readonly typeName = "changes.RiskCalculationStatus";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "status", kind: "enum", T: proto3.getEnumType(RiskCalculationStatus_Status) },
-    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "numSteps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 4, name: "currentStep", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 5, name: "progressMilestones", kind: "message", T: RiskCalculationStatus_ProgressMilestone, repeated: true },
   ]);
 
