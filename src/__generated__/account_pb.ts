@@ -1582,3 +1582,83 @@ export class CreateTokenResponse extends Message<CreateTokenResponse> {
   }
 }
 
+/**
+ * @generated from message account.RevlinkWarmupRequest
+ */
+export class RevlinkWarmupRequest extends Message<RevlinkWarmupRequest> {
+  constructor(data?: PartialMessage<RevlinkWarmupRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.RevlinkWarmupRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RevlinkWarmupRequest {
+    return new RevlinkWarmupRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RevlinkWarmupRequest {
+    return new RevlinkWarmupRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RevlinkWarmupRequest {
+    return new RevlinkWarmupRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RevlinkWarmupRequest | PlainMessage<RevlinkWarmupRequest> | undefined, b: RevlinkWarmupRequest | PlainMessage<RevlinkWarmupRequest> | undefined): boolean {
+    return proto3.util.equals(RevlinkWarmupRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message account.RevlinkWarmupResponse
+ */
+export class RevlinkWarmupResponse extends Message<RevlinkWarmupResponse> {
+  /**
+   * @generated from field: string status = 1;
+   */
+  status = "";
+
+  /**
+   * @generated from field: int32 items = 2;
+   */
+  items = 0;
+
+  /**
+   * @generated from field: int32 edges = 3;
+   */
+  edges = 0;
+
+  constructor(data?: PartialMessage<RevlinkWarmupResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.RevlinkWarmupResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "items", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "edges", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RevlinkWarmupResponse {
+    return new RevlinkWarmupResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RevlinkWarmupResponse {
+    return new RevlinkWarmupResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RevlinkWarmupResponse {
+    return new RevlinkWarmupResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RevlinkWarmupResponse | PlainMessage<RevlinkWarmupResponse> | undefined, b: RevlinkWarmupResponse | PlainMessage<RevlinkWarmupResponse> | undefined): boolean {
+    return proto3.util.equals(RevlinkWarmupResponse, a, b);
+  }
+}
+
