@@ -1,7 +1,0 @@
-{
-  "extends": ["eslint-config-unjs"],
-  "rules": {
-    // turning this off as lots of files are generated files
-    "camelcase": ["off", { "ignoreImports": true }]
-  }
-}
