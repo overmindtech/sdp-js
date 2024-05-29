@@ -96,6 +96,15 @@ export class Response extends Message<Response> {
    */
   UUID = new Uint8Array(0);
 
+  /**
+   * The ID of the responder that is working on a response. This is used for
+   * internal bookkeeping and should remain constant for the duration of a
+   * request, preferably over the lifetime of the source process.
+   *
+   * @generated from field: bytes responderUUID = 5;
+   */
+  responderUUID = new Uint8Array(0);
+
   constructor(data?: PartialMessage<Response>) {
     super();
     proto3.util.initPartial(data, this);
@@ -108,6 +117,7 @@ export class Response extends Message<Response> {
     { no: 2, name: "state", kind: "enum", T: proto3.getEnumType(ResponderState) },
     { no: 3, name: "nextUpdateIn", kind: "message", T: Duration },
     { no: 4, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 5, name: "responderUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Response {
