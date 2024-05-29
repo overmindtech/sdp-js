@@ -12,21 +12,21 @@ importers:
         specifier: ^1.9.0
         version: 1.9.0
       '@connectrpc/connect-query':
-        specifier: ^1.4.0
-        version: 1.4.0(@bufbuild/protobuf@1.9.0)(@connectrpc/connect@1.4.0(@bufbuild/protobuf@1.9.0))(@tanstack/react-query@5.28.14(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^1.4.1
+        version: 1.4.1(@bufbuild/protobuf@1.9.0)(@connectrpc/connect@1.4.0(@bufbuild/protobuf@1.9.0))(@tanstack/react-query@5.28.14(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
     devDependencies:
       '@types/node':
-        specifier: ^20.12.12
-        version: 20.12.12
+        specifier: ^20.12.13
+        version: 20.12.13
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
       '@vitest/coverage-v8':
         specifier: ^1.6.0
-        version: 1.6.0(vitest@1.6.0(@types/node@20.12.12)(@vitest/ui@1.6.0))
+        version: 1.6.0(vitest@1.6.0(@types/node@20.12.13)(@vitest/ui@1.6.0))
       '@vitest/ui':
         specifier: ^1.6.0
         version: 1.6.0(vitest@1.6.0)
@@ -55,11 +55,11 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(typescript@5.4.5)
       vite:
-        specifier: ^5.2.11
-        version: 5.2.11(@types/node@20.12.12)
+        specifier: ^5.2.12
+        version: 5.2.12(@types/node@20.12.13)
       vitest:
         specifier: ^1.6.0
-        version: 1.6.0(@types/node@20.12.12)(@vitest/ui@1.6.0)
+        version: 1.6.0(@types/node@20.12.13)(@vitest/ui@1.6.0)
 
 packages:
 
@@ -168,8 +168,8 @@ packages:
   '@bufbuild/protobuf@1.9.0':
     resolution: {integrity: sha512-W7gp8Q/v1NlCZLsv8pQ3Y0uCu/SHgXOVFK+eUluUKWXmsb6VHkpNx0apdOWWcDbB9sJoKeP8uPrjmehJz6xETQ==}
 
-  '@connectrpc/connect-query@1.4.0':
-    resolution: {integrity: sha512-ij3Iktvqz++FELpe2kDIVq1pTH5RpfvUALfoZh6u7TyqDXsz6j9ZiKgqHWZkdFo0cUaXMtMpCBLIGd/klCkx3Q==}
+  '@connectrpc/connect-query@1.4.1':
+    resolution: {integrity: sha512-kRv0ka+kSBpnG/56H/vLbQEHkcaFkVb2tZ4fo5m6V3AxKMFvrl35i2nO7+9cmPjhzzbTbE8W/zJqYZkO4YE+FA==}
     peerDependencies:
       '@bufbuild/protobuf': ^1.3.3
       '@connectrpc/connect': ^1.1.2
@@ -682,8 +682,8 @@ packages:
   '@types/mdast@3.0.15':
     resolution: {integrity: sha512-LnwD+mUEfxWMa1QpDraczIn6k0Ee3SMicuYSSzS6ZYl2gKS09EClnJYGd8Du6rfc5r/GZEk5o1mRb8TaTj03sQ==}
 
-  '@types/node@20.12.12':
-    resolution: {integrity: sha512-eWLDGF/FOSPtAvEqeRAQ4C8LSA7M1I7i0ky1I8U7kD1J5ITyW3AsRhQrKVoWf5pFKZ2kILsEGJhsI9r93PYnOw==}
+  '@types/node@20.12.13':
+    resolution: {integrity: sha512-gBGeanV41c1L171rR7wjbMiEpEI/l5XFQdLLfhr/REwpgDy/4U8y89+i8kRiLzDyZdOkXh+cRaTetUnCYutoXA==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -1322,10 +1322,12 @@ packages:
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   glob@8.1.0:
     resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
     engines: {node: '>=12'}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   globals@11.12.0:
     resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
@@ -1404,6 +1406,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -2119,6 +2122,7 @@ packages:
 
   rimraf@3.0.2:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
+    deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
   rollup-plugin-dts@6.1.0:
@@ -2403,8 +2407,8 @@ packages:
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
 
-  vite@5.2.11:
-    resolution: {integrity: sha512-HndV31LWW05i1BLPMUCE1B9E9GFbOu1MbenhS58FuK6owSO5qHm7GiCotrNY1YE5rMeQSFBGmT5ZaLEjFizgiQ==}
+  vite@5.2.12:
+    resolution: {integrity: sha512-/gC8GxzxMK5ntBwb48pR32GGhENnjtY30G4A0jemunsBkiEZFw60s8InGpN8gkhHEkjnRK1aSAxeQgwvFhUHAA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -2628,7 +2632,7 @@ snapshots:
 
   '@bufbuild/protobuf@1.9.0': {}
 
-  '@connectrpc/connect-query@1.4.0(@bufbuild/protobuf@1.9.0)(@connectrpc/connect@1.4.0(@bufbuild/protobuf@1.9.0))(@tanstack/react-query@5.28.14(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@connectrpc/connect-query@1.4.1(@bufbuild/protobuf@1.9.0)(@connectrpc/connect@1.4.0(@bufbuild/protobuf@1.9.0))(@tanstack/react-query@5.28.14(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@bufbuild/protobuf': 1.9.0
       '@connectrpc/connect': 1.4.0(@bufbuild/protobuf@1.9.0)
@@ -2964,7 +2968,7 @@ snapshots:
     dependencies:
       '@types/unist': 2.0.10
 
-  '@types/node@20.12.12':
+  '@types/node@20.12.13':
     dependencies:
       undici-types: 5.26.5
 
@@ -3059,7 +3063,7 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitest/coverage-v8@1.6.0(vitest@1.6.0(@types/node@20.12.12)(@vitest/ui@1.6.0))':
+  '@vitest/coverage-v8@1.6.0(vitest@1.6.0(@types/node@20.12.13)(@vitest/ui@1.6.0))':
     dependencies:
       '@ampproject/remapping': 2.2.1
       '@bcoe/v8-coverage': 0.2.3
@@ -3074,7 +3078,7 @@ snapshots:
       std-env: 3.7.0
       strip-literal: 2.0.0
       test-exclude: 6.0.0
-      vitest: 1.6.0(@types/node@20.12.12)(@vitest/ui@1.6.0)
+      vitest: 1.6.0(@types/node@20.12.13)(@vitest/ui@1.6.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -3109,7 +3113,7 @@ snapshots:
       pathe: 1.1.2
       picocolors: 1.0.0
       sirv: 2.0.4
-      vitest: 1.6.0(@types/node@20.12.12)(@vitest/ui@1.6.0)
+      vitest: 1.6.0(@types/node@20.12.13)(@vitest/ui@1.6.0)
 
   '@vitest/utils@1.6.0':
     dependencies:
@@ -4843,13 +4847,13 @@ snapshots:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
 
-  vite-node@1.6.0(@types/node@20.12.12):
+  vite-node@1.6.0(@types/node@20.12.13):
     dependencies:
       cac: 6.7.14
       debug: 4.3.4
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.2.11(@types/node@20.12.12)
+      vite: 5.2.12(@types/node@20.12.13)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -4860,16 +4864,16 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.2.11(@types/node@20.12.12):
+  vite@5.2.12(@types/node@20.12.13):
     dependencies:
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.14.0
     optionalDependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
       fsevents: 2.3.3
 
-  vitest@1.6.0(@types/node@20.12.12)(@vitest/ui@1.6.0):
+  vitest@1.6.0(@types/node@20.12.13)(@vitest/ui@1.6.0):
     dependencies:
       '@vitest/expect': 1.6.0
       '@vitest/runner': 1.6.0
@@ -4888,11 +4892,11 @@ snapshots:
       strip-literal: 2.0.0
       tinybench: 2.6.0
       tinypool: 0.8.3
-      vite: 5.2.11(@types/node@20.12.12)
-      vite-node: 1.6.0(@types/node@20.12.12)
+      vite: 5.2.12(@types/node@20.12.13)
+      vite-node: 1.6.0(@types/node@20.12.13)
       why-is-node-running: 2.2.2
     optionalDependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
       '@vitest/ui': 1.6.0(vitest@1.6.0)
     transitivePeerDependencies:
       - less
