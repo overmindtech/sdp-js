@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteAccountRequest, AdminDeleteAccountResponse, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListSourcesRequest, ListSourcesResponse, RevlinkWarmupRequest, RevlinkWarmupResponse, UpdateAccountRequest, UpdateAccountResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
+import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteAccountRequest, AdminDeleteAccountResponse, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateAccountRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListSourcesRequest, ListSourcesResponse, RevlinkWarmupRequest, RevlinkWarmupResponse, UpdateAccountResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -46,7 +46,7 @@ export const AdminService = {
      */
     updateAccount: {
       name: "UpdateAccount",
-      I: UpdateAccountRequest,
+      I: AdminUpdateAccountRequest,
       O: UpdateAccountResponse,
       kind: MethodKind.Unary,
     },
