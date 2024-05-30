@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteAccountRequest, AdminDeleteAccountResponse, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListSourcesRequest, ListSourcesResponse, RevlinkWarmupRequest, RevlinkWarmupResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
+import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteAccountRequest, AdminDeleteAccountResponse, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListSourcesRequest, ListSourcesResponse, RevlinkWarmupRequest, RevlinkWarmupResponse, UpdateAccountRequest, UpdateAccountResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -37,6 +37,17 @@ export const AdminService = {
       name: "CreateAccount",
       I: CreateAccountRequest,
       O: CreateAccountResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Updates account details, returns the account
+     *
+     * @generated from rpc account.AdminService.UpdateAccount
+     */
+    updateAccount: {
+      name: "UpdateAccount",
+      I: UpdateAccountRequest,
+      O: UpdateAccountResponse,
       kind: MethodKind.Unary,
     },
     /**

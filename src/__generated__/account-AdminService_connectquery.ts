@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteAccountRequest, AdminDeleteAccountResponse, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceResponse, CreateTokenResponse, DeleteSourceResponse, GetAccountResponse, GetSourceResponse, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListSourcesResponse, UpdateSourceResponse } from "./account_pb.ts";
+import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteAccountRequest, AdminDeleteAccountResponse, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceResponse, CreateTokenResponse, DeleteSourceResponse, GetAccountResponse, GetSourceResponse, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListSourcesResponse, UpdateAccountRequest, UpdateAccountResponse, UpdateSourceResponse } from "./account_pb.ts";
 
 /**
  * Lists the details of all NATS Accounts
@@ -33,6 +33,22 @@ export const createAccount = {
   kind: MethodKind.Unary,
   I: CreateAccountRequest,
   O: CreateAccountResponse,
+  service: {
+    typeName: "account.AdminService"
+  }
+} as const;
+
+/**
+ * Updates account details, returns the account
+ *
+ * @generated from rpc account.AdminService.UpdateAccount
+ */
+export const updateAccount = {
+  localName: "updateAccount",
+  name: "UpdateAccount",
+  kind: MethodKind.Unary,
+  I: UpdateAccountRequest,
+  O: UpdateAccountResponse,
   service: {
     typeName: "account.AdminService"
   }

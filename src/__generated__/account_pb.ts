@@ -187,6 +187,80 @@ export class CreateAccountResponse extends Message<CreateAccountResponse> {
 }
 
 /**
+ * @generated from message account.UpdateAccountRequest
+ */
+export class UpdateAccountRequest extends Message<UpdateAccountRequest> {
+  /**
+   * @generated from field: account.AccountProperties properties = 1;
+   */
+  properties?: AccountProperties;
+
+  constructor(data?: PartialMessage<UpdateAccountRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.UpdateAccountRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "properties", kind: "message", T: AccountProperties },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateAccountRequest {
+    return new UpdateAccountRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateAccountRequest {
+    return new UpdateAccountRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateAccountRequest {
+    return new UpdateAccountRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateAccountRequest | PlainMessage<UpdateAccountRequest> | undefined, b: UpdateAccountRequest | PlainMessage<UpdateAccountRequest> | undefined): boolean {
+    return proto3.util.equals(UpdateAccountRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message account.UpdateAccountResponse
+ */
+export class UpdateAccountResponse extends Message<UpdateAccountResponse> {
+  /**
+   * @generated from field: account.Account account = 1;
+   */
+  account?: Account;
+
+  constructor(data?: PartialMessage<UpdateAccountResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.UpdateAccountResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "account", kind: "message", T: Account },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateAccountResponse {
+    return new UpdateAccountResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateAccountResponse {
+    return new UpdateAccountResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateAccountResponse {
+    return new UpdateAccountResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateAccountResponse | PlainMessage<UpdateAccountResponse> | undefined, b: UpdateAccountResponse | PlainMessage<UpdateAccountResponse> | undefined): boolean {
+    return proto3.util.equals(UpdateAccountResponse, a, b);
+  }
+}
+
+/**
  * @generated from message account.AdminGetAccountRequest
  */
 export class AdminGetAccountRequest extends Message<AdminGetAccountRequest> {
