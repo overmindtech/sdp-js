@@ -261,6 +261,51 @@ export class UpdateAccountResponse extends Message<UpdateAccountResponse> {
 }
 
 /**
+ * @generated from message account.AdminUpdateAccountRequest
+ */
+export class AdminUpdateAccountRequest extends Message<AdminUpdateAccountRequest> {
+  /**
+   * The name of the account to update
+   *
+   * @generated from field: string name = 1;
+   */
+  name = "";
+
+  /**
+   * @generated from field: account.UpdateAccountRequest request = 2;
+   */
+  request?: UpdateAccountRequest;
+
+  constructor(data?: PartialMessage<AdminUpdateAccountRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.AdminUpdateAccountRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "request", kind: "message", T: UpdateAccountRequest },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AdminUpdateAccountRequest {
+    return new AdminUpdateAccountRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AdminUpdateAccountRequest {
+    return new AdminUpdateAccountRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AdminUpdateAccountRequest {
+    return new AdminUpdateAccountRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: AdminUpdateAccountRequest | PlainMessage<AdminUpdateAccountRequest> | undefined, b: AdminUpdateAccountRequest | PlainMessage<AdminUpdateAccountRequest> | undefined): boolean {
+    return proto3.util.equals(AdminUpdateAccountRequest, a, b);
+  }
+}
+
+/**
  * @generated from message account.AdminGetAccountRequest
  */
 export class AdminGetAccountRequest extends Message<AdminGetAccountRequest> {
