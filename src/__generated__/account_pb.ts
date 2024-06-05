@@ -1781,3 +1781,71 @@ export class RevlinkWarmupResponse extends Message<RevlinkWarmupResponse> {
   }
 }
 
+/**
+ * @generated from message account.GetTrialEndRequest
+ */
+export class GetTrialEndRequest extends Message<GetTrialEndRequest> {
+  constructor(data?: PartialMessage<GetTrialEndRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.GetTrialEndRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetTrialEndRequest {
+    return new GetTrialEndRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetTrialEndRequest {
+    return new GetTrialEndRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetTrialEndRequest {
+    return new GetTrialEndRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetTrialEndRequest | PlainMessage<GetTrialEndRequest> | undefined, b: GetTrialEndRequest | PlainMessage<GetTrialEndRequest> | undefined): boolean {
+    return proto3.util.equals(GetTrialEndRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message account.GetTrialEndResponse
+ */
+export class GetTrialEndResponse extends Message<GetTrialEndResponse> {
+  /**
+   * @generated from field: google.protobuf.Timestamp endsAt = 1;
+   */
+  endsAt?: Timestamp;
+
+  constructor(data?: PartialMessage<GetTrialEndResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.GetTrialEndResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "endsAt", kind: "message", T: Timestamp },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetTrialEndResponse {
+    return new GetTrialEndResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetTrialEndResponse {
+    return new GetTrialEndResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetTrialEndResponse {
+    return new GetTrialEndResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetTrialEndResponse | PlainMessage<GetTrialEndResponse> | undefined, b: GetTrialEndResponse | PlainMessage<GetTrialEndResponse> | undefined): boolean {
+    return proto3.util.equals(GetTrialEndResponse, a, b);
+  }
+}
+

@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListSourcesRequest, ListSourcesResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
+import { CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, GetTrialEndRequest, GetTrialEndResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListSourcesRequest, ListSourcesResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
 
 /**
  * Get the details of the account that this user belongs to
@@ -150,6 +150,20 @@ export const createToken = {
   kind: MethodKind.Unary,
   I: CreateTokenRequest,
   O: CreateTokenResponse,
+  service: {
+    typeName: "account.ManagementService"
+  }
+} as const;
+
+/**
+ * @generated from rpc account.ManagementService.GetTrialEnd
+ */
+export const getTrialEnd = {
+  localName: "getTrialEnd",
+  name: "GetTrialEnd",
+  kind: MethodKind.Unary,
+  I: GetTrialEndRequest,
+  O: GetTrialEndResponse,
   service: {
     typeName: "account.ManagementService"
   }
