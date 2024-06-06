@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateSnapshotRequest, CreateSnapshotResponse, DeleteSnapshotRequest, DeleteSnapshotResponse, GetInitialDataRequest, GetInitialDataResponse, GetSnapshotRequest, GetSnapshotResponse, ListSnapshotResponse, ListSnapshotsRequest, UpdateSnapshotRequest, UpdateSnapshotResponse } from "./snapshots_pb.ts";
+import { CreateSnapshotRequest, CreateSnapshotResponse, DeleteSnapshotRequest, DeleteSnapshotResponse, GetSnapshotRequest, GetSnapshotResponse, ListSnapshotResponse, ListSnapshotsRequest, UpdateSnapshotRequest, UpdateSnapshotResponse } from "./snapshots_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -55,17 +55,6 @@ export const SnapshotsService = {
       name: "DeleteSnapshot",
       I: DeleteSnapshotRequest,
       O: DeleteSnapshotResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * retrieve the initial data for the example change
-     *
-     * @generated from rpc snapshots.SnapshotsService.GetInitialData
-     */
-    getInitialData: {
-      name: "GetInitialData",
-      I: GetInitialDataRequest,
-      O: GetInitialDataResponse,
       kind: MethodKind.Unary,
     },
   }
