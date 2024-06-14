@@ -41,7 +41,7 @@
     "@vitest/coverage-v8": "^1.6.0",
     "@vitest/ui": "^1.6.0",
     "changelogen": "^0.5.5",
-    "eslint": "^8.57.0",
+    "eslint": "^9.5.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-unjs": "^0.3.1",
     "jest-websocket-mock": "^2.5.0",
