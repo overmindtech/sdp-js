@@ -62,6 +62,7 @@ export {
   keepaliveSources,
   createToken,
   deleteAccount,
+  getTrialEnd,
 } from './__generated__/account-ManagementService_connectquery'
 export {
   listInvites,
