@@ -40,7 +40,6 @@ export {
   listSnapshots,
   createSnapshot,
   getSnapshot,
-  getInitialData,
   updateSnapshot,
   deleteSnapshot,
 } from './__generated__/snapshots-SnapshotsService_connectquery'
