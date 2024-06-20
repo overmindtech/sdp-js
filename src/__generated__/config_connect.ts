@@ -9,15 +9,15 @@ import { MethodKind } from "@bufbuild/protobuf";
 /**
  * a simple key-value store to store configuration data for accounts and users (TODO)
  *
- * @generated from service config.ConfigService
+ * @generated from service config.ConfigurationService
  */
-export const ConfigService = {
-  typeName: "config.ConfigService",
+export const ConfigurationService = {
+  typeName: "config.ConfigurationService",
   methods: {
     /**
      * Get the account config for the user's account
      *
-     * @generated from rpc config.ConfigService.GetAccountConfig
+     * @generated from rpc config.ConfigurationService.GetAccountConfig
      */
     getAccountConfig: {
       name: "GetAccountConfig",
@@ -28,7 +28,7 @@ export const ConfigService = {
     /**
      * Update the account config for the user's account
      *
-     * @generated from rpc config.ConfigService.UpdateAccountConfig
+     * @generated from rpc config.ConfigurationService.UpdateAccountConfig
      */
     updateAccountConfig: {
       name: "UpdateAccountConfig",

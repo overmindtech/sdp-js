@@ -9,7 +9,7 @@ import { GetAccountConfigRequest, GetAccountConfigResponse, UpdateAccountConfigR
 /**
  * Get the account config for the user's account
  *
- * @generated from rpc config.ConfigService.GetAccountConfig
+ * @generated from rpc config.ConfigurationService.GetAccountConfig
  */
 export const getAccountConfig = {
   localName: "getAccountConfig",
@@ -18,14 +18,14 @@ export const getAccountConfig = {
   I: GetAccountConfigRequest,
   O: GetAccountConfigResponse,
   service: {
-    typeName: "config.ConfigService"
+    typeName: "config.ConfigurationService"
   }
 } as const;
 
 /**
  * Update the account config for the user's account
  *
- * @generated from rpc config.ConfigService.UpdateAccountConfig
+ * @generated from rpc config.ConfigurationService.UpdateAccountConfig
  */
 export const updateAccountConfig = {
   localName: "updateAccountConfig",
@@ -34,6 +34,6 @@ export const updateAccountConfig = {
   I: UpdateAccountConfigRequest,
   O: UpdateAccountConfigResponse,
   service: {
-    typeName: "config.ConfigService"
+    typeName: "config.ConfigurationService"
   }
 } as const;
