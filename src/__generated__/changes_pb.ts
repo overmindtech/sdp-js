@@ -6,6 +6,7 @@
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
 import { Edge, Health, Item, Query, Reference } from "./items_pb.ts";
+import { BlastRadiusConfig } from "./config_pb.ts";
 import { Bookmark } from "./bookmarks_pb.ts";
 import { Snapshot } from "./snapshots_pb.ts";
 
@@ -646,6 +647,13 @@ export class UpdatePlannedChangesRequest extends Message<UpdatePlannedChangesReq
    */
   changingItems: MappedItemDiff[] = [];
 
+  /**
+   * Overrides the stored blast radius config for this change
+   *
+   * @generated from field: optional config.BlastRadiusConfig blastRadiusConfigOverride = 3;
+   */
+  blastRadiusConfigOverride?: BlastRadiusConfig;
+
   constructor(data?: PartialMessage<UpdatePlannedChangesRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -656,6 +664,7 @@ export class UpdatePlannedChangesRequest extends Message<UpdatePlannedChangesReq
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "changeUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 2, name: "changingItems", kind: "message", T: MappedItemDiff, repeated: true },
+    { no: 3, name: "blastRadiusConfigOverride", kind: "message", T: BlastRadiusConfig, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdatePlannedChangesRequest {
