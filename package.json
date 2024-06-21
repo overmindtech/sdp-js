@@ -33,11 +33,11 @@
   "dependencies": {
     "@bufbuild/protobuf": "^1.10.0",
     "@connectrpc/connect-query": "^1.4.1",
-    "uuid": "^9.0.1"
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.14.7",
-    "@types/uuid": "^9.0.8",
+    "@types/uuid": "^10.0.0",
     "@vitest/coverage-v8": "^1.6.0",
     "@vitest/ui": "^1.6.0",
     "changelogen": "^0.5.5",
