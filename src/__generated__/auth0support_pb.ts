@@ -25,10 +25,12 @@ export class Auth0CreateUserRequest extends Message<Auth0CreateUserRequest> {
   email = "";
 
   /**
-   * The user's full name
+   * The user's full name. This will be split and stored as first_name and
+   * last_name internally. It is provided for convenience since some social
+   * providers do not provide first_name and last_name fields. If `first_name`
+   * and `last_name` are provided, this field will be ignored.
    *
-   * @generated from field: string name = 3 [deprecated = true];
-   * @deprecated
+   * @generated from field: string name = 3;
    */
   name = "";
 
