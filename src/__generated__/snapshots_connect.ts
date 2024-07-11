@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateSnapshotRequest, CreateSnapshotResponse, DeleteSnapshotRequest, DeleteSnapshotResponse, GetSnapshotRequest, GetSnapshotResponse, ListSnapshotResponse, ListSnapshotsRequest, UpdateSnapshotRequest, UpdateSnapshotResponse } from "./snapshots_pb.ts";
+import { CreateSnapshotRequest, CreateSnapshotResponse, DeleteSnapshotRequest, DeleteSnapshotResponse, GetSnapshotRequest, GetSnapshotResponse, ListSnapshotResponse, ListSnapshotsByGUNRequest, ListSnapshotsByGUNResponse, ListSnapshotsRequest, UpdateSnapshotRequest, UpdateSnapshotResponse } from "./snapshots_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -55,6 +55,15 @@ export const SnapshotsService = {
       name: "DeleteSnapshot",
       I: DeleteSnapshotRequest,
       O: DeleteSnapshotResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc snapshots.SnapshotsService.ListSnapshotByGUN
+     */
+    listSnapshotByGUN: {
+      name: "ListSnapshotByGUN",
+      I: ListSnapshotsByGUNRequest,
+      O: ListSnapshotsByGUNResponse,
       kind: MethodKind.Unary,
     },
   }

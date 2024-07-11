@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateSnapshotRequest, CreateSnapshotResponse, DeleteSnapshotRequest, DeleteSnapshotResponse, GetSnapshotRequest, GetSnapshotResponse, ListSnapshotResponse, ListSnapshotsRequest, UpdateSnapshotRequest, UpdateSnapshotResponse } from "./snapshots_pb.ts";
+import { CreateSnapshotRequest, CreateSnapshotResponse, DeleteSnapshotRequest, DeleteSnapshotResponse, GetSnapshotRequest, GetSnapshotResponse, ListSnapshotResponse, ListSnapshotsByGUNRequest, ListSnapshotsByGUNResponse, ListSnapshotsRequest, UpdateSnapshotRequest, UpdateSnapshotResponse } from "./snapshots_pb.ts";
 
 /**
  * @generated from rpc snapshots.SnapshotsService.ListSnapshots
@@ -71,6 +71,20 @@ export const deleteSnapshot = {
   kind: MethodKind.Unary,
   I: DeleteSnapshotRequest,
   O: DeleteSnapshotResponse,
+  service: {
+    typeName: "snapshots.SnapshotsService"
+  }
+} as const;
+
+/**
+ * @generated from rpc snapshots.SnapshotsService.ListSnapshotByGUN
+ */
+export const listSnapshotByGUN = {
+  localName: "listSnapshotByGUN",
+  name: "ListSnapshotByGUN",
+  kind: MethodKind.Unary,
+  I: ListSnapshotsByGUNRequest,
+  O: ListSnapshotsByGUNResponse,
   service: {
     typeName: "snapshots.SnapshotsService"
   }

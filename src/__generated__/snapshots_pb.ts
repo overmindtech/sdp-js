@@ -627,3 +627,77 @@ export class GetInitialDataResponse extends Message<GetInitialDataResponse> {
   }
 }
 
+/**
+ * @generated from message snapshots.ListSnapshotsByGUNRequest
+ */
+export class ListSnapshotsByGUNRequest extends Message<ListSnapshotsByGUNRequest> {
+  /**
+   * @generated from field: string globallyUniqueName = 1;
+   */
+  globallyUniqueName = "";
+
+  constructor(data?: PartialMessage<ListSnapshotsByGUNRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "snapshots.ListSnapshotsByGUNRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "globallyUniqueName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListSnapshotsByGUNRequest {
+    return new ListSnapshotsByGUNRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListSnapshotsByGUNRequest {
+    return new ListSnapshotsByGUNRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListSnapshotsByGUNRequest {
+    return new ListSnapshotsByGUNRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListSnapshotsByGUNRequest | PlainMessage<ListSnapshotsByGUNRequest> | undefined, b: ListSnapshotsByGUNRequest | PlainMessage<ListSnapshotsByGUNRequest> | undefined): boolean {
+    return proto3.util.equals(ListSnapshotsByGUNRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message snapshots.ListSnapshotsByGUNResponse
+ */
+export class ListSnapshotsByGUNResponse extends Message<ListSnapshotsByGUNResponse> {
+  /**
+   * @generated from field: repeated bytes UUIDs = 1;
+   */
+  UUIDs: Uint8Array[] = [];
+
+  constructor(data?: PartialMessage<ListSnapshotsByGUNResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "snapshots.ListSnapshotsByGUNResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUIDs", kind: "scalar", T: 12 /* ScalarType.BYTES */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListSnapshotsByGUNResponse {
+    return new ListSnapshotsByGUNResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListSnapshotsByGUNResponse {
+    return new ListSnapshotsByGUNResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListSnapshotsByGUNResponse {
+    return new ListSnapshotsByGUNResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListSnapshotsByGUNResponse | PlainMessage<ListSnapshotsByGUNResponse> | undefined, b: ListSnapshotsByGUNResponse | PlainMessage<ListSnapshotsByGUNResponse> | undefined): boolean {
+    return proto3.util.equals(ListSnapshotsByGUNResponse, a, b);
+  }
+}
+
