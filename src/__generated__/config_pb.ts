@@ -60,13 +60,29 @@ export class BlastRadiusConfig extends Message<BlastRadiusConfig> {
 }
 
 /**
+ * This account config is stored in the `kv.Store` protobuf key-value store in
+ * the api-server database. This means that as long as we don't have any
+ * *breaking* changes to the protobuf, we shouldn't need to do a migration. If
+ * however we do need to change this message in a breaking way, we will need to
+ * do some kind of a migration (depending on the change)
+ *
  * @generated from message config.AccountConfig
  */
 export class AccountConfig extends Message<AccountConfig> {
   /**
-   * The blast radius config for this account
+   * The preset that we should use when calculating the blast radius for a
+   * change. If this is set to "CUSTOM" then the `blastRadius` config should be
+   * set
    *
-   * @generated from field: config.BlastRadiusConfig blastRadius = 1;
+   * @generated from field: config.AccountConfig.BlastRadiusPreset blastRadiusPreset = 2;
+   */
+  blastRadiusPreset = AccountConfig_BlastRadiusPreset.CUSTOM;
+
+  /**
+   * The blast radius config for this account, this is only required if the
+   * preset is "CUSTOM"
+   *
+   * @generated from field: optional config.BlastRadiusConfig blastRadius = 1;
    */
   blastRadius?: BlastRadiusConfig;
 
@@ -78,7 +94,8 @@ export class AccountConfig extends Message<AccountConfig> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "config.AccountConfig";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "blastRadius", kind: "message", T: BlastRadiusConfig },
+    { no: 2, name: "blastRadiusPreset", kind: "enum", T: proto3.getEnumType(AccountConfig_BlastRadiusPreset) },
+    { no: 1, name: "blastRadius", kind: "message", T: BlastRadiusConfig, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AccountConfig {
@@ -97,6 +114,48 @@ export class AccountConfig extends Message<AccountConfig> {
     return proto3.util.equals(AccountConfig, a, b);
   }
 }
+
+/**
+ * @generated from enum config.AccountConfig.BlastRadiusPreset
+ */
+export enum AccountConfig_BlastRadiusPreset {
+  /**
+   * Customise advanced limits.
+   *
+   * @generated from enum value: CUSTOM = 0;
+   */
+  CUSTOM = 0,
+
+  /**
+   * Runs a shallow scan for dependencies. Reduces time takes to calculate
+   * blast radius, but might mean some dependencies are missed
+   *
+   * @generated from enum value: QUICK = 1;
+   */
+  QUICK = 1,
+
+  /**
+   * An optimised balance between time taken and discovery.
+   *
+   * @generated from enum value: DETAILED = 2;
+   */
+  DETAILED = 2,
+
+  /**
+   * Discovers all possible dependencies, might take a long time and
+   * discover items that are less likely to be relevant to a change.
+   *
+   * @generated from enum value: FULL = 3;
+   */
+  FULL = 3,
+}
+// Retrieve enum metadata with: proto3.getEnumType(AccountConfig_BlastRadiusPreset)
+proto3.util.setEnumType(AccountConfig_BlastRadiusPreset, "config.AccountConfig.BlastRadiusPreset", [
+  { no: 0, name: "CUSTOM" },
+  { no: 1, name: "QUICK" },
+  { no: 2, name: "DETAILED" },
+  { no: 3, name: "FULL" },
+]);
 
 /**
  * @generated from message config.GetAccountConfigRequest
