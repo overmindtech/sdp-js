@@ -7,6 +7,7 @@ import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialM
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
 import { Edge, Health, Item, Query, Reference } from "./items_pb.ts";
 import { BlastRadiusConfig } from "./config_pb.ts";
+import { PaginationRequest, PaginationResponse } from "./util_pb.ts";
 import { Bookmark } from "./bookmarks_pb.ts";
 import { Snapshot } from "./snapshots_pb.ts";
 
@@ -910,6 +911,11 @@ export class GetAppSummariesResponse extends Message<GetAppSummariesResponse> {
  * @generated from message changes.ListHomeChangesRequest
  */
 export class ListHomeChangesRequest extends Message<ListHomeChangesRequest> {
+  /**
+   * @generated from field: PaginationRequest pagination = 1;
+   */
+  pagination?: PaginationRequest;
+
   constructor(data?: PartialMessage<ListHomeChangesRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -918,6 +924,7 @@ export class ListHomeChangesRequest extends Message<ListHomeChangesRequest> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "changes.ListHomeChangesRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "pagination", kind: "message", T: PaginationRequest },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListHomeChangesRequest {
@@ -946,6 +953,11 @@ export class ListHomeChangesResponse extends Message<ListHomeChangesResponse> {
    */
   changes: ChangeSummary[] = [];
 
+  /**
+   * @generated from field: PaginationResponse pagination = 2;
+   */
+  pagination?: PaginationResponse;
+
   constructor(data?: PartialMessage<ListHomeChangesResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -955,6 +967,7 @@ export class ListHomeChangesResponse extends Message<ListHomeChangesResponse> {
   static readonly typeName = "changes.ListHomeChangesResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "changes", kind: "message", T: ChangeSummary, repeated: true },
+    { no: 2, name: "pagination", kind: "message", T: PaginationResponse },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListHomeChangesResponse {
