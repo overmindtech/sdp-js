@@ -69,3 +69,7 @@ export {
   revokeInvite,
   resendInvite,
 } from './__generated__/invites-InviteService_connectquery'
+export {
+  getAccountConfig,
+  updateAccountConfig,
+} from './__generated__/config-ConfigurationService_connectquery'
