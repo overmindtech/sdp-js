@@ -3194,6 +3194,82 @@ export class DeleteChangeRequest extends Message<DeleteChangeRequest> {
 }
 
 /**
+ * list changes for a snapshot UUID
+ *
+ * @generated from message changes.ListChangesBySnapshotUUIDRequest
+ */
+export class ListChangesBySnapshotUUIDRequest extends Message<ListChangesBySnapshotUUIDRequest> {
+  /**
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<ListChangesBySnapshotUUIDRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListChangesBySnapshotUUIDRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListChangesBySnapshotUUIDRequest {
+    return new ListChangesBySnapshotUUIDRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListChangesBySnapshotUUIDRequest {
+    return new ListChangesBySnapshotUUIDRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListChangesBySnapshotUUIDRequest {
+    return new ListChangesBySnapshotUUIDRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListChangesBySnapshotUUIDRequest | PlainMessage<ListChangesBySnapshotUUIDRequest> | undefined, b: ListChangesBySnapshotUUIDRequest | PlainMessage<ListChangesBySnapshotUUIDRequest> | undefined): boolean {
+    return proto3.util.equals(ListChangesBySnapshotUUIDRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ListChangesBySnapshotUUIDResponse
+ */
+export class ListChangesBySnapshotUUIDResponse extends Message<ListChangesBySnapshotUUIDResponse> {
+  /**
+   * @generated from field: repeated changes.Change changes = 1;
+   */
+  changes: Change[] = [];
+
+  constructor(data?: PartialMessage<ListChangesBySnapshotUUIDResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ListChangesBySnapshotUUIDResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changes", kind: "message", T: Change, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListChangesBySnapshotUUIDResponse {
+    return new ListChangesBySnapshotUUIDResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListChangesBySnapshotUUIDResponse {
+    return new ListChangesBySnapshotUUIDResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListChangesBySnapshotUUIDResponse {
+    return new ListChangesBySnapshotUUIDResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListChangesBySnapshotUUIDResponse | PlainMessage<ListChangesBySnapshotUUIDResponse> | undefined, b: ListChangesBySnapshotUUIDResponse | PlainMessage<ListChangesBySnapshotUUIDResponse> | undefined): boolean {
+    return proto3.util.equals(ListChangesBySnapshotUUIDResponse, a, b);
+  }
+}
+
+/**
  * @generated from message changes.DeleteChangeResponse
  */
 export class DeleteChangeResponse extends Message<DeleteChangeResponse> {

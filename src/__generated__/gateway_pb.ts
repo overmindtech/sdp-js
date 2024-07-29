@@ -97,6 +97,17 @@ export class GatewayRequest extends Message<GatewayRequest> {
      */
     value: LoadBookmark;
     case: "loadBookmark";
+  } | {
+    /**
+     * // cancel the loading of a Bookmark
+     * CancelLoadBookmark cancelLoadBookmark = ??;
+     * // undo the loading of a Bookmark
+     * UndoLoadBookmark undoLoadBookmark = ??;
+     *
+     * @generated from field: gateway.ChatMessage chatMessage = 16;
+     */
+    value: ChatMessage;
+    case: "chatMessage";
   } | { case: undefined; value?: undefined } = { case: undefined };
 
   /**
@@ -123,6 +134,7 @@ export class GatewayRequest extends Message<GatewayRequest> {
     { no: 11, name: "loadSnapshot", kind: "message", T: LoadSnapshot, oneof: "request_type" },
     { no: 14, name: "storeBookmark", kind: "message", T: StoreBookmark, oneof: "request_type" },
     { no: 15, name: "loadBookmark", kind: "message", T: LoadBookmark, oneof: "request_type" },
+    { no: 16, name: "chatMessage", kind: "message", T: ChatMessage, oneof: "request_type" },
     { no: 2, name: "minStatusInterval", kind: "message", T: Duration, opt: true },
   ]);
 
@@ -250,6 +262,12 @@ export class GatewayResponse extends Message<GatewayResponse> {
      */
     value: QueryStatus;
     case: "queryStatus";
+  } | {
+    /**
+     * @generated from field: gateway.ChatMessageResult chatMessageResult = 18;
+     */
+    value: ChatMessageResult;
+    case: "chatMessageResult";
   } | { case: undefined; value?: undefined } = { case: undefined };
 
   constructor(data?: PartialMessage<GatewayResponse>) {
@@ -273,6 +291,7 @@ export class GatewayResponse extends Message<GatewayResponse> {
     { no: 15, name: "bookmarkStoreResult", kind: "message", T: BookmarkStoreResult, oneof: "response_type" },
     { no: 16, name: "bookmarkLoadResult", kind: "message", T: BookmarkLoadResult, oneof: "response_type" },
     { no: 17, name: "queryStatus", kind: "message", T: QueryStatus, oneof: "response_type" },
+    { no: 18, name: "chatMessageResult", kind: "message", T: ChatMessageResult, oneof: "response_type" },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GatewayResponse {
@@ -886,6 +905,95 @@ export class SnapshotLoadResult extends Message<SnapshotLoadResult> {
 
   static equals(a: SnapshotLoadResult | PlainMessage<SnapshotLoadResult> | undefined, b: SnapshotLoadResult | PlainMessage<SnapshotLoadResult> | undefined): boolean {
     return proto3.util.equals(SnapshotLoadResult, a, b);
+  }
+}
+
+/**
+ * @generated from message gateway.ChatMessage
+ */
+export class ChatMessage extends Message<ChatMessage> {
+  /**
+   * The message to create
+   *
+   * @generated from field: string message = 1;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<ChatMessage>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.ChatMessage";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChatMessage {
+    return new ChatMessage().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChatMessage {
+    return new ChatMessage().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChatMessage {
+    return new ChatMessage().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChatMessage | PlainMessage<ChatMessage> | undefined, b: ChatMessage | PlainMessage<ChatMessage> | undefined): boolean {
+    return proto3.util.equals(ChatMessage, a, b);
+  }
+}
+
+/**
+ * @generated from message gateway.ChatMessageResult
+ */
+export class ChatMessageResult extends Message<ChatMessageResult> {
+  /**
+   * @generated from oneof gateway.ChatMessageResult.response_type
+   */
+  responseType: {
+    /**
+     * @generated from field: string error = 1;
+     */
+    value: string;
+    case: "error";
+  } | {
+    /**
+     * @generated from field: string message = 2;
+     */
+    value: string;
+    case: "message";
+  } | { case: undefined; value?: undefined } = { case: undefined };
+
+  constructor(data?: PartialMessage<ChatMessageResult>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.ChatMessageResult";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "error", kind: "scalar", T: 9 /* ScalarType.STRING */, oneof: "response_type" },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */, oneof: "response_type" },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChatMessageResult {
+    return new ChatMessageResult().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChatMessageResult {
+    return new ChatMessageResult().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChatMessageResult {
+    return new ChatMessageResult().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChatMessageResult | PlainMessage<ChatMessageResult> | undefined, b: ChatMessageResult | PlainMessage<ChatMessageResult> | undefined): boolean {
+    return proto3.util.equals(ChatMessageResult, a, b);
   }
 }
 

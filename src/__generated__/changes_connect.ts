@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CalculateBlastRadiusRequest, CalculateBlastRadiusResponse, CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, CreateSimpleAppRequest, CreateSimpleAppResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, EndChangeRequest, EndChangeResponse, GetAffectedAppsRequest, GetAffectedAppsResponse, GetAppRequest, GetAppResponse, GetAppSummariesRequest, GetAppSummariesResponse, GetAppSummaryRequest, GetAppSummaryResponse, GetChangeArchiveRequest, GetChangeArchiveResponse, GetChangeRequest, GetChangeResponse, GetChangeRisksRequest, GetChangeRisksResponse, GetChangeTimelineRequest, GetChangeTimelineResponse, GetDiffRequest, GetDiffResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppChangesRequest, ListAppChangesResponse, ListAppChangesSummaryRequest, ListAppChangesSummaryResponse, ListAppsRequest, ListAppsResponse, ListChangesByStatusRequest, ListChangesByStatusResponse, ListChangesRequest, ListChangesResponse, ListChangingItemsSummaryRequest, ListChangingItemsSummaryResponse, ListHomeAppsRequest, ListHomeAppsResponse, ListHomeChangesRequest, ListHomeChangesResponse, RefreshStateRequest, RefreshStateResponse, SimulateChangeRequest, SimulateChangeResponse, StartChangeRequest, StartChangeResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateChangingItemsRequest, UpdateOnboardingRequest, UpdateOnboardingResponse, UpdatePlannedChangesRequest } from "./changes_pb.ts";
+import { CalculateBlastRadiusRequest, CalculateBlastRadiusResponse, CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, CreateSimpleAppRequest, CreateSimpleAppResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, EndChangeRequest, EndChangeResponse, GetAffectedAppsRequest, GetAffectedAppsResponse, GetAppRequest, GetAppResponse, GetAppSummariesRequest, GetAppSummariesResponse, GetAppSummaryRequest, GetAppSummaryResponse, GetChangeArchiveRequest, GetChangeArchiveResponse, GetChangeRequest, GetChangeResponse, GetChangeRisksRequest, GetChangeRisksResponse, GetChangeTimelineRequest, GetChangeTimelineResponse, GetDiffRequest, GetDiffResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppChangesRequest, ListAppChangesResponse, ListAppChangesSummaryRequest, ListAppChangesSummaryResponse, ListAppsRequest, ListAppsResponse, ListChangesBySnapshotUUIDRequest, ListChangesBySnapshotUUIDResponse, ListChangesByStatusRequest, ListChangesByStatusResponse, ListChangesRequest, ListChangesResponse, ListChangingItemsSummaryRequest, ListChangingItemsSummaryResponse, ListHomeAppsRequest, ListHomeAppsResponse, ListHomeChangesRequest, ListHomeChangesResponse, RefreshStateRequest, RefreshStateResponse, SimulateChangeRequest, SimulateChangeResponse, StartChangeRequest, StartChangeResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateChangingItemsRequest, UpdateOnboardingRequest, UpdateOnboardingResponse, UpdatePlannedChangesRequest } from "./changes_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -167,6 +167,17 @@ export const ChangesService = {
       name: "DeleteChange",
       I: DeleteChangeRequest,
       O: DeleteChangeResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Lists all changes for a snapshot UUID
+     *
+     * @generated from rpc changes.ChangesService.ListChangesBySnapshotUUID
+     */
+    listChangesBySnapshotUUID: {
+      name: "ListChangesBySnapshotUUID",
+      I: ListChangesBySnapshotUUIDRequest,
+      O: ListChangesBySnapshotUUIDResponse,
       kind: MethodKind.Unary,
     },
     /**
