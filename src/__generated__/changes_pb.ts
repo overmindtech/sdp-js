@@ -2096,6 +2096,13 @@ export class ChangeSummary extends Message<ChangeSummary> {
   creatorName = "";
 
   /**
+   * The email of the user that created the change
+   *
+   * @generated from field: string creatorEmail = 15;
+   */
+  creatorEmail = "";
+
+  /**
    * The number of apps that will be affected by this change
    *
    * @generated from field: int32 numAffectedApps = 8;
@@ -2159,6 +2166,7 @@ export class ChangeSummary extends Message<ChangeSummary> {
     { no: 4, name: "ticketLink", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 5, name: "createdAt", kind: "message", T: Timestamp },
     { no: 6, name: "creatorName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 15, name: "creatorEmail", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 8, name: "numAffectedApps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 9, name: "numAffectedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 10, name: "numAffectedEdges", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
@@ -2277,6 +2285,13 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
   creatorName = "";
 
   /**
+   * The email of the user that created the change
+   *
+   * @generated from field: string creatorEmail = 19;
+   */
+  creatorEmail = "";
+
+  /**
    * The number of apps that will be affected by this change
    *
    * @generated from field: int32 numAffectedApps = 6;
@@ -2371,6 +2386,7 @@ export class ChangeMetadata extends Message<ChangeMetadata> {
     { no: 3, name: "updatedAt", kind: "message", T: Timestamp },
     { no: 4, name: "status", kind: "enum", T: proto3.getEnumType(ChangeStatus) },
     { no: 5, name: "creatorName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 19, name: "creatorEmail", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "numAffectedApps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 7, name: "numAffectedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 17, name: "numAffectedEdges", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
