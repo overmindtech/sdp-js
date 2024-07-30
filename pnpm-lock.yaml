@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@bufbuild/protobuf':
-        specifier: ^1.10.0
-        version: 1.10.0
+        specifier: ^2.0.0
+        version: 2.0.0
       '@connectrpc/connect-query':
         specifier: ^1.4.1
-        version: 1.4.1(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.4.0(@bufbuild/protobuf@1.10.0))(@tanstack/react-query@5.28.14(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 1.4.1(@bufbuild/protobuf@2.0.0)(@connectrpc/connect@1.4.0(@bufbuild/protobuf@2.0.0))(@tanstack/react-query@5.28.14(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
@@ -165,8 +165,8 @@ packages:
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  '@bufbuild/protobuf@1.10.0':
-    resolution: {integrity: sha512-QDdVFLoN93Zjg36NoQPZfsVH9tZew7wKDKyV5qRdj8ntT4wQCOradQjRaTdwMhWUYsgKsvCINKKm87FdEk96Ag==}
+  '@bufbuild/protobuf@2.0.0':
+    resolution: {integrity: sha512-sw2JhwJyvyL0zlhG61aDzOVryEfJg2PDZFSV7i7IdC7nAE41WuXCru3QWLGiP87At0BMzKOoKO/FqEGoKygGZQ==}
 
   '@connectrpc/connect-query@1.4.1':
     resolution: {integrity: sha512-kRv0ka+kSBpnG/56H/vLbQEHkcaFkVb2tZ4fo5m6V3AxKMFvrl35i2nO7+9cmPjhzzbTbE8W/zJqYZkO4YE+FA==}
@@ -2696,20 +2696,20 @@ snapshots:
 
   '@bcoe/v8-coverage@0.2.3': {}
 
-  '@bufbuild/protobuf@1.10.0': {}
+  '@bufbuild/protobuf@2.0.0': {}
 
-  '@connectrpc/connect-query@1.4.1(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.4.0(@bufbuild/protobuf@1.10.0))(@tanstack/react-query@5.28.14(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@connectrpc/connect-query@1.4.1(@bufbuild/protobuf@2.0.0)(@connectrpc/connect@1.4.0(@bufbuild/protobuf@2.0.0))(@tanstack/react-query@5.28.14(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@bufbuild/protobuf': 1.10.0
-      '@connectrpc/connect': 1.4.0(@bufbuild/protobuf@1.10.0)
+      '@bufbuild/protobuf': 2.0.0
+      '@connectrpc/connect': 1.4.0(@bufbuild/protobuf@2.0.0)
       '@tanstack/react-query': 5.28.14(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       stable-hash: 0.0.4
 
-  '@connectrpc/connect@1.4.0(@bufbuild/protobuf@1.10.0)':
+  '@connectrpc/connect@1.4.0(@bufbuild/protobuf@2.0.0)':
     dependencies:
-      '@bufbuild/protobuf': 1.10.0
+      '@bufbuild/protobuf': 2.0.0
 
   '@esbuild/aix-ppc64@0.19.12':
     optional: true
