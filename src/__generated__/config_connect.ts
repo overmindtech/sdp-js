@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { GetAccountConfigRequest, GetAccountConfigResponse, UpdateAccountConfigRequest, UpdateAccountConfigResponse } from "./config_pb.ts";
+import { CreateHcpConfigRequest, CreateHcpConfigResponse, DeleteHcpConfigRequest, DeleteHcpConfigResponse, GetAccountConfigRequest, GetAccountConfigResponse, GetHcpConfigRequest, GetHcpConfigResponse, UpdateAccountConfigRequest, UpdateAccountConfigResponse } from "./config_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -34,6 +34,41 @@ export const ConfigurationService = {
       name: "UpdateAccountConfig",
       I: UpdateAccountConfigRequest,
       O: UpdateAccountConfigResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Create a new HCP Terraform config for the user's account. This follows
+     * the same flow as CreateAPIKey, to create a new API key that is then used
+     * for the HCP Terraform endpoint URL.
+     *
+     * @generated from rpc config.ConfigurationService.CreateHcpConfig
+     */
+    createHcpConfig: {
+      name: "CreateHcpConfig",
+      I: CreateHcpConfigRequest,
+      O: CreateHcpConfigResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Get the existing HCP Terraform config for the user's account.
+     *
+     * @generated from rpc config.ConfigurationService.GetHcpConfig
+     */
+    getHcpConfig: {
+      name: "GetHcpConfig",
+      I: GetHcpConfigRequest,
+      O: GetHcpConfigResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Remove the existing HCP Terraform config from the user's account.
+     *
+     * @generated from rpc config.ConfigurationService.DeleteHcpConfig
+     */
+    deleteHcpConfig: {
+      name: "DeleteHcpConfig",
+      I: DeleteHcpConfigRequest,
+      O: DeleteHcpConfigResponse,
       kind: MethodKind.Unary,
     },
   }

@@ -5,6 +5,7 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3 } from "@bufbuild/protobuf";
+import { CreateAPIKeyResponse } from "./apikeys_pb.ts";
 
 /**
  * The config that is used when calculating the blast radius for a change, this
@@ -298,6 +299,267 @@ export class UpdateAccountConfigResponse extends Message<UpdateAccountConfigResp
 
   static equals(a: UpdateAccountConfigResponse | PlainMessage<UpdateAccountConfigResponse> | undefined, b: UpdateAccountConfigResponse | PlainMessage<UpdateAccountConfigResponse> | undefined): boolean {
     return proto3.util.equals(UpdateAccountConfigResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message config.CreateHcpConfigRequest
+ */
+export class CreateHcpConfigRequest extends Message<CreateHcpConfigRequest> {
+  /**
+   * The URL that the user should be redirected to after the whole process is
+   * over. This should be a page in the frontend, probably the HCP Terraform
+   * Integration page.
+   *
+   * @generated from field: string finalFrontendRedirect = 1;
+   */
+  finalFrontendRedirect = "";
+
+  constructor(data?: PartialMessage<CreateHcpConfigRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "config.CreateHcpConfigRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "finalFrontendRedirect", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateHcpConfigRequest {
+    return new CreateHcpConfigRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateHcpConfigRequest {
+    return new CreateHcpConfigRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateHcpConfigRequest {
+    return new CreateHcpConfigRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateHcpConfigRequest | PlainMessage<CreateHcpConfigRequest> | undefined, b: CreateHcpConfigRequest | PlainMessage<CreateHcpConfigRequest> | undefined): boolean {
+    return proto3.util.equals(CreateHcpConfigRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message config.CreateHcpConfigResponse
+ */
+export class CreateHcpConfigResponse extends Message<CreateHcpConfigResponse> {
+  /**
+   * @generated from field: config.HcpConfig config = 1;
+   */
+  config?: HcpConfig;
+
+  /**
+   * @generated from field: apikeys.CreateAPIKeyResponse apiKey = 2;
+   */
+  apiKey?: CreateAPIKeyResponse;
+
+  constructor(data?: PartialMessage<CreateHcpConfigResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "config.CreateHcpConfigResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "config", kind: "message", T: HcpConfig },
+    { no: 2, name: "apiKey", kind: "message", T: CreateAPIKeyResponse },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateHcpConfigResponse {
+    return new CreateHcpConfigResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateHcpConfigResponse {
+    return new CreateHcpConfigResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateHcpConfigResponse {
+    return new CreateHcpConfigResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateHcpConfigResponse | PlainMessage<CreateHcpConfigResponse> | undefined, b: CreateHcpConfigResponse | PlainMessage<CreateHcpConfigResponse> | undefined): boolean {
+    return proto3.util.equals(CreateHcpConfigResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message config.HcpConfig
+ */
+export class HcpConfig extends Message<HcpConfig> {
+  /**
+   * the Endpoint URL for the HCP Run Task configuration
+   *
+   * @generated from field: string endpoint = 1;
+   */
+  endpoint = "";
+
+  /**
+   * the HMAC secret for the HCP Run Task configuration
+   *
+   * @generated from field: string secret = 2;
+   */
+  secret = "";
+
+  constructor(data?: PartialMessage<HcpConfig>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "config.HcpConfig";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "endpoint", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "secret", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): HcpConfig {
+    return new HcpConfig().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): HcpConfig {
+    return new HcpConfig().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): HcpConfig {
+    return new HcpConfig().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: HcpConfig | PlainMessage<HcpConfig> | undefined, b: HcpConfig | PlainMessage<HcpConfig> | undefined): boolean {
+    return proto3.util.equals(HcpConfig, a, b);
+  }
+}
+
+/**
+ * @generated from message config.GetHcpConfigRequest
+ */
+export class GetHcpConfigRequest extends Message<GetHcpConfigRequest> {
+  constructor(data?: PartialMessage<GetHcpConfigRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "config.GetHcpConfigRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetHcpConfigRequest {
+    return new GetHcpConfigRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetHcpConfigRequest {
+    return new GetHcpConfigRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetHcpConfigRequest {
+    return new GetHcpConfigRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetHcpConfigRequest | PlainMessage<GetHcpConfigRequest> | undefined, b: GetHcpConfigRequest | PlainMessage<GetHcpConfigRequest> | undefined): boolean {
+    return proto3.util.equals(GetHcpConfigRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message config.GetHcpConfigResponse
+ */
+export class GetHcpConfigResponse extends Message<GetHcpConfigResponse> {
+  /**
+   * @generated from field: config.HcpConfig config = 1;
+   */
+  config?: HcpConfig;
+
+  constructor(data?: PartialMessage<GetHcpConfigResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "config.GetHcpConfigResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "config", kind: "message", T: HcpConfig },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetHcpConfigResponse {
+    return new GetHcpConfigResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetHcpConfigResponse {
+    return new GetHcpConfigResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetHcpConfigResponse {
+    return new GetHcpConfigResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetHcpConfigResponse | PlainMessage<GetHcpConfigResponse> | undefined, b: GetHcpConfigResponse | PlainMessage<GetHcpConfigResponse> | undefined): boolean {
+    return proto3.util.equals(GetHcpConfigResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message config.DeleteHcpConfigRequest
+ */
+export class DeleteHcpConfigRequest extends Message<DeleteHcpConfigRequest> {
+  constructor(data?: PartialMessage<DeleteHcpConfigRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "config.DeleteHcpConfigRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteHcpConfigRequest {
+    return new DeleteHcpConfigRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteHcpConfigRequest {
+    return new DeleteHcpConfigRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteHcpConfigRequest {
+    return new DeleteHcpConfigRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteHcpConfigRequest | PlainMessage<DeleteHcpConfigRequest> | undefined, b: DeleteHcpConfigRequest | PlainMessage<DeleteHcpConfigRequest> | undefined): boolean {
+    return proto3.util.equals(DeleteHcpConfigRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message config.DeleteHcpConfigResponse
+ */
+export class DeleteHcpConfigResponse extends Message<DeleteHcpConfigResponse> {
+  constructor(data?: PartialMessage<DeleteHcpConfigResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "config.DeleteHcpConfigResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteHcpConfigResponse {
+    return new DeleteHcpConfigResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteHcpConfigResponse {
+    return new DeleteHcpConfigResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteHcpConfigResponse {
+    return new DeleteHcpConfigResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteHcpConfigResponse | PlainMessage<DeleteHcpConfigResponse> | undefined, b: DeleteHcpConfigResponse | PlainMessage<DeleteHcpConfigResponse> | undefined): boolean {
+    return proto3.util.equals(DeleteHcpConfigResponse, a, b);
   }
 }
 
