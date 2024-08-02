@@ -1,6 +1,6 @@
 // Protobuf
 export * from './__generated__/account_pb'
-export * from './__generated__/apikey_pb'
+export * from './__generated__/apikeys_pb'
 export * from './__generated__/auth0support_pb'
 export * from './__generated__/bookmarks_pb'
 export * from './__generated__/changes_pb'

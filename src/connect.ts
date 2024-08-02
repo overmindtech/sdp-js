@@ -50,7 +50,7 @@ export {
   getAPIKey,
   exchangeKeyForToken,
   updateAPIKey,
-} from './__generated__/apikey-ApiKeyService_connectquery'
+} from './__generated__/apikeys-ApiKeyService_connectquery'
 export {
   getAccount,
   listSources,
