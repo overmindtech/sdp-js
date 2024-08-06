@@ -72,4 +72,7 @@ export {
 export {
   getAccountConfig,
   updateAccountConfig,
+  createHcpConfig,
+  getHcpConfig,
+  deleteHcpConfig,
 } from './__generated__/config-ConfigurationService_connectquery'
