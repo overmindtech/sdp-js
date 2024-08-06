@@ -18,9 +18,9 @@ export class PaginationRequest extends Message<PaginationRequest> {
   pageSize = 0;
 
   /**
-   * The page number to return. the first page is 0. 
+   * The page number to return. the first page is 1.
    * if the page number is larger than the total number of pages, the last page is returned.
-   * if the page number is negative, the first page 0 is returned.
+   * if the page number is negative, the first page 1 is returned.
    *
    * @generated from field: int32 page = 2;
    */
@@ -75,7 +75,7 @@ export class PaginationResponse extends Message<PaginationResponse> {
   totalItems = 0;
 
   /**
-   * The current page number
+   * The current page number, NB if the user provided a negative page number, this will be 1, if the user provided a page number larger than the total number of pages, this will be the last page.
    *
    * @generated from field: int32 page = 3;
    */
