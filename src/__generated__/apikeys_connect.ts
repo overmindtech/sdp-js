@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateAPIKeyRequest, CreateAPIKeyResponse, DeleteAPIKeyRequest, DeleteAPIKeyResponse, ExchangeKeyForTokenRequest, ExchangeKeyForTokenResponse, GetAPIKeyRequest, GetAPIKeyResponse, ListAPIKeysRequest, ListAPIKeysResponse, UpdateAPIKeyRequest, UpdateAPIKeyResponse } from "./apikeys_pb.ts";
+import { CreateAPIKeyRequest, CreateAPIKeyResponse, DeleteAPIKeyRequest, DeleteAPIKeyResponse, ExchangeKeyForTokenRequest, ExchangeKeyForTokenResponse, GetAPIKeyRequest, GetAPIKeyResponse, ListAPIKeysRequest, ListAPIKeysResponse, RefreshAPIKeyRequest, RefreshAPIKeyResponse, UpdateAPIKeyRequest, UpdateAPIKeyResponse } from "./apikeys_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -31,6 +31,19 @@ export const ApiKeyService = {
       name: "CreateAPIKey",
       I: CreateAPIKeyRequest,
       O: CreateAPIKeyResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Refreshes an API key, returning a new one with the same metadata and
+     * properties. The response will be the same as CreateAPIKey, and requires
+     * the same redirect handling to authenticate the new key.
+     *
+     * @generated from rpc apikeys.ApiKeyService.RefreshAPIKey
+     */
+    refreshAPIKey: {
+      name: "RefreshAPIKey",
+      I: RefreshAPIKeyRequest,
+      O: RefreshAPIKeyResponse,
       kind: MethodKind.Unary,
     },
     /**

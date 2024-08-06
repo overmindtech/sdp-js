@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateAPIKeyRequest, CreateAPIKeyResponse, DeleteAPIKeyRequest, DeleteAPIKeyResponse, ExchangeKeyForTokenRequest, ExchangeKeyForTokenResponse, GetAPIKeyRequest, GetAPIKeyResponse, ListAPIKeysRequest, ListAPIKeysResponse, UpdateAPIKeyRequest, UpdateAPIKeyResponse } from "./apikeys_pb.ts";
+import { CreateAPIKeyRequest, CreateAPIKeyResponse, DeleteAPIKeyRequest, DeleteAPIKeyResponse, ExchangeKeyForTokenRequest, ExchangeKeyForTokenResponse, GetAPIKeyRequest, GetAPIKeyResponse, ListAPIKeysRequest, ListAPIKeysResponse, RefreshAPIKeyRequest, RefreshAPIKeyResponse, UpdateAPIKeyRequest, UpdateAPIKeyResponse } from "./apikeys_pb.ts";
 
 /**
  * Creates an API key, pending access token generation from Auth0. The key
@@ -19,6 +19,24 @@ export const createAPIKey = {
   kind: MethodKind.Unary,
   I: CreateAPIKeyRequest,
   O: CreateAPIKeyResponse,
+  service: {
+    typeName: "apikeys.ApiKeyService"
+  }
+} as const;
+
+/**
+ * Refreshes an API key, returning a new one with the same metadata and
+ * properties. The response will be the same as CreateAPIKey, and requires
+ * the same redirect handling to authenticate the new key.
+ *
+ * @generated from rpc apikeys.ApiKeyService.RefreshAPIKey
+ */
+export const refreshAPIKey = {
+  localName: "refreshAPIKey",
+  name: "RefreshAPIKey",
+  kind: MethodKind.Unary,
+  I: RefreshAPIKeyRequest,
+  O: RefreshAPIKeyResponse,
   service: {
     typeName: "apikeys.ApiKeyService"
   }
