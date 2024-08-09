@@ -62,6 +62,11 @@ export const SnapshotLoadResultEvent = 'snapshot-load-result'
 export const QueryStatusEvent = 'query-status'
 
 /**
+ * This event informs the client of chat message response
+ */
+export const ChatMessageResultEvent = 'chat-message-result'
+
+/**
  * This event means that an error was encountered by one of the responders
  * when responding to the request. This could indicate a failure, or might
  * be expected. It s up to the user to determine how these errors should be

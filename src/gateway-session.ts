@@ -15,6 +15,7 @@ import {
   BookmarkStoreResultEvent,
   SnapshotLoadResultEvent,
   SnapshotStoreResultEvent,
+  ChatMessageResultEvent,
 } from './events'
 import {
   Edge,
@@ -33,6 +34,7 @@ import {
   SnapshotLoadResult,
   StoreBookmark,
   StoreSnapshot,
+  ChatMessageResult,
 } from './protobuf'
 
 export interface CustomEventListener<T> {
@@ -309,6 +311,14 @@ export class GatewaySession extends EventTarget {
         )
         break
       }
+      case 'chatMessageResult': {
+        this.dispatchEvent(
+          new CustomEvent<ChatMessageResult>(ChatMessageResultEvent, {
+            detail: response.responseType.value,
+          }),
+        )
+        break
+      }
       default: {
         break
       }
@@ -372,6 +382,12 @@ export class GatewaySession extends EventTarget {
   addEventListener(
     type: typeof SnapshotLoadResultEvent,
     callback: CustomEventListenerOrEventListenerObject<SnapshotLoadResult> | null,
+    options?: boolean | AddEventListenerOptions | undefined,
+  ): void
+
+  addEventListener(
+    type: typeof ChatMessageResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<ChatMessageResult> | null,
     options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
@@ -470,6 +486,12 @@ export class GatewaySession extends EventTarget {
   removeEventListener(
     type: typeof SnapshotLoadResultEvent,
     callback: CustomEventListenerOrEventListenerObject<SnapshotLoadResult> | null,
+    options?: boolean | AddEventListenerOptions | undefined,
+  ): void
+
+  removeEventListener(
+    type: typeof ChatMessageResultEvent,
+    callback: CustomEventListenerOrEventListenerObject<ChatMessageResult> | null,
     options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
