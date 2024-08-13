@@ -7,6 +7,7 @@ import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialM
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
 import { Item, Query, Reference } from "./items_pb.ts";
 import { Bookmark } from "./bookmarks_pb.ts";
+import { PaginationRequest, PaginationResponse } from "./util_pb.ts";
 
 /**
  * @generated from message snapshots.Snapshot
@@ -636,6 +637,11 @@ export class ListSnapshotsByGUNRequest extends Message<ListSnapshotsByGUNRequest
    */
   globallyUniqueName = "";
 
+  /**
+   * @generated from field: PaginationRequest pagination = 2;
+   */
+  pagination?: PaginationRequest;
+
   constructor(data?: PartialMessage<ListSnapshotsByGUNRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -645,6 +651,7 @@ export class ListSnapshotsByGUNRequest extends Message<ListSnapshotsByGUNRequest
   static readonly typeName = "snapshots.ListSnapshotsByGUNRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "globallyUniqueName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "pagination", kind: "message", T: PaginationRequest },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListSnapshotsByGUNRequest {
@@ -673,6 +680,11 @@ export class ListSnapshotsByGUNResponse extends Message<ListSnapshotsByGUNRespon
    */
   UUIDs: Uint8Array[] = [];
 
+  /**
+   * @generated from field: PaginationResponse pagination = 2;
+   */
+  pagination?: PaginationResponse;
+
   constructor(data?: PartialMessage<ListSnapshotsByGUNResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -682,6 +694,7 @@ export class ListSnapshotsByGUNResponse extends Message<ListSnapshotsByGUNRespon
   static readonly typeName = "snapshots.ListSnapshotsByGUNResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "UUIDs", kind: "scalar", T: 12 /* ScalarType.BYTES */, repeated: true },
+    { no: 2, name: "pagination", kind: "message", T: PaginationResponse },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListSnapshotsByGUNResponse {
