@@ -87,6 +87,17 @@ export class AccountConfig extends Message<AccountConfig> {
    */
   blastRadius?: BlastRadiusConfig;
 
+  /**
+   * If this is set to true, changes that weren't able to be mapped to real
+   * infrastructure won't be considered for risk calculations. This usually
+   * reduces the number low-quality and low-severity risks, and focuses more
+   * on risks that we have additional context for. If you find that Overmind's
+   * risks are "too obvious" then this might be a good setting to enable.
+   *
+   * @generated from field: bool skipUnmappedChangesForRisks = 3;
+   */
+  skipUnmappedChangesForRisks = false;
+
   constructor(data?: PartialMessage<AccountConfig>) {
     super();
     proto3.util.initPartial(data, this);
@@ -97,6 +108,7 @@ export class AccountConfig extends Message<AccountConfig> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 2, name: "blastRadiusPreset", kind: "enum", T: proto3.getEnumType(AccountConfig_BlastRadiusPreset) },
     { no: 1, name: "blastRadius", kind: "message", T: BlastRadiusConfig, opt: true },
+    { no: 3, name: "skipUnmappedChangesForRisks", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AccountConfig {
