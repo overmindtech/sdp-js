@@ -264,10 +264,22 @@ export class GatewayResponse extends Message<GatewayResponse> {
     case: "queryStatus";
   } | {
     /**
-     * @generated from field: gateway.ChatMessageResult chatMessageResult = 18;
+     * @generated from field: gateway.ChatResponse chatResponse = 18;
      */
-    value: ChatMessageResult;
-    case: "chatMessageResult";
+    value: ChatResponse;
+    case: "chatResponse";
+  } | {
+    /**
+     * @generated from field: gateway.ToolStart toolStart = 19;
+     */
+    value: ToolStart;
+    case: "toolStart";
+  } | {
+    /**
+     * @generated from field: gateway.ToolFinish toolFinish = 20;
+     */
+    value: ToolFinish;
+    case: "toolFinish";
   } | { case: undefined; value?: undefined } = { case: undefined };
 
   constructor(data?: PartialMessage<GatewayResponse>) {
@@ -291,7 +303,9 @@ export class GatewayResponse extends Message<GatewayResponse> {
     { no: 15, name: "bookmarkStoreResult", kind: "message", T: BookmarkStoreResult, oneof: "response_type" },
     { no: 16, name: "bookmarkLoadResult", kind: "message", T: BookmarkLoadResult, oneof: "response_type" },
     { no: 17, name: "queryStatus", kind: "message", T: QueryStatus, oneof: "response_type" },
-    { no: 18, name: "chatMessageResult", kind: "message", T: ChatMessageResult, oneof: "response_type" },
+    { no: 18, name: "chatResponse", kind: "message", T: ChatResponse, oneof: "response_type" },
+    { no: 19, name: "toolStart", kind: "message", T: ToolStart, oneof: "response_type" },
+    { no: 20, name: "toolFinish", kind: "message", T: ToolFinish, oneof: "response_type" },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GatewayResponse {
@@ -915,9 +929,23 @@ export class ChatMessage extends Message<ChatMessage> {
   /**
    * The message to create
    *
-   * @generated from field: string message = 1;
+   * @generated from oneof gateway.ChatMessage.request_type
    */
-  message = "";
+  requestType: {
+    /**
+     * @generated from field: string text = 1;
+     */
+    value: string;
+    case: "text";
+  } | {
+    /**
+     * Cancel the last message sent to openAI, includes the message and tools that were started
+     *
+     * @generated from field: bool cancel = 2;
+     */
+    value: boolean;
+    case: "cancel";
+  } | { case: undefined; value?: undefined } = { case: undefined };
 
   constructor(data?: PartialMessage<ChatMessage>) {
     super();
@@ -927,7 +955,8 @@ export class ChatMessage extends Message<ChatMessage> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "gateway.ChatMessage";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "text", kind: "scalar", T: 9 /* ScalarType.STRING */, oneof: "request_type" },
+    { no: 2, name: "cancel", kind: "scalar", T: 8 /* ScalarType.BOOL */, oneof: "request_type" },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChatMessage {
@@ -948,52 +977,551 @@ export class ChatMessage extends Message<ChatMessage> {
 }
 
 /**
- * @generated from message gateway.ChatMessageResult
+ * @generated from message gateway.ToolMetadata
  */
-export class ChatMessageResult extends Message<ChatMessageResult> {
+export class ToolMetadata extends Message<ToolMetadata> {
   /**
-   * @generated from oneof gateway.ChatMessageResult.response_type
+   * The toolID from openAI
+   *
+   * @generated from field: string id = 1;
    */
-  responseType: {
-    /**
-     * @generated from field: string error = 1;
-     */
-    value: string;
-    case: "error";
-  } | {
-    /**
-     * @generated from field: string message = 2;
-     */
-    value: string;
-    case: "message";
-  } | { case: undefined; value?: undefined } = { case: undefined };
+  id = "";
 
-  constructor(data?: PartialMessage<ChatMessageResult>) {
+  constructor(data?: PartialMessage<ToolMetadata>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "gateway.ChatMessageResult";
+  static readonly typeName = "gateway.ToolMetadata";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "error", kind: "scalar", T: 9 /* ScalarType.STRING */, oneof: "response_type" },
-    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */, oneof: "response_type" },
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChatMessageResult {
-    return new ChatMessageResult().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ToolMetadata {
+    return new ToolMetadata().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChatMessageResult {
-    return new ChatMessageResult().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ToolMetadata {
+    return new ToolMetadata().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChatMessageResult {
-    return new ChatMessageResult().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ToolMetadata {
+    return new ToolMetadata().fromJsonString(jsonString, options);
   }
 
-  static equals(a: ChatMessageResult | PlainMessage<ChatMessageResult> | undefined, b: ChatMessageResult | PlainMessage<ChatMessageResult> | undefined): boolean {
-    return proto3.util.equals(ChatMessageResult, a, b);
+  static equals(a: ToolMetadata | PlainMessage<ToolMetadata> | undefined, b: ToolMetadata | PlainMessage<ToolMetadata> | undefined): boolean {
+    return proto3.util.equals(ToolMetadata, a, b);
+  }
+}
+
+/**
+ * @generated from message gateway.QueryToolStart
+ */
+export class QueryToolStart extends Message<QueryToolStart> {
+  /**
+   * @generated from field: string type = 1;
+   */
+  type = "";
+
+  /**
+   * @generated from field: string method = 2;
+   */
+  method = "";
+
+  /**
+   * @generated from field: string uniqueAttributeValue = 3;
+   */
+  uniqueAttributeValue = "";
+
+  /**
+   * @generated from field: string scope = 4;
+   */
+  scope = "";
+
+  constructor(data?: PartialMessage<QueryToolStart>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.QueryToolStart";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "method", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "uniqueAttributeValue", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "scope", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): QueryToolStart {
+    return new QueryToolStart().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): QueryToolStart {
+    return new QueryToolStart().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): QueryToolStart {
+    return new QueryToolStart().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: QueryToolStart | PlainMessage<QueryToolStart> | undefined, b: QueryToolStart | PlainMessage<QueryToolStart> | undefined): boolean {
+    return proto3.util.equals(QueryToolStart, a, b);
+  }
+}
+
+/**
+ * @generated from message gateway.QueryToolFinish
+ */
+export class QueryToolFinish extends Message<QueryToolFinish> {
+  /**
+   * @generated from field: int32 numItems = 1;
+   */
+  numItems = 0;
+
+  constructor(data?: PartialMessage<QueryToolFinish>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.QueryToolFinish";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "numItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): QueryToolFinish {
+    return new QueryToolFinish().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): QueryToolFinish {
+    return new QueryToolFinish().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): QueryToolFinish {
+    return new QueryToolFinish().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: QueryToolFinish | PlainMessage<QueryToolFinish> | undefined, b: QueryToolFinish | PlainMessage<QueryToolFinish> | undefined): boolean {
+    return proto3.util.equals(QueryToolFinish, a, b);
+  }
+}
+
+/**
+ * @generated from message gateway.RelationshipToolStart
+ */
+export class RelationshipToolStart extends Message<RelationshipToolStart> {
+  /**
+   * @generated from field: string type = 1;
+   */
+  type = "";
+
+  /**
+   * @generated from field: string uniqueAttributeValue = 2;
+   */
+  uniqueAttributeValue = "";
+
+  /**
+   * @generated from field: string scope = 3;
+   */
+  scope = "";
+
+  constructor(data?: PartialMessage<RelationshipToolStart>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.RelationshipToolStart";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "uniqueAttributeValue", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "scope", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RelationshipToolStart {
+    return new RelationshipToolStart().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RelationshipToolStart {
+    return new RelationshipToolStart().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RelationshipToolStart {
+    return new RelationshipToolStart().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RelationshipToolStart | PlainMessage<RelationshipToolStart> | undefined, b: RelationshipToolStart | PlainMessage<RelationshipToolStart> | undefined): boolean {
+    return proto3.util.equals(RelationshipToolStart, a, b);
+  }
+}
+
+/**
+ * @generated from message gateway.RelationshipToolFinish
+ */
+export class RelationshipToolFinish extends Message<RelationshipToolFinish> {
+  /**
+   * @generated from field: int32 numItems = 1;
+   */
+  numItems = 0;
+
+  constructor(data?: PartialMessage<RelationshipToolFinish>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.RelationshipToolFinish";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "numItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RelationshipToolFinish {
+    return new RelationshipToolFinish().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RelationshipToolFinish {
+    return new RelationshipToolFinish().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RelationshipToolFinish {
+    return new RelationshipToolFinish().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RelationshipToolFinish | PlainMessage<RelationshipToolFinish> | undefined, b: RelationshipToolFinish | PlainMessage<RelationshipToolFinish> | undefined): boolean {
+    return proto3.util.equals(RelationshipToolFinish, a, b);
+  }
+}
+
+/**
+ * @generated from message gateway.ChangesByReferenceToolStart
+ */
+export class ChangesByReferenceToolStart extends Message<ChangesByReferenceToolStart> {
+  /**
+   * @generated from field: string type = 1;
+   */
+  type = "";
+
+  /**
+   * @generated from field: string uniqueAttributeValue = 2;
+   */
+  uniqueAttributeValue = "";
+
+  /**
+   * @generated from field: string scope = 3;
+   */
+  scope = "";
+
+  constructor(data?: PartialMessage<ChangesByReferenceToolStart>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.ChangesByReferenceToolStart";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "uniqueAttributeValue", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "scope", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangesByReferenceToolStart {
+    return new ChangesByReferenceToolStart().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChangesByReferenceToolStart {
+    return new ChangesByReferenceToolStart().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChangesByReferenceToolStart {
+    return new ChangesByReferenceToolStart().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChangesByReferenceToolStart | PlainMessage<ChangesByReferenceToolStart> | undefined, b: ChangesByReferenceToolStart | PlainMessage<ChangesByReferenceToolStart> | undefined): boolean {
+    return proto3.util.equals(ChangesByReferenceToolStart, a, b);
+  }
+}
+
+/**
+ * @generated from message gateway.ChangeByReferenceSummary
+ */
+export class ChangeByReferenceSummary extends Message<ChangeByReferenceSummary> {
+  /**
+   * from ChangeProperties
+   *
+   * @generated from field: string title = 1;
+   */
+  title = "";
+
+  /**
+   * from ChangeMetadata
+   *
+   * @generated from field: bytes UUID = 2;
+   */
+  UUID = new Uint8Array(0);
+
+  /**
+   * From ChangeMetadata
+   *
+   * @generated from field: google.protobuf.Timestamp createdAt = 3;
+   */
+  createdAt?: Timestamp;
+
+  /**
+   * From ChangeProperties
+   *
+   * @generated from field: string owner = 4;
+   */
+  owner = "";
+
+  /**
+   * From ChangeMetadata
+   *
+   * @generated from field: int32 numAffectedItems = 5;
+   */
+  numAffectedItems = 0;
+
+  constructor(data?: PartialMessage<ChangeByReferenceSummary>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.ChangeByReferenceSummary";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "title", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 3, name: "createdAt", kind: "message", T: Timestamp },
+    { no: 4, name: "owner", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "numAffectedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeByReferenceSummary {
+    return new ChangeByReferenceSummary().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChangeByReferenceSummary {
+    return new ChangeByReferenceSummary().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChangeByReferenceSummary {
+    return new ChangeByReferenceSummary().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChangeByReferenceSummary | PlainMessage<ChangeByReferenceSummary> | undefined, b: ChangeByReferenceSummary | PlainMessage<ChangeByReferenceSummary> | undefined): boolean {
+    return proto3.util.equals(ChangeByReferenceSummary, a, b);
+  }
+}
+
+/**
+ * @generated from message gateway.ChangesByReferenceToolFinish
+ */
+export class ChangesByReferenceToolFinish extends Message<ChangesByReferenceToolFinish> {
+  /**
+   * @generated from field: repeated gateway.ChangeByReferenceSummary changeSummaries = 1;
+   */
+  changeSummaries: ChangeByReferenceSummary[] = [];
+
+  constructor(data?: PartialMessage<ChangesByReferenceToolFinish>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.ChangesByReferenceToolFinish";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "changeSummaries", kind: "message", T: ChangeByReferenceSummary, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangesByReferenceToolFinish {
+    return new ChangesByReferenceToolFinish().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChangesByReferenceToolFinish {
+    return new ChangesByReferenceToolFinish().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChangesByReferenceToolFinish {
+    return new ChangesByReferenceToolFinish().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChangesByReferenceToolFinish | PlainMessage<ChangesByReferenceToolFinish> | undefined, b: ChangesByReferenceToolFinish | PlainMessage<ChangesByReferenceToolFinish> | undefined): boolean {
+    return proto3.util.equals(ChangesByReferenceToolFinish, a, b);
+  }
+}
+
+/**
+ * @generated from message gateway.ToolStart
+ */
+export class ToolStart extends Message<ToolStart> {
+  /**
+   * @generated from field: gateway.ToolMetadata metadata = 1;
+   */
+  metadata?: ToolMetadata;
+
+  /**
+   * @generated from oneof gateway.ToolStart.tool_type
+   */
+  toolType: {
+    /**
+     * @generated from field: gateway.QueryToolStart query = 2;
+     */
+    value: QueryToolStart;
+    case: "query";
+  } | {
+    /**
+     * @generated from field: gateway.RelationshipToolStart relationship = 3;
+     */
+    value: RelationshipToolStart;
+    case: "relationship";
+  } | {
+    /**
+     * @generated from field: gateway.ChangesByReferenceToolStart changesByReference = 4;
+     */
+    value: ChangesByReferenceToolStart;
+    case: "changesByReference";
+  } | { case: undefined; value?: undefined } = { case: undefined };
+
+  constructor(data?: PartialMessage<ToolStart>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.ToolStart";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "metadata", kind: "message", T: ToolMetadata },
+    { no: 2, name: "query", kind: "message", T: QueryToolStart, oneof: "tool_type" },
+    { no: 3, name: "relationship", kind: "message", T: RelationshipToolStart, oneof: "tool_type" },
+    { no: 4, name: "changesByReference", kind: "message", T: ChangesByReferenceToolStart, oneof: "tool_type" },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ToolStart {
+    return new ToolStart().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ToolStart {
+    return new ToolStart().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ToolStart {
+    return new ToolStart().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ToolStart | PlainMessage<ToolStart> | undefined, b: ToolStart | PlainMessage<ToolStart> | undefined): boolean {
+    return proto3.util.equals(ToolStart, a, b);
+  }
+}
+
+/**
+ * @generated from message gateway.ToolFinish
+ */
+export class ToolFinish extends Message<ToolFinish> {
+  /**
+   * @generated from field: gateway.ToolMetadata metadata = 1;
+   */
+  metadata?: ToolMetadata;
+
+  /**
+   * @generated from field: string error = 2;
+   */
+  error = "";
+
+  /**
+   * @generated from oneof gateway.ToolFinish.tool_type
+   */
+  toolType: {
+    /**
+     * @generated from field: gateway.QueryToolFinish query = 3;
+     */
+    value: QueryToolFinish;
+    case: "query";
+  } | {
+    /**
+     * @generated from field: gateway.RelationshipToolFinish relationship = 4;
+     */
+    value: RelationshipToolFinish;
+    case: "relationship";
+  } | {
+    /**
+     * @generated from field: gateway.ChangesByReferenceToolFinish changesByReference = 5;
+     */
+    value: ChangesByReferenceToolFinish;
+    case: "changesByReference";
+  } | { case: undefined; value?: undefined } = { case: undefined };
+
+  constructor(data?: PartialMessage<ToolFinish>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.ToolFinish";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "metadata", kind: "message", T: ToolMetadata },
+    { no: 2, name: "error", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "query", kind: "message", T: QueryToolFinish, oneof: "tool_type" },
+    { no: 4, name: "relationship", kind: "message", T: RelationshipToolFinish, oneof: "tool_type" },
+    { no: 5, name: "changesByReference", kind: "message", T: ChangesByReferenceToolFinish, oneof: "tool_type" },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ToolFinish {
+    return new ToolFinish().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ToolFinish {
+    return new ToolFinish().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ToolFinish {
+    return new ToolFinish().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ToolFinish | PlainMessage<ToolFinish> | undefined, b: ToolFinish | PlainMessage<ToolFinish> | undefined): boolean {
+    return proto3.util.equals(ToolFinish, a, b);
+  }
+}
+
+/**
+ * @generated from message gateway.ChatResponse
+ */
+export class ChatResponse extends Message<ChatResponse> {
+  /**
+   * @generated from field: string text = 1;
+   */
+  text = "";
+
+  /**
+   * @generated from field: string error = 2;
+   */
+  error = "";
+
+  constructor(data?: PartialMessage<ChatResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "gateway.ChatResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "text", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "error", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChatResponse {
+    return new ChatResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChatResponse {
+    return new ChatResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChatResponse {
+    return new ChatResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChatResponse | PlainMessage<ChatResponse> | undefined, b: ChatResponse | PlainMessage<ChatResponse> | undefined): boolean {
+    return proto3.util.equals(ChatResponse, a, b);
   }
 }
 
