@@ -5,7 +5,7 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Duration, Message, proto3, Timestamp } from "@bufbuild/protobuf";
-import { CancelQuery, Edge, Expand, Item, Query, QueryError, QueryStatus, Reference, UndoExpand, UndoQuery } from "./items_pb.ts";
+import { CancelQuery, Edge, Expand, Item, Query, QueryError, QueryMethod, QueryStatus, Reference, UndoExpand, UndoQuery } from "./items_pb.ts";
 import { ResponderState } from "./responses_pb.ts";
 
 /**
@@ -1025,14 +1025,14 @@ export class QueryToolStart extends Message<QueryToolStart> {
   type = "";
 
   /**
-   * @generated from field: string method = 2;
+   * @generated from field: QueryMethod method = 2;
    */
-  method = "";
+  method = QueryMethod.GET;
 
   /**
-   * @generated from field: string uniqueAttributeValue = 3;
+   * @generated from field: string query = 3;
    */
-  uniqueAttributeValue = "";
+  query = "";
 
   /**
    * @generated from field: string scope = 4;
@@ -1048,8 +1048,8 @@ export class QueryToolStart extends Message<QueryToolStart> {
   static readonly typeName = "gateway.QueryToolStart";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "method", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "uniqueAttributeValue", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "method", kind: "enum", T: proto3.getEnumType(QueryMethod) },
+    { no: 3, name: "query", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "scope", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
