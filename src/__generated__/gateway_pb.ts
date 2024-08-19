@@ -7,6 +7,7 @@ import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialM
 import { Duration, Message, proto3, Timestamp } from "@bufbuild/protobuf";
 import { CancelQuery, Edge, Expand, Item, Query, QueryError, QueryMethod, QueryStatus, Reference, UndoExpand, UndoQuery } from "./items_pb.ts";
 import { ResponderState } from "./responses_pb.ts";
+import { ChangeStatus } from "./changes_pb.ts";
 
 /**
  * A union of all request made to the gateway.
@@ -1281,6 +1282,13 @@ export class ChangeByReferenceSummary extends Message<ChangeByReferenceSummary> 
    */
   numAffectedItems = 0;
 
+  /**
+   * From ChangeMetadata
+   *
+   * @generated from field: changes.ChangeStatus changeStatus = 6;
+   */
+  changeStatus = ChangeStatus.UNSPECIFIED;
+
   constructor(data?: PartialMessage<ChangeByReferenceSummary>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1294,6 +1302,7 @@ export class ChangeByReferenceSummary extends Message<ChangeByReferenceSummary> 
     { no: 3, name: "createdAt", kind: "message", T: Timestamp },
     { no: 4, name: "owner", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 5, name: "numAffectedItems", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 6, name: "changeStatus", kind: "enum", T: proto3.getEnumType(ChangeStatus) },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeByReferenceSummary {
