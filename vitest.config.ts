@@ -7,7 +7,8 @@ export default defineConfig({
     globals: true,
     setupFiles: ['vitest.setup.ts'],
     coverage: {
-      exclude: ['src/__generated__'],
+      include: ['src/**/*'],
+      exclude: ['src/__generated__/**/*', 'src/__tests__/**/*'],
     },
   },
 })
