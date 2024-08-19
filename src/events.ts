@@ -64,7 +64,17 @@ export const QueryStatusEvent = 'query-status'
 /**
  * This event informs the client of chat message response
  */
-export const ChatMessageResultEvent = 'chat-message-result'
+export const ChatResponseEvent = 'chat-response'
+
+/**
+ * This event informs the client of chat message tool start
+ */
+export const ChatResponseToolStartEvent = 'chat-response-tool-start'
+
+/**
+ * This event informs the client of chat message tool call
+ */
+export const ChatResponseToolFinishEvent = 'chat-response-tool-finish'
 
 /**
  * This event means that an error was encountered by one of the responders
