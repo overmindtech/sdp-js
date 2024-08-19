@@ -15,10 +15,21 @@ import {
   DeleteItemEvent,
   DeleteEdgeEvent,
   UpdateItemEvent,
+  ChatResponseEvent,
+  ChatResponseToolStartEvent,
+  ChatResponseToolFinishEvent,
 } from '../events'
 import { GatewaySession } from '../gateway-session'
-import { GatewayResponse, StoreBookmark, StoreSnapshot } from '../protobuf'
+import {
+  ChangeByReferenceSummary,
+  ChangesByReferenceToolFinish,
+  GatewayResponse,
+  QueryMethod,
+  StoreBookmark,
+  StoreSnapshot,
+} from '../protobuf'
 import * as data from './sampledata.helper'
+import { Timestamp } from '@bufbuild/protobuf'
 
 // create a WS instance
 const TestServerAddress = 'ws://localhost:31274'
@@ -113,6 +124,261 @@ describe('GatewaySession', () => {
 
             server.send(response.toBinary().buffer)
           }))
+      })
+      describe('ChatResponse', () => {
+        it('should call the callback', () =>
+          new Promise((resolve) => {
+            const response = new GatewayResponse({
+              responseType: {
+                case: 'chatResponse',
+                value: {
+                  text: 'Hello, World!',
+                },
+              },
+            })
+
+            // Register the callbacks
+            gs.addEventListener(
+              ChatResponseEvent,
+              (event) => {
+                expect(event.detail.text).toEqual('Hello, World!')
+                resolve(undefined)
+              },
+              { once: true },
+            )
+
+            server.send(response.toBinary().buffer)
+          }))
+      })
+      describe('ToolStart', () => {
+        describe('Query', () => {
+          it('should call the callback', () =>
+            new Promise((resolve) => {
+              const response = new GatewayResponse({
+                responseType: {
+                  case: 'toolStart',
+                  value: {
+                    toolType: {
+                      case: 'query',
+                      value: {
+                        method: QueryMethod.GET,
+                        scope: '*',
+                        query: 'i-123456',
+                        type: 'ec2-instance',
+                      },
+                    },
+                  },
+                },
+              })
+
+              // Register the callbacks
+              gs.addEventListener(
+                ChatResponseToolStartEvent,
+                (event) => {
+                  expect(event.detail.toolType.case).toEqual('query')
+                  expect(event.detail.toolType.value).toMatchObject({
+                    method: QueryMethod.GET,
+                    scope: '*',
+                    query: 'i-123456',
+                    type: 'ec2-instance',
+                  })
+                  resolve(undefined)
+                },
+                { once: true },
+              )
+
+              server.send(response.toBinary().buffer)
+            }))
+        })
+        describe('Relationship', () => {
+          it('should call the callback', () =>
+            new Promise((resolve) => {
+              const response = new GatewayResponse({
+                responseType: {
+                  case: 'toolStart',
+                  value: {
+                    toolType: {
+                      case: 'relationship',
+                      value: {
+                        scope: '*',
+                        uniqueAttributeValue: 'i-123456',
+                        type: 'ec2-instance',
+                      },
+                    },
+                  },
+                },
+              })
+
+              // Register the callbacks
+              gs.addEventListener(
+                ChatResponseToolStartEvent,
+                (event) => {
+                  expect(event.detail.toolType.case).toEqual('relationship')
+                  expect(event.detail.toolType.value).toMatchObject({
+                    scope: '*',
+                    uniqueAttributeValue: 'i-123456',
+                    type: 'ec2-instance',
+                  })
+                  resolve(undefined)
+                },
+                { once: true },
+              )
+
+              server.send(response.toBinary().buffer)
+            }))
+        })
+        describe('ChangesByReference', () => {
+          it('should call the callback', () =>
+            new Promise((resolve) => {
+              const response = new GatewayResponse({
+                responseType: {
+                  case: 'toolStart',
+                  value: {
+                    toolType: {
+                      case: 'changesByReference',
+                      value: {
+                        scope: '*',
+                        uniqueAttributeValue: 'i-123456',
+                        type: 'ec2-instance',
+                      },
+                    },
+                  },
+                },
+              })
+
+              // Register the callbacks
+              gs.addEventListener(
+                ChatResponseToolStartEvent,
+                (event) => {
+                  expect(event.detail.toolType.case).toEqual(
+                    'changesByReference',
+                  )
+                  expect(event.detail.toolType.value).toMatchObject({
+                    scope: '*',
+                    uniqueAttributeValue: 'i-123456',
+                    type: 'ec2-instance',
+                  })
+                  resolve(undefined)
+                },
+                { once: true },
+              )
+
+              server.send(response.toBinary().buffer)
+            }))
+        })
+      })
+      describe('ToolFinish', () => {
+        describe('Query', () => {
+          it('should call the callback', () =>
+            new Promise((resolve) => {
+              const response = new GatewayResponse({
+                responseType: {
+                  case: 'toolFinish',
+                  value: {
+                    toolType: {
+                      case: 'query',
+                      value: {
+                        numItems: 123,
+                      },
+                    },
+                  },
+                },
+              })
+
+              // Register the callbacks
+              gs.addEventListener(
+                ChatResponseToolFinishEvent,
+                (event) => {
+                  expect(event.detail.toolType.case).toEqual('query')
+                  expect(event.detail.toolType.value).toMatchObject({
+                    numItems: 123,
+                  })
+                  resolve(undefined)
+                },
+                { once: true },
+              )
+
+              server.send(response.toBinary().buffer)
+            }))
+        })
+        describe('Relationship', () => {
+          it('should call the callback', () =>
+            new Promise((resolve) => {
+              const response = new GatewayResponse({
+                responseType: {
+                  case: 'toolFinish',
+                  value: {
+                    toolType: {
+                      case: 'relationship',
+                      value: {
+                        numItems: 123,
+                      },
+                    },
+                  },
+                },
+              })
+
+              // Register the callbacks
+              gs.addEventListener(
+                ChatResponseToolFinishEvent,
+                (event) => {
+                  expect(event.detail.toolType.case).toEqual('relationship')
+                  expect(event.detail.toolType.value).toMatchObject({
+                    numItems: 123,
+                  })
+                  resolve(undefined)
+                },
+                { once: true },
+              )
+
+              server.send(response.toBinary().buffer)
+            }))
+        })
+        describe('ChangesByReference', () => {
+          it('should call the callback', () =>
+            new Promise((resolve) => {
+              const response = new GatewayResponse({
+                responseType: {
+                  case: 'toolFinish',
+                  value: {
+                    toolType: {
+                      case: 'changesByReference',
+                      value: {
+                        changeSummaries: [
+                          new ChangeByReferenceSummary({
+                            title: 'Some title',
+                            numAffectedItems: 123,
+                            owner: 'Some owner',
+                            createdAt: new Timestamp({
+                              nanos: 100,
+                              seconds: BigInt(100_000_000),
+                            }),
+                          }),
+                        ],
+                      },
+                    },
+                  },
+                },
+              })
+
+              // Register the callbacks
+              gs.addEventListener(
+                ChatResponseToolFinishEvent,
+                (event) => {
+                  expect(event.detail.toolType.case).toEqual(
+                    'changesByReference',
+                  )
+                  const tool = event.detail.toolType
+                    .value as ChangesByReferenceToolFinish
+                  expect(tool.changeSummaries.length).toEqual(1)
+                  resolve(undefined)
+                },
+                { once: true },
+              )
+
+              server.send(response.toBinary().buffer)
+            }))
+        })
       })
       describe('NewEdge', () => {
         it('should call the callback', () =>

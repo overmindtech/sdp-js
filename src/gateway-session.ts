@@ -15,7 +15,9 @@ import {
   BookmarkStoreResultEvent,
   SnapshotLoadResultEvent,
   SnapshotStoreResultEvent,
-  ChatMessageResultEvent,
+  ChatResponseEvent,
+  ChatResponseToolFinishEvent,
+  ChatResponseToolStartEvent,
 } from './events'
 import {
   Edge,
@@ -34,7 +36,9 @@ import {
   SnapshotLoadResult,
   StoreBookmark,
   StoreSnapshot,
-  ChatMessageResult,
+  ChatResponse,
+  ToolStart,
+  ToolFinish,
 } from './protobuf'
 
 export interface CustomEventListener<T> {
@@ -311,9 +315,25 @@ export class GatewaySession extends EventTarget {
         )
         break
       }
-      case 'chatMessageResult': {
+      case 'chatResponse': {
         this.dispatchEvent(
-          new CustomEvent<ChatMessageResult>(ChatMessageResultEvent, {
+          new CustomEvent<ChatResponse>(ChatResponseEvent, {
+            detail: response.responseType.value,
+          }),
+        )
+        break
+      }
+      case 'toolStart': {
+        this.dispatchEvent(
+          new CustomEvent<ToolStart>(ChatResponseToolStartEvent, {
+            detail: response.responseType.value,
+          }),
+        )
+        break
+      }
+      case 'toolFinish': {
+        this.dispatchEvent(
+          new CustomEvent<ToolFinish>(ChatResponseToolFinishEvent, {
             detail: response.responseType.value,
           }),
         )
@@ -386,8 +406,20 @@ export class GatewaySession extends EventTarget {
   ): void
 
   addEventListener(
-    type: typeof ChatMessageResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<ChatMessageResult> | null,
+    type: typeof ChatResponseEvent,
+    callback: CustomEventListenerOrEventListenerObject<ChatResponse> | null,
+    options?: boolean | AddEventListenerOptions | undefined,
+  ): void
+
+  addEventListener(
+    type: typeof ChatResponseToolStartEvent,
+    callback: CustomEventListenerOrEventListenerObject<ToolStart> | null,
+    options?: boolean | AddEventListenerOptions | undefined,
+  ): void
+
+  addEventListener(
+    type: typeof ChatResponseToolFinishEvent,
+    callback: CustomEventListenerOrEventListenerObject<ToolFinish> | null,
     options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
@@ -490,8 +522,20 @@ export class GatewaySession extends EventTarget {
   ): void
 
   removeEventListener(
-    type: typeof ChatMessageResultEvent,
-    callback: CustomEventListenerOrEventListenerObject<ChatMessageResult> | null,
+    type: typeof ChatResponseEvent,
+    callback: CustomEventListenerOrEventListenerObject<ChatResponse> | null,
+    options?: boolean | AddEventListenerOptions | undefined,
+  ): void
+
+  removeEventListener(
+    type: typeof ChatResponseToolStartEvent,
+    callback: CustomEventListenerOrEventListenerObject<ToolStart> | null,
+    options?: boolean | AddEventListenerOptions | undefined,
+  ): void
+
+  removeEventListener(
+    type: typeof ChatResponseToolFinishEvent,
+    callback: CustomEventListenerOrEventListenerObject<ToolFinish> | null,
     options?: boolean | AddEventListenerOptions | undefined,
   ): void
 
