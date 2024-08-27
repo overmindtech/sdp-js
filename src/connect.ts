@@ -45,11 +45,12 @@ export {
 } from './__generated__/snapshots-SnapshotsService_connectquery'
 export {
   createAPIKey,
-  deleteAPIKey,
-  listAPIKeys,
+  refreshAPIKey,
   getAPIKey,
-  exchangeKeyForToken,
   updateAPIKey,
+  listAPIKeys,
+  deleteAPIKey,
+  exchangeKeyForToken,
 } from './__generated__/apikeys-ApiKeyService_connectquery'
 export {
   getAccount,
