@@ -346,6 +346,15 @@ export class RefreshAPIKeyRequest extends Message<RefreshAPIKeyRequest> {
    */
   uuid = new Uint8Array(0);
 
+  /**
+   * The URL that the user should be redirected to after the whole process is
+   * over. This should be a page in the frontend, probably the one they
+   * started from, but could also be a detail page for this particular API key
+   *
+   * @generated from field: string finalFrontendRedirect = 2;
+   */
+  finalFrontendRedirect = "";
+
   constructor(data?: PartialMessage<RefreshAPIKeyRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -355,6 +364,7 @@ export class RefreshAPIKeyRequest extends Message<RefreshAPIKeyRequest> {
   static readonly typeName = "apikeys.RefreshAPIKeyRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "uuid", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "finalFrontendRedirect", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RefreshAPIKeyRequest {
