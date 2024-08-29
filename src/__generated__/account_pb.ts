@@ -35,6 +35,14 @@ export enum SourceStatus {
    * @generated from enum value: STATUS_UNHEALTHY = 3;
    */
   STATUS_UNHEALTHY = 3,
+
+  /**
+   * The source is sleeping due to inactivity. It will be woken up before it
+   * is needed
+   *
+   * @generated from enum value: STATUS_SLEEPING = 4;
+   */
+  STATUS_SLEEPING = 4,
 }
 // Retrieve enum metadata with: proto3.getEnumType(SourceStatus)
 proto3.util.setEnumType(SourceStatus, "account.SourceStatus", [
@@ -42,6 +50,7 @@ proto3.util.setEnumType(SourceStatus, "account.SourceStatus", [
   { no: 1, name: "STATUS_PROGRESSING" },
   { no: 2, name: "STATUS_HEALTHY" },
   { no: 3, name: "STATUS_UNHEALTHY" },
+  { no: 4, name: "STATUS_SLEEPING" },
 ]);
 
 /**
