@@ -1555,6 +1555,61 @@ export class DeleteSourceResponse extends Message<DeleteSourceResponse> {
 }
 
 /**
+ * @generated from message account.SourceKeepaliveResult
+ */
+export class SourceKeepaliveResult extends Message<SourceKeepaliveResult> {
+  /**
+   * The UUID of the source that was kept alive
+   *
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  /**
+   * The status of the source
+   *
+   * @generated from field: account.SourceStatus Status = 2;
+   */
+  Status = SourceStatus.STATUS_UNSPECIFIED;
+
+  /**
+   * The error message if the source is unhealthy
+   *
+   * @generated from field: string Error = 3;
+   */
+  Error = "";
+
+  constructor(data?: PartialMessage<SourceKeepaliveResult>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.SourceKeepaliveResult";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "Status", kind: "enum", T: proto3.getEnumType(SourceStatus) },
+    { no: 3, name: "Error", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SourceKeepaliveResult {
+    return new SourceKeepaliveResult().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SourceKeepaliveResult {
+    return new SourceKeepaliveResult().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SourceKeepaliveResult {
+    return new SourceKeepaliveResult().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SourceKeepaliveResult | PlainMessage<SourceKeepaliveResult> | undefined, b: SourceKeepaliveResult | PlainMessage<SourceKeepaliveResult> | undefined): boolean {
+    return proto3.util.equals(SourceKeepaliveResult, a, b);
+  }
+}
+
+/**
  * @generated from message account.KeepaliveSourcesRequest
  */
 export class KeepaliveSourcesRequest extends Message<KeepaliveSourcesRequest> {
@@ -1597,6 +1652,15 @@ export class KeepaliveSourcesRequest extends Message<KeepaliveSourcesRequest> {
  * @generated from message account.KeepaliveSourcesResponse
  */
 export class KeepaliveSourcesResponse extends Message<KeepaliveSourcesResponse> {
+  /**
+   * If the user requested to wait for the sources to be healthy, this will
+   * contain information about the sources that came up. If the user did not
+   * request to wait, this will be empty
+   *
+   * @generated from field: repeated account.SourceKeepaliveResult sources = 1;
+   */
+  sources: SourceKeepaliveResult[] = [];
+
   constructor(data?: PartialMessage<KeepaliveSourcesResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1605,6 +1669,7 @@ export class KeepaliveSourcesResponse extends Message<KeepaliveSourcesResponse> 
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "account.KeepaliveSourcesResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "sources", kind: "message", T: SourceKeepaliveResult, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): KeepaliveSourcesResponse {
