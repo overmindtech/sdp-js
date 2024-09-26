@@ -60,6 +60,7 @@ export {
   updateSource,
   deleteSource,
   keepaliveSources,
+  listAllSourcesStatus,
   createToken,
   deleteAccount,
   getTrialEnd,
