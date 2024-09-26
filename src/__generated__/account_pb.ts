@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
-import { Message, proto3, Struct, Timestamp } from "@bufbuild/protobuf";
+import { Duration, Message, proto3, Struct, Timestamp } from "@bufbuild/protobuf";
 
 /**
  * @generated from enum account.SourceStatus
@@ -51,6 +51,56 @@ proto3.util.setEnumType(SourceStatus, "account.SourceStatus", [
   { no: 2, name: "STATUS_HEALTHY" },
   { no: 3, name: "STATUS_UNHEALTHY" },
   { no: 4, name: "STATUS_SLEEPING" },
+]);
+
+/**
+ * @generated from enum account.ActiveSourceStatus
+ */
+export enum ActiveSourceStatus {
+  /**
+   * @generated from enum value: ACTIVE_SOURCE_STATUS_HEALTHY = 0;
+   */
+  HEALTHY = 0,
+
+  /**
+   * @generated from enum value: ACTIVE_SOURCE_STATUS_UNHEALTHY = 1;
+   */
+  UNHEALTHY = 1,
+
+  /**
+   * @generated from enum value: ACTIVE_SOURCE_STATUS_DISCONNECTED = 2;
+   */
+  DISCONNECTED = 2,
+}
+// Retrieve enum metadata with: proto3.getEnumType(ActiveSourceStatus)
+proto3.util.setEnumType(ActiveSourceStatus, "account.ActiveSourceStatus", [
+  { no: 0, name: "ACTIVE_SOURCE_STATUS_HEALTHY" },
+  { no: 1, name: "ACTIVE_SOURCE_STATUS_UNHEALTHY" },
+  { no: 2, name: "ACTIVE_SOURCE_STATUS_DISCONNECTED" },
+]);
+
+/**
+ * Whether the source is managed by srcman or was created by the user locally
+ *
+ * @generated from enum account.SourceManaged
+ */
+export enum SourceManaged {
+  /**
+   * Local is the default
+   *
+   * @generated from enum value: LOCAL = 0;
+   */
+  LOCAL = 0,
+
+  /**
+   * @generated from enum value: MANAGED = 1;
+   */
+  MANAGED = 1,
+}
+// Retrieve enum metadata with: proto3.getEnumType(SourceManaged)
+proto3.util.setEnumType(SourceManaged, "account.SourceManaged", [
+  { no: 0, name: "LOCAL" },
+  { no: 1, name: "MANAGED" },
 ]);
 
 /**
@@ -772,7 +822,7 @@ export class Source extends Message<Source> {
  */
 export class SourceMetadata extends Message<SourceMetadata> {
   /**
-   * TOOD: Change to ID along with everything else
+   * TODO: Change to ID along with everything else
    *
    * @generated from field: bytes UUID = 1;
    */
@@ -1606,6 +1656,337 @@ export class SourceKeepaliveResult extends Message<SourceKeepaliveResult> {
 
   static equals(a: SourceKeepaliveResult | PlainMessage<SourceKeepaliveResult> | undefined, b: SourceKeepaliveResult | PlainMessage<SourceKeepaliveResult> | undefined): boolean {
     return proto3.util.equals(SourceKeepaliveResult, a, b);
+  }
+}
+
+/**
+ * @generated from message account.ListAllSourcesStatusRequest
+ */
+export class ListAllSourcesStatusRequest extends Message<ListAllSourcesStatusRequest> {
+  constructor(data?: PartialMessage<ListAllSourcesStatusRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.ListAllSourcesStatusRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListAllSourcesStatusRequest {
+    return new ListAllSourcesStatusRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListAllSourcesStatusRequest {
+    return new ListAllSourcesStatusRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListAllSourcesStatusRequest {
+    return new ListAllSourcesStatusRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListAllSourcesStatusRequest | PlainMessage<ListAllSourcesStatusRequest> | undefined, b: ListAllSourcesStatusRequest | PlainMessage<ListAllSourcesStatusRequest> | undefined): boolean {
+    return proto3.util.equals(ListAllSourcesStatusRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message account.SourceHealth
+ */
+export class SourceHealth extends Message<SourceHealth> {
+  /**
+   * The UUID of the source
+   *
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  /**
+   * The version of the source
+   *
+   * @generated from field: string version = 2;
+   */
+  version = "";
+
+  /**
+   * The name of the source
+   *
+   * @generated from field: string name = 3;
+   */
+  name = "";
+
+  /**
+   * The error message if the source is unhealthy
+   *
+   * @generated from field: optional string error = 4;
+   */
+  error?: string;
+
+  /**
+   * The status of the source, this is calculated based on the last heartbeat received and if there is an error
+   *
+   * @generated from field: account.ActiveSourceStatus status = 5;
+   */
+  status = ActiveSourceStatus.HEALTHY;
+
+  /**
+   * Created at time
+   *
+   * @generated from field: google.protobuf.Timestamp createdAt = 6;
+   */
+  createdAt?: Timestamp;
+
+  /**
+   * The last time we received a heartbeat from the source
+   *
+   * @generated from field: google.protobuf.Timestamp lastHeartbeat = 7;
+   */
+  lastHeartbeat?: Timestamp;
+
+  /**
+   * The next time we expect to receive a heartbeat from the source
+   *
+   * @generated from field: google.protobuf.Timestamp nextHeartbeat = 8;
+   */
+  nextHeartbeat?: Timestamp;
+
+  /**
+   * The type of the source, AWS or Stdlib or Kubernetes
+   *
+   * @generated from field: string type = 9;
+   */
+  type = "";
+
+  /**
+   * Whether the source is managed, or local
+   *
+   * @generated from field: account.SourceManaged managed = 10;
+   */
+  managed = SourceManaged.LOCAL;
+
+  /**
+   * The types of sources that this source can discover
+   *
+   * @generated from field: repeated string availableTypes = 11;
+   */
+  availableTypes: string[] = [];
+
+  /**
+   * The scopes that this source can discover
+   *
+   * @generated from field: repeated string availableScopes = 12;
+   */
+  availableScopes: string[] = [];
+
+  constructor(data?: PartialMessage<SourceHealth>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.SourceHealth";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "version", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "error", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 5, name: "status", kind: "enum", T: proto3.getEnumType(ActiveSourceStatus) },
+    { no: 6, name: "createdAt", kind: "message", T: Timestamp },
+    { no: 7, name: "lastHeartbeat", kind: "message", T: Timestamp },
+    { no: 8, name: "nextHeartbeat", kind: "message", T: Timestamp },
+    { no: 9, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 10, name: "managed", kind: "enum", T: proto3.getEnumType(SourceManaged) },
+    { no: 11, name: "availableTypes", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 12, name: "availableScopes", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SourceHealth {
+    return new SourceHealth().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SourceHealth {
+    return new SourceHealth().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SourceHealth {
+    return new SourceHealth().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SourceHealth | PlainMessage<SourceHealth> | undefined, b: SourceHealth | PlainMessage<SourceHealth> | undefined): boolean {
+    return proto3.util.equals(SourceHealth, a, b);
+  }
+}
+
+/**
+ * @generated from message account.ListAllSourcesStatusResponse
+ */
+export class ListAllSourcesStatusResponse extends Message<ListAllSourcesStatusResponse> {
+  /**
+   * @generated from field: repeated account.SourceHealth sources = 1;
+   */
+  sources: SourceHealth[] = [];
+
+  constructor(data?: PartialMessage<ListAllSourcesStatusResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.ListAllSourcesStatusResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "sources", kind: "message", T: SourceHealth, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListAllSourcesStatusResponse {
+    return new ListAllSourcesStatusResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListAllSourcesStatusResponse {
+    return new ListAllSourcesStatusResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListAllSourcesStatusResponse {
+    return new ListAllSourcesStatusResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListAllSourcesStatusResponse | PlainMessage<ListAllSourcesStatusResponse> | undefined, b: ListAllSourcesStatusResponse | PlainMessage<ListAllSourcesStatusResponse> | undefined): boolean {
+    return proto3.util.equals(ListAllSourcesStatusResponse, a, b);
+  }
+}
+
+/**
+ * The source sends a heartbeat to the API to let it know that it is still alive, note it does not give a status.
+ *
+ * @generated from message account.SubmitSourceHeartbeatRequest
+ */
+export class SubmitSourceHeartbeatRequest extends Message<SubmitSourceHeartbeatRequest> {
+  /**
+   * The UUID of the source that is sending the heartbeat
+   *
+   * @generated from field: bytes UUID = 1;
+   */
+  UUID = new Uint8Array(0);
+
+  /**
+   * The version of the source
+   *
+   * @generated from field: string version = 2;
+   */
+  version = "";
+
+  /**
+   * The name of the source
+   *
+   * @generated from field: string name = 3;
+   */
+  name = "";
+
+  /**
+   * The error message if the source is unhealthy
+   *
+   * @generated from field: optional string error = 4;
+   */
+  error?: string;
+
+  /**
+   * The maximum time between heartbeats that the source can send to the api-server. Otherwise, the source will be marked as unhealthy. eg 30s
+   *
+   * @generated from field: google.protobuf.Duration nextHeartbeatMax = 5;
+   */
+  nextHeartbeatMax?: Duration;
+
+  /**
+   * The type of the source, AWS or Stdlib or Kubernetes
+   *
+   * @generated from field: string type = 6;
+   */
+  type = "";
+
+  /**
+   * Whether the source is managed, or local
+   *
+   * @generated from field: account.SourceManaged managed = 7;
+   */
+  managed = SourceManaged.LOCAL;
+
+  /**
+   * The types of sources that this source can discover
+   *
+   * @generated from field: repeated string availableTypes = 8;
+   */
+  availableTypes: string[] = [];
+
+  /**
+   * The scopes that this source can discover
+   *
+   * @generated from field: repeated string availableScopes = 9;
+   */
+  availableScopes: string[] = [];
+
+  constructor(data?: PartialMessage<SubmitSourceHeartbeatRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.SubmitSourceHeartbeatRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "version", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "error", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 5, name: "nextHeartbeatMax", kind: "message", T: Duration },
+    { no: 6, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "managed", kind: "enum", T: proto3.getEnumType(SourceManaged) },
+    { no: 8, name: "availableTypes", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 9, name: "availableScopes", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SubmitSourceHeartbeatRequest {
+    return new SubmitSourceHeartbeatRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SubmitSourceHeartbeatRequest {
+    return new SubmitSourceHeartbeatRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SubmitSourceHeartbeatRequest {
+    return new SubmitSourceHeartbeatRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SubmitSourceHeartbeatRequest | PlainMessage<SubmitSourceHeartbeatRequest> | undefined, b: SubmitSourceHeartbeatRequest | PlainMessage<SubmitSourceHeartbeatRequest> | undefined): boolean {
+    return proto3.util.equals(SubmitSourceHeartbeatRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message account.SubmitSourceHeartbeatResponse
+ */
+export class SubmitSourceHeartbeatResponse extends Message<SubmitSourceHeartbeatResponse> {
+  constructor(data?: PartialMessage<SubmitSourceHeartbeatResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.SubmitSourceHeartbeatResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SubmitSourceHeartbeatResponse {
+    return new SubmitSourceHeartbeatResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SubmitSourceHeartbeatResponse {
+    return new SubmitSourceHeartbeatResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SubmitSourceHeartbeatResponse {
+    return new SubmitSourceHeartbeatResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SubmitSourceHeartbeatResponse | PlainMessage<SubmitSourceHeartbeatResponse> | undefined, b: SubmitSourceHeartbeatResponse | PlainMessage<SubmitSourceHeartbeatResponse> | undefined): boolean {
+    return proto3.util.equals(SubmitSourceHeartbeatResponse, a, b);
   }
 }
 

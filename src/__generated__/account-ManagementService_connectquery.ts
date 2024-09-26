@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, GetTrialEndRequest, GetTrialEndResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListSourcesRequest, ListSourcesResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
+import { CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, GetTrialEndRequest, GetTrialEndResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListAllSourcesStatusRequest, ListAllSourcesStatusResponse, ListSourcesRequest, ListSourcesResponse, SubmitSourceHeartbeatRequest, SubmitSourceHeartbeatResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
 
 /**
  * Get the details of the account that this user belongs to
@@ -115,6 +115,39 @@ export const deleteSource = {
   kind: MethodKind.Unary,
   I: DeleteSourceRequest,
   O: DeleteSourceResponse,
+  service: {
+    typeName: "account.ManagementService"
+  }
+} as const;
+
+/**
+ * Sources heartbeat and health
+ * List of all recently active sources and their health, includes managed and local sources
+ *
+ * @generated from rpc account.ManagementService.ListAllSourcesStatus
+ */
+export const listAllSourcesStatus = {
+  localName: "listAllSourcesStatus",
+  name: "ListAllSourcesStatus",
+  kind: MethodKind.Unary,
+  I: ListAllSourcesStatusRequest,
+  O: ListAllSourcesStatusResponse,
+  service: {
+    typeName: "account.ManagementService"
+  }
+} as const;
+
+/**
+ * Heartbeat from a source to keep it registered and healthy
+ *
+ * @generated from rpc account.ManagementService.SubmitSourceHeartbeat
+ */
+export const submitSourceHeartbeat = {
+  localName: "submitSourceHeartbeat",
+  name: "SubmitSourceHeartbeat",
+  kind: MethodKind.Unary,
+  I: SubmitSourceHeartbeatRequest,
+  O: SubmitSourceHeartbeatResponse,
   service: {
     typeName: "account.ManagementService"
   }

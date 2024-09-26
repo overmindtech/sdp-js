@@ -3,13 +3,13 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteAccountRequest, AdminDeleteAccountResponse, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateAccountRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, GetTrialEndRequest, GetTrialEndResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListSourcesRequest, ListSourcesResponse, RevlinkWarmupRequest, RevlinkWarmupResponse, UpdateAccountResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
+import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteAccountRequest, AdminDeleteAccountResponse, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateAccountRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, GetTrialEndRequest, GetTrialEndResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListAllSourcesStatusRequest, ListAllSourcesStatusResponse, ListSourcesRequest, ListSourcesResponse, RevlinkWarmupRequest, RevlinkWarmupResponse, SubmitSourceHeartbeatRequest, SubmitSourceHeartbeatResponse, UpdateAccountResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
  * The admin service allows users with Admin privileges to any account. Many of
  * the RPCs in this service mirror RPCs in the ManagementService, but allow the
- * user to specfy an account to operate on, rather than using the account that
+ * user to specify an account to operate on, rather than using the account that
  * the user belongs to.
  *
  * @generated from service account.AdminService
@@ -160,7 +160,7 @@ export const AdminService = {
 /**
  * RPCs to manage the user's account, sources etc. All requests to this API are
  * scoped to that user's account via the
- * `https://api.overmind.tech/account-name` claim in the suppplied token
+ * `https://api.overmind.tech/account-name` claim in the supplied token
  *
  * @generated from service account.ManagementService
  */
@@ -244,6 +244,29 @@ export const ManagementService = {
       name: "DeleteSource",
       I: DeleteSourceRequest,
       O: DeleteSourceResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Sources heartbeat and health
+     * List of all recently active sources and their health, includes managed and local sources
+     *
+     * @generated from rpc account.ManagementService.ListAllSourcesStatus
+     */
+    listAllSourcesStatus: {
+      name: "ListAllSourcesStatus",
+      I: ListAllSourcesStatusRequest,
+      O: ListAllSourcesStatusResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Heartbeat from a source to keep it registered and healthy
+     *
+     * @generated from rpc account.ManagementService.SubmitSourceHeartbeat
+     */
+    submitSourceHeartbeat: {
+      name: "SubmitSourceHeartbeat",
+      I: SubmitSourceHeartbeatRequest,
+      O: SubmitSourceHeartbeatResponse,
       kind: MethodKind.Unary,
     },
     /**
