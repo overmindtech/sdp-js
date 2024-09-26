@@ -8,20 +8,36 @@ Please make any changes in a feature branch and add a pull request. All changes 
 
 ### Testing
 
-Tests can be run with `pnpm run test` or the VSCode Test task
+Tests can be run with `pnpm run test` or the VSCode Test task.
 
 ### Style
 
 Code formatting/style can be validated using:
 
-```
+```shell
 pnpm codequality:check
 ```
 
 And fixed using:
 
-```
+```shell
 pnpm codequality:fix
+```
+
+### Local Development
+
+To use a local version of this package in the frontend. You can build the package and then linking it:
+
+```shell
+pnpm build
+```
+
+Then in the frontend edit the `package.json` to point to the local package:
+
+```json
+"dependencies": {
+  "@overmindtech/sdp": "file:../sdp-js/dist"
+}
 ```
 
 ## Releasing
