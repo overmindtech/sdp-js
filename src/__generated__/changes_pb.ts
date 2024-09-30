@@ -2860,6 +2860,18 @@ export class GetChangeRequest extends Message<GetChangeRequest> {
    */
   UUID = new Uint8Array(0);
 
+  /**
+   * Return a slimmed down version of the change. This will exclude the
+   * following data:
+   * * `rawPlan`: The entire Terraform plan output
+   * * `codeChanges`: The code changes that created this change
+   * * `plannedChanges.before`: The item before the change
+   * * `plannedChanges.after`: The item after the change
+   *
+   * @generated from field: bool slim = 2;
+   */
+  slim = false;
+
   constructor(data?: PartialMessage<GetChangeRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2869,6 +2881,7 @@ export class GetChangeRequest extends Message<GetChangeRequest> {
   static readonly typeName = "changes.GetChangeRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "UUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "slim", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChangeRequest {
