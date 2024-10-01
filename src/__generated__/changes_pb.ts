@@ -2865,8 +2865,6 @@ export class GetChangeRequest extends Message<GetChangeRequest> {
    * following data:
    * * `rawPlan`: The entire Terraform plan output
    * * `codeChanges`: The code changes that created this change
-   * * `plannedChanges.before`: The item before the change
-   * * `plannedChanges.after`: The item after the change
    *
    * @generated from field: bool slim = 2;
    */
