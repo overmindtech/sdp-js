@@ -5,6 +5,7 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Duration, Message, proto3, Struct, Timestamp } from "@bufbuild/protobuf";
+import { QueryMethod } from "./items_pb.ts";
 
 /**
  * @generated from enum account.SourceStatus
@@ -101,6 +102,118 @@ export enum SourceManaged {
 proto3.util.setEnumType(SourceManaged, "account.SourceManaged", [
   { no: 0, name: "LOCAL" },
   { no: 1, name: "MANAGED" },
+]);
+
+/**
+ * @generated from enum account.AdapterCategory
+ */
+export enum AdapterCategory {
+  /**
+   * Fall-back category for resources that do not fit into any other category
+   *
+   * @generated from enum value: ADAPTER_CATEGORY_OTHER = 0;
+   */
+  OTHER = 0,
+
+  /**
+   * This category includes resources that provide processing power and host
+   * applications or services. Examples are virtual machines, containers,
+   * serverless functions, and application hosting platforms. If the primary
+   * purpose of a resource is to execute workloads, run code, or host
+   * applications, it should belong here.
+   *
+   * @generated from enum value: ADAPTER_CATEGORY_COMPUTE_APPLICATION = 1;
+   */
+  COMPUTE_APPLICATION = 1,
+
+  /**
+   * Encompassing resources designed to store, archive, and manage data, this
+   * category includes object storage, block storage, file storage, and data
+   * backup solutions. Select this category when the core function of a
+   * resource is persistent data storage or management
+   *
+   * @generated from enum value: ADAPTER_CATEGORY_STORAGE = 2;
+   */
+  STORAGE = 2,
+
+  /**
+   * This category covers resources that facilitate connectivity and
+   * communication within cloud environments. Typical resources include
+   * virtual networks, load balancers, VPNs, and DNS services. Assign
+   * resources here if their primary role is related to communication,
+   * connectivity, or traffic management
+   *
+   * @generated from enum value: ADAPTER_CATEGORY_NETWORK = 3;
+   */
+  NETWORK = 3,
+
+  /**
+   * Resources in this category focus on safeguarding data, applications, and
+   * cloud infrastructure. Examples include firewalls, identity and access
+   * management, encryption services, and security monitoring tools. Choose
+   * this category if a resource's main function is security, access control,
+   * or compliance
+   *
+   * @generated from enum value: ADAPTER_CATEGORY_SECURITY = 4;
+   */
+  SECURITY = 4,
+
+  /**
+   * This category includes resources aimed at monitoring, tracing, and
+   * logging applications and cloud infrastructure. Examples are monitoring
+   * tools, logging services, and performance management solutions. Use this
+   * category for resources that provide insights into system performance and
+   * health
+   *
+   * @generated from enum value: ADAPTER_CATEGORY_OBSERVABILITY = 5;
+   */
+  OBSERVABILITY = 5,
+
+  /**
+   * Focused on structured data storage and management, this category includes
+   * relational, NoSQL, and in-memory databases, along with data warehousing
+   * solutions. Choose this category for resources specifically designed for
+   * data querying, transaction processing, or complex data operations. This
+   * differs from "storage" in that "databases" have compute associated with
+   * them rather than just storing data.
+   *
+   * @generated from enum value: ADAPTER_CATEGORY_DATABASE = 6;
+   */
+  DATABASE = 6,
+
+  /**
+   * This category includes resources designed for managing configurations and
+   * deployments. Examples are infrastructure as code tools, configuration
+   * management services, and deployment orchestration solutions. Classify
+   * resources here if they primarily handle configuration, environment
+   * management, or automated deployment
+   *
+   * @generated from enum value: ADAPTER_CATEGORY_CONFIGURATION = 7;
+   */
+  CONFIGURATION = 7,
+
+  /**
+   * This category is dedicated to resources for developing, training, and
+   * deploying artificial intelligence models and machine learning
+   * applications. Include machine learning platforms, AI services, and data
+   * labeling tools here. Select this category if a resource's principal
+   * function involves AI or machine learning processes
+   *
+   * @generated from enum value: ADAPTER_CATEGORY_AI = 8;
+   */
+  AI = 8,
+}
+// Retrieve enum metadata with: proto3.getEnumType(AdapterCategory)
+proto3.util.setEnumType(AdapterCategory, "account.AdapterCategory", [
+  { no: 0, name: "ADAPTER_CATEGORY_OTHER" },
+  { no: 1, name: "ADAPTER_CATEGORY_COMPUTE_APPLICATION" },
+  { no: 2, name: "ADAPTER_CATEGORY_STORAGE" },
+  { no: 3, name: "ADAPTER_CATEGORY_NETWORK" },
+  { no: 4, name: "ADAPTER_CATEGORY_SECURITY" },
+  { no: 5, name: "ADAPTER_CATEGORY_OBSERVABILITY" },
+  { no: 6, name: "ADAPTER_CATEGORY_DATABASE" },
+  { no: 7, name: "ADAPTER_CATEGORY_CONFIGURATION" },
+  { no: 8, name: "ADAPTER_CATEGORY_AI" },
 ]);
 
 /**
@@ -1778,6 +1891,13 @@ export class SourceHealth extends Message<SourceHealth> {
    */
   availableScopes: string[] = [];
 
+  /**
+   * AdapterMetadata is a map of metadata that the source can send to the API
+   *
+   * @generated from field: repeated account.AdapterMetadata adapterMetadata = 13;
+   */
+  adapterMetadata: AdapterMetadata[] = [];
+
   constructor(data?: PartialMessage<SourceHealth>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1798,6 +1918,7 @@ export class SourceHealth extends Message<SourceHealth> {
     { no: 10, name: "managed", kind: "enum", T: proto3.getEnumType(SourceManaged) },
     { no: 11, name: "availableTypes", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
     { no: 12, name: "availableScopes", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 13, name: "adapterMetadata", kind: "message", T: AdapterMetadata, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SourceHealth {
@@ -1910,18 +2031,18 @@ export class SubmitSourceHeartbeatRequest extends Message<SubmitSourceHeartbeatR
   managed = SourceManaged.LOCAL;
 
   /**
-   * The types of sources that this source can discover
-   *
-   * @generated from field: repeated string availableTypes = 8;
-   */
-  availableTypes: string[] = [];
-
-  /**
    * The scopes that this source can discover
    *
    * @generated from field: repeated string availableScopes = 9;
    */
   availableScopes: string[] = [];
+
+  /**
+   * AdapterMetadata is a map of metadata that the source can send to the API
+   *
+   * @generated from field: repeated account.AdapterMetadata adapterMetadata = 10;
+   */
+  adapterMetadata: AdapterMetadata[] = [];
 
   constructor(data?: PartialMessage<SubmitSourceHeartbeatRequest>) {
     super();
@@ -1938,8 +2059,8 @@ export class SubmitSourceHeartbeatRequest extends Message<SubmitSourceHeartbeatR
     { no: 5, name: "nextHeartbeatMax", kind: "message", T: Duration },
     { no: 6, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "managed", kind: "enum", T: proto3.getEnumType(SourceManaged) },
-    { no: 8, name: "availableTypes", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
     { no: 9, name: "availableScopes", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 10, name: "adapterMetadata", kind: "message", T: AdapterMetadata, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SubmitSourceHeartbeatRequest {
@@ -1956,6 +2077,215 @@ export class SubmitSourceHeartbeatRequest extends Message<SubmitSourceHeartbeatR
 
   static equals(a: SubmitSourceHeartbeatRequest | PlainMessage<SubmitSourceHeartbeatRequest> | undefined, b: SubmitSourceHeartbeatRequest | PlainMessage<SubmitSourceHeartbeatRequest> | undefined): boolean {
     return proto3.util.equals(SubmitSourceHeartbeatRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message account.AdapterMetadata
+ */
+export class AdapterMetadata extends Message<AdapterMetadata> {
+  /**
+   * The type of item that this adapter returns e.g. eks-cluster
+   *
+   * @generated from field: string type = 1;
+   */
+  type = "";
+
+  /**
+   * The category that these items fall under
+   *
+   * @generated from field: account.AdapterCategory category = 2;
+   */
+  category = AdapterCategory.OTHER;
+
+  /**
+   * The list of other types that this can be linked to, eg eks-cluster ->
+   * eks-node-group 
+   *
+   * @generated from field: repeated string potentialLinks = 3;
+   */
+  potentialLinks: string[] = [];
+
+  /**
+   * A descriptive name of the types of items that are returned by this
+   * adapter e.g. "EKS Cluster"
+   *
+   * @generated from field: string descriptiveName = 4;
+   */
+  descriptiveName = "";
+
+  /**
+   * The supported query methods for this adapter
+   *
+   * @generated from field: account.AdapterSupportedQueryMethods supportedQueryMethods = 5;
+   */
+  supportedQueryMethods?: AdapterSupportedQueryMethods;
+
+  /**
+   * The terraform mappings for this adapter, this is optional
+   *
+   * @generated from field: repeated account.TerraformMapping terraformMappings = 6;
+   */
+  terraformMappings: TerraformMapping[] = [];
+
+  constructor(data?: PartialMessage<AdapterMetadata>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.AdapterMetadata";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "category", kind: "enum", T: proto3.getEnumType(AdapterCategory) },
+    { no: 3, name: "potentialLinks", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 4, name: "descriptiveName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "supportedQueryMethods", kind: "message", T: AdapterSupportedQueryMethods },
+    { no: 6, name: "terraformMappings", kind: "message", T: TerraformMapping, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AdapterMetadata {
+    return new AdapterMetadata().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AdapterMetadata {
+    return new AdapterMetadata().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AdapterMetadata {
+    return new AdapterMetadata().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: AdapterMetadata | PlainMessage<AdapterMetadata> | undefined, b: AdapterMetadata | PlainMessage<AdapterMetadata> | undefined): boolean {
+    return proto3.util.equals(AdapterMetadata, a, b);
+  }
+}
+
+/**
+ * @generated from message account.AdapterSupportedQueryMethods
+ */
+export class AdapterSupportedQueryMethods extends Message<AdapterSupportedQueryMethods> {
+  /**
+   * description of the Get method
+   *
+   * @generated from field: bool get = 1;
+   */
+  get = false;
+
+  /**
+   * @generated from field: string getDescription = 2;
+   */
+  getDescription = "";
+
+  /**
+   * description of the List method
+   *
+   * @generated from field: bool list = 3;
+   */
+  list = false;
+
+  /**
+   * @generated from field: string listDescription = 4;
+   */
+  listDescription = "";
+
+  /**
+   * description of the Search method
+   *
+   * @generated from field: bool search = 5;
+   */
+  search = false;
+
+  /**
+   * @generated from field: string searchDescription = 6;
+   */
+  searchDescription = "";
+
+  constructor(data?: PartialMessage<AdapterSupportedQueryMethods>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.AdapterSupportedQueryMethods";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "get", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "getDescription", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "list", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 4, name: "listDescription", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "search", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 6, name: "searchDescription", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AdapterSupportedQueryMethods {
+    return new AdapterSupportedQueryMethods().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AdapterSupportedQueryMethods {
+    return new AdapterSupportedQueryMethods().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AdapterSupportedQueryMethods {
+    return new AdapterSupportedQueryMethods().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: AdapterSupportedQueryMethods | PlainMessage<AdapterSupportedQueryMethods> | undefined, b: AdapterSupportedQueryMethods | PlainMessage<AdapterSupportedQueryMethods> | undefined): boolean {
+    return proto3.util.equals(AdapterSupportedQueryMethods, a, b);
+  }
+}
+
+/**
+ * @generated from message account.TerraformMapping
+ */
+export class TerraformMapping extends Message<TerraformMapping> {
+  /**
+   * eg get
+   *
+   * @generated from field: QueryMethod terraformMethod = 1;
+   */
+  terraformMethod = QueryMethod.GET;
+
+  /**
+   * eg ap aws_eks_node_group.arn
+   *
+   * @generated from field: string terraformQueryMap = 2;
+   */
+  terraformQueryMap = "";
+
+  /**
+   * eg ${provider_mapping.cluster_name}.${values.metadata[0].namespace}
+   *
+   * @generated from field: string terraformScope = 3;
+   */
+  terraformScope = "";
+
+  constructor(data?: PartialMessage<TerraformMapping>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.TerraformMapping";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "terraformMethod", kind: "enum", T: proto3.getEnumType(QueryMethod) },
+    { no: 2, name: "terraformQueryMap", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "terraformScope", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TerraformMapping {
+    return new TerraformMapping().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): TerraformMapping {
+    return new TerraformMapping().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): TerraformMapping {
+    return new TerraformMapping().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: TerraformMapping | PlainMessage<TerraformMapping> | undefined, b: TerraformMapping | PlainMessage<TerraformMapping> | undefined): boolean {
+    return proto3.util.equals(TerraformMapping, a, b);
   }
 }
 

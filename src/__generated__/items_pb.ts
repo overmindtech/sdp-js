@@ -111,7 +111,7 @@ proto3.util.setEnumType(QueryMethod, "QueryMethod", [
  * |       |       | example: a change to an EC2 instance can affect its DNS name (in the sense that other items depending on that DNS name will see the impact)
  * | true  | false | a change to linked items can affect this item
  * |       |       | example: changing the KMS key used by a DynamoDB table can impact the table, but no change to the table can impact the key
- * | true  | true  | changes on boths sides of the link can affect the other
+ * | true  | true  | changes on both sides of the link can affect the other
  * |       |       | example: changes to both EC2 Instances and their volumes can affect the other side of the relation.
  *
  * @generated from message BlastPropagation
