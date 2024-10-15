@@ -2651,3 +2651,127 @@ export class GetTrialEndResponse extends Message<GetTrialEndResponse> {
   }
 }
 
+/**
+ * @generated from message account.AvailableItemType
+ */
+export class AvailableItemType extends Message<AvailableItemType> {
+  /**
+   * The type of item that this adapter returns e.g. eks-cluster
+   *
+   * @generated from field: string type = 1;
+   */
+  type = "";
+
+  /**
+   * The category that these items fall under
+   *
+   * @generated from field: account.AdapterCategory category = 2;
+   */
+  category = AdapterCategory.OTHER;
+
+  /**
+   * A descriptive name of the types of items that are returned by this
+   * adapter e.g. "EKS Cluster"
+   *
+   * @generated from field: string descriptiveName = 3;
+   */
+  descriptiveName = "";
+
+  constructor(data?: PartialMessage<AvailableItemType>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.AvailableItemType";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "category", kind: "enum", T: proto3.getEnumType(AdapterCategory) },
+    { no: 3, name: "descriptiveName", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AvailableItemType {
+    return new AvailableItemType().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AvailableItemType {
+    return new AvailableItemType().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AvailableItemType {
+    return new AvailableItemType().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: AvailableItemType | PlainMessage<AvailableItemType> | undefined, b: AvailableItemType | PlainMessage<AvailableItemType> | undefined): boolean {
+    return proto3.util.equals(AvailableItemType, a, b);
+  }
+}
+
+/**
+ * @generated from message account.ListAvailableItemTypesRequest
+ */
+export class ListAvailableItemTypesRequest extends Message<ListAvailableItemTypesRequest> {
+  constructor(data?: PartialMessage<ListAvailableItemTypesRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.ListAvailableItemTypesRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListAvailableItemTypesRequest {
+    return new ListAvailableItemTypesRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListAvailableItemTypesRequest {
+    return new ListAvailableItemTypesRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListAvailableItemTypesRequest {
+    return new ListAvailableItemTypesRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListAvailableItemTypesRequest | PlainMessage<ListAvailableItemTypesRequest> | undefined, b: ListAvailableItemTypesRequest | PlainMessage<ListAvailableItemTypesRequest> | undefined): boolean {
+    return proto3.util.equals(ListAvailableItemTypesRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message account.ListAvailableItemTypesResponse
+ */
+export class ListAvailableItemTypesResponse extends Message<ListAvailableItemTypesResponse> {
+  /**
+   * @generated from field: repeated account.AvailableItemType types = 1;
+   */
+  types: AvailableItemType[] = [];
+
+  constructor(data?: PartialMessage<ListAvailableItemTypesResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "account.ListAvailableItemTypesResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "types", kind: "message", T: AvailableItemType, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListAvailableItemTypesResponse {
+    return new ListAvailableItemTypesResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListAvailableItemTypesResponse {
+    return new ListAvailableItemTypesResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListAvailableItemTypesResponse {
+    return new ListAvailableItemTypesResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListAvailableItemTypesResponse | PlainMessage<ListAvailableItemTypesResponse> | undefined, b: ListAvailableItemTypesResponse | PlainMessage<ListAvailableItemTypesResponse> | undefined): boolean {
+    return proto3.util.equals(ListAvailableItemTypesResponse, a, b);
+  }
+}
+

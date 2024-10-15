@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteAccountRequest, AdminDeleteAccountResponse, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateAccountRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, GetTrialEndRequest, GetTrialEndResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListAllSourcesStatusRequest, ListAllSourcesStatusResponse, ListSourcesRequest, ListSourcesResponse, RevlinkWarmupRequest, RevlinkWarmupResponse, SubmitSourceHeartbeatRequest, SubmitSourceHeartbeatResponse, UpdateAccountResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
+import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteAccountRequest, AdminDeleteAccountResponse, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateAccountRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, GetTrialEndRequest, GetTrialEndResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListAllSourcesStatusRequest, ListAllSourcesStatusResponse, ListAvailableItemTypesRequest, ListAvailableItemTypesResponse, ListSourcesRequest, ListSourcesResponse, RevlinkWarmupRequest, RevlinkWarmupResponse, SubmitSourceHeartbeatRequest, SubmitSourceHeartbeatResponse, UpdateAccountResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -152,6 +152,17 @@ export const AdminService = {
       name: "CreateToken",
       I: AdminCreateTokenRequest,
       O: CreateTokenResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Lists all the available item types that can be discovered by sources
+     *
+     * @generated from rpc account.AdminService.ListAvailableItemTypes
+     */
+    listAvailableItemTypes: {
+      name: "ListAvailableItemTypes",
+      I: ListAvailableItemTypesRequest,
+      O: ListAvailableItemTypesResponse,
       kind: MethodKind.Unary,
     },
   }
