@@ -7,6 +7,46 @@ import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialM
 import { Message, proto3 } from "@bufbuild/protobuf";
 
 /**
+ * @generated from enum SortOrder
+ */
+export enum SortOrder {
+  /**
+   * A-Z
+   *
+   * @generated from enum value: ALPHABETICAL_ASCENDING = 0;
+   */
+  ALPHABETICAL_ASCENDING = 0,
+
+  /**
+   * Z-A
+   *
+   * @generated from enum value: ALPHABETICAL_DESCENDING = 1;
+   */
+  ALPHABETICAL_DESCENDING = 1,
+
+  /**
+   * Oldest first
+   *
+   * @generated from enum value: DATE_ASCENDING = 2;
+   */
+  DATE_ASCENDING = 2,
+
+  /**
+   * Newest first
+   *
+   * @generated from enum value: DATE_DESCENDING = 3;
+   */
+  DATE_DESCENDING = 3,
+}
+// Retrieve enum metadata with: proto3.getEnumType(SortOrder)
+proto3.util.setEnumType(SortOrder, "SortOrder", [
+  { no: 0, name: "ALPHABETICAL_ASCENDING" },
+  { no: 1, name: "ALPHABETICAL_DESCENDING" },
+  { no: 2, name: "DATE_ASCENDING" },
+  { no: 3, name: "DATE_DESCENDING" },
+]);
+
+/**
  * @generated from message PaginationRequest
  */
 export class PaginationRequest extends Message<PaginationRequest> {

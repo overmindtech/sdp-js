@@ -7,7 +7,7 @@ import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialM
 import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
 import { Edge, Health, Item, Query, Reference } from "./items_pb.ts";
 import { BlastRadiusConfig } from "./config_pb.ts";
-import { PaginationRequest, PaginationResponse } from "./util_pb.ts";
+import { PaginationRequest, PaginationResponse, SortOrder } from "./util_pb.ts";
 import { Bookmark } from "./bookmarks_pb.ts";
 import { Snapshot } from "./snapshots_pb.ts";
 
@@ -916,6 +916,11 @@ export class ListHomeChangesRequest extends Message<ListHomeChangesRequest> {
    */
   pagination?: PaginationRequest;
 
+  /**
+   * @generated from field: changes.ChangeFiltersRequest filters = 2;
+   */
+  filters?: ChangeFiltersRequest;
+
   constructor(data?: PartialMessage<ListHomeChangesRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -925,6 +930,7 @@ export class ListHomeChangesRequest extends Message<ListHomeChangesRequest> {
   static readonly typeName = "changes.ListHomeChangesRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "pagination", kind: "message", T: PaginationRequest },
+    { no: 2, name: "filters", kind: "message", T: ChangeFiltersRequest },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListHomeChangesRequest {
@@ -941,6 +947,73 @@ export class ListHomeChangesRequest extends Message<ListHomeChangesRequest> {
 
   static equals(a: ListHomeChangesRequest | PlainMessage<ListHomeChangesRequest> | undefined, b: ListHomeChangesRequest | PlainMessage<ListHomeChangesRequest> | undefined): boolean {
     return proto3.util.equals(ListHomeChangesRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.ChangeFiltersRequest
+ */
+export class ChangeFiltersRequest extends Message<ChangeFiltersRequest> {
+  /**
+   * @generated from field: repeated string repos = 1;
+   */
+  repos: string[] = [];
+
+  /**
+   * @generated from field: map<string, string> tags = 2;
+   */
+  tags: { [key: string]: string } = {};
+
+  /**
+   * @generated from field: repeated changes.Risk.Severity risks = 3;
+   */
+  risks: Risk_Severity[] = [];
+
+  /**
+   * @generated from field: repeated string authors = 4;
+   */
+  authors: string[] = [];
+
+  /**
+   * @generated from field: repeated changes.ChangeStatus statuses = 5;
+   */
+  statuses: ChangeStatus[] = [];
+
+  /**
+   * @generated from field: SortOrder sortOrder = 6;
+   */
+  sortOrder = SortOrder.ALPHABETICAL_ASCENDING;
+
+  constructor(data?: PartialMessage<ChangeFiltersRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.ChangeFiltersRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "repos", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 2, name: "tags", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 9 /* ScalarType.STRING */} },
+    { no: 3, name: "risks", kind: "enum", T: proto3.getEnumType(Risk_Severity), repeated: true },
+    { no: 4, name: "authors", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 5, name: "statuses", kind: "enum", T: proto3.getEnumType(ChangeStatus), repeated: true },
+    { no: 6, name: "sortOrder", kind: "enum", T: proto3.getEnumType(SortOrder) },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeFiltersRequest {
+    return new ChangeFiltersRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChangeFiltersRequest {
+    return new ChangeFiltersRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChangeFiltersRequest {
+    return new ChangeFiltersRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChangeFiltersRequest | PlainMessage<ChangeFiltersRequest> | undefined, b: ChangeFiltersRequest | PlainMessage<ChangeFiltersRequest> | undefined): boolean {
+    return proto3.util.equals(ChangeFiltersRequest, a, b);
   }
 }
 
@@ -984,6 +1057,86 @@ export class ListHomeChangesResponse extends Message<ListHomeChangesResponse> {
 
   static equals(a: ListHomeChangesResponse | PlainMessage<ListHomeChangesResponse> | undefined, b: ListHomeChangesResponse | PlainMessage<ListHomeChangesResponse> | undefined): boolean {
     return proto3.util.equals(ListHomeChangesResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.PopulateChangeFiltersRequest
+ */
+export class PopulateChangeFiltersRequest extends Message<PopulateChangeFiltersRequest> {
+  constructor(data?: PartialMessage<PopulateChangeFiltersRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.PopulateChangeFiltersRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PopulateChangeFiltersRequest {
+    return new PopulateChangeFiltersRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PopulateChangeFiltersRequest {
+    return new PopulateChangeFiltersRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PopulateChangeFiltersRequest {
+    return new PopulateChangeFiltersRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PopulateChangeFiltersRequest | PlainMessage<PopulateChangeFiltersRequest> | undefined, b: PopulateChangeFiltersRequest | PlainMessage<PopulateChangeFiltersRequest> | undefined): boolean {
+    return proto3.util.equals(PopulateChangeFiltersRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message changes.PopulateChangeFiltersResponse
+ */
+export class PopulateChangeFiltersResponse extends Message<PopulateChangeFiltersResponse> {
+  /**
+   * @generated from field: repeated string repos = 1;
+   */
+  repos: string[] = [];
+
+  /**
+   * @generated from field: repeated string authors = 2;
+   */
+  authors: string[] = [];
+
+  /**
+   * @generated from field: repeated changes.ChangeStatus statuses = 3;
+   */
+  statuses: ChangeStatus[] = [];
+
+  constructor(data?: PartialMessage<PopulateChangeFiltersResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "changes.PopulateChangeFiltersResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "repos", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 2, name: "authors", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 3, name: "statuses", kind: "enum", T: proto3.getEnumType(ChangeStatus), repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PopulateChangeFiltersResponse {
+    return new PopulateChangeFiltersResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PopulateChangeFiltersResponse {
+    return new PopulateChangeFiltersResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PopulateChangeFiltersResponse {
+    return new PopulateChangeFiltersResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PopulateChangeFiltersResponse | PlainMessage<PopulateChangeFiltersResponse> | undefined, b: PopulateChangeFiltersResponse | PlainMessage<PopulateChangeFiltersResponse> | undefined): boolean {
+    return proto3.util.equals(PopulateChangeFiltersResponse, a, b);
   }
 }
 

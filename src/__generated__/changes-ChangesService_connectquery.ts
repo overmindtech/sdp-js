@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, CreateSimpleAppRequest, CreateSimpleAppResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, GetAffectedAppsRequest, GetAffectedAppsResponse, GetAppRequest, GetAppResponse, GetAppSummariesRequest, GetAppSummariesResponse, GetAppSummaryRequest, GetAppSummaryResponse, GetChangeArchiveRequest, GetChangeArchiveResponse, GetChangeRequest, GetChangeResponse, GetChangeRisksRequest, GetChangeRisksResponse, GetChangeTimelineRequest, GetChangeTimelineResponse, GetDiffRequest, GetDiffResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppChangesRequest, ListAppChangesResponse, ListAppChangesSummaryRequest, ListAppChangesSummaryResponse, ListAppsRequest, ListAppsResponse, ListChangesBySnapshotUUIDRequest, ListChangesBySnapshotUUIDResponse, ListChangesByStatusRequest, ListChangesByStatusResponse, ListChangesRequest, ListChangesResponse, ListChangingItemsSummaryRequest, ListChangingItemsSummaryResponse, ListHomeAppsRequest, ListHomeAppsResponse, ListHomeChangesRequest, ListHomeChangesResponse, RefreshStateRequest, RefreshStateResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
+import { CreateAppRequest, CreateAppResponse, CreateChangeRequest, CreateChangeResponse, CreateSimpleAppRequest, CreateSimpleAppResponse, DeleteAppRequest, DeleteAppResponse, DeleteChangeRequest, DeleteChangeResponse, GetAffectedAppsRequest, GetAffectedAppsResponse, GetAppRequest, GetAppResponse, GetAppSummariesRequest, GetAppSummariesResponse, GetAppSummaryRequest, GetAppSummaryResponse, GetChangeArchiveRequest, GetChangeArchiveResponse, GetChangeRequest, GetChangeResponse, GetChangeRisksRequest, GetChangeRisksResponse, GetChangeTimelineRequest, GetChangeTimelineResponse, GetDiffRequest, GetDiffResponse, GetOnboardingRequest, GetOnboardingResponse, ListAppChangesRequest, ListAppChangesResponse, ListAppChangesSummaryRequest, ListAppChangesSummaryResponse, ListAppsRequest, ListAppsResponse, ListChangesBySnapshotUUIDRequest, ListChangesBySnapshotUUIDResponse, ListChangesByStatusRequest, ListChangesByStatusResponse, ListChangesRequest, ListChangesResponse, ListChangingItemsSummaryRequest, ListChangingItemsSummaryResponse, ListHomeAppsRequest, ListHomeAppsResponse, ListHomeChangesRequest, ListHomeChangesResponse, PopulateChangeFiltersRequest, PopulateChangeFiltersResponse, RefreshStateRequest, RefreshStateResponse, UpdateAppRequest, UpdateAppResponse, UpdateChangeRequest, UpdateChangeResponse, UpdateOnboardingRequest, UpdateOnboardingResponse } from "./changes_pb.ts";
 
 /**
  * Lists all apps
@@ -453,6 +453,22 @@ export const getDiff = {
   kind: MethodKind.Unary,
   I: GetDiffRequest,
   O: GetDiffResponse,
+  service: {
+    typeName: "changes.ChangesService"
+  }
+} as const;
+
+/**
+ * List all the available repos, authors and statuses that can be used to populate the dropdown filters
+ *
+ * @generated from rpc changes.ChangesService.PopulateChangeFilters
+ */
+export const populateChangeFilters = {
+  localName: "populateChangeFilters",
+  name: "PopulateChangeFilters",
+  kind: MethodKind.Unary,
+  I: PopulateChangeFiltersRequest,
+  O: PopulateChangeFiltersResponse,
   service: {
     typeName: "changes.ChangesService"
   }
