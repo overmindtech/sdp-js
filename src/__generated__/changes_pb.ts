@@ -2305,6 +2305,13 @@ export class ChangeSummary extends Message<ChangeSummary> {
    */
   description = "";
 
+  /**
+   * Repo information; can be an empty string. CLI attempts auto-population, but users can override. Not necessarily a URL. The UI will be responsible for any formatting/shortnening/sprucing up should it be required.
+   *
+   * @generated from field: string repo = 16;
+   */
+  repo = "";
+
   constructor(data?: PartialMessage<ChangeSummary>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2327,6 +2334,7 @@ export class ChangeSummary extends Message<ChangeSummary> {
     { no: 12, name: "numMediumRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 13, name: "numHighRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 14, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 16, name: "repo", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeSummary {
@@ -2740,6 +2748,13 @@ export class ChangeProperties extends Message<ChangeProperties> {
    */
   codeChanges = "";
 
+  /**
+   * Repo information; can be an empty string. CLI attempts auto-population, but users can override. Not necessarily a URL. The UI will be responsible for any formatting/shortnening/sprucing up should it be required.
+   *
+   * @generated from field: string repo = 15;
+   */
+  repo = "";
+
   constructor(data?: PartialMessage<ChangeProperties>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2761,6 +2776,7 @@ export class ChangeProperties extends Message<ChangeProperties> {
     { no: 12, name: "plannedChanges", kind: "message", T: ItemDiff, repeated: true },
     { no: 13, name: "rawPlan", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 14, name: "codeChanges", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 15, name: "repo", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeProperties {
