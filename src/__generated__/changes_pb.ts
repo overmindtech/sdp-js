@@ -917,7 +917,7 @@ export class ListHomeChangesRequest extends Message<ListHomeChangesRequest> {
   pagination?: PaginationRequest;
 
   /**
-   * @generated from field: changes.ChangeFiltersRequest filters = 2;
+   * @generated from field: optional changes.ChangeFiltersRequest filters = 2;
    */
   filters?: ChangeFiltersRequest;
 
@@ -930,7 +930,7 @@ export class ListHomeChangesRequest extends Message<ListHomeChangesRequest> {
   static readonly typeName = "changes.ListHomeChangesRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "pagination", kind: "message", T: PaginationRequest },
-    { no: 2, name: "filters", kind: "message", T: ChangeFiltersRequest },
+    { no: 2, name: "filters", kind: "message", T: ChangeFiltersRequest, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListHomeChangesRequest {
@@ -980,9 +980,11 @@ export class ChangeFiltersRequest extends Message<ChangeFiltersRequest> {
   statuses: ChangeStatus[] = [];
 
   /**
-   * @generated from field: SortOrder sortOrder = 6;
+   * the default is SortOrder.DATE_DESCENDING (newest first)
+   *
+   * @generated from field: optional SortOrder sortOrder = 6;
    */
-  sortOrder = SortOrder.ALPHABETICAL_ASCENDING;
+  sortOrder?: SortOrder;
 
   constructor(data?: PartialMessage<ChangeFiltersRequest>) {
     super();
@@ -997,7 +999,7 @@ export class ChangeFiltersRequest extends Message<ChangeFiltersRequest> {
     { no: 3, name: "risks", kind: "enum", T: proto3.getEnumType(Risk_Severity), repeated: true },
     { no: 4, name: "authors", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
     { no: 5, name: "statuses", kind: "enum", T: proto3.getEnumType(ChangeStatus), repeated: true },
-    { no: 6, name: "sortOrder", kind: "enum", T: proto3.getEnumType(SortOrder) },
+    { no: 6, name: "sortOrder", kind: "enum", T: proto3.getEnumType(SortOrder), opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeFiltersRequest {
