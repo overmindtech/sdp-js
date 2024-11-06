@@ -1107,11 +1107,6 @@ export class PopulateChangeFiltersResponse extends Message<PopulateChangeFilters
    */
   authors: string[] = [];
 
-  /**
-   * @generated from field: repeated changes.ChangeStatus statuses = 3;
-   */
-  statuses: ChangeStatus[] = [];
-
   constructor(data?: PartialMessage<PopulateChangeFiltersResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1122,7 +1117,6 @@ export class PopulateChangeFiltersResponse extends Message<PopulateChangeFilters
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "repos", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
     { no: 2, name: "authors", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
-    { no: 3, name: "statuses", kind: "enum", T: proto3.getEnumType(ChangeStatus), repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PopulateChangeFiltersResponse {
