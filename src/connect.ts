@@ -35,6 +35,7 @@ export {
   getChangeRisks,
   getChangeArchive,
   listChangesByStatus,
+  populateChangeFilters,
 } from './__generated__/changes-ChangesService_connectquery'
 export {
   listSnapshots,
