@@ -12,8 +12,8 @@ importers:
         specifier: ^1.10.0
         version: 1.10.0
       '@connectrpc/connect-query':
-        specifier: ^1.4.2
-        version: 1.4.2(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.4.0(@bufbuild/protobuf@1.10.0))(@tanstack/react-query@5.28.14(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^2.0.0
+        version: 2.0.0(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.4.0(@bufbuild/protobuf@1.10.0))(@tanstack/query-core@5.28.13)(@tanstack/react-query@5.28.14(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@typescript-eslint/parser':
         specifier: ^8.10.0
         version: 8.10.0(eslint@9.12.0(jiti@1.21.6))(typescript@5.6.3)
@@ -154,11 +154,18 @@ packages:
   '@bufbuild/protobuf@1.10.0':
     resolution: {integrity: sha512-QDdVFLoN93Zjg36NoQPZfsVH9tZew7wKDKyV5qRdj8ntT4wQCOradQjRaTdwMhWUYsgKsvCINKKm87FdEk96Ag==}
 
-  '@connectrpc/connect-query@1.4.2':
-    resolution: {integrity: sha512-ZjBLtaGoBPDMtdRu4KiX7KpSigifiZiVaenhXHUsmNRjLj9r4OxQM+O2OqvTQ1YJhP4/h1xL+HX7YB0gcQ0FoA==}
+  '@connectrpc/connect-query-core@2.0.0':
+    resolution: {integrity: sha512-IYn3Nw37yOihg6W/8WqsioorxO9E4K2ypvyk5/JQ1A0s4l/UOwNVrPlUv3uhF4eW++R4NMCn25B4iKBDygS2yg==}
     peerDependencies:
-      '@bufbuild/protobuf': ^1.10.0
-      '@connectrpc/connect': ^1.1.2
+      '@bufbuild/protobuf': 2.x
+      '@connectrpc/connect': ^2.0.0
+      '@tanstack/query-core': 5.x
+
+  '@connectrpc/connect-query@2.0.0':
+    resolution: {integrity: sha512-1xLeS+aT4QZvMbP4TrZrrcV9w4fIsOPVg8WtMtINoYYGpQOp9sSW/EGp9NgwiTWfyA3DoJDLttXCIf3eIHvOlA==}
+    peerDependencies:
+      '@bufbuild/protobuf': 2.x
+      '@connectrpc/connect': ^2.0.0
       '@tanstack/react-query': 5.x
       react: ^18.3.1
       react-dom: ^18.3.1
@@ -2363,9 +2370,6 @@ packages:
   spdx-license-ids@3.0.18:
     resolution: {integrity: sha512-xxRs31BqRYHwiMzudOrpSiHtZ8i/GeionCBDSilhYRj+9gIcI8wCZTlXZKu9vZIVqViP3dcp9qE5G6AlIaD+TQ==}
 
-  stable-hash@0.0.4:
-    resolution: {integrity: sha512-LjdcbuBeLcdETCrPn9i8AYAZ1eCtu4ECAWtP7UleOiZ9LzVxRzzUZEoZ8zB24nhkQnDWyET0I+3sWokSDS3E7g==}
-
   stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
 
@@ -2767,14 +2771,22 @@ snapshots:
 
   '@bufbuild/protobuf@1.10.0': {}
 
-  '@connectrpc/connect-query@1.4.2(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.4.0(@bufbuild/protobuf@1.10.0))(@tanstack/react-query@5.28.14(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@connectrpc/connect-query-core@2.0.0(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.4.0(@bufbuild/protobuf@1.10.0))(@tanstack/query-core@5.28.13)':
     dependencies:
       '@bufbuild/protobuf': 1.10.0
       '@connectrpc/connect': 1.4.0(@bufbuild/protobuf@1.10.0)
+      '@tanstack/query-core': 5.28.13
+
+  '@connectrpc/connect-query@2.0.0(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.4.0(@bufbuild/protobuf@1.10.0))(@tanstack/query-core@5.28.13)(@tanstack/react-query@5.28.14(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@bufbuild/protobuf': 1.10.0
+      '@connectrpc/connect': 1.4.0(@bufbuild/protobuf@1.10.0)
+      '@connectrpc/connect-query-core': 2.0.0(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.4.0(@bufbuild/protobuf@1.10.0))(@tanstack/query-core@5.28.13)
       '@tanstack/react-query': 5.28.14(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      stable-hash: 0.0.4
+    transitivePeerDependencies:
+      - '@tanstack/query-core'
 
   '@connectrpc/connect@1.4.0(@bufbuild/protobuf@1.10.0)':
     dependencies:
@@ -4850,8 +4862,6 @@ snapshots:
       spdx-license-ids: 3.0.18
 
   spdx-license-ids@3.0.18: {}
-
-  stable-hash@0.0.4: {}
 
   stackback@0.0.2: {}
 
