@@ -2751,6 +2751,13 @@ export class ChangeProperties extends Message<ChangeProperties> {
    */
   repo = "";
 
+  /**
+   * User-defined tags associated with this change, will be populated via the CLI and not the UI.
+   *
+   * @generated from field: map<string, string> tags = 16;
+   */
+  tags: { [key: string]: string } = {};
+
   constructor(data?: PartialMessage<ChangeProperties>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2773,6 +2780,7 @@ export class ChangeProperties extends Message<ChangeProperties> {
     { no: 13, name: "rawPlan", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 14, name: "codeChanges", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 15, name: "repo", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 16, name: "tags", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 9 /* ScalarType.STRING */} },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeProperties {
