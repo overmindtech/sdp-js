@@ -2308,6 +2308,13 @@ export class ChangeSummary extends Message<ChangeSummary> {
    */
   repo = "";
 
+  /**
+   * User-defined tags associated with this change, will be populated via the CLI and not the UI.
+   *
+   * @generated from field: map<string, string> tags = 17;
+   */
+  tags: { [key: string]: string } = {};
+
   constructor(data?: PartialMessage<ChangeSummary>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2331,6 +2338,7 @@ export class ChangeSummary extends Message<ChangeSummary> {
     { no: 13, name: "numHighRisk", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 14, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 16, name: "repo", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 17, name: "tags", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 9 /* ScalarType.STRING */} },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangeSummary {
