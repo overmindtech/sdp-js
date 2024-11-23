@@ -982,7 +982,7 @@ export class ChatMessage extends Message<ChatMessage> {
  */
 export class ToolMetadata extends Message<ToolMetadata> {
   /**
-   * The toolID from openAI
+   * A unique ID that tracks this tool call and can be used to correlate messages
    *
    * @generated from field: string id = 1;
    */
