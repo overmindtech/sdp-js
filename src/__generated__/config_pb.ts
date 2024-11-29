@@ -360,11 +360,17 @@ export class CreateHcpConfigRequest extends Message<CreateHcpConfigRequest> {
  */
 export class CreateHcpConfigResponse extends Message<CreateHcpConfigResponse> {
   /**
+   * The configuration of the HCP Run Task that was created
+   *
    * @generated from field: config.HcpConfig config = 1;
    */
   config?: HcpConfig;
 
   /**
+   * The API Key response for the API key that backs this integration. This
+   * API will have been created but not yet authorised, the user must still be
+   * redirected to the authorizeURL to complete the process.
+   *
    * @generated from field: apikeys.CreateAPIKeyResponse apiKey = 2;
    */
   apiKey?: CreateAPIKeyResponse;
@@ -485,6 +491,11 @@ export class GetHcpConfigResponse extends Message<GetHcpConfigResponse> {
    */
   config?: HcpConfig;
 
+  /**
+   * @generated from field: config.GetHcpConfigResponse.Status status = 2;
+   */
+  status = GetHcpConfigResponse_Status.CONFIGURED;
+
   constructor(data?: PartialMessage<GetHcpConfigResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -494,6 +505,7 @@ export class GetHcpConfigResponse extends Message<GetHcpConfigResponse> {
   static readonly typeName = "config.GetHcpConfigResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "config", kind: "message", T: HcpConfig },
+    { no: 2, name: "status", kind: "enum", T: proto3.getEnumType(GetHcpConfigResponse_Status) },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetHcpConfigResponse {
@@ -512,6 +524,32 @@ export class GetHcpConfigResponse extends Message<GetHcpConfigResponse> {
     return proto3.util.equals(GetHcpConfigResponse, a, b);
   }
 }
+
+/**
+ * @generated from enum config.GetHcpConfigResponse.Status
+ */
+export enum GetHcpConfigResponse_Status {
+  /**
+   * The HCP Run Task configuration is active and can be used
+   *
+   * @generated from enum value: CONFIGURED = 0;
+   */
+  CONFIGURED = 0,
+
+  /**
+   * The HCP Run Task configuration is not fully configured and needs to
+   * be recreated, this is usually due to the API key being revoked or the
+   * user not completing the authorisation process
+   *
+   * @generated from enum value: ERROR = 1;
+   */
+  ERROR = 1,
+}
+// Retrieve enum metadata with: proto3.getEnumType(GetHcpConfigResponse_Status)
+proto3.util.setEnumType(GetHcpConfigResponse_Status, "config.GetHcpConfigResponse.Status", [
+  { no: 0, name: "CONFIGURED" },
+  { no: 1, name: "ERROR" },
+]);
 
 /**
  * @generated from message config.DeleteHcpConfigRequest
