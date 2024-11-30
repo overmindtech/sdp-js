@@ -155,7 +155,7 @@ export const AdminService = {
       kind: MethodKind.Unary,
     },
     /**
-     * Lists all the available item types that can be discovered by sources
+     * Lists all the available item types that can be discovered by sources that are running and healthy
      *
      * @generated from rpc account.AdminService.ListAvailableItemTypes
      */
