@@ -17,7 +17,8 @@ export enum SourceStatus {
   STATUS_UNSPECIFIED = 0,
 
   /**
-   * The source is starting or updating
+   * The source is starting or updating. This is only applicable to managed
+   * sources where Overmind manages the source's lifecycle
    *
    * @generated from enum value: STATUS_PROGRESSING = 1;
    */
@@ -39,11 +40,22 @@ export enum SourceStatus {
 
   /**
    * The source is sleeping due to inactivity. It will be woken up before it
-   * is needed
+   * is needed. This is only applicable to managed sources where Overmind
+   * manages the source's lifecycle
    *
    * @generated from enum value: STATUS_SLEEPING = 4;
    */
   STATUS_SLEEPING = 4,
+
+  /**
+   * The source is disconnected and therefore not able to handle requests.
+   * This will only be returned for non-managed sources that have recently
+   * stopped sending heartbeats such as a user running the CLI that has
+   * recently disconnected
+   *
+   * @generated from enum value: STATUS_DISCONNECTED = 5;
+   */
+  STATUS_DISCONNECTED = 5,
 }
 // Retrieve enum metadata with: proto3.getEnumType(SourceStatus)
 proto3.util.setEnumType(SourceStatus, "account.SourceStatus", [
@@ -52,32 +64,7 @@ proto3.util.setEnumType(SourceStatus, "account.SourceStatus", [
   { no: 2, name: "STATUS_HEALTHY" },
   { no: 3, name: "STATUS_UNHEALTHY" },
   { no: 4, name: "STATUS_SLEEPING" },
-]);
-
-/**
- * @generated from enum account.ActiveSourceStatus
- */
-export enum ActiveSourceStatus {
-  /**
-   * @generated from enum value: ACTIVE_SOURCE_STATUS_HEALTHY = 0;
-   */
-  HEALTHY = 0,
-
-  /**
-   * @generated from enum value: ACTIVE_SOURCE_STATUS_UNHEALTHY = 1;
-   */
-  UNHEALTHY = 1,
-
-  /**
-   * @generated from enum value: ACTIVE_SOURCE_STATUS_DISCONNECTED = 2;
-   */
-  DISCONNECTED = 2,
-}
-// Retrieve enum metadata with: proto3.getEnumType(ActiveSourceStatus)
-proto3.util.setEnumType(ActiveSourceStatus, "account.ActiveSourceStatus", [
-  { no: 0, name: "ACTIVE_SOURCE_STATUS_HEALTHY" },
-  { no: 1, name: "ACTIVE_SOURCE_STATUS_UNHEALTHY" },
-  { no: 2, name: "ACTIVE_SOURCE_STATUS_DISCONNECTED" },
+  { no: 5, name: "STATUS_DISCONNECTED" },
 ]);
 
 /**
@@ -1838,9 +1825,9 @@ export class SourceHealth extends Message<SourceHealth> {
   /**
    * The status of the source, this is calculated based on the last heartbeat received and if there is an error
    *
-   * @generated from field: account.ActiveSourceStatus status = 5;
+   * @generated from field: account.SourceStatus status = 5;
    */
-  status = ActiveSourceStatus.HEALTHY;
+  status = SourceStatus.STATUS_UNSPECIFIED;
 
   /**
    * Created at time
@@ -1910,7 +1897,7 @@ export class SourceHealth extends Message<SourceHealth> {
     { no: 2, name: "version", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "error", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 5, name: "status", kind: "enum", T: proto3.getEnumType(ActiveSourceStatus) },
+    { no: 5, name: "status", kind: "enum", T: proto3.getEnumType(SourceStatus) },
     { no: 6, name: "createdAt", kind: "message", T: Timestamp },
     { no: 7, name: "lastHeartbeat", kind: "message", T: Timestamp },
     { no: 8, name: "nextHeartbeat", kind: "message", T: Timestamp },
