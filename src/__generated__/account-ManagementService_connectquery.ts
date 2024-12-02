@@ -122,13 +122,33 @@ export const deleteSource = {
 
 /**
  * Sources heartbeat and health
- * List of all recently active sources and their health, includes managed and local sources
+ * List of all recently active sources and their health, includes information from srcman
+ * meaning that it can show the status of managed sources that have not started and
+ * connected yet
  *
  * @generated from rpc account.ManagementService.ListAllSourcesStatus
  */
 export const listAllSourcesStatus = {
   localName: "listAllSourcesStatus",
   name: "ListAllSourcesStatus",
+  kind: MethodKind.Unary,
+  I: ListAllSourcesStatusRequest,
+  O: ListAllSourcesStatusResponse,
+  service: {
+    typeName: "account.ManagementService"
+  }
+} as const;
+
+/**
+ * Lists all active sources and their health. This should be used to determine
+ * what types, scopes etc are available rather than `ListAllSourcesStatus` since
+ * this endpoint only include running, available sources
+ *
+ * @generated from rpc account.ManagementService.ListActiveSourcesStatus
+ */
+export const listActiveSourcesStatus = {
+  localName: "listActiveSourcesStatus",
+  name: "ListActiveSourcesStatus",
   kind: MethodKind.Unary,
   I: ListAllSourcesStatusRequest,
   O: ListAllSourcesStatusResponse,

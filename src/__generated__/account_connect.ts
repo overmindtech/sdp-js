@@ -259,12 +259,27 @@ export const ManagementService = {
     },
     /**
      * Sources heartbeat and health
-     * List of all recently active sources and their health, includes managed and local sources
+     * List of all recently active sources and their health, includes information from srcman
+     * meaning that it can show the status of managed sources that have not started and
+     * connected yet
      *
      * @generated from rpc account.ManagementService.ListAllSourcesStatus
      */
     listAllSourcesStatus: {
       name: "ListAllSourcesStatus",
+      I: ListAllSourcesStatusRequest,
+      O: ListAllSourcesStatusResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Lists all active sources and their health. This should be used to determine
+     * what types, scopes etc are available rather than `ListAllSourcesStatus` since
+     * this endpoint only include running, available sources
+     *
+     * @generated from rpc account.ManagementService.ListActiveSourcesStatus
+     */
+    listActiveSourcesStatus: {
+      name: "ListActiveSourcesStatus",
       I: ListAllSourcesStatusRequest,
       O: ListAllSourcesStatusResponse,
       kind: MethodKind.Unary,
