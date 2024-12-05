@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, GetTrialEndRequest, GetTrialEndResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListAllSourcesStatusRequest, ListAllSourcesStatusResponse, ListSourcesRequest, ListSourcesResponse, SubmitSourceHeartbeatRequest, SubmitSourceHeartbeatResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
+import { CreateSourceRequest, CreateSourceResponse, CreateTokenRequest, CreateTokenResponse, DeleteAccountRequest, DeleteAccountResponse, DeleteSourceRequest, DeleteSourceResponse, GetAccountRequest, GetAccountResponse, GetSourceRequest, GetSourceResponse, GetTrialEndRequest, GetTrialEndResponse, KeepaliveSourcesRequest, KeepaliveSourcesResponse, ListAllSourcesStatusRequest, ListAllSourcesStatusResponse, ListAvailableItemTypesRequest, ListAvailableItemTypesResponse, ListSourcesRequest, ListSourcesResponse, SubmitSourceHeartbeatRequest, SubmitSourceHeartbeatResponse, UpdateSourceRequest, UpdateSourceResponse } from "./account_pb.ts";
 
 /**
  * Get the details of the account that this user belongs to
@@ -217,6 +217,22 @@ export const getTrialEnd = {
   kind: MethodKind.Unary,
   I: GetTrialEndRequest,
   O: GetTrialEndResponse,
+  service: {
+    typeName: "account.ManagementService"
+  }
+} as const;
+
+/**
+ * Lists all the available item types that can be discovered by sources that are running and healthy
+ *
+ * @generated from rpc account.ManagementService.ListAvailableItemTypes
+ */
+export const listAvailableItemTypes = {
+  localName: "listAvailableItemTypes",
+  name: "ListAvailableItemTypes",
+  kind: MethodKind.Unary,
+  I: ListAvailableItemTypesRequest,
+  O: ListAvailableItemTypesResponse,
   service: {
     typeName: "account.ManagementService"
   }

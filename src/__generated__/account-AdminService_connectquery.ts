@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteAccountRequest, AdminDeleteAccountResponse, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateAccountRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceResponse, CreateTokenResponse, DeleteSourceResponse, GetAccountResponse, GetSourceResponse, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListAvailableItemTypesRequest, ListAvailableItemTypesResponse, ListSourcesResponse, UpdateAccountResponse, UpdateSourceResponse } from "./account_pb.ts";
+import { AdminCreateSourceRequest, AdminCreateTokenRequest, AdminDeleteAccountRequest, AdminDeleteAccountResponse, AdminDeleteSourceRequest, AdminGetAccountRequest, AdminGetSourceRequest, AdminKeepaliveSourcesRequest, AdminListSourcesRequest, AdminUpdateAccountRequest, AdminUpdateSourceRequest, CreateAccountRequest, CreateAccountResponse, CreateSourceResponse, CreateTokenResponse, DeleteSourceResponse, GetAccountResponse, GetSourceResponse, KeepaliveSourcesResponse, ListAccountsRequest, ListAccountsResponse, ListSourcesResponse, UpdateAccountResponse, UpdateSourceResponse } from "./account_pb.ts";
 
 /**
  * Lists the details of all NATS Accounts
@@ -198,22 +198,6 @@ export const createToken = {
   kind: MethodKind.Unary,
   I: AdminCreateTokenRequest,
   O: CreateTokenResponse,
-  service: {
-    typeName: "account.AdminService"
-  }
-} as const;
-
-/**
- * Lists all the available item types that can be discovered by sources that are running and healthy
- *
- * @generated from rpc account.AdminService.ListAvailableItemTypes
- */
-export const listAvailableItemTypes = {
-  localName: "listAvailableItemTypes",
-  name: "ListAvailableItemTypes",
-  kind: MethodKind.Unary,
-  I: ListAvailableItemTypesRequest,
-  O: ListAvailableItemTypesResponse,
   service: {
     typeName: "account.AdminService"
   }

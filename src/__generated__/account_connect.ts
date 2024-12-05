@@ -154,17 +154,6 @@ export const AdminService = {
       O: CreateTokenResponse,
       kind: MethodKind.Unary,
     },
-    /**
-     * Lists all the available item types that can be discovered by sources that are running and healthy
-     *
-     * @generated from rpc account.AdminService.ListAvailableItemTypes
-     */
-    listAvailableItemTypes: {
-      name: "ListAvailableItemTypes",
-      I: ListAvailableItemTypesRequest,
-      O: ListAvailableItemTypesResponse,
-      kind: MethodKind.Unary,
-    },
   }
 } as const;
 
@@ -339,6 +328,17 @@ export const ManagementService = {
       name: "GetTrialEnd",
       I: GetTrialEndRequest,
       O: GetTrialEndResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Lists all the available item types that can be discovered by sources that are running and healthy
+     *
+     * @generated from rpc account.ManagementService.ListAvailableItemTypes
+     */
+    listAvailableItemTypes: {
+      name: "ListAvailableItemTypes",
+      I: ListAvailableItemTypesRequest,
+      O: ListAvailableItemTypesResponse,
       kind: MethodKind.Unary,
     },
   }
