@@ -65,6 +65,7 @@ export {
   createToken,
   deleteAccount,
   getTrialEnd,
+  listAvailableItemTypes,
 } from './__generated__/account-ManagementService_connectquery'
 export {
   listInvites,
