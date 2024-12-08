@@ -435,10 +435,13 @@ export class Metadata extends Message<Metadata> {
   timestamp?: Timestamp;
 
   /**
-   * How long the source took to execute in total when processing the
-   * Query
+   * How long the source took to execute in total when processing the Query.
    *
-   * @generated from field: google.protobuf.Duration sourceDuration = 5;
+   * (deprecated) This is no longer sent as streaming responses make this metric
+   * impossible to calculate on a per-item basis
+   *
+   * @generated from field: google.protobuf.Duration sourceDuration = 5 [deprecated = true];
+   * @deprecated
    */
   sourceDuration?: Duration;
 
@@ -446,7 +449,10 @@ export class Metadata extends Message<Metadata> {
    * How long the source took to execute per item when processing the
    * Query
    *
-   * @generated from field: google.protobuf.Duration sourceDurationPerItem = 6;
+   * (deprecated) This is no longer sent
+   *
+   * @generated from field: google.protobuf.Duration sourceDurationPerItem = 6 [deprecated = true];
+   * @deprecated
    */
   sourceDurationPerItem?: Duration;
 
@@ -464,14 +470,6 @@ export class Metadata extends Message<Metadata> {
    */
   hidden = false;
 
-  /**
-   * The UUID of the QUERY that caused this item to be found
-   *
-   * @generated from field: bytes sourceQueryUUID = 8 [deprecated = true];
-   * @deprecated
-   */
-  sourceQueryUUID = new Uint8Array(0);
-
   constructor(data?: PartialMessage<Metadata>) {
     super();
     proto3.util.initPartial(data, this);
@@ -486,7 +484,6 @@ export class Metadata extends Message<Metadata> {
     { no: 5, name: "sourceDuration", kind: "message", T: Duration },
     { no: 6, name: "sourceDurationPerItem", kind: "message", T: Duration },
     { no: 7, name: "hidden", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 8, name: "sourceQueryUUID", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Metadata {
