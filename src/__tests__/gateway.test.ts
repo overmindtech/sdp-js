@@ -21,15 +21,18 @@ import {
 } from '../events'
 import { GatewaySession } from '../gateway-session'
 import {
-  ChangeByReferenceSummary,
+  ChangeByReferenceSummarySchema,
   ChangesByReferenceToolFinish,
-  GatewayResponse,
+  GatewayRequestSchema,
+  GatewayRequestStatus_SummarySchema,
+  GatewayResponseSchema,
   QueryMethod,
-  StoreBookmark,
-  StoreSnapshot,
+  StoreBookmarkSchema,
+  StoreSnapshotSchema,
 } from '../protobuf'
 import * as data from './sampledata.helper'
-import { Timestamp } from '@bufbuild/protobuf'
+import { create, toBinary, toJsonString } from '@bufbuild/protobuf'
+import { TimestampSchema } from '@bufbuild/protobuf/wkt'
 
 // create a WS instance
 const TestServerAddress = 'ws://localhost:31274'
@@ -63,7 +66,7 @@ describe('GatewaySession', () => {
         gs.sendRequest(data.gatewayRequest.itemRequest)
 
         expect(await server.nextMessage).toEqual(
-          data.gatewayRequest.itemRequest.toBinary(),
+          toBinary(GatewayRequestSchema, data.gatewayRequest.itemRequest),
         )
       })
     })
@@ -82,7 +85,7 @@ describe('GatewaySession', () => {
       describe('Error', () => {
         it('should call the callback', () =>
           new Promise((resolve) => {
-            const response = new GatewayResponse({
+            const response = create(GatewayResponseSchema, {
               responseType: {
                 case: 'error',
                 value: 'some error',
@@ -99,13 +102,13 @@ describe('GatewaySession', () => {
               { once: true },
             )
 
-            server.send(response.toBinary().buffer)
+            server.send(toBinary(GatewayResponseSchema, response).buffer)
           }))
       })
       describe('NewItem', () => {
         it('should call the callback', () =>
           new Promise((resolve) => {
-            const response = new GatewayResponse({
+            const response = create(GatewayResponseSchema, {
               responseType: {
                 case: 'newItem',
                 value: data.item.dylan,
@@ -122,13 +125,13 @@ describe('GatewaySession', () => {
               { once: true },
             )
 
-            server.send(response.toBinary().buffer)
+            server.send(toBinary(GatewayResponseSchema, response).buffer)
           }))
       })
       describe('ChatResponse', () => {
         it('should call the callback', () =>
           new Promise((resolve) => {
-            const response = new GatewayResponse({
+            const response = create(GatewayResponseSchema, {
               responseType: {
                 case: 'chatResponse',
                 value: {
@@ -147,14 +150,14 @@ describe('GatewaySession', () => {
               { once: true },
             )
 
-            server.send(response.toBinary().buffer)
+            server.send(toBinary(GatewayResponseSchema, response).buffer)
           }))
       })
       describe('ToolStart', () => {
         describe('Query', () => {
           it('should call the callback', () =>
             new Promise((resolve) => {
-              const response = new GatewayResponse({
+              const response = create(GatewayResponseSchema, {
                 responseType: {
                   case: 'toolStart',
                   value: {
@@ -187,13 +190,13 @@ describe('GatewaySession', () => {
                 { once: true },
               )
 
-              server.send(response.toBinary().buffer)
+              server.send(toBinary(GatewayResponseSchema, response).buffer)
             }))
         })
         describe('Relationship', () => {
           it('should call the callback', () =>
             new Promise((resolve) => {
-              const response = new GatewayResponse({
+              const response = create(GatewayResponseSchema, {
                 responseType: {
                   case: 'toolStart',
                   value: {
@@ -224,13 +227,13 @@ describe('GatewaySession', () => {
                 { once: true },
               )
 
-              server.send(response.toBinary().buffer)
+              server.send(toBinary(GatewayResponseSchema, response).buffer)
             }))
         })
         describe('ChangesByReference', () => {
           it('should call the callback', () =>
             new Promise((resolve) => {
-              const response = new GatewayResponse({
+              const response = create(GatewayResponseSchema, {
                 responseType: {
                   case: 'toolStart',
                   value: {
@@ -263,7 +266,7 @@ describe('GatewaySession', () => {
                 { once: true },
               )
 
-              server.send(response.toBinary().buffer)
+              server.send(toBinary(GatewayResponseSchema, response).buffer)
             }))
         })
       })
@@ -271,7 +274,7 @@ describe('GatewaySession', () => {
         describe('Query', () => {
           it('should call the callback', () =>
             new Promise((resolve) => {
-              const response = new GatewayResponse({
+              const response = create(GatewayResponseSchema, {
                 responseType: {
                   case: 'toolFinish',
                   value: {
@@ -298,13 +301,13 @@ describe('GatewaySession', () => {
                 { once: true },
               )
 
-              server.send(response.toBinary().buffer)
+              server.send(toBinary(GatewayResponseSchema, response).buffer)
             }))
         })
         describe('Relationship', () => {
           it('should call the callback', () =>
             new Promise((resolve) => {
-              const response = new GatewayResponse({
+              const response = create(GatewayResponseSchema, {
                 responseType: {
                   case: 'toolFinish',
                   value: {
@@ -331,13 +334,13 @@ describe('GatewaySession', () => {
                 { once: true },
               )
 
-              server.send(response.toBinary().buffer)
+              server.send(toBinary(GatewayResponseSchema, response).buffer)
             }))
         })
         describe('ChangesByReference', () => {
           it('should call the callback', () =>
             new Promise((resolve) => {
-              const response = new GatewayResponse({
+              const response = create(GatewayResponseSchema, {
                 responseType: {
                   case: 'toolFinish',
                   value: {
@@ -345,11 +348,11 @@ describe('GatewaySession', () => {
                       case: 'changesByReference',
                       value: {
                         changeSummaries: [
-                          new ChangeByReferenceSummary({
+                          create(ChangeByReferenceSummarySchema, {
                             title: 'Some title',
                             numAffectedItems: 123,
                             owner: 'Some owner',
-                            createdAt: new Timestamp({
+                            createdAt: create(TimestampSchema, {
                               nanos: 100,
                               seconds: BigInt(100_000_000),
                             }),
@@ -376,14 +379,14 @@ describe('GatewaySession', () => {
                 { once: true },
               )
 
-              server.send(response.toBinary().buffer)
+              server.send(toBinary(GatewayResponseSchema, response).buffer)
             }))
         })
       })
       describe('NewEdge', () => {
         it('should call the callback', () =>
           new Promise((resolve) => {
-            const response = new GatewayResponse({
+            const response = create(GatewayResponseSchema, {
               responseType: {
                 case: 'newEdge',
                 value: data.edge.basic,
@@ -401,13 +404,13 @@ describe('GatewaySession', () => {
               { once: true },
             )
 
-            server.send(response.toBinary().buffer)
+            server.send(toBinary(GatewayResponseSchema, response).buffer)
           }))
       })
       describe('QueryError', () => {
         it('should call the callback', () =>
           new Promise((resolve) => {
-            const response = new GatewayResponse({
+            const response = create(GatewayResponseSchema, {
               responseType: {
                 case: 'queryError',
                 value: data.error.NOSCOPE,
@@ -427,13 +430,13 @@ describe('GatewaySession', () => {
               { once: true },
             )
 
-            server.send(response.toBinary().buffer)
+            server.send(toBinary(GatewayResponseSchema, response).buffer)
           }))
       })
       describe('DeleteItem', () => {
         it('should call the callback', () =>
           new Promise((resolve) => {
-            const response = new GatewayResponse({
+            const response = create(GatewayResponseSchema, {
               responseType: {
                 case: 'deleteItem',
                 value: data.reference,
@@ -453,13 +456,13 @@ describe('GatewaySession', () => {
               { once: true },
             )
 
-            server.send(response.toBinary().buffer)
+            server.send(toBinary(GatewayResponseSchema, response).buffer)
           }))
       })
       describe('DeleteEdge', () => {
         it('should call the callback', () =>
           new Promise((resolve) => {
-            const response = new GatewayResponse({
+            const response = create(GatewayResponseSchema, {
               responseType: {
                 case: 'deleteEdge',
                 value: data.edge.basic,
@@ -481,13 +484,13 @@ describe('GatewaySession', () => {
               { once: true },
             )
 
-            server.send(response.toBinary().buffer)
+            server.send(toBinary(GatewayResponseSchema, response).buffer)
           }))
       })
       describe('UpdateItem', () => {
         it('should call the callback', () =>
           new Promise((resolve) => {
-            const response = new GatewayResponse({
+            const response = create(GatewayResponseSchema, {
               responseType: {
                 case: 'updateItem',
                 value: data.item.dylan,
@@ -499,21 +502,19 @@ describe('GatewaySession', () => {
               UpdateItemEvent,
               (event) => {
                 expect(event.detail.scope).toEqual(data.item.dylan.scope)
-                expect(event.detail.getType()).toEqual(
-                  data.item.dylan.getType(),
-                )
+                expect(event.detail.type).toEqual(data.item.dylan.type)
                 resolve(undefined)
               },
               { once: true },
             )
 
-            server.send(response.toBinary().buffer)
+            server.send(toBinary(GatewayResponseSchema, response).buffer)
           }))
       })
       describe('Status', () => {
         it('should call the callback', () =>
           new Promise((resolve) => {
-            const response = new GatewayResponse({
+            const response = create(GatewayResponseSchema, {
               responseType: {
                 case: 'status',
                 value: data.gatewayStatus.working,
@@ -527,25 +528,34 @@ describe('GatewaySession', () => {
                 expect(event.detail.postProcessingComplete).toEqual(
                   data.gatewayStatus.working.postProcessingComplete,
                 )
-                expect(event.detail.summary?.toJsonString()).toEqual(
-                  data.gatewayStatus.working.summary?.toJsonString(),
-                )
+                if (event.detail.summary && data.gatewayStatus.working.summary)
+                  expect(
+                    toJsonString(
+                      GatewayRequestStatus_SummarySchema,
+                      event.detail.summary,
+                    ),
+                  ).toEqual(
+                    toJsonString(
+                      GatewayRequestStatus_SummarySchema,
+                      data.gatewayStatus.working.summary,
+                    ),
+                  )
                 resolve(undefined)
               },
               { once: true },
             )
 
-            server.send(response.toBinary().buffer)
+            server.send(toBinary(GatewayResponseSchema, response).buffer)
           }))
         it('should update the status', () =>
           new Promise((resolve) => {
-            const working = new GatewayResponse({
+            const working = create(GatewayResponseSchema, {
               responseType: {
                 case: 'status',
                 value: data.gatewayStatus.working,
               },
             })
-            const doneResponse = new GatewayResponse({
+            const doneResponse = create(GatewayResponseSchema, {
               responseType: {
                 case: 'status',
                 value: data.gatewayStatus.done,
@@ -559,9 +569,19 @@ describe('GatewaySession', () => {
                 expect(gs.status?.postProcessingComplete).toEqual(
                   data.gatewayStatus.working.postProcessingComplete,
                 )
-                expect(gs.status?.summary?.toJsonString()).toEqual(
-                  data.gatewayStatus.working.summary?.toJsonString(),
-                )
+                if (gs.status?.summary && data.gatewayStatus.working.summary) {
+                  expect(
+                    toJsonString(
+                      GatewayRequestStatus_SummarySchema,
+                      gs.status?.summary,
+                    ),
+                  ).toEqual(
+                    toJsonString(
+                      GatewayRequestStatus_SummarySchema,
+                      data.gatewayStatus.working.summary,
+                    ),
+                  )
+                }
 
                 // Add the second test
                 gs.addEventListener(
@@ -570,20 +590,32 @@ describe('GatewaySession', () => {
                     expect(gs.status?.postProcessingComplete).toEqual(
                       data.gatewayStatus.done.postProcessingComplete,
                     )
-                    expect(gs.status?.summary?.toJsonString()).toEqual(
-                      data.gatewayStatus.done.summary?.toJsonString(),
-                    )
+                    if (gs.status?.summary && data.gatewayStatus.done.summary) {
+                      expect(
+                        toJsonString(
+                          GatewayRequestStatus_SummarySchema,
+                          gs.status?.summary,
+                        ),
+                      ).toEqual(
+                        toJsonString(
+                          GatewayRequestStatus_SummarySchema,
+                          data.gatewayStatus.done.summary,
+                        ),
+                      )
+                    }
                     resolve(undefined)
                   },
                   { once: true },
                 )
 
-                server.send(doneResponse.toBinary().buffer)
+                server.send(
+                  toBinary(GatewayResponseSchema, doneResponse).buffer,
+                )
               },
               { once: true },
             )
 
-            server.send(working.toBinary().buffer)
+            server.send(toBinary(GatewayResponseSchema, working).buffer)
           }))
       })
     })
@@ -606,8 +638,8 @@ describe('GatewaySession', () => {
               description: 'new description',
               msgID: parse(v4()),
             }
-            const bookmark = new StoreBookmark(data)
-            const response = new GatewayResponse({
+            const bookmark = create(StoreBookmarkSchema, data)
+            const response = create(GatewayResponseSchema, {
               responseType: {
                 case: 'bookmarkStoreResult',
                 value: {
@@ -624,7 +656,7 @@ describe('GatewaySession', () => {
               resolve(undefined)
             })
 
-            server.send(response.toBinary().buffer)
+            server.send(toBinary(GatewayResponseSchema, response).buffer)
           }))
       })
       describe('storeSnapshot', () => {
@@ -635,8 +667,8 @@ describe('GatewaySession', () => {
               description: 'new description',
               msgID: parse(v4()),
             }
-            const snapshot = new StoreSnapshot(data)
-            const response = new GatewayResponse({
+            const snapshot = create(StoreSnapshotSchema, data)
+            const response = create(GatewayResponseSchema, {
               responseType: {
                 case: 'snapshotStoreResult',
                 value: {
@@ -653,7 +685,7 @@ describe('GatewaySession', () => {
               resolve(undefined)
             })
 
-            server.send(response.toBinary().buffer)
+            server.send(toBinary(GatewayResponseSchema, response).buffer)
           }))
       })
     })

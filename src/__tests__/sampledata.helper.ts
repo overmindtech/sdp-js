@@ -1,38 +1,37 @@
+import { create } from '@bufbuild/protobuf'
 import { parse } from 'uuid'
-import { newDuration, newItemAttributes } from '../util'
 import {
-  CancelQuery,
-  Edge,
-  GatewayRequest,
-  Item,
-  Query,
-  QueryError,
-  Reference,
-  QueryMethod,
-  ResponderState,
-  Expand,
-  UndoQuery,
-  QueryError_ErrorType,
-} from '../protobuf'
-import { Response } from '../__generated__/responses_pb'
-import {
-  GatewayRequestStatus,
-  GatewayRequestStatus_Summary,
+  GatewayRequestSchema,
+  GatewayRequestStatus_SummarySchema,
+  GatewayRequestStatusSchema,
 } from '../__generated__/gateway_pb'
-import { LinkedItem } from '../__generated__/items_pb'
+import {
+  CancelQuerySchema,
+  EdgeSchema,
+  ExpandSchema,
+  ItemSchema,
+  LinkedItemSchema,
+  QueryErrorSchema,
+  QuerySchema,
+  ReferenceSchema,
+  UndoQuerySchema,
+} from '../__generated__/items_pb'
+import { ResponseSchema } from '../__generated__/responses_pb'
+import { QueryError_ErrorType, QueryMethod, ResponderState } from '../protobuf'
+import { newDuration, newItemAttributes } from '../util'
 
 export const error = {
-  NOTFOUND: new QueryError({
+  NOTFOUND: create(QueryErrorSchema, {
     errorString: 'Could not be found',
     errorType: QueryError_ErrorType.NOTFOUND,
     scope: 'test.scope',
   }),
-  NOSCOPE: new QueryError({
+  NOSCOPE: create(QueryErrorSchema, {
     errorString: 'Scope does not exist',
     errorType: QueryError_ErrorType.NOSCOPE,
     scope: 'test.scope',
   }),
-  OTHER: new QueryError({
+  OTHER: create(QueryErrorSchema, {
     errorString: 'Unknown error',
     errorType: QueryError_ErrorType.OTHER,
     scope: 'test.scope',
@@ -40,28 +39,28 @@ export const error = {
 }
 
 export const response = {
-  WORKING: new Response({
+  WORKING: create(ResponseSchema, {
     responder: 'test.scope',
     state: ResponderState.WORKING,
     nextUpdateIn: newDuration(100),
   }),
-  COMPLETE: new Response({
+  COMPLETE: create(ResponseSchema, {
     responder: 'test.scope',
     state: ResponderState.COMPLETE,
     nextUpdateIn: newDuration(100),
   }),
-  CANCELLED: new Response({
+  CANCELLED: create(ResponseSchema, {
     responder: 'test.scope',
     state: ResponderState.CANCELLED,
   }),
-  ERROR: new Response({
+  ERROR: create(ResponseSchema, {
     responder: 'test.scope',
     state: ResponderState.ERROR,
   }),
 }
 
 export const request = {
-  LIST: new Query({
+  LIST: create(QuerySchema, {
     type: 'package',
     method: QueryMethod.LIST,
     recursionBehaviour: { linkDepth: 90 },
@@ -72,7 +71,7 @@ export const request = {
 }
 
 export const item = {
-  process: new Item({
+  process: create(ItemSchema, {
     type: 'process',
     scope: 'myPod',
     uniqueAttribute: 'pid',
@@ -82,7 +81,7 @@ export const item = {
       cpuPercent: 99.99,
     }),
   }),
-  dylan: new Item({
+  dylan: create(ItemSchema, {
     scope: 'global',
     uniqueAttribute: 'name',
     type: 'person',
@@ -91,8 +90,8 @@ export const item = {
       age: 27,
     }),
     linkedItems: [
-      new LinkedItem({
-        item: new Reference({
+      create(LinkedItemSchema, {
+        item: create(ReferenceSchema, {
           scope: 'global',
           type: 'person',
           uniqueAttributeValue: 'katie',
@@ -100,7 +99,7 @@ export const item = {
       }),
     ],
   }),
-  katie: new Item({
+  katie: create(ItemSchema, {
     scope: 'global',
     uniqueAttribute: 'name',
     type: 'person',
@@ -113,30 +112,30 @@ export const item = {
 
 export const items = [item.process, item.dylan, item.katie]
 
-export const cancelQuery = new CancelQuery({
+export const cancelQuery = create(CancelQuerySchema, {
   UUID: parse('a520d67f-0b2a-4852-87d2-d02bbc74ad89'),
 })
 
-export const undoQuery = new UndoQuery({
+export const undoQuery = create(UndoQuerySchema, {
   UUID: parse('a520d67f-0b2a-4852-87d2-d02bbc74ad89'),
 })
 
-export const reference = new Reference({
+export const reference = create(ReferenceSchema, {
   scope: 'global',
   type: 'ip',
   uniqueAttributeValue: '1.1.1.1',
 })
 
-export const expand = new Expand({
+export const expand = create(ExpandSchema, {
   item: reference,
   linkDepth: 1,
 })
 
 export const gatewayRequest = {
-  itemRequest: new GatewayRequest({
+  itemRequest: create(GatewayRequestSchema, {
     requestType: {
       case: 'query',
-      value: new Query({
+      value: create(QuerySchema, {
         scope: 'test',
         recursionBehaviour: { linkDepth: 10 },
         method: QueryMethod.GET,
@@ -146,10 +145,10 @@ export const gatewayRequest = {
       }),
     },
   }),
-  cancel: new GatewayRequest({
+  cancel: create(GatewayRequestSchema, {
     requestType: {
       case: 'cancelQuery',
-      value: new CancelQuery({
+      value: create(CancelQuerySchema, {
         UUID: parse('a520d67f-0b2a-4852-87d2-d02bbc74ad89'),
       }),
     },
@@ -157,14 +156,14 @@ export const gatewayRequest = {
 }
 
 export const gatewayStatus = {
-  working: new GatewayRequestStatus({
+  working: create(GatewayRequestStatusSchema, {
     responderStates: {
       'responder.cancel': ResponderState.CANCELLED,
       'responder.complete': ResponderState.COMPLETE,
       'responder.error': ResponderState.ERROR,
       'responder.working': ResponderState.WORKING,
     },
-    summary: new GatewayRequestStatus_Summary({
+    summary: create(GatewayRequestStatus_SummarySchema, {
       cancelled: 1,
       complete: 1,
       error: 1,
@@ -174,14 +173,14 @@ export const gatewayStatus = {
     }),
     postProcessingComplete: false,
   }),
-  done: new GatewayRequestStatus({
+  done: create(GatewayRequestStatusSchema, {
     responderStates: {
       'responder.cancel': ResponderState.CANCELLED,
       'responder.complete': ResponderState.COMPLETE,
       'responder.error': ResponderState.ERROR,
       'responder.working': ResponderState.COMPLETE,
     },
-    summary: new GatewayRequestStatus_Summary({
+    summary: create(GatewayRequestStatus_SummarySchema, {
       cancelled: 1,
       complete: 2,
       error: 1,
@@ -194,13 +193,13 @@ export const gatewayStatus = {
 }
 
 export const edge = {
-  basic: new Edge({
-    from: new Reference({
+  basic: create(EdgeSchema, {
+    from: create(ReferenceSchema, {
       scope: 'test',
       type: 'user',
       uniqueAttributeValue: 'Dylan',
     }),
-    to: new Reference({
+    to: create(ReferenceSchema, {
       scope: 'test',
       type: 'dog',
       uniqueAttributeValue: 'Manny',

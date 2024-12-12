@@ -1,5 +1,17 @@
-import { Duration, JsonValue, Struct, Timestamp } from '@bufbuild/protobuf'
-import { Item, ItemAttributes, Reference } from './protobuf'
+import { create, JsonValue } from '@bufbuild/protobuf'
+import {
+  Item,
+  ItemAttributes,
+  ItemAttributesSchema,
+  Reference,
+  ReferenceSchema,
+} from './protobuf'
+import {
+  Duration,
+  DurationSchema,
+  Timestamp,
+  TimestampSchema,
+} from '@bufbuild/protobuf/wkt'
 
 /**
  * Creates a new ItemAttributes object from any javascript object that has
@@ -10,9 +22,8 @@ import { Item, ItemAttributes, Reference } from './protobuf'
 export function newItemAttributes(value: {
   [key: string]: JsonValue
 }): ItemAttributes {
-  const attributes = new ItemAttributes()
-  attributes.attrStruct = new Struct()
-  attributes.attrStruct.fromJson(value)
+  const attributes = create(ItemAttributesSchema)
+  attributes.attrStruct = value
 
   return attributes
 }
@@ -23,7 +34,7 @@ export function newItemAttributes(value: {
  * @returns A reference to that item
  */
 export function toReference(item: Item): Reference {
-  const reference = new Reference()
+  const reference = create(ReferenceSchema)
   reference.scope = item.scope
   reference.type = item.type
   reference.uniqueAttributeValue = getUniqueAttributeValue(item)
@@ -37,7 +48,7 @@ export function toReference(item: Item): Reference {
  * @returns A timestamp in protobuf format
  */
 export function newTimestamp(date: Date): Timestamp {
-  const t = new Timestamp()
+  const t = create(TimestampSchema)
   t.seconds = BigInt(Math.floor(date.getTime() / 1000))
   t.nanos = date.getMilliseconds() * 1_000_000
   return t
@@ -49,10 +60,9 @@ export function newTimestamp(date: Date): Timestamp {
  * @returns A duration in protobuf format
  */
 export function newDuration(ms: number): Duration {
-  const d = new Duration({
-    nanos: (ms % 1000) * 1e6,
-    seconds: BigInt(Math.floor(ms / 1000)),
-  })
+  const d = create(DurationSchema)
+  d.nanos = (ms % 1000) * 1e6
+  d.seconds = BigInt(Math.floor(ms / 1000))
 
   return d
 }
@@ -65,7 +75,10 @@ export function newDuration(ms: number): Duration {
  */
 export function newDeadline(ms: number): Timestamp {
   const deadline = new Date(Date.now() + ms)
-  return Timestamp.fromDate(deadline)
+  const t = create(TimestampSchema)
+  t.seconds = BigInt(Math.floor(deadline.getTime() / 1000))
+  t.nanos = deadline.getMilliseconds() * 1_000_000
+  return t
 }
 
 /**
@@ -78,13 +91,12 @@ export function newDeadline(ms: number): Timestamp {
 export function getAttributeValue<T>(
   attributes: ItemAttributes,
   name: string,
-): T | undefined {
-  const j = attributes.attrStruct?.toJson()
+): JsonValue | undefined {
+  const j = attributes.attrStruct
   if (!j) {
     return undefined
   }
 
-  // @ts-expect-error // come back and type this properly.
   return j[name]
 }
 

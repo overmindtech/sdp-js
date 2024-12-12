@@ -23,13 +23,10 @@ import {
   Edge,
   GatewayRequest,
   GatewayRequestStatus,
-  GatewayResponse,
   Item,
   QueryStatus,
   QueryError,
   Reference,
-  UndoQuery,
-  UndoExpand,
   BookmarkStoreResult,
   BookmarkLoadResult,
   SnapshotStoreResult,
@@ -39,7 +36,12 @@ import {
   ChatResponse,
   ToolStart,
   ToolFinish,
+  GatewayRequestSchema,
+  UndoQuerySchema,
+  UndoExpandSchema,
+  GatewayResponseSchema,
 } from './protobuf'
+import { create, fromBinary, toBinary } from '@bufbuild/protobuf'
 
 export interface CustomEventListener<T> {
   (evt: CustomEvent<T>): void
@@ -181,7 +183,8 @@ export class GatewaySession extends EventTarget {
     // Loop over the data using the index
     for (let i = 0; i < data.length; i++) {
       // Process the message
-      this._processMessage(data[i].msg)
+      // eslint-disable-next-line unicorn/prefer-spread
+      this._processMessage(data[i].msg.slice().buffer)
 
       // If we are not at the end of the array, calculate the time to wait
       if (i < data.length - 1) {
@@ -204,7 +207,7 @@ export class GatewaySession extends EventTarget {
    */
   _processMessage(buffer: ArrayBuffer) {
     const binary = new Uint8Array(buffer)
-    const response = GatewayResponse.fromBinary(binary)
+    const response = fromBinary(GatewayResponseSchema, binary)
 
     switch (response.responseType.case) {
       case 'error': {
@@ -582,7 +585,7 @@ export class GatewaySession extends EventTarget {
    * @param request The request to send
    */
   sendRequest(request: GatewayRequest) {
-    const binary = request.toBinary()
+    const binary = toBinary(GatewayRequestSchema, request)
     this.socket.send(binary)
   }
 
@@ -594,32 +597,32 @@ export class GatewaySession extends EventTarget {
     switch (request.requestType.case) {
       case 'query': {
         {
-          const undoReq = new GatewayRequest({
+          const undoReq = create(GatewayRequestSchema, {
             requestType: {
               case: 'undoQuery',
-              value: new UndoQuery({
+              value: create(UndoQuerySchema, {
                 UUID: request.requestType.value.UUID,
               }),
             },
           })
 
-          const binary = undoReq.toBinary()
+          const binary = toBinary(GatewayRequestSchema, undoReq)
           this.socket.send(binary)
         }
         break
       }
       case 'expand': {
         {
-          const undoReq = new GatewayRequest({
+          const undoReq = create(GatewayRequestSchema, {
             requestType: {
               case: 'undoExpand',
-              value: new UndoExpand({
+              value: create(UndoExpandSchema, {
                 UUID: request.requestType.value.UUID,
               }),
             },
           })
 
-          const binary = undoReq.toBinary()
+          const binary = toBinary(GatewayRequestSchema, undoReq)
           this.socket.send(binary)
         }
         break
@@ -637,7 +640,7 @@ export class GatewaySession extends EventTarget {
       bookmark.msgID = parse(v4())
     }
 
-    const req = new GatewayRequest({
+    const req = create(GatewayRequestSchema, {
       requestType: {
         case: 'storeBookmark',
         value: bookmark,
@@ -673,7 +676,7 @@ export class GatewaySession extends EventTarget {
       snapshot.msgID = parse(v4())
     }
 
-    const req = new GatewayRequest({
+    const req = create(GatewayRequestSchema, {
       requestType: {
         case: 'storeSnapshot',
         value: snapshot,

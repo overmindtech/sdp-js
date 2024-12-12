@@ -1,6 +1,6 @@
 {
   "name": "@overmindtech/sdp-js",
-  "version": "11.11.0",
+  "version": "12.0.0",
   "description": "Javascript and Typescript libraries for the State Description Protocol",
   "license": "MIT",
   "sideEffects": false,
@@ -31,8 +31,8 @@
     "qa": "pnpm typecheck && pnpm lint:fix && pnpm prettier:fix && npm test"
   },
   "dependencies": {
-    "@bufbuild/protobuf": "^1.10.0",
-    "@connectrpc/connect-query": "^1.4.2",
+    "@bufbuild/protobuf": "^2.2.2",
+    "@connectrpc/connect-query": "^2.0.0",
     "@typescript-eslint/parser": "^8.10.0",
     "typescript-eslint": "^8.10.0",
     "uuid": "^11.0.3"
