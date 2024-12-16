@@ -7,7 +7,9 @@ import {
   getGloballyUniqueName,
   toReference,
 } from '../util'
-import { Item } from '../protobuf'
+import { ItemSchema } from '../protobuf'
+import { create } from '@bufbuild/protobuf'
+import { timestampDate } from '@bufbuild/protobuf/wkt'
 
 describe('Util namespace', () => {
   describe('#newTimestamp', () => {
@@ -15,7 +17,7 @@ describe('Util namespace', () => {
       const now = new Date()
       const ts = newTimestamp(now)
 
-      expect(now.toISOString()).toEqual(ts.toDate().toISOString())
+      expect(now.toISOString()).toEqual(timestampDate(ts).toISOString())
     })
   })
 
@@ -30,7 +32,7 @@ describe('Util namespace', () => {
 
   describe('#newReference', () => {
     it('returns a fully populated reference', () => {
-      const item = new Item({
+      const item = create(ItemSchema, {
         type: 'person',
         uniqueAttribute: 'name',
         attributes: newItemAttributes({
@@ -61,7 +63,7 @@ describe('Util namespace', () => {
 
   describe('#getUniqueAttributeValue', () => {
     it('returns the correct value', () => {
-      const item = new Item({
+      const item = create(ItemSchema, {
         type: 'person',
         uniqueAttribute: 'name',
         attributes: newItemAttributes({
@@ -77,7 +79,7 @@ describe('Util namespace', () => {
 
   describe('#getGloballyUniqueName', () => {
     it('returns the correct value', () => {
-      const item = new Item({
+      const item = create(ItemSchema, {
         type: 'person',
         uniqueAttribute: 'name',
         scope: 'scope',
