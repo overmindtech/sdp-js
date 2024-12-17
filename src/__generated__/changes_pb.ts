@@ -98,9 +98,16 @@ export type RuleProperties = Message<"changes.RuleProperties"> & {
   instructions: string;
 
   /**
-   * A list of valid tag values. If the instructions produce a value that is not
-   * in this list, the rule will be retried, however if we cannot converge on a
-   * valid value after some number of tries, the rule will not be applied
+   * A list of valid tag values.
+   *
+   * If this list is empty then the tag will have no value. Overmind will
+   * evaluate the instructions in the context of each incoming change, and if
+   * instructed, it will tag that change with the given `tagKey` and an empty
+   * value.
+   *
+   * If this list is populated, Overmind will evaluate the instructions in the
+   * context of each incoming change and decide; whether to tag the change at
+   * all, and if so, what value to use.
    *
    * @generated from field: repeated string validValues = 5;
    */
@@ -1557,7 +1564,7 @@ export const TagValueSchema: GenMessage<TagValue> = /*@__PURE__*/
  */
 export type UserTagValue = Message<"changes.UserTagValue"> & {
   /**
-   * The value of the tag that was set by the user
+   * The value of the tag that was set by the user.
    *
    * @generated from field: string value = 1;
    */
