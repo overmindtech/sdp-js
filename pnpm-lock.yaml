@@ -49,8 +49,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(typescript@5.6.3)
       vite:
-        specifier: ^5.4.9
-        version: 5.4.9(@types/node@20.16.12)
+        specifier: ^6.0.3
+        version: 6.0.3(@types/node@20.16.12)(jiti@2.4.1)(yaml@2.5.1)
       vitest:
         specifier: ^2.1.3
         version: 2.1.3(@types/node@20.16.12)(@vitest/ui@2.1.3)
@@ -2504,6 +2504,46 @@ packages:
       terser:
         optional: true
 
+  vite@6.0.3:
+    resolution: {integrity: sha512-Cmuo5P0ENTN6HxLSo6IHsjCLn/81Vgrp81oaiFFMRa8gGDj5xEjIcEpf2ZymZtZR8oU0P2JX5WuUp/rlXcHkAw==}
+    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^18.0.0 || ^20.0.0 || >=22.0.0
+      jiti: '>=1.21.0'
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      sass-embedded: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.16.0
+      tsx: ^4.8.1
+      yaml: ^2.4.2
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      jiti:
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      sass-embedded:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+      tsx:
+        optional: true
+      yaml:
+        optional: true
+
   vitest@2.1.3:
     resolution: {integrity: sha512-Zrxbg/WiIvUP2uEzelDNTXmEMJXuzJ1kCpbDvaKByFA9MNeO95V+7r/3ti0qzJzrxdyuUw5VduN7k+D3VmVOSA==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -2582,7 +2622,7 @@ snapshots:
     dependencies:
       '@babel/helper-validator-identifier': 7.25.9
       js-tokens: 4.0.0
-      picocolors: 1.1.0
+      picocolors: 1.1.1
 
   '@babel/compat-data@7.26.3': {}
 
@@ -2658,7 +2698,7 @@ snapshots:
       '@babel/helper-validator-identifier': 7.24.7
       chalk: 2.4.2
       js-tokens: 4.0.0
-      picocolors: 1.1.0
+      picocolors: 1.1.1
 
   '@babel/parser@7.25.3':
     dependencies:
@@ -4784,7 +4824,7 @@ snapshots:
       css-tree: 2.3.1
       css-what: 6.1.0
       csso: 5.0.5
-      picocolors: 1.1.0
+      picocolors: 1.1.1
 
   tar@6.2.1:
     dependencies:
@@ -4914,13 +4954,13 @@ snapshots:
     dependencies:
       browserslist: 4.23.3
       escalade: 3.1.2
-      picocolors: 1.1.0
+      picocolors: 1.1.1
 
   update-browserslist-db@1.1.1(browserslist@4.24.3):
     dependencies:
       browserslist: 4.24.3
       escalade: 3.2.0
-      picocolors: 1.1.0
+      picocolors: 1.1.1
 
   uri-js@4.4.1:
     dependencies:
@@ -4960,6 +5000,17 @@ snapshots:
     optionalDependencies:
       '@types/node': 20.16.12
       fsevents: 2.3.3
+
+  vite@6.0.3(@types/node@20.16.12)(jiti@2.4.1)(yaml@2.5.1):
+    dependencies:
+      esbuild: 0.24.0
+      postcss: 8.4.49
+      rollup: 4.28.1
+    optionalDependencies:
+      '@types/node': 20.16.12
+      fsevents: 2.3.3
+      jiti: 2.4.1
+      yaml: 2.5.1
 
   vitest@2.1.3(@types/node@20.16.12)(@vitest/ui@2.1.3):
     dependencies:
