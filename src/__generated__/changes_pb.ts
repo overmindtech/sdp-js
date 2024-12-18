@@ -964,7 +964,7 @@ export const ListHomeAppsResponseSchema: GenMessage<ListHomeAppsResponse> = /*@_
 
 /**
  * Editor's node: I'm using references here rather than just directly
- * embedding the name, uniqueAttributeValue and scope becuase the reference
+ * embedding the name, uniqueAttributeValue and scope because the reference
  * structs have some methods on them which it might be useful to use (like
  * `String()`), and that some methods will accept a reference as a parameter
  * and it doesn't make sense to have to re-construct one if you already have
@@ -981,7 +981,7 @@ export type ItemDiffSummary = Message<"changes.ItemDiffSummary"> & {
   item?: Reference;
 
   /**
-   * The staus of the item
+   * The status of the item
    *
    * @generated from field: changes.ItemDiffStatus status = 4;
    */
@@ -1014,7 +1014,7 @@ export type ItemDiff = Message<"changes.ItemDiff"> & {
   item?: Reference;
 
   /**
-   * The staus of the item
+   * The status of the item
    *
    * @generated from field: changes.ItemDiffStatus status = 2;
    */
@@ -1416,7 +1416,7 @@ export const GetAppResponseSchema: GenMessage<GetAppResponse> = /*@__PURE__*/
   messageDesc(file_changes, 55);
 
 /**
- * update an expsting app
+ * update an existing app
  *
  * @generated from message changes.UpdateAppRequest
  */
@@ -2060,7 +2060,7 @@ export type ChangeProperties = Message<"changes.ChangeProperties"> & {
   codeChanges: string;
 
   /**
-   * Repo information; can be an empty string. CLI attempts auto-population, but users can override. Not necessarily a URL. The UI will be responsible for any formatting/shortnening/sprucing up should it be required.
+   * Repo information; can be an empty string. CLI attempts auto-population, but users can override. Not necessarily a URL. The UI will be responsible for any formatting/shortening/sprucing up should it be required.
    *
    * @generated from field: string repo = 15;
    */
@@ -2975,7 +2975,7 @@ export type SimulateChangeResponse = Message<"changes.SimulateChangeResponse"> &
 
   /**
    * How far through the simulation process we are. This will be pretty
-   * apprioximate as it's not expected to take very long and is more to give the
+   * approximate as it's not expected to take very long and is more to give the
    * sense of progress than to be an accurate measure
    *
    * @generated from field: uint32 percentComplete = 2;
