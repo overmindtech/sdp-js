@@ -13,7 +13,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file auth0support.proto.
  */
 export const file_auth0support: GenFile = /*@__PURE__*/
-  fileDesc("ChJhdXRoMHN1cHBvcnQucHJvdG8SDGF1dGgwc3VwcG9ydCKFAQoWQXV0aDBDcmVhdGVVc2VyUmVxdWVzdBIPCgd1c2VyX2lkGAEgASgJEg0KBWVtYWlsGAIgASgJEgwKBG5hbWUYAyABKAkSFgoOZW1haWxfdmVyaWZpZWQYBCABKAgSEgoKZmlyc3RfbmFtZRgFIAEoCRIRCglsYXN0X25hbWUYBiABKAkiKQoXQXV0aDBDcmVhdGVVc2VyUmVzcG9uc2USDgoGb3JnX2lkGAEgASgJMscBCgxBdXRoMFN1cHBvcnQSWQoKQ3JlYXRlVXNlchIkLmF1dGgwc3VwcG9ydC5BdXRoMENyZWF0ZVVzZXJSZXF1ZXN0GiUuYXV0aDBzdXBwb3J0LkF1dGgwQ3JlYXRlVXNlclJlc3BvbnNlElwKEEtlZXBhbGl2ZVNvdXJjZXMSJS5hY2NvdW50LkFkbWluS2VlcGFsaXZlU291cmNlc1JlcXVlc3QaIS5hY2NvdW50LktlZXBhbGl2ZVNvdXJjZXNSZXNwb25zZUIkWiJnaXRodWIuY29tL292ZXJtaW5kdGVjaC9zZHAtZ287c2RwYgZwcm90bzM", [file_google_protobuf_struct, file_google_protobuf_timestamp, file_account]);
+  fileDesc("ChJhdXRoMHN1cHBvcnQucHJvdG8SDGF1dGgwc3VwcG9ydCKcAQoWQXV0aDBDcmVhdGVVc2VyUmVxdWVzdBIPCgd1c2VyX2lkGAEgASgJEg0KBWVtYWlsGAIgASgJEgwKBG5hbWUYAyABKAkSFgoOZW1haWxfdmVyaWZpZWQYBCABKAgSEgoKZmlyc3RfbmFtZRgFIAEoCRIRCglsYXN0X25hbWUYBiABKAkSFQoNY29ubmVjdGlvbl9pZBgHIAEoCSIpChdBdXRoMENyZWF0ZVVzZXJSZXNwb25zZRIOCgZvcmdfaWQYASABKAkyxwEKDEF1dGgwU3VwcG9ydBJZCgpDcmVhdGVVc2VyEiQuYXV0aDBzdXBwb3J0LkF1dGgwQ3JlYXRlVXNlclJlcXVlc3QaJS5hdXRoMHN1cHBvcnQuQXV0aDBDcmVhdGVVc2VyUmVzcG9uc2USXAoQS2VlcGFsaXZlU291cmNlcxIlLmFjY291bnQuQWRtaW5LZWVwYWxpdmVTb3VyY2VzUmVxdWVzdBohLmFjY291bnQuS2VlcGFsaXZlU291cmNlc1Jlc3BvbnNlQiRaImdpdGh1Yi5jb20vb3Zlcm1pbmR0ZWNoL3NkcC1nbztzZHBiBnByb3RvMw", [file_google_protobuf_struct, file_google_protobuf_timestamp, file_account]);
 
 /**
  * @generated from message auth0support.Auth0CreateUserRequest
@@ -63,6 +63,13 @@ export type Auth0CreateUserRequest = Message<"auth0support.Auth0CreateUserReques
    * @generated from field: string last_name = 6;
    */
   lastName: string;
+
+  /**
+   * The user's connection id
+   *
+   * @generated from field: string connection_id = 7;
+   */
+  connectionId: string;
 };
 
 /**
